@@ -1,0 +1,160 @@
+% \VignetteIndexEntry{Robust Regression with Particle Swarm Optimisation and Differential Evolution}
+% \VignetteKeyword{optimize}
+\documentclass[a4paper]{article}
+\title{Robust Regression with Particle Swarm Optimisation and Differential Evolution}
+\author{Enrico Schumann}
+\usepackage[noae]{Sweave}
+\usepackage{mathptmx}
+\usepackage{natbib}
+\usepackage{amsmath,amstext}
+\begin{document}
+\maketitle
+\begin{abstract}
+\noindent A brief tutorial on using Differential Evolution and Particle Swarm Optimisation to estimate a regression model.
+\end{abstract}
+
+\section{Introduction}
+\noindent We provide a code example for a robust regression problem. The purpose of this vignette is to provide 
+the code in a convenient way; for more details, please see \citet{Gilli2011b}. (The vignette builds on the script \texttt{comparisonLMS.R}.)
+
+\section{Data and settings}
+We start by attaching the package.
+<<>>=
+require(NMOF)
+require(MASS) 
+@
+We will use the function \texttt{lqs} from the \texttt{MASS} package \citep{Venables2002}. We will use an artificial data set with 
+\texttt{n}~observations and \texttt{p}~regressors, created with the function \texttt{createData}.
+<<>>=
+createData <- function(n, p, constant = TRUE, sigma = 2, oFrac = 0.1) {
+    X <- array(rnorm(n * p), dim = c(n, p))
+    if (constant) X[ ,1L] <- 1L
+    b <- rnorm(p)
+    y <- X %*% b + rnorm(n)*0.5
+    nO <- ceiling(oFrac*n)
+    when <- sample.int(n, nO)
+    X[when, -1L] <- X[when, -1L] + rnorm(nO, sd = sigma)
+    list(X = X, y = y)
+}
+@
+
+We start by creating some artifial data. We collect \texttt{X} and \texttt{y} in the list \texttt{data}. We also add the scalar~\texttt{h} which gives the order statistic of the squared 
+residuals to be minimised.
+<<>>=
+n <- 100L  # number of observations
+p <- 10L   # number of regressors
+constant <- TRUE; sigma <- 5; oFrac  <- 0.1
+h <- 70L   # ... or use something like floor((n+1)/2)
+
+aux <- createData(n,p,constant,sigma,oFrac) 
+X <- aux$X; y <- aux$y
+data <- list(y = y, X = X, h = h)
+@
+The outliers are clearly visible.
+<<fig = TRUE, height = 3.8>>=
+plot(X[ ,2L], type = "l")
+@
+
+Two example objective functions, Least Trimmed Squares (LTS) and Least Quantile of Squares (LQS). Note that they are almost identical.
+<<>>=
+OF <- function(param,data) { 
+    X <- data$X
+    y <- data$y
+    # as.vector(y) for recycling; param is a matrix
+    aux <- as.vector(y) - X %*% param 
+    aux <- aux * aux
+    aux <- apply(aux, 2, sort, partial = data$h)
+    colSums(aux[1:data$h, ])  # LTS
+}
+OF <- function(param, data) { 
+    X <- data$X
+    y <- data$y
+    # as.vector(y) for recycling; param is a matrix
+    aux <- as.vector(y) - X %*% param
+    aux <- aux * aux
+    aux <- apply(aux, 2, sort, partial = data$h)
+    aux[data$h, ]  # LQS
+}
+@
+Both functions are vectorised. They work with a single solution (\texttt{param} would be a vector) or a whole population (\texttt{param} would 
+be a matrix; each column would be one solution).
+
+\section{Using DE and PSO}
+We run DE and PSO. We compare the result with \texttt{lqs}.
+<<>>=
+popsize <- 100L; generations <- 400L
+ps <- list(min = rep(-10,p), 
+           max = rep(10,p), 
+            c1 = 1.0, 
+            c2 = 2.0,
+          iner = 0.8, 
+         initV = 1.0, 
+            nP = popsize,
+            nG = generations, 
+          maxV = 3,
+        loopOF = FALSE,
+      printBar = FALSE,
+   printDetail = FALSE)
+de <- list(min = rep(-10,p),
+           max = rep(10,p),
+            nP = popsize,
+            nG = generations, 
+             F = 0.7, 
+            CR = 0.9,
+        loopOF = FALSE,
+      printBar = FALSE,
+   printDetail = FALSE)
+
+system.time(solPS <- PSopt(OF = OF, algo = ps, data = data))
+system.time(solDE <- DEopt(OF = OF, algo = de, data = data))
+
+if (require(MASS, quietly = TRUE)) {
+  system.time(test1 <- lqs(y ~ X[ ,-1L], adjust = TRUE, 
+               nsamp = 100000, method = "lqs", quantile = h))
+  res1 <- sort((y - X %*% as.matrix(coef(test1)))^2)[h]
+} else res1 <- NA
+res2 <- sort((y - X %*% as.matrix(solPS$xbest))^2)[h]
+res3 <- sort((y - X %*% as.matrix(solDE$xbest))^2)[h]
+cat("lqs:   ", res1, "\n",
+    "PSopt: ", res2, "\n",
+    "DEopt: ", res3, "\n", sep = "")
+@
+To demonstrate the advantage of a vectorised objective function, we can compare it with looping over the solutions.
+<<>>=
+de$loopOF <- TRUE; ps$loopOF <- TRUE
+system.time(solPS <- PSopt(OF = OF, algo = ps, data = data))
+system.time(solDE <- DEopt(OF = OF, algo = de, data = data))
+@
+<<>>=
+de$loopOF <- FALSE; ps$loopOF <- FALSE
+system.time(solPS <- PSopt(OF = OF, algo = ps, data = data))
+system.time(solDE <- DEopt(OF = OF, algo = de, data = data))
+@
+Finally, we can show the effect that DE performs better with a small value for \texttt{F}. But as so often: 
+increasing the computational resources (eg, increasing generations) helps.
+
+<<fig = TRUE, height = 3.8>>=
+trials <- 20L
+
+de$F <- 0.2
+allResF02 <- numeric(trials)
+resF02 <- restartOpt(DEopt, n = trials, OF, algo = de, data = data)
+de$F <- 0.8
+allResF08 <- numeric(trials)
+resF08 <- restartOpt(DEopt, n = trials, OF, algo = de, data = data)
+
+for (i in 1L:trials) allResF02[i] <- resF02[[i]]$OFvalue
+for (i in 1L:trials) allResF08[i] <- resF08[[i]]$OFvalue
+Xlim <- pretty(c(allResF02, allResF08))
+
+plot(ecdf(allResF02), main = "", xlab = "", ylab = "", 
+    xlim = c(min(Xlim), max(Xlim)))
+lines(ecdf(allResF08), main = "", xlab = "", ylab = "", col = "blue")
+legend(x = "right", legend=c("F = 0.2", "F = 0.8"), 
+     col = c("black", "blue"),lty = 1, pch = 19)
+@
+
+\bibliographystyle{plainnat}
+\bibliography{NMOF}
+\end{document}
+

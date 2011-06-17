@@ -1,0 +1,13 @@
+Changes in Version 0.12-1
+
+  o documentation has been revised
+
+Changes in Version 0.11-1
+
+  o a number of test functions have been added (see ?testFunctions)
+  o new examples added for DEopt and TAopt
+  o vignettes have been revised
+
+Changes in Version 0.1-1
+
+  o opt-functions now have 'printBar' and 'printDetail' option (set via 'algo')

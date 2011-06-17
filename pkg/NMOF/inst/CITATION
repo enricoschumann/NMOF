@@ -1,0 +1,17 @@
+citHeader("To cite NMOF in publications use:")
+
+aa <- c(person("Manfred", "Gilli", role = "aut"),
+        person("Dietmar", "Maringer", role = "aut"),
+        person("Enrico", "Schumann", role = c("aut","cre")))
+
+citEntry(entry = "book",
+         title = "Numerical Methods and Optimization in Finance",
+         author = aa,
+         year = "2011",
+         publisher = "Elsevier",
+         url  = "http://www.elsevierdirect.com/product.jsp?isbn=9780123756626",
+         textVersion = 
+         paste("Gilli, Manfred; Maringer, Dietmar; and Schumann, Enrico. ", 
+               "Numerical Methods and Optimization in Finance. ",
+               "Elsevier, 2011.", sep = "")
+)
