@@ -1,4 +1,4 @@
-% version 2011-04-28
+% version 2011-06-18
 \name{restartOpt}
 \alias{restartOpt}
 %\alias{restartOpt2}
@@ -104,8 +104,8 @@ myOpt <- function(fun, OF, algo) {
     f
 } 
 DE <- myOpt(DEopt, OF = tfTrefethen, algo = algo)
-system.time(res1000a <-   lapply(1:100, DE))
-system.time(res1000b <- mclapply(1:100, DE))
+system.time(res1000a <-   lapply(1:10, DE))
+system.time(res1000b <- mclapply(1:10, DE))
 
 res1000Fa <- sapply(res1000a, `[[`, "OFvalue")
 res1000Fb <- sapply(res1000b, `[[`, "OFvalue")
