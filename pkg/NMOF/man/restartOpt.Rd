@@ -1,4 +1,4 @@
-% version 2011-06-18
+% version 2011-04-28
 \name{restartOpt}
 \alias{restartOpt}
 %\alias{restartOpt2}
@@ -59,7 +59,7 @@ This is a pure convenience function. There no error handling.
 }
 \examples{
 # see example(DEopt)
-algo <- list(nP = 50,
+algo <- list(nP = 50L,
               F = 0.5, 
              CR = 0.9, 
             min = c(-10, -10), 
@@ -68,11 +68,11 @@ algo <- list(nP = 50,
        printBar = FALSE)
 
 # choose a larger 'n' when you can afford it
-algo$nG <- 100
-res100 <- restartOpt(DEopt, n = 10, OF = tfTrefethen, algo = algo)
+algo$nG <- 100L
+res100 <- restartOpt(DEopt, n = 10L, OF = tfTrefethen, algo = algo)
 res100F <- sapply(res100, `[[`, "OFvalue")
 
-algo$nG <- 300
+algo$nG <- 300L
 res300 <- restartOpt(DEopt, n = 10, OF = tfTrefethen, algo = algo)
 res300F <- sapply(res300, `[[`, "OFvalue")
 
@@ -87,7 +87,7 @@ legend(x = "right", box.lty = 0, , lty = 1,
 
 \dontrun{
 # with R >= 2.13.0 and the compiler package
-algo$nG <- 100
+algo$nG <- 100L
 system.time(res100 <- restartOpt(DEopt, n = 10, OF = tfTrefethen, algo = algo))
 
 require(compiler)
@@ -98,7 +98,7 @@ system.time(res100 <- restartOpt(DEopt, n = 10, OF = tfTrefethen, algo = algo))
 \dontrun{
 # experimental: multicore
 require(multicore)
-algo$nP <- 100; algo$nG <- 1000
+algo$nP <- 100L; algo$nG <- 1000L
 myOpt <- function(fun, OF, algo) {
     f <- function(ignore) fun(OF = OF, algo = algo)
     f
