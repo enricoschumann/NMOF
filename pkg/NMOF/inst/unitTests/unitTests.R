@@ -230,6 +230,7 @@ test.TAopt <- function() {
     algo$stepUp <- 2L
     res <- TAopt(OF, algo = algo, data = data)
     checkEqualsNumeric(res$vT, rep(algo$vT, 3L))    
+    algo$stepUp <- 0L
     algo$scale <- 1.5
     res <- TAopt(OF, algo = algo, data = data)
     checkEqualsNumeric(res$vT, algo$scale*c(0.1,0.05,0))    
