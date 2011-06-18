@@ -4,8 +4,7 @@
 \docType{package}
 \title{Numerical Methods and Optimization in Finance}
 \description{
-Functions and other \R code from the book \sQuote{Numerical Methods and Optimization in Finance}. The package serves 
-as a convenient way to collect the book's code examples. Many functions are still experimental; 
+Functions, data and other \R code from the book \sQuote{Numerical Methods and Optimization in Finance}. Many functions are still experimental; 
 interfaces may change in the future. There is little error handling. Comments/corrections/remarks/suggestions are very welcome 
 (please contact the maintainer directly).
 }
