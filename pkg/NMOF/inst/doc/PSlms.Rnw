@@ -134,7 +134,7 @@ Finally, we can show the effect that DE performs better with a small value for \
 increasing the computational resources (eg, increasing generations) helps.
 
 <<fig = TRUE, height = 3.8>>=
-trials <- 20L
+trials <- 10L
 
 de$F <- 0.2
 allResF02 <- numeric(trials)
