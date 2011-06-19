@@ -1,8 +1,8 @@
 Package: NMOF
 Type: Package
 Title: Functions and scripts for the book 'Numerical Methods and Optimization in Finance'
-Version: 0.12-8
-Date: 2011-06-18
+Version: 0.12-9
+Date: 2011-06-19
 Author: Enrico Schumann
 Maintainer: Enrico Schumann <enricoschumann@yahoo.de>
 Suggests: MASS, quadprog, RUnit
