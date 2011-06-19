@@ -193,14 +193,15 @@ legend(x = "topright", legend = c("true yields", "DE", "nlminb"),
 @
 
 It is important to stress that the results of both algorithms are stochastic: in the case of DE, because it deliberately uses randomness; in the 
-case of \texttt{nlminb}, because we set the starting value randomly. To get more meaningful results, we run both algorithms 10~times.
+case of \texttt{nlminb}, because we set the starting value randomly. To get more meaningful results, we should run both algorithms several times 
+(here, we do it just 5~times).
 
 <<fig = TRUE, height = 3>>=
 par(ps = 11, bty = "n", las = 1, tck = 0.01, mgp = c(3, 0.2, 0), mar = c(4, 4, 1, 1))
 plot(tm, yM, xlab = "maturities in years",
              ylab = "yields in %")
 algo$printDetail <- FALSE
-for (i in 1:10) {
+for (i in 1:5) {
     sol <- DEopt(OF = OF, algo = algo, data = data)
     lines(tm, data$model(sol$xbest,tm), col = "blue")
     s0 <- algo$min + (algo$max-algo$min) * runif(length(algo$min))
@@ -322,11 +323,11 @@ system.time(sol2 <- nlminb(s0,OF,data = data,
 max(abs(data$model(sol2$par,tm) - data$model(betaTRUE,tm)))
 sol2$objective
 @
-Finally, we compare the yield curves resulting from 10 runs.
+Finally, we compare the yield curves resulting from 5~runs.
 <<fig = TRUE, height = 3>>=
 par(ps = 11, bty = "n", las = 1, tck = 0.01, mgp = c(3, 0.2, 0), mar = c(4, 4, 1, 1))
 plot(tm, yM, xlab = "maturities in years", ylab = "yields in %")
-for (i in 1:10) {
+for (i in 1:5) {
     sol <- DEopt(OF = OF, algo = algo, data = data)
     lines(tm, data$model(sol$xbest,tm), col = "blue")
     s0 <- algo$min + (algo$max - algo$min) * runif(length(algo$min))
@@ -634,16 +635,7 @@ betaTRUE
 round(sol$xbest,3)
 @
 While the returned \texttt{OF} value seems acceptable, we need many more iterations to have the parameters converge. But compare the fitted 
-yield curve.
-<<>>=
-algo$nG <- 1000L
-system.time(sol <- DEopt(OF = OF3, algo = algo, data = data))
-max(abs(data$model(sol$xbest,tm) - data$model(betaTRUE,tm)))
-sol$OFvalue
-betaTRUE
-round(sol$xbest,3)
-@
-
+yield curve: the fitted yields are generally fine.
 
 
 \bibliographystyle{plainnat}
