@@ -12,8 +12,8 @@ interfaces may change in the future. There is little error handling. Comments/co
 \tabular{ll}{
 Package: \tab NMOF\cr
 Type: \tab Package\cr
-Version: \tab 0.12-8\cr
-Date: \tab 2011-06-18\cr
+Version: \tab 0.12-9\cr
+Date: \tab 2011-06-19\cr
 Suggests: \tab MASS, quadprog, RUnit\cr
 License: \tab GPL-3\cr
 LazyLoad: \tab yes\cr
