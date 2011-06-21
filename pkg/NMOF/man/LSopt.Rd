@@ -35,13 +35,14 @@ The list \code{algo} contains the following items.
  \code{x0 <- algo$x0()}. This can be useful when the routine is called in a loop of restarts and each restart is to have its own starting value.}
 \item{\code{neighbour}}{The neighbourhood function. It takes a solution \code{x} and returns a changed solution.}
 \item{\code{printDetail}}{If \code{TRUE} (the default), information is printed.}
-\item{\code{printBar}}{If \code{TRUE} (the default), information on progress is printed (\code{txtProgressBar}} from the \pkg{utils} 
+\item{\code{printBar}}{If \code{TRUE} (the default), information on progress is printed (\code{txtProgressBar} from the \pkg{utils} 
 package is used).}
+}
 
 \acronym{LS} works on solutions through the functions \code{neighbour} and \code{OF} which are specified by the user. Thus, a solution 
 need not be a numeric vector, but can be another data structure as well (eg, a list or a matrix).
-}
 
+}
 
 \value{
 Returns a list.

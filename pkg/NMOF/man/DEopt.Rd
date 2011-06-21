@@ -48,8 +48,8 @@ The list \code{algo} contains the following items.
 \item{\code{nG}}{number of generations. Defaults to 300. Using default settings may not be a good idea.}
 \item{\code{F}}{defaults to 0.5. Using default settings may not be a good idea.}
 \item{\code{CR}}{mutation probability. Defaults to 0.9. Using default settings may not be a good idea.}
-\item{\code{min}}{A vector of minimum parameter values.}
-\item{\code{max}}{A vector of minimum parameter values.}
+\item{\code{min}}{a vector of minimum parameter values. See below.}
+\item{\code{max}}{a vector of maximum parameter values. See below.}
 \item{\code{pen}}{a penalty function. Default is NULL (no penalty).}
 \item{\code{mP}}{optional: the initial population. A matrix of size \code{length(algo$min)} times \code{algo$nP}, or a function that creates 
 such a matrix. If a function, it should take no arguments.}
@@ -61,7 +61,7 @@ such a matrix. If a function, it should take no arguments.}
 \item{\code{printBar}}{If \code{TRUE} (the default), information in progress is printed (\code{txtProgressBar} is used).}
 }
 The vectors \code{min} and \code{max} are used to determine the dimension of the problem and to randomly 
-initialise the population. They are no constraints.
+initialise the population. They are not constraints.
 
 
 }

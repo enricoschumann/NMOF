@@ -13,13 +13,13 @@ NSf(lambda, tm)
 NSSf(lambda1, lambda2, tm)
 }
 \arguments{
-  \item{lambda}{The \eqn{\lambda}{lambda} parameter of the \acronym{NS} model (a scalar).
+  \item{lambda}{the \eqn{\lambda}{lambda} parameter of the \acronym{NS} model (a scalar)
 }
-  \item{lambda1}{The \eqn{\lambda_1}{lambda1} parameter of the \acronym{NSS} model (a scalar).
+  \item{lambda1}{the \eqn{\lambda_1}{lambda1} parameter of the \acronym{NSS} model (a scalar)
 }
-  \item{lambda2}{The \eqn{\lambda_2}{lambda2} parameter of the \acronym{NSS} model (a scalar).
+  \item{lambda2}{the \eqn{\lambda_2}{lambda2} parameter of the \acronym{NSS} model (a scalar)
 }
-  \item{tm}{A numeric vector with times-to-payment/maturity.
+  \item{tm}{a numeric vector with times-to-payment/maturity
 }
 }
 \details{

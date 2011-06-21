@@ -1,12 +1,12 @@
 Package: NMOF
 Type: Package
-Title: Functions and scripts for the book 'Numerical Methods and Optimization in Finance'
-Version: 0.12-9
-Date: 2011-06-19
+Title: Functions, data and examples from the book 'Numerical Methods and Optimization in Finance' by M. Gilli, D. Maringer and E. Schumann.
+Version: 0.12-10
+Date: 2011-06-21
 Author: Enrico Schumann
 Maintainer: Enrico Schumann <enricoschumann@yahoo.de>
 Suggests: MASS, quadprog, RUnit
-Description: The package comprises several functions and code examples for the book 'Numerical Methods and Optimization in Finance'.
+Description: The package contains several functions and code examples for the book 'Numerical Methods and Optimization in Finance'.
 License: GPL-3
 LazyLoad: yes
 LazyData: yes

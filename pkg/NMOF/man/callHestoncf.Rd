@@ -28,7 +28,7 @@ callHestoncf(S, X, tau, r, q, v0, vT, rho, k, sigma, implVol = FALSE)
 }
   \item{k}{speed of mean-reversion
 }
-  \item{sigma}{volatility of variance. A value smaller than 0.01 replaced with 0.01.
+  \item{sigma}{volatility of variance. A value smaller than 0.01 is replaced with 0.01.
 }
   \item{implVol}{compute equivalent Black--Scholes--Merton volatility? Default is FALSE.
 }

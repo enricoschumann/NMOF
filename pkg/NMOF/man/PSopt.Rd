@@ -63,8 +63,8 @@ past best position.}
 change in a given solution in a given iteration. A maximum velocity can be set so to prevent unreasonable 
 velocities (\sQuote{overshooting}): for instance, if a decision variable may lie between 0 and 1, then an absolute velocity much greater than 1 
 makes rarely sense.}
-\item{\code{min}}{A vector of minimum parameter values.}
-\item{\code{max}}{A vector of minimum parameter values.}
+\item{\code{min}}{a vector of minimum parameter values. See below.}
+\item{\code{max}}{a vector of maximum parameter values. See below.}
 \item{\code{pen}}{a penalty function. Default is NULL (no penalty).}
 \item{\code{repair}}{a repair function. Default is NULL (no repairing).}
 \item{\code{mP}}{optional: the initial population. A matrix of size \code{length(algo$min)} times \code{algo$nP}, or a function that creates 

@@ -36,7 +36,7 @@ Additional data that is passed to the particular optimisation function.
 }
 \details{
 The function returns a list of lists. If a specific starting solution is passed, all runs will start from the same solution. 
-If this is not desired, solutions can to be created randomly. This is done automatically in \code{\link{DEopt}} and \code{\link{PSopt}}. 
+If this is not desired, initial solutions can be created randomly. This is done automatically in \code{\link{DEopt}} and \code{\link{PSopt}}. 
 For \code{\link{LSopt}} and \code{\link{TAopt}}, the passed initial solution \code{algo$x0} is checked with 
 \code{is.function}: if \code{TRUE}, the function is evaluated in each single run.
 }
@@ -51,7 +51,7 @@ Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Opti
 Enrico Schumann
 }
 \note{
-This is a pure convenience function. There no error handling.
+This is a pure convenience function. There is no error handling.
 }
 
 \seealso{
@@ -92,8 +92,7 @@ system.time(res100 <- restartOpt(DEopt, n = 10, OF = tfTrefethen, algo = algo))
 
 require(compiler)
 enableJIT(3)
-system.time(res100 <- restartOpt(DEopt, n = 10, OF = tfTrefethen, algo = algo))
-}
+system.time(res100 <- restartOpt(DEopt, n = 10, OF = tfTrefethen, algo = algo))}
 
 \dontrun{
 # experimental: multicore
@@ -110,7 +109,6 @@ system.time(res1000b <- mclapply(1:10, DE))
 res1000Fa <- sapply(res1000a, `[[`, "OFvalue")
 res1000Fb <- sapply(res1000b, `[[`, "OFvalue")
 plot( ecdf(res1000Fa))
-lines(ecdf(res1000Fb), col = "blue")
-}
+lines(ecdf(res1000Fb), col = "blue")}
 
 }

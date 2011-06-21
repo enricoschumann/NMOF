@@ -18,7 +18,7 @@ The function \sQuote{repairs} a correlation matrix: it replaces negative eigenva
 on the main diagonal become unity again.
 }
 \value{
-returns a numeric matrix
+Returns a numeric matrix.
 }
 \references{
 Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Optimization in Finance}. Elsevier. 

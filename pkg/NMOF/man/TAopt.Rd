@@ -109,9 +109,9 @@ TA is similar to Simulated Annealing.
 
 # create data with specified correlation
 n <- 100L
-rho <- 0.9
+rho <- 0.7
 C <- matrix(rho, 2L, 2L); diag(C) <- 1
-x <- matrix(rnorm(n * 2L), n, 2L) %*% chol(C)
+x <- matrix(rnorm(n * 2L), n, 2L) \%*\% chol(C)
 
 # collect data
 data <- list(x = x, n = n, nmin = 40L)
