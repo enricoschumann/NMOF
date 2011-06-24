@@ -121,31 +121,33 @@ OF <- function(xn, data)
 #       redundancies/overhead here are small; and the example is to
 #       show how LSopt can be used for such a search
 data <- list(X = X, y = y, nc = nc, nr = nr, n = 1L)
-algo <- list(nS = 5000L, neighbour = neighbourG, x0 = x0,
+algo <- list(nS = 500L, neighbour = neighbourG, x0 = x0,
              printBar = FALSE, printDetail = FALSE)
 
-system.time(sol <- LSopt(OF, algo = algo, data = data))
+sol <- LSopt(OF, algo = algo, data = data)
 sort(which(as.logical(sol$xbest)))
 sort(xTRUE)
 sol$OFvalue
-plot(sol$Fmat[ ,2L],type = "l")
+par(ylog = TRUE)
+plot(sol$Fmat[ ,2L],type = "l", log = "y", 
+    ylim = c(1e-4, max(pretty(sol$Fmat[ ,2L]))), 
+    xlab = "iterations", ylab = "OF value")
 
 # (2) *Local Search*
 algo$neighbour <- neighbour
-algo$nS <- 5000L
-system.time(sol <- LSopt(OF, algo = algo, data = data))
+sol <- LSopt(OF, algo = algo, data = data)
 sort(which(as.logical(sol$xbest)))
 sort(xTRUE)
 sol$OFvalue
-plot(sol$Fmat[ ,2L], type = "l")
+lines(sol$Fmat[ ,2L], type = "l", lty = 2)
 
 # (3) *Threshold Accepting*
 algo$nT <- 10L
 algo$nS <- ceiling(algo$nS/algo$nT)
-system.time(sol2 <- TAopt(OF, algo = algo, data = data))
+sol2 <- TAopt(OF, algo = algo, data = data)
 sort(which(as.logical(sol2$xbest)))
 sort(xTRUE)
 sol2$OFvalue
-plot(cummin(sol2$Fmat[ ,2L]),type = "l")
+lines(cummin(sol2$Fmat[ ,2L]),type = "l", lty = 3)
 }
 \keyword{optimize}

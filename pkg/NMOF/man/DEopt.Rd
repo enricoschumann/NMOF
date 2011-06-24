@@ -61,7 +61,7 @@ such a matrix. If a function, it should take no arguments.}
 \item{\code{printBar}}{If \code{TRUE} (the default), information in progress is printed (\code{txtProgressBar} is used).}
 }
 The vectors \code{min} and \code{max} are used to determine the dimension of the problem and to randomly 
-initialise the population. They are not constraints.
+initialise the population. They are no constraints: a solution may well be outside these limits.
 
 
 }
@@ -111,17 +111,17 @@ ts.plot(sol$Fmat, xlab = "generations", ylab = "OF")
 
 ## Example 2: vectorising the evaluation of the population
 OF <- tfRosenbrock  # see ?testFunctions
-size <- 20L         # define dimension
+size <- 10L         # define dimension
 x <- rep(1, size)   # the known solution ...
 OF(x)               # ... should give zero
 
 algo <- list(printBar = FALSE,
                    nP = 100L, 
-                   nG = 5000L,
+                   nG = 2000L,
                     F = 0.5, 
                    CR = 0.9, 
-                  min = rep(-20, size), 
-                  max = rep( 20, size))
+                  min = rep(-100, size), 
+                  max = rep( 100, size))
 
 # run DEopt
 (t1 <- system.time(sol <- DEopt(OF = OF, algo = algo)))
@@ -143,8 +143,8 @@ all.equal(OF2(x)[1L:3L], c(OF(x[ ,1L]), OF(x[ ,2L]), OF(x[ ,3L])))
 algo$loopOF <- FALSE
 (t2 <- system.time(sol2 <- DEopt(OF = OF2, algo = algo)))
 sol2$xbest
-sol2$OFvalue  # should be zero (with luck)
-t1/t2  # speedup
+sol2$OFvalue   # should be zero (with luck)
+t1[3L]/t2[3L]  # speedup
 }
 \keyword{optimize}
 

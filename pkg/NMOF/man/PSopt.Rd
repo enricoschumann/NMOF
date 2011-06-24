@@ -77,7 +77,7 @@ such a matrix. If a function, it should take no arguments.}
 is used).}
 }
 The vectors \code{min} and \code{max} are used to determine the dimension of the problem and 
-to randomly initialise the population. They are no constraints.
+to randomly initialise the population. They are no constraints: a solution may well be outside these limits.
 
 }
 \value{

@@ -13,7 +13,7 @@
 \author{Enrico Schumann}
 \maketitle
 \begin{abstract}
-\noindent A brief tutorial on how to use Differential Evolution to fit the Nelson--Siegel model.
+\noindent A brief tutorial on how to use Differential Evolution (DE) to fit the Nelson--Siegel model.
 \end{abstract}
 
 \section{Introduction}
@@ -26,7 +26,7 @@ the code in a convenient way; for more details, please see the book \citep{Gilli
 We start by attaching the package and creating a `true' yield curve \texttt{yM} with given parameters \texttt{betaTRUE}. 
 The times-to-payment, measured in years, are collected in the vector \texttt{tm}. We also set a seed to make the computations reproducible.
 <<fig = TRUE, height = 3>>=
-require(NMOF)
+require("NMOF")
 set.seed(112233)
 tm <- c(c(1,3,6,9)/12,1:10)
 betaTRUE <- c(6, 3, 8, 1)
@@ -35,10 +35,9 @@ par(ps = 11, bty = "n", las = 1, tck = 0.01, mgp = c(3, 0.2, 0), mar = c(4, 4, 1
 plot(tm, yM, xlab = "maturities in years", ylab = "yields in %")
 @
 
-The aim is to fit a smooth curve through these points. Since we 
-have used the model to create the points, we should be able to 
+The aim is to fit a smooth curve through these points. Since we have used the model to create the points, we should be able to 
 obtain a perfect fit. We start with the objective 
-function~\texttt{OF}. It takes two arguments: \texttt{param}, 
+function \texttt{OF}. It takes two arguments: \texttt{param}, 
 which is a candidate solution (a numeric vector), and the list 
 \texttt{data}, which holds all other variables. 
 
@@ -53,8 +52,8 @@ OF <- function(param, data) {
 @ 
  
 We have a added a crude but effective safeguard against 
-`strange' parameter values that lead to \texttt{NA} values: the objective function returns a large positive value. We minimise, and so parameters 
-that produce \texttt{NA} values are marked as bad.
+`strange' parameter values that lead to \texttt{NA} values: the objective function returns a large positive value. We minimise, and 
+hence parameters that produce \texttt{NA} values are marked as bad.
 
 In this first example, we set up \texttt{data} as follows: 
 <<>>= 
@@ -66,8 +65,8 @@ data <- list(
             min = c( 0,-15,-30, 0), 
             max = c(15, 30, 30,10))
 @
-We add a \texttt{model} (a function) that describes the mapping from parameters to a yield curve, and vectors \texttt{min} and \texttt{max} 
-that tell Differential Evolution (DE) over what range to construct the initial population. \texttt{ww} is a penalty weight, explained below.
+We add a \texttt{model} (a function; in this case \texttt{NS}) that describes the mapping from parameters to a yield curve, and vectors \texttt{min} and \texttt{max} 
+that we will later use as constraints. \texttt{ww} is a penalty weight, explained below.
 
 \texttt{OF} will take a candidate solution \texttt{param}, transform this solution via \texttt{data\$model} into yields, and compare 
 these yields with \texttt{yM}, which here means to compute the maximum absolute difference. 
@@ -106,7 +105,7 @@ penalty <- function(mP, data) {
 }
 @
 We already have \texttt{data}, so let us see what the function does to solutions that violate a constraint. 
-Suppose we have a population \texttt{mP} of three solutions.
+Suppose we have a population \texttt{mP} of three solutions (the \texttt{m} in \texttt{mP} is to remind us that we deal with a matrix).
 <<>>=
 param1 <- c( 6,3,8,-1)
 param2 <- c( 6,3,8, 1)
@@ -159,13 +158,14 @@ algo <- list(nP = 100L,
 <<>>=
 system.time(sol <- DEopt(OF = OF, algo = algo, data = data))
 @
-Just to check whether objective function works properly, we compare the maximum error with the returned objective function value~-- 
+Just to check whether the objective function works properly, we compare the maximum error with the returned objective function value -- 
 they should be the same.
 <<>>=
 max( abs(data$model(sol$xbest,tm) - data$model(betaTRUE,tm)) )
 sol$OFvalue
 @
-As a benchmark, we run the function \texttt{nlminb}. This is not a fair test: \texttt{nlminb} is not appropriate for such problems. (But then, 
+As a benchmark, we run the function \texttt{nlminb} from the \textsf{stats} package. This is not a fair test: 
+\texttt{nlminb} is not appropriate for such problems. (But then, 
 if we found that it performs better than DE, we would have a strong indication that something is wrong with our implementation of DE.) 
 We use a random starting value \texttt{s0}.
 <<>>=
@@ -181,27 +181,17 @@ Again, we compare the returned objective function value and the maximum error.
 max(abs(data$model(sol2$par,tm)-data$model(betaTRUE,tm)))
 sol2$objective	
 @
-To compare our two solutions (DE and \texttt{nlminb}), we plot them together with the true yields curve.
-<<fig = TRUE, height = 3>>=
-par(ps = 11, bty = "n", las = 1, tck = 0.01, mgp = c(3, 0.2, 0), mar = c(4, 4, 1, 1))
-plot(tm, yM, xlab = "maturities in years", ylab = "yields in %")
-lines(tm,data$model(sol$xbest,tm), col = "blue")
-lines(tm,data$model(sol2$par,tm), col = "darkgreen", lty = 2)
-legend(x = "topright", legend = c("true yields", "DE", "nlminb"),
-       col = c("black", "blue", "darkgreen"),
-       pch = c(1, NA, NA), lty = c(0, 1, 2))
-@
-
-It is important to stress that the results of both algorithms are stochastic: in the case of DE, because it deliberately uses randomness; in the 
-case of \texttt{nlminb}, because we set the starting value randomly. To get more meaningful results, we should run both algorithms several times 
-(here, we do it just 5~times).
+To compare our two solutions (DE and \texttt{nlminb}), we can plot them together with the true yields curve. But it is important to 
+stress that the results of both algorithms are stochastic: in the case of DE because it deliberately uses randomness; in the 
+case of \texttt{nlminb} because we set the starting value randomly. To get more meaningful results, we should run both algorithms several times. 
+(Here, we do it just 3 times to keep the time to build the vignette reasonable. Typically, one would use more restart.)
 
 <<fig = TRUE, height = 3>>=
 par(ps = 11, bty = "n", las = 1, tck = 0.01, mgp = c(3, 0.2, 0), mar = c(4, 4, 1, 1))
 plot(tm, yM, xlab = "maturities in years",
              ylab = "yields in %")
 algo$printDetail <- FALSE
-for (i in 1:5) {
+for (i in 1L:3L) {
     sol <- DEopt(OF = OF, algo = algo, data = data)
     lines(tm, data$model(sol$xbest,tm), col = "blue")
     s0 <- algo$min + (algo$max-algo$min) * runif(length(algo$min))
@@ -219,7 +209,7 @@ legend(x = "topright", legend = c("true yields", "DE", "nlminb"),
        pch = c(1, NA, NA), lty = c(0, 1, 2))
 @
 
-It is no error that there appears to be only one curve for DE. There are, in fact, 10~lines, but they are printed on top of each other.
+It is no error that there appears to be only one curve for DE: there are, in fact, 3~lines, but they are printed on top of each other.
 
 
 \subsection*{Other constraints}
@@ -323,11 +313,12 @@ system.time(sol2 <- nlminb(s0,OF,data = data,
 max(abs(data$model(sol2$par,tm) - data$model(betaTRUE,tm)))
 sol2$objective
 @
-Finally, we compare the yield curves resulting from 5~runs.
+Finally, we compare the yield curves resulting from three runs. (Again, the low number of restarts is chosen only to keep the time to build the 
+vignette reasonable. A better number would 100.)
 <<fig = TRUE, height = 3>>=
 par(ps = 11, bty = "n", las = 1, tck = 0.01, mgp = c(3, 0.2, 0), mar = c(4, 4, 1, 1))
 plot(tm, yM, xlab = "maturities in years", ylab = "yields in %")
-for (i in 1:5) {
+for (i in 1:3) {
     sol <- DEopt(OF = OF, algo = algo, data = data)
     lines(tm, data$model(sol$xbest,tm), col = "blue")
     s0 <- algo$min + (algo$max - algo$min) * runif(length(algo$min))
@@ -565,10 +556,10 @@ OF3 <- function(param,data) {
     aux
 }
 @
-So the game plan is as follows: we compute prices~\texttt{b} as in the last section, but then we convert 
-them into yields-to-maturity~\texttt{r} with the function 
-\texttt{compYield}. The objective function evaluates the discrepancy between the market yields-to-maturity~\texttt{rM} and our 
-model yields~\texttt{r}. We start by defining the `true' \texttt{rM}.
+So the game plan is as follows: we compute prices \texttt{b} as in the last section, but then we convert 
+them into yields-to-maturity \texttt{r} with the function \texttt{compYield}. 
+The objective function evaluates the discrepancy between the market yields-to-maturity \texttt{rM} and our 
+model yields \texttt{r}. We start by defining the `true' \texttt{rM}.
 <<>>=
 betaTRUE <- c(5,-2,1,10,1,3)
 yM <- NSS(betaTRUE, tm)
@@ -585,7 +576,7 @@ data <- list(rM = rM, tm = tm,
         min = c( 0,-15,-30,-30,0  ,2.5),
         max = c(15, 30, 30, 30,2.5,5  ), ww = 0.1)
 algo <- list(
-        nP = 100L,
+        nP = 50L,
         nG = 600L,
         F   = 0.50,
         CR  = 0.99,

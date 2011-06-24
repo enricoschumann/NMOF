@@ -115,9 +115,9 @@ plot(sqrt(sol1$Fmat[,2L]), type = "l", xlab = "", ylab = "Portfolio volatility")
 
 (Recall that the simulated data had volatilities between~0.2 and~0.4.)
 
-We can also run the search repeatedly with the same starting value.
+We can also run the search repeatedly with the same starting value.  
 <<fig = TRUE, height = 4>>=
-trials <- 10L
+trials <- 5L
 allRes <- restartOpt(LSopt, n = trials, OF, algo = algo, data = data)
 allResOF <- numeric(trials)
 for (i in 1L:trials) allResOF[i] <- sqrt(allRes[[i]]$OFvalue)
