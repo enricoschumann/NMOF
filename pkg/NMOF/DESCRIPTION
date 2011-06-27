@@ -1,8 +1,8 @@
 Package: NMOF
 Type: Package
 Title: Functions, data and examples from the book 'Numerical Methods and Optimization in Finance' by M. Gilli, D. Maringer and E. Schumann.
-Version: 0.12-11
-Date: 2011-06-24
+Version: 0.13-0
+Date: 2011-06-28
 Author: Enrico Schumann
 Maintainer: Enrico Schumann <enricoschumann@yahoo.de>
 Suggests: MASS, quadprog, RUnit

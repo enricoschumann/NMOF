@@ -19,13 +19,15 @@ DEopt <- function(OF, algo = list(), ...) {
     if(is.null(vmax))
         stop("specify 'max' vector") 
     if(length(vmax) != length(vmin))
-        stop("max/min have different lengths") 
+        stop("'max' and 'min' have different lengths") 
     if (!is.vector(vmax)) 
         stop("'max' must be a vector")
     if (!is.vector(vmin)) 
         stop("'min' must be a vector")
     if (any(vmin > vmax)) 
-        stop("(at least) some max < min")  
+        stop("(at least) some 'max' < 'min'")  
+    if (algo$CR > 1 || algo$CR < 0) 
+        stop("'CR' must be between 0 and 1")
     printDetail <- algo$printDetail
     printBar <- algo$printBar
     OF1 <- function(x) OF(x, ...)
@@ -51,7 +53,9 @@ DEopt <- function(OF, algo = list(), ...) {
         mP <- vmin + diag(vmax - vmin) %*% mRU(d, nP)
     } else {
         if (is.function(algo$mP))
-            mP <- algo$mP() else mP <- algo$mP         
+            mP <- algo$mP() else mP <- algo$mP
+        if (any(dim(mP) != c(d,nP)))
+            stop("supplied population has wrong dimension")
     }
     # evaluate initial population
     # 1) repair

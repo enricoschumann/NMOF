@@ -12,14 +12,18 @@ interfaces may change in the future. There is little error handling. Comments/co
 \tabular{ll}{
 Package: \tab NMOF\cr
 Type: \tab Package\cr
-Version: \tab 0.12-11\cr
-Date: \tab 2011-06-24\cr
+Version: \tab 0.13-0\cr
+Date: \tab 2011-06-28\cr
 Suggests: \tab MASS, quadprog, RUnit\cr
 License: \tab GPL-3\cr
 LazyLoad: \tab yes\cr
 LazyData: \tab yes\cr
 Classification/JEL: \tab C61, C63\cr
 }
+The package contains implementations of several general-purpose optimisation heuristics: Differential Evolution (\code{\link{DEopt}}), 
+Genetic Algorithms (\code{\link{GAopt}}), (Stochastic) Local Search (\code{\link{LSopt}}), Particle Swarm (\code{\link{PSopt}}), and 
+Threshold Accepting (\code{\link{TAopt}}).
+
 }
 \author{Enrico Schumann
 

@@ -47,7 +47,10 @@ PSopt <- function(OF, algo = list(), ...) {
         mP <- vmin + diag(vmax - vmin) %*% mRU(d,algo$nP)
     } else {
         if (is.function(algo$mP))
-            mP <- algo$mP() else mP <- algo$mP 
+            mP <- algo$mP() else mP <- algo$mP
+        if (any(dim(mP) != c(d,algo$nP)))
+            stop("supplied population has wrong dimension")
+        
     }
     mV <- algo$initV * mRN(d,algo$nP)
     # evaluate initial population

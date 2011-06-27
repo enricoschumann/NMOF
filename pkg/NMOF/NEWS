@@ -1,3 +1,9 @@
+Changes in Version 0.13-0
+
+  o function 'GAopt' added (minimisation by a Genetic Algorithm)
+  o several unit tests added
+  o documentation revised (thanks to Manfred Gilli for comments)
+  
 Changes in Version 0.12-9
 
   o fewer simulation runs in vignettes to reduce build time

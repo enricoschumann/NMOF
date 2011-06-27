@@ -1,4 +1,4 @@
-export(callHestoncf, DEopt, EuropeanCall, EuropeanCallBE, LSopt, 
-MA, NS, NSf, NSS, NSSf, 
-PSopt, qTable, repairMatrix, restartOpt, TAopt, 
+export(callHestoncf, DEopt, EuropeanCall, EuropeanCallBE, GAopt, LSopt,
+MA, NS, NSf, NSS, NSSf,
+PSopt, qTable, repairMatrix, restartOpt, TAopt,
 tfAckley, tfGriewank, tfRastrigin, tfRosenbrock, tfSchwefel, tfTrefethen)

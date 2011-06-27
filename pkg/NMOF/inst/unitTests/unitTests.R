@@ -135,20 +135,20 @@ test.DEopt <- function() {
         min = c(-3, -3), max = c( 3,  3), 
         printBar = FALSE, printDetail = FALSE)
     
-    # test 1: DE should solve the problem
+    # DE should solve the problem
     sol <- DEopt(OF = trefethen, algo)
     format(sol$OFvalue, digits = 12)
     checkEquals(round(sol$OFvalue,2), -3.31)
     
-    # test 2: without max vector, DE should give error
+    # without max vector, DE should give error
     algo$max <- NULL
     checkException(res <- DEopt(OF = trefethen, algo), silent = TRUE)
     
-    # test 3: unused parameter 'z' should cause error
+    # unused parameter 'z' should cause error
     algo$max <- c( 3,  3)
     checkException(res <- DEopt(OF = trefethen, algo, z = 2), silent = TRUE)
     
-    # test 4: 'z' is required but not provided >> error 
+    # 'z' is required but not provided >> error 
     trefethen2 <- function(xx, z) {
         x <- xx[1]; y <- xx[2]
         res <- exp(sin(50*x)) + sin(60*exp(y)) + sin(70*sin(x)) +
@@ -157,14 +157,13 @@ test.DEopt <- function() {
     }
     checkException(res <- DEopt(OF = trefethen2, algo), silent = TRUE)
     
-    # test 5: 'z' is required and provided
+    # 'z' is required and provided
     checkEquals(round(
             DEopt(OF = trefethen2, algo, z = 2)$OFvalue,2),-1.31)
     checkEquals(round(
             DEopt(OF = trefethen2, algo,     2)$OFvalue,2),-1.31)       
     
-    
-    # test function
+    # test function: DE should find minimum
     OF <- tfRosenbrock
     size <- 5L        # define dimension
     algo <- list(
@@ -178,13 +177,26 @@ test.DEopt <- function() {
     system.time(sol <- DEopt(OF = OF, algo = algo))
     checkEquals(sol$OFvalue, 0)
     
+    # exception: wrong size of mP
+    algo$mP <- array(0, dim = c(20,20))
+    checkException(res <- DEopt(OF = OF, algo), silent = TRUE)
+    algo$mP <- function() array(0, dim = c(5,20))
+    checkException(res <- DEopt(OF = OF, algo), silent = TRUE)
+    algo$mP <- NULL
+    
+    # exception: CR > 1, CR < 0
+    algo$CR <- 2
+    checkException(res <- DEopt(OF = OF, algo), silent = TRUE)
+    algo$CR <- -1
+    checkException(res <- DEopt(OF = OF, algo), silent = TRUE)
+   
 }
 
 
 
 # PSopt
 test.PSopt <- function() {
-    # test function
+    # test function: PS should find minimum 
     OF <- tfRosenbrock
     size <- 5L        # define dimension
     algo <- list(
@@ -196,9 +208,15 @@ test.PSopt <- function() {
         min = rep(-50, size), 
         max = rep( 50, size))
     
-    system.time(sol <- PSopt(OF = OF, algo = algo))
-    sol$OFvalue
+    sol <- PSopt(OF = OF, algo = algo)
     checkEquals(sol$OFvalue, 0)
+    
+    # exception: wrong size of mP
+    algo$mP <- array(0, dim = c(20,20))
+    checkException(res <- PSopt(OF = OF, algo), silent = TRUE)
+    algo$mP <- function() array(0, dim = c(5,20))
+    checkException(res <- PSopt(OF = OF, algo), silent = TRUE)
+    
     
 }
 

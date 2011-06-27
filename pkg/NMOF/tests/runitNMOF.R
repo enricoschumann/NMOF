@@ -1,4 +1,4 @@
-# path <- "C:/packages/NMOF/inst/unitTests"
+# path <- "C:/packages/RForge/Test/NMOF/inst/unitTests"
 if (require(RUnit, quietly = TRUE)) {
     path <- system.file(package = "NMOF", "unitTests")
     myTestSuite <- defineTestSuite("NMOF1", 
