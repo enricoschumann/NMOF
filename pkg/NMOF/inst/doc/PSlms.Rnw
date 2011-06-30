@@ -119,22 +119,36 @@ cat("lqs:   ", res1, "\n",
     "PSopt: ", res2, "\n",
     "DEopt: ", res3, "\n", sep = "")
 @
-To demonstrate the advantage of a vectorised objective function, we can compare it with looping over the solutions.
+To demonstrate the advantage of a vectorised objective function, we can compare it with looping over the solutions. We first set 
+\texttt{loopOF} to \texttt{TRUE}, so we actually loop over the solutions. (We also reduce the number of objective function evaluations.)
 <<>>=
+popsize <- 20L; generations <- 100L
+de$nP <- popsize; de$nG <- generations
+ps$nP <- popsize; ps$nG <- generations
+
 de$loopOF <- TRUE; ps$loopOF <- TRUE
-system.time(solPS <- PSopt(OF = OF, algo = ps, data = data))
-system.time(solDE <- DEopt(OF = OF, algo = de, data = data))
+(t1ps <- system.time(solPS <- PSopt(OF = OF, algo = ps, data = data)))
+(t1de <- system.time(solDE <- DEopt(OF = OF, algo = de, data = data)))
 @
+To evaluate the objective function in one step, we \texttt{loopOF} to \texttt{FALSE}.
 <<>>=
 de$loopOF <- FALSE; ps$loopOF <- FALSE
-system.time(solPS <- PSopt(OF = OF, algo = ps, data = data))
-system.time(solDE <- DEopt(OF = OF, algo = de, data = data))
+(t2ps <- system.time(solPS <- PSopt(OF = OF, algo = ps, data = data)))
+(t2de <- system.time(solDE <- DEopt(OF = OF, algo = de, data = data)))
 @
-Finally, we can show the effect that DE performs better with a small value for \texttt{F}. But as so often: 
-increasing the computational resources (eg, increasing generations) helps.
+Speedup:
+<<>>=
+t1ps[[3L]]/t2ps[[3L]]
+t1de[[3L]]/t2de[[3L]]
+@
+Finally, we can show the effect that DE performs better with a small value for \texttt{F}. (We run only five restarts to keep the time to build 
+the vignette acceptable.)
 
 <<fig = TRUE, height = 3.8>>=
-trials <- 10L
+trials <- 5L
+de$nP <- popsize; de$nG <- generations
+ps$nP <- popsize; ps$nG <- generations
+
 
 de$F <- 0.2
 allResF02 <- numeric(trials)
@@ -150,9 +164,11 @@ Xlim <- pretty(c(allResF02, allResF08))
 plot(ecdf(allResF02), main = "", xlab = "", ylab = "", 
     xlim = c(min(Xlim), max(Xlim)))
 lines(ecdf(allResF08), main = "", xlab = "", ylab = "", col = "blue")
-legend(x = "right", legend=c("F = 0.2", "F = 0.8"), 
+legend(x = "right", legend = c("F = 0.2", "F = 0.8"), 
      col = c("black", "blue"),lty = 1, pch = 19)
 @
+
+But as so often: increasing the computational resources (eg, increasing generations) helps. (Check whether the populations have converged.)
 
 \bibliographystyle{plainnat}
 \bibliography{NMOF}

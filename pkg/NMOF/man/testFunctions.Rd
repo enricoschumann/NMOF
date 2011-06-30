@@ -46,7 +46,7 @@ The \emph{Rosenbrock} (or banana) function: \deqn{\sum_{i=1}^{n-1}\left(100 (x_{
 The minimum function value is zero; reached at \eqn{x=1}{x = 1}. 
 
 The \emph{Schwefel} function: \deqn{\sum_{i=1}^n \left(-x_i \sin\left(\sqrt{|x_i|}\right)\right)\,.}{sum(-x * sin(sqrt(abs(x))))}
-The minimum function value is \eqn{-418.9829n}{-418.9829n}; reached at \eqn{x = 420.9687}{x = 420.9687}. 
+The minimum function value (to about 8 digits) is \eqn{-418.9829n}{-418.9829n}; reached at \eqn{x = 420.9687}{x = 420.9687}.
 
 \emph{Trefethen}'s function takes a two-dimensional \code{x} (here written as \eqn{x}{x} and \eqn{y}{y}); it is defined as 
 \deqn{\exp(\sin(50x)) + \sin(60 e^y) + \sin(70 \sin(x)) + \sin(\sin(80y)) - \sin(10(x+y)) + \frac{1}{4}(x^2+y^2)\,.}{exp(sin(50 * x)) + sin(60 * exp(y)) + sin(70 * sin(x)) + sin(sin(80 * y)) - sin(10 * (x + y)) + (x^2 + y^2)/4}

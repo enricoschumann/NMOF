@@ -1,3 +1,8 @@
+Changes in Version 0.13-1
+
+  o the population in 'GAopt' is now of mode logical (mistaking a logical
+    vector for a numeric one is less harmful than the other way around)
+
 Changes in Version 0.13-0
 
   o function 'GAopt' added (minimisation by a Genetic Algorithm)

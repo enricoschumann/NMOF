@@ -189,7 +189,7 @@ test.DEopt <- function() {
     checkException(res <- DEopt(OF = OF, algo), silent = TRUE)
     algo$CR <- -1
     checkException(res <- DEopt(OF = OF, algo), silent = TRUE)
-   
+    
 }
 
 
@@ -198,11 +198,11 @@ test.DEopt <- function() {
 test.PSopt <- function() {
     # test function: PS should find minimum 
     OF <- tfRosenbrock
-    size <- 5L        # define dimension
+    size <- 3L        # define dimension
     algo <- list(
         printBar = FALSE, 
         printDetail = FALSE,
-        nP = 100L, nG = 2000L,
+        nP = 50L, nG = 1500L,
         c1 = 0.0, c2 = 1.5,
         iner = 0.8, initV = 0.00, maxV = 50,
         min = rep(-50, size), 
@@ -224,6 +224,7 @@ test.PSopt <- function() {
 
 # TAopt
 test.TAopt <- function() {
+    # TA should come close to the minimum
     xTRUE <- runif(5)
     data <- list(xTRUE = xTRUE)
     OF <- function(x, data) max(abs(x - data$xTRUE))
@@ -240,14 +241,22 @@ test.TAopt <- function() {
         printDetail = FALSE)
     res <- TAopt(OF, algo = algo, data = data)
     checkTrue(res$OFvalue < 0.005)
+    
+    # length(returned thresholds) == specified length(thresholds) 
     checkTrue(length(res$vT) == algo$nT)
+    
+    # specified thresholds are used
     algo$vT <- c(0.1,0.05,0)
     algo$nS <- 1000L
     res <- TAopt(OF, algo = algo, data = data)
     checkEqualsNumeric(res$vT,algo$vT) 
+    
+    # stepUp is used
     algo$stepUp <- 2L
     res <- TAopt(OF, algo = algo, data = data)
     checkEqualsNumeric(res$vT, rep(algo$vT, 3L))    
+    
+    # scale is used
     algo$stepUp <- 0L
     algo$scale <- 1.5
     res <- TAopt(OF, algo = algo, data = data)
@@ -272,3 +281,24 @@ test.LSopt <- function() {
     res <- LSopt(OF, algo = algo, data = data)
     checkTrue(res$OFvalue < 0.005)        
 }
+
+
+# TESTfunctions
+test.testFunctions <- function() {
+    x <- rep(0,10L)
+    checkEqualsNumeric(tfAckley(x), 0)
+    checkEqualsNumeric(tfGriewank(x), 0)
+    checkEqualsNumeric(tfRastrigin(x), 0)
+    
+    x <- rep(1,10L)
+    checkEqualsNumeric(tfRosenbrock(x), 0)
+    
+    x <- rep(420.9687, 10)
+    checkEqualsNumeric(tfSchwefel(x), -418.9829*10, 
+        tolerance = 1e-4)
+    
+    x <- c(-0.0244, 0.2106)
+    checkEqualsNumeric(tfTrefethen(x), -3.306868,
+        tolerance = 1e-4)
+}
+

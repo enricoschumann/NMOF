@@ -13,30 +13,35 @@ GAopt <- function (OF, algo = list(), ...) {
     Re1 <- function(x) algo$repair(x, ...)
     nP <- algo$nP
     crossOver <- function(x,y) {
-      cutoff <- sample.int(algo$nB-1L, 1L) + 1L
-      ii <- cutoff:algo$nB
-      x[ii] <- y[ii]
-      x
+        cutoff <- sample.int(algo$nB-1L, 1L) + 1L
+        ii <- cutoff:algo$nB
+        x[ii] <- y[ii]
+        x
     }
-    switch <- function(x) abs(x-1)
+    switch <- function(x) !x
     shift <- function(x) c(x[nP], x[1L:(nP - 1L)])
-
     mRU <- function(m, n) array(runif(m * n), dim = c(m, n))
     mRN <- function(m, n) array(rnorm(m * n), dim = c(m, n))
-
+    
     vF <- numeric(nP)
     vF[] <- NA
     vP <- vF
     vFc <- vF
     Fmat <- array(NaN, c(algo$nG, nP))
+    # create population
     if (is.null(algo$mP)) {
-        mP <- array(sample.int(2L, algo$nB * nP, replace = TRUE)-1L, 
-              dim = c(algo$nB,nP))
-    }
-    else {
+        mP <- array(sample.int(2L, algo$nB * nP, replace = TRUE) - 1L, 
+            dim = c(algo$nB,nP))
+        storage.mode(mP) <- "logical"
+    } else {
         if (is.function(algo$mP)) 
             mP <- algo$mP()
-        else mP <- algo$mP
+        else 
+            mP <- algo$mP
+        if (mode(mP) != "logical") {
+            storage.mode(mP) <- "logical"
+            warning("'mP' is not of mode logical. 'storage.mode(mP)' will be tried")
+        }
     }
     if (!is.null(algo$repair)) {
         if (algo$loopRepair) {
@@ -48,8 +53,7 @@ GAopt <- function (OF, algo = list(), ...) {
     }
     if (algo$loopOF) {
         for (s in 1L:nP) vF[s] <- OF1(mP[, s])
-    }
-    else {
+    } else {
         vF <- OF1(mP)
     }
     if (!is.null(algo$pen)) {
@@ -68,18 +72,18 @@ GAopt <- function (OF, algo = list(), ...) {
     for (g in 1L:algo$nG) {
         if (printBar) 
             setTxtProgressBar(whatGen, value = g)
-
+        
         # create children
         mC <- array(NA, dim = dim(mP))
         # ... crossover
         o <- sample.int(nP)
         oo <- shift(o)
         for (s in 1L:nP)
-           mC[ ,s] <- crossOver(mP[ ,o[s]],mP[ ,oo[s]])
+            mC[ ,s] <- crossOver(mP[ ,o[s]],mP[ ,oo[s]])
         # mutate
         mutate <- runif(algo$nB*nP) < algo$prob
         mC[mutate] <- switch(mC[mutate])
-
+        
         if (!is.null(algo$repair)) {
             if (algo$loopRepair) {
                 for (s in 1L:nP) mC[ ,s] <- Re1(mC[ ,s])
@@ -118,4 +122,3 @@ GAopt <- function (OF, algo = list(), ...) {
     sgbest <- which.min(vF)[1L]
     list(xbest = mP[, sgbest], OFvalue = sGbest, popF = vF, Fmat = Fmat)
 }
-
