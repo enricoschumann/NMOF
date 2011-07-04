@@ -77,7 +77,7 @@ Using thresholds of size 0 makes TA run as a Local Search. The function \code{\l
 Dueck, G. and Scheuer, T. (1990) Threshold Accepting. A General Purpose Optimization Algorithm Superior to Simulated Annealing. 
 \emph{Journal of Computational Physics}. \strong{90}, 1, pp. 161--175.
 
-Gilli, M., K\"{e}llezi, E. and Hysi, H. (2006) A Data-Driven Optimization Heuristic for Downside Risk Minimization. 
+Gilli, M., Kellezi, E. and Hysi, H. (2006) A Data-Driven Optimization Heuristic for Downside Risk Minimization. 
 \emph{Journal of Risk}. \strong{8}, 3, pp. 1--18.
 
 Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Optimization in Finance}. Elsevier. 

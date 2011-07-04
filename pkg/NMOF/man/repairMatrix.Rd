@@ -24,7 +24,7 @@ Returns a numeric matrix.
 Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Optimization in Finance}. Elsevier. 
 \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
 
-Rebonato, R. and J\"{a}ckel, P. (1999) The most general methodology to create a valid correlation matrix 
+Rebonato, R. and Jaeckel, P. (1999) The most general methodology to create a valid correlation matrix 
 for risk management and option pricing purposes. 
 \url{http://www.riccardorebonato.co.uk/papers/ValCorMat.pdf}
 }

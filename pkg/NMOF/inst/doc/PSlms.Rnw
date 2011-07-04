@@ -38,39 +38,38 @@ createData <- function(n, p, constant = TRUE, sigma = 2, oFrac = 0.1) {
 }
 @
 
-We start by creating some artifial data. We collect \texttt{X} and \texttt{y} in the list \texttt{data}. We also add the scalar~\texttt{h} which gives the order statistic of the squared 
-residuals to be minimised.
+We start by creating some artifial data. We collect \texttt{X} and \texttt{y} in the list \texttt{data}. 
+We also add the scalar~\texttt{h} which gives the order statistic of the squared 
+residuals to be minimised. Note that we put \code{as.vector(y)} into \code{data} so that the vector gets `recycled' in the objective function.
 <<>>=
-n <- 100L  # number of observations
-p <- 10L   # number of regressors
+n <- 50L  # number of observations
+p <- 5L   # number of regressors
 constant <- TRUE; sigma <- 5; oFrac  <- 0.1
-h <- 70L   # ... or use something like floor((n+1)/2)
+h <- 30L   # ... or use something like floor((n+1)/2)
 
 aux <- createData(n,p,constant,sigma,oFrac) 
 X <- aux$X; y <- aux$y
-data <- list(y = y, X = X, h = h)
+data <- list(y = as.vector(y), X = X, h = h)
 @
 The outliers are clearly visible.
 <<fig = TRUE, height = 3.8>>=
-plot(X[ ,2L], type = "l")
+par(bty = "n", las = 1)
+plot(X[ ,2L], type = "b", ylab = "X values")
+abline(h = 0)
 @
 
 Two example objective functions, Least Trimmed Squares (LTS) and Least Quantile of Squares (LQS). Note that they are almost identical.
 <<>>=
 OF <- function(param,data) { 
-    X <- data$X
-    y <- data$y
-    # as.vector(y) for recycling; param is a matrix
-    aux <- as.vector(y) - X %*% param 
+    X <- data$X; y <- data$y
+    aux <- y - X %*% param 
     aux <- aux * aux
     aux <- apply(aux, 2, sort, partial = data$h)
     colSums(aux[1:data$h, ])  # LTS
 }
 OF <- function(param, data) { 
-    X <- data$X
-    y <- data$y
-    # as.vector(y) for recycling; param is a matrix
-    aux <- as.vector(y) - X %*% param
+    X <- data$X; y <- data$y
+    aux <- y - X %*% param
     aux <- aux * aux
     aux <- apply(aux, 2, sort, partial = data$h)
     aux[data$h, ]  # LQS
@@ -82,12 +81,12 @@ be a matrix; each column would be one solution).
 \section{Using DE and PSO}
 We run DE and PSO. We compare the result with \texttt{lqs}.
 <<>>=
-popsize <- 100L; generations <- 400L
+popsize <- 30L; generations <- 300L
 ps <- list(min = rep(-10,p), 
            max = rep(10,p), 
             c1 = 1.0, 
             c2 = 2.0,
-          iner = 0.8, 
+          iner = 0.7, 
          initV = 1.0, 
             nP = popsize,
             nG = generations, 
@@ -122,7 +121,7 @@ cat("lqs:   ", res1, "\n",
 To demonstrate the advantage of a vectorised objective function, we can compare it with looping over the solutions. We first set 
 \texttt{loopOF} to \texttt{TRUE}, so we actually loop over the solutions. (We also reduce the number of objective function evaluations.)
 <<>>=
-popsize <- 20L; generations <- 100L
+popsize <- 20L; generations <- 150L
 de$nP <- popsize; de$nG <- generations
 ps$nP <- popsize; ps$nG <- generations
 

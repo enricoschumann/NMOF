@@ -1,9 +1,11 @@
 GAopt <- function (OF, algo = list(), ...) {
-    algoD <- list(nB = 100L, nP = 50L, nG = 300L, 
-        prob = 0.1,
+    algoD <- list(nB = NA, nP = 50L, nG = 300L, 
+        prob = 0.01,
         pen = NULL, repair = NULL, 
         loopOF = TRUE, loopPen = TRUE, loopRepair = TRUE, 
-        printDetail = TRUE, printBar = TRUE, mP = NULL)
+        printDetail = TRUE, printBar = TRUE, mP = NULL,
+        crossover = c("onePoint", "uniform")
+    )
     algoD[names(algo)] <- algo
     algo <- algoD
     printDetail <- algo$printDetail
@@ -11,12 +13,30 @@ GAopt <- function (OF, algo = list(), ...) {
     OF1 <- function(x) OF(x, ...)
     Pe1 <- function(x) algo$pen(x, ...)
     Re1 <- function(x) algo$repair(x, ...)
-    nP <- algo$nP
-    crossOver <- function(x,y) {
-        cutoff <- sample.int(algo$nB-1L, 1L) + 1L
-        ii <- cutoff:algo$nB
-        x[ii] <- y[ii]
-        x
+    if (is.na(algo$nB))
+        stop("'nB' must be specified")
+    nP <- as.integer(algo$nP)
+    if (algo$prob > 1 || algo$prob < 0) 
+        stop("'prob' must be between 0 and 1")
+    crossover <- algo$crossover[1L]
+    crossOver1 <- FALSE; crossOver2 <- FALSE
+    if (crossover == "onePoint") {
+        crossOver <- function(x,y) {
+            cutoff <- sample.int(algo$nB-1L, 1L) + 1L
+            ii <- cutoff:algo$nB
+            x[ii] <- y[ii]
+            x
+        }
+        crossOver1 <- TRUE
+    } else if (crossover == "uniform") {
+        crossOver <- function(x,y) {
+            ii <- runif(algo$nB) > 0.5 
+            x[ii] <- y[ii]
+            x
+        }
+        crossOver2 <- TRUE
+    } else {
+        stop("unknown crossover type")   
     }
     switch <- function(x) !x
     shift <- function(x) c(x[nP], x[1L:(nP - 1L)])
@@ -38,6 +58,7 @@ GAopt <- function (OF, algo = list(), ...) {
             mP <- algo$mP()
         else 
             mP <- algo$mP
+        
         if (mode(mP) != "logical") {
             storage.mode(mP) <- "logical"
             warning("'mP' is not of mode logical. 'storage.mode(mP)' will be tried")
@@ -46,8 +67,7 @@ GAopt <- function (OF, algo = list(), ...) {
     if (!is.null(algo$repair)) {
         if (algo$loopRepair) {
             for (s in 1L:nP) mP[, s] <- Re1(mP[, s])
-        }
-        else {
+        } else {
             mP <- Re1(mP)
         }
     }
@@ -59,8 +79,7 @@ GAopt <- function (OF, algo = list(), ...) {
     if (!is.null(algo$pen)) {
         if (algo$loopPen) {
             for (s in 1L:nP) vP[s] <- Pe1(mP[, s])
-        }
-        else {
+        } else {
             vP <- Pe1(mP)
         }
         vF <- vF + vP
@@ -73,36 +92,39 @@ GAopt <- function (OF, algo = list(), ...) {
         if (printBar) 
             setTxtProgressBar(whatGen, value = g)
         
-        # create children
+        # create children ...
         mC <- array(NA, dim = dim(mP))
-        # ... crossover
+        
+        # ... through crossover
         o <- sample.int(nP)
         oo <- shift(o)
-        for (s in 1L:nP)
-            mC[ ,s] <- crossOver(mP[ ,o[s]],mP[ ,oo[s]])
-        # mutate
+        if (crossOver1) {
+            for (s in 1L:nP)
+                mC[ ,s] <- crossOver(mP[ ,o[s]],mP[ ,oo[s]])
+        } else if (crossOver2) {
+            mC <- crossOver(mP[ ,o],mP[ ,oo])
+        }
+        
+        # ... through mutation
         mutate <- runif(algo$nB*nP) < algo$prob
         mC[mutate] <- switch(mC[mutate])
         
         if (!is.null(algo$repair)) {
             if (algo$loopRepair) {
                 for (s in 1L:nP) mC[ ,s] <- Re1(mC[ ,s])
-            }
-            else {
+            } else {
                 mC <- Re1(mC)
             }
         }
         if (algo$loopOF) {
             for (s in 1L:nP) vFc[s] <- OF1(mC[, s])
-        }
-        else {
+        } else {
             vFc <- OF1(mC)
         }
         if (!is.null(algo$pen)) {
             if (algo$loopPen) {
                 for (s in 1L:nP) vP[s] <- Pe1(mC[, s])
-            }
-            else {
+            } else {
                 vP <- Pe1(mC)
             }
             vFc <- vFc + vP
