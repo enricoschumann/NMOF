@@ -40,7 +40,7 @@ createData <- function(n, p, constant = TRUE, sigma = 2, oFrac = 0.1) {
 
 We start by creating some artifial data. We collect \texttt{X} and \texttt{y} in the list \texttt{data}. 
 We also add the scalar~\texttt{h} which gives the order statistic of the squared 
-residuals to be minimised. Note that we put \code{as.vector(y)} into \code{data} so that the vector gets `recycled' in the objective function.
+residuals to be minimised. Note that we put \texttt{as.vector(y)} into \texttt{data} so that the vector gets `recycled' in the objective function.
 <<>>=
 n <- 50L  # number of observations
 p <- 5L   # number of regressors
