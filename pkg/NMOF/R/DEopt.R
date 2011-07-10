@@ -33,7 +33,8 @@ DEopt <- function(OF, algo = list(), ...) {
     OF1 <- function(x) OF(x, ...)
     Pe1 <- function(x) algo$pen(x, ...)
     Re1 <- function(x) algo$repair(x, ...)
-    nP <- algo$nP
+    nP <- as.integer(algo$nP)
+    nG <- as.integer(algo$nG)
     # ------------------------------------------------------------------
     # auxiliary functions
     # ------------------------------------------------------------------
@@ -87,7 +88,7 @@ DEopt <- function(OF, algo = list(), ...) {
     if (printDetail)
         cat('\nDifferential Evolution.\n')
     
-    for (g in 1L:algo$nG) {
+    for (g in seq_len(algo$nG)) {
         if(printBar) 
             setTxtProgressBar(whatGen, value = g)
         # update population

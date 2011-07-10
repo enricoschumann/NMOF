@@ -35,6 +35,7 @@ TAopt <- function(OF, algo = list(), ...) {
     
     printDetail <- algo$printDetail
     printBar <- algo$printBar
+    if (printBar && printDetail) printBar <- FALSE 
     if (printDetail) 
         cat("\nThreshold Accepting.\n")
     # compute thresholds
@@ -50,7 +51,7 @@ TAopt <- function(OF, algo = list(), ...) {
         xcF <- OF1(xc)
         diffF <- numeric(algo$nD)
         diffF[] <- NA 
-        for(i in 1:algo$nD) {
+        for(i in seq_len(algo$nD)){
             if(printBar) 
                 setTxtProgressBar(whatGen, value = i)
             xn  <- N1(xc)
@@ -65,7 +66,7 @@ TAopt <- function(OF, algo = list(), ...) {
         if (printBar)
             close(whatGen)
         if (printDetail) {
-            cat("\nOK.")
+            cat("OK.")
             endTime <- proc.time()
             cat("\nEstimated remaining running time:", 
                 as.numeric(endTime[3L] - startTime[3L]) /
@@ -99,8 +100,8 @@ TAopt <- function(OF, algo = list(), ...) {
     }
     if (printBar) 
         whatGen <- txtProgressBar (min = 1, max = nT*algo$nS, style = 3)
-    for (t in 1L:nT){        
-        for (s in 1L:algo$nS){
+    for (t in seq_len(nT)){        
+        for (s in seq_len(algo$nS)){
             xn <- N1(xc)
             xnF <- OF1(xn)
             if (xnF <= (xcF + vT[t])) {
@@ -125,7 +126,8 @@ TAopt <- function(OF, algo = list(), ...) {
         }
     }
     if (printDetail)
-        cat("Finished.\nBest solution overall:", prettyNum(xbestF))
+        cat("Finished.\nBest solution overall:", prettyNum(xbestF), "\n", 
+            sep = "")
     if (printBar) 
         close(whatGen)
     # return best solution

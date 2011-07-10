@@ -1,4 +1,4 @@
-restartOpt <- function(fun, n, OF, algo = NULL, ...){
+restartOpt <- function(fun, n, OF, algo, ...) {
     n <- as.integer(n)
     stopifnot(n > 0L)
     allResults <- vector("list", n)

@@ -9,9 +9,9 @@ Restart an Optimisation Algorithm
 The function provides a simple wrapper for the optimisation algorithms in the package.
 }
 \usage{
-restartOpt(fun, n, OF, algo = NULL, ...)
+restartOpt(fun, n, OF, algo, ...)
 
-%restartOpt2(fun, n, OF, algo = NULL, ..., multicore = FALSE)
+%restartOpt2(fun, n, OF, algo, ..., multicore = FALSE)
 }
 \arguments{
   \item{fun}{

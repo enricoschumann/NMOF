@@ -101,7 +101,7 @@ We collect all settings in the list \texttt{algo}.
 # settings
 algo <- list(x0 = x0, 
       neighbour = neighbour, 
-             nS = 10000L,
+             nS = 5000L,
     printDetail = FALSE,
        printBar = FALSE)
 @
