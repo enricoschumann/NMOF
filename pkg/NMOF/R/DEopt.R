@@ -49,7 +49,7 @@ DEopt <- function(OF, algo = list(), ...) {
     d <- length(vmax)
     vF <- numeric(nP) 
     vF[] <- NA; vPv <- vF; vFv <- vF 
-    Fmat <- array(NaN,c(algo$nG, nP))
+    Fmat <- array(NaN, c(nG, nP))
     if (is.null(algo$mP)) {
         mP <- vmin + diag(vmax - vmin) %*% mRU(d, nP)
     } else {
@@ -62,21 +62,21 @@ DEopt <- function(OF, algo = list(), ...) {
     # 1) repair
     if(!is.null(algo$repair) ){
         if(algo$loopRepair){
-            for(s in 1L:nP) mP[ ,s] <- Re1(mP[ ,s])
+            for (s in seq_len(nP)) mP[ ,s] <- Re1(mP[ ,s])
         } else {
             mP <- Re1(mP)
         }
     }
     # 2) evaluate
     if(algo$loopOF){
-        for(s in 1L:nP) vF[s] <- OF1(mP[ ,s])
+        for (s in seq_len(nP)) vF[s] <- OF1(mP[ ,s])
     }else{	
         vF <- OF1(mP)
     }
     # 3) penalise
     if( !is.null(algo$pen) ) {
         if(algo$loopPen){
-            for(s in 1L:nP) vPv[s] <- Pe1(mP[,s])
+            for (s in seq_len(nP)) vPv[s] <- Pe1(mP[,s])
         } else {
             vPv <- Pe1(mP)
         }
@@ -84,15 +84,15 @@ DEopt <- function(OF, algo = list(), ...) {
     }
     
     if (printBar)
-        whatGen <- txtProgressBar (min = 1, max = algo$nG, style = 3)
+        whatGen <- txtProgressBar (min = 1, max = nG, style = 3)
     if (printDetail)
         cat('\nDifferential Evolution.\n')
     
-    for (g in seq_len(algo$nG)) {
+    for (g in seq_len(nG)) {
         if(printBar) 
             setTxtProgressBar(whatGen, value = g)
         # update population
-        vI <- sample(1L:nP, nP)
+        vI <- sample(seq_len(nP), nP)
         R1 <- shift(vI)
         R2 <- shift(R1)
         R3 <- shift(R2)
@@ -105,19 +105,19 @@ DEopt <- function(OF, algo = list(), ...) {
         # evaluate updated population
         if (!is.null(algo$repair)) {
             if(algo$loopRepair){
-                for(s in 1L:nP) mPv[ ,s] <- Re1(mPv[ ,s])
+                for (s in seq_len(nP)) mPv[ ,s] <- Re1(mPv[ ,s])
             }else{
                 mPv <- Re1(mPv)
             }
         }
         if (algo$loopOF) {
-            for(s in 1L:nP) vFv[s] <- OF1(mPv[ ,s])
+            for (s in seq_len(nP)) vFv[s] <- OF1(mPv[ ,s])
         } else {	
             vFv <- OF1(mPv)
         }
         if (!is.null(algo$pen)) {
-            if(algo$loopPen){
-                for(s in 1L:nP) vPv[s] <- Pe1(mPv[ ,s])
+            if (algo$loopPen){
+                for (s in seq_len(nP)) vPv[s] <- Pe1(mPv[ ,s])
             } else {
                 vPv <- Pe1(mPv)
             }

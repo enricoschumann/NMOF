@@ -14,11 +14,12 @@ LSopt <- function(OF, algo = list(), ...) {
     if(is.function(algo$x0)) xc <- algo$x0() else xc <- algo$x0
     printDetail  <- algo$printDetail
     printBar  <- algo$printBar
+    nS <- as.integer(algo$nS)
     Fmat <- array(NA, dim = c(algo$nS, 2L))
     xcF <- OF1(xc)
     if (printBar)
         whatGen <- txtProgressBar(min = 1, max = algo$nS, style = 3)
-    for (s in 1L:algo$nS){	
+    for (s in seq_len(nS)){	
         if(printBar) 
             setTxtProgressBar(whatGen, value = s)
         xn <- N1(xc)

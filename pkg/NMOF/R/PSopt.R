@@ -15,6 +15,7 @@ PSopt <- function(OF, algo = list(), ...) {
     algo <- algoD
     vmax <- as.vector(algo$max)
     vmin <- as.vector(algo$min)
+    nP <- as.integer(algo$nP)
     if(is.null(vmin))
         stop("specify 'min' vector") 
     if(is.null(vmax))
@@ -40,35 +41,35 @@ PSopt <- function(OF, algo = list(), ...) {
     pmax2 <- function(x1,x2) ( (x1 + x2) + abs(x1 - x2) ) / 2
     pmin2 <- function(x1,x2) ( (x1 + x2) - abs(x1 - x2) ) / 2    
     
-    Fmat <- array(NaN, c(algo$nG, algo$nP))
+    Fmat <- array(NaN, c(algo$nG, nP))
     # set up initial population and velocity
-    d <- length(vmax); vF <- numeric(algo$nP); vF[] <- NA; vPv <- vF
+    d <- length(vmax); vF <- numeric(nP); vF[] <- NA; vPv <- vF
     if (is.null(algo$mP)) {
-        mP <- vmin + diag(vmax - vmin) %*% mRU(d,algo$nP)
+        mP <- vmin + diag(vmax - vmin) %*% mRU(d, nP)
     } else {
         if (is.function(algo$mP))
             mP <- algo$mP() else mP <- algo$mP
-        if (any(dim(mP) != c(d,algo$nP)))
+        if (any(dim(mP) != c(d, nP)))
             stop("supplied population has wrong dimension")
         
     }
-    mV <- algo$initV * mRN(d,algo$nP)
+    mV <- algo$initV * mRN(d,nP)
     # evaluate initial population
     if(!is.null(algo$repair)) {
         if(algo$loopRepair) {
-            for(s in 1:algo$nP) mP[,s] <- Re1(mP[,s])
+            for(s in seq_len(nP)) mP[,s] <- Re1(mP[,s])
         }else{
             mP <- Re1(mP)
         }
     }
     if(algo$loopOF) {
-        for(s in 1:algo$nP) vF[s] <- OF1(mP[,s])
+        for(s in seq_len(nP)) vF[s] <- OF1(mP[,s])
     } else {	
         vF <- OF1(mP)
     }
     if(!is.null(algo$pen)) {
         if(algo$loopPen){
-            for(s in 1:algo$nP) vPv[s] <- Pe1(mP[,s])
+            for(s in seq_len(nP)) vPv[s] <- Pe1(mP[,s])
         } else {
             vPv <- Pe1(mP)
         }
@@ -86,12 +87,12 @@ PSopt <- function(OF, algo = list(), ...) {
         cat('\nParticle Swarm Optimisation.\n')
     if (printBar)
         whatGen <- txtProgressBar (min = 1, max = algo$nG, style = 3)
-    for (g in 1:algo$nG) {
+    for (g in seq_len(algo$nG)) {
         if(printBar) 
             setTxtProgressBar(whatGen, value = g)
         # update population
-        mDV <-  algo$c1 * mRU(d,algo$nP) * (mPbest - mP) + 
-            algo$c2 * mRU(d,algo$nP) * (mPbest[,sgbest] - mP)
+        mDV <-  algo$c1 * mRU(d,nP) * (mPbest - mP) + 
+                algo$c2 * mRU(d,nP) * (mPbest[ ,sgbest] - mP)
         mV  <- algo$iner * mV + mDV
         mV <- pmin2(mV, algo$maxV)
         mV <- pmax2(mV,-algo$maxV)
@@ -100,19 +101,19 @@ PSopt <- function(OF, algo = list(), ...) {
         # evaluate updated population
         if (!is.null(algo$repair)) {
             if (algo$loopRepair){
-                for (s in 1:algo$nP) mP[,s] <- Re1(mP[ ,s])
+                for (s in seq_len(nP)) mP[,s] <- Re1(mP[ ,s])
             } else {
                 mPv <- Re1(mPv)
             }
         }
         if (algo$loopOF) {
-            for (s in 1:algo$nP) vF[s] <- OF1(mP[ ,s])
+            for (s in seq_len(nP)) vF[s] <- OF1(mP[ ,s])
         } else {	
             vF <- OF1(mP)
         }
         if(!is.null(algo$pen)) {
             if (algo$loopPen){
-                for (s in 1:algo$nP)	vPv[s] <- Pe1(mP[ ,s])
+                for (s in seq_len(nP)) vPv[s] <- Pe1(mP[ ,s])
             } else {
                 vPv <- Pe1(mP)
             }

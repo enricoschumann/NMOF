@@ -1,3 +1,8 @@
+Changes in Version 0.13-4
+
+  o directory NMOFex was updated
+  o minor internal changes in several functions
+
 Changes in Version 0.13-3
 
   o directory NMOFex was added; it contains the code for 

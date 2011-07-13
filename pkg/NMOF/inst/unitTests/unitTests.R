@@ -309,7 +309,7 @@ test.GAopt <- function() {
     y <- runif(size) > 0.5; x <- runif(size) > 0.5
     data <- list(y = y)
     algo <- list(nB = size, nP = 20L, nG = 150L, prob = 0.002, 
-        printBar = TRUE, crossover = "uniform")
+        printBar = FALSE, crossover = "uniform")
     OF <- function(x, data) sum(x != y)
     solGA <- GAopt(OF, algo = algo, data = data)
     checkEqualsNumeric(solGA$OFvalue, 0)

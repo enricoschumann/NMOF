@@ -16,6 +16,7 @@ GAopt <- function (OF, algo = list(), ...) {
     if (is.na(algo$nB))
         stop("'nB' must be specified")
     nP <- as.integer(algo$nP)
+    nG <- as.integer(algo$nG)
     if (algo$prob > 1 || algo$prob < 0) 
         stop("'prob' must be between 0 and 1")
     crossover <- algo$crossover[1L]
@@ -47,7 +48,7 @@ GAopt <- function (OF, algo = list(), ...) {
     vF[] <- NA
     vP <- vF
     vFc <- vF
-    Fmat <- array(NaN, c(algo$nG, nP))
+    Fmat <- array(NaN, c(nG, nP))
     # create population
     if (is.null(algo$mP)) {
         mP <- array(sample.int(2L, algo$nB * nP, replace = TRUE) - 1L, 
@@ -66,29 +67,29 @@ GAopt <- function (OF, algo = list(), ...) {
     }
     if (!is.null(algo$repair)) {
         if (algo$loopRepair) {
-            for (s in 1L:nP) mP[, s] <- Re1(mP[, s])
+            for (s in seq_len(nP)) mP[, s] <- Re1(mP[, s])
         } else {
             mP <- Re1(mP)
         }
     }
     if (algo$loopOF) {
-        for (s in 1L:nP) vF[s] <- OF1(mP[, s])
+        for (s in seq_len(nP)) vF[s] <- OF1(mP[, s])
     } else {
         vF <- OF1(mP)
     }
     if (!is.null(algo$pen)) {
         if (algo$loopPen) {
-            for (s in 1L:nP) vP[s] <- Pe1(mP[, s])
+            for (s in seq_len(nP)) vP[s] <- Pe1(mP[, s])
         } else {
             vP <- Pe1(mP)
         }
         vF <- vF + vP
     }
     if (printBar) 
-        whatGen <- txtProgressBar(min = 1, max = algo$nG, style = 3)
+        whatGen <- txtProgressBar(min = 1, max = nG, style = 3)
     if (printDetail) 
         cat("\nGenetic Algorithm.\n")
-    for (g in 1L:algo$nG) {
+    for (g in seq_len(nG)) {
         if (printBar) 
             setTxtProgressBar(whatGen, value = g)
         
@@ -99,7 +100,7 @@ GAopt <- function (OF, algo = list(), ...) {
         o <- sample.int(nP)
         oo <- shift(o)
         if (crossOver1) {
-            for (s in 1L:nP)
+            for (s in seq_len(nP))
                 mC[ ,s] <- crossOver(mP[ ,o[s]],mP[ ,oo[s]])
         } else if (crossOver2) {
             mC <- crossOver(mP[ ,o],mP[ ,oo])
@@ -111,19 +112,19 @@ GAopt <- function (OF, algo = list(), ...) {
         
         if (!is.null(algo$repair)) {
             if (algo$loopRepair) {
-                for (s in 1L:nP) mC[ ,s] <- Re1(mC[ ,s])
+                for (s in seq_len(nP)) mC[ ,s] <- Re1(mC[ ,s])
             } else {
                 mC <- Re1(mC)
             }
         }
         if (algo$loopOF) {
-            for (s in 1L:nP) vFc[s] <- OF1(mC[, s])
+            for (s in seq_len(nP)) vFc[s] <- OF1(mC[, s])
         } else {
             vFc <- OF1(mC)
         }
         if (!is.null(algo$pen)) {
             if (algo$loopPen) {
-                for (s in 1L:nP) vP[s] <- Pe1(mC[, s])
+                for (s in seq_len(nP)) vP[s] <- Pe1(mC[, s])
             } else {
                 vP <- Pe1(mC)
             }
