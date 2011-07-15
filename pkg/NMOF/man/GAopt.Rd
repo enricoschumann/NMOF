@@ -84,8 +84,8 @@ Enrico Schumann
 \code{\link{DEopt}}, \code{\link{PSopt}}
 }
 \examples{
-# (1) a *very* simple problem (why?):
-#     match a binary (logical) string y
+# a *very* simple problem (why?):
+# match a binary (logical) string y
 #
 size <- 20L  # the length of the string
 OF <- function(x, data) sum(x != y)
@@ -106,78 +106,6 @@ sol2 <- GAopt(OF, algo = algo, data = data)
 # show differences (if any: marked by a dot)
 cat(as.integer(y), "\n", as.integer(sol2$xbest), "\n", 
     ifelse(y == sol2$xbest , " ", "^"), "\n", sep = "")
-
-
-# (2) asset selection: find equal-weight portfolio; 
-#     compare with LS and TA
-
-# create random data with vols between minVol and maxVol 
-# and pairwise correlation of 0.6
-na <- 50L
-C <- array(0.6, dim = c(na,na)); diag(C) <- 1
-minVol <- 0.20; maxVol <- 0.40
-Vols <- (maxVol - minVol) * runif(na) + minVol
-Sigma <- outer(Vols,Vols) * C
-
-# the objective function for LS/TA
-OF <- function(x, data) {
-    w <- x/sum(x)
-    res <- crossprod(w[x], data$Sigma[x,x])
-    res <- tcrossprod(w[x], res)
-    res
-}
-
-# neighborhood function for LS/TA
-neighbour <- function(xc, data) {
-    xn <- xc
-    p <- sample.int(data$na, data$nn, replace = FALSE)
-    xn[p] <- !xn[p]
-    # reject infeasible solution
-    sumx <- sum(xn)
-    if ( (sumx > data$Ksup) || (sumx < data$Kinf) )
-        xc else xn
-}
-
-# data 
-data <- list(Sigma = Sigma, # cov-matrix
-              Kinf = 10L,   # min cardinality
-              Ksup = 30L,   # max cardinality
-                na = na,    # number of assets
-                nn = 1L)    # assets to change per iteration
-
-# a random solution x0
-card0 <- sample(data$Kinf:data$Ksup, 1L, replace = FALSE) 
-assets <- sample.int(na, card0, replace = FALSE)
-x0 <- logical(na)
-x0[assets] <- TRUE
-
-
-# *Local Search*
-algo <- list(x0 = x0, neighbour = neighbour, nS = 5000L)
-system.time(solLS <- LSopt(OF, algo = algo, data = data))
-
-# *Threshold Accepting*
-algo$nT <- 10; algo$nS <- trunc(algo$nS/algo$nT); algo$q <- 0.2
-system.time(solTA <- TAopt(OF, algo = algo, data = data))
-
-# *Genetic Algorithm*
-OF <- function(x, data) {
-    res <- colSums(data$Sigma \%*\% x * x)
-    n <- colSums(x); res <- res / n^2
-    # penalise
-    p <- pmax(data$Kinf - n, 0) + pmax(n - data$Ksup, 0)
-    res + p
-}
-algo <- list(nB = na, nP = 100L, nG = 500L, prob = 0.002, 
-printBar = TRUE, loopOF = FALSE)
-system.time(solGA <- GAopt(OF = OF, algo = algo, data=data))
-
-cat(
-"Local Search        best solution ", format(sqrt(solLS$OFvalue), digits = 4), "\n", 
-"Threshold Accepting best solution ", format(sqrt(solTA$OFvalue), digits = 4), "\n", 
-"Genetic Algorithm   best solution ", format(sqrt(solGA$OFvalue), digits = 4), "\n", 
-sep = "")
-
 }
 \keyword{optimize}
 

@@ -2,7 +2,7 @@ restartOpt <- function(fun, n, OF, algo, ...) {
     n <- as.integer(n)
     stopifnot(n > 0L)
     allResults <- vector("list", n)
-    for (i in 1L:n) allResults[[i]] <- fun(OF, algo, ...)        
+    for (i in seq_len(n)) allResults[[i]] <- fun(OF, algo, ...)        
     allResults
 }
 

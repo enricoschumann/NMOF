@@ -189,9 +189,6 @@ system.time(res2 <- TAopt(OF,algo,data))
 
 Compare computing times.
 
-\section{Minimising a risk--reward ratio}
-to be added
-
 \bibliographystyle{plainnat}
 \bibliography{NMOF}
 \end{document}
