@@ -54,7 +54,7 @@ The list \code{algo} contains the following items.
 \item{\code{prob}}{The probability for switching a single bit. Defaults to 0.01; typically a small number.}
 \item{\code{pen}}{a penalty function. Default is NULL (no penalty).}
 \item{\code{repair}}{a repair function. Default is NULL (no repairing).}
-\item{\code{mP}}{optional: the initial population. A logical matrix of size \code{length(algo$nB)} times \code{algo$nP}, 
+\item{\code{initP}}{optional: the initial population. A logical matrix of size \code{length(algo$nB)} times \code{algo$nP}, 
 or a function that creates such a matrix. If a function, it must take no arguments. If \code{mode(mP)} is not \code{logical}, 
 then \code{storage.mode(mP)} will be tried (and a warning will be issued).}
 \item{\code{loopOF}}{logical. Should the OF be evaluated through a loop? Defaults to TRUE.}
@@ -75,6 +75,8 @@ A list:
 \references{
 Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Optimization in Finance}. Elsevier. 
 \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
+
+Schumann, E. (2011) Examples and Extensions for the \pkg{NMOF} Package. \url{http://ssrn.com/abstract=1886522}
 }
 \author{
 Enrico Schumann

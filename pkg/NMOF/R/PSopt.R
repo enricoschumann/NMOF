@@ -10,12 +10,13 @@ PSopt <- function(OF, algo = list(), ...) {
         pen = NULL, repair = NULL,
         loopOF = TRUE, loopPen = TRUE, loopRepair = TRUE,
         printDetail = TRUE, printBar = TRUE,
-        mP = NULL)
+        initP = NULL)
     algoD[names(algo)] <- algo	
     algo <- algoD
     vmax <- as.vector(algo$max)
     vmin <- as.vector(algo$min)
     nP <- as.integer(algo$nP)
+    nG <- as.integer(algo$nG)
     if(is.null(vmin))
         stop("specify 'min' vector") 
     if(is.null(vmax))
@@ -41,14 +42,14 @@ PSopt <- function(OF, algo = list(), ...) {
     pmax2 <- function(x1,x2) ( (x1 + x2) + abs(x1 - x2) ) / 2
     pmin2 <- function(x1,x2) ( (x1 + x2) - abs(x1 - x2) ) / 2    
     
-    Fmat <- array(NaN, c(algo$nG, nP))
+    Fmat <- array(NaN, c(nG, nP))
     # set up initial population and velocity
     d <- length(vmax); vF <- numeric(nP); vF[] <- NA; vPv <- vF
-    if (is.null(algo$mP)) {
+    if (is.null(algo$initP)) {
         mP <- vmin + diag(vmax - vmin) %*% mRU(d, nP)
     } else {
-        if (is.function(algo$mP))
-            mP <- algo$mP() else mP <- algo$mP
+        if (is.function(algo$initP))
+            mP <- algo$initP() else mP <- algo$initP
         if (any(dim(mP) != c(d, nP)))
             stop("supplied population has wrong dimension")
         
@@ -86,8 +87,8 @@ PSopt <- function(OF, algo = list(), ...) {
     if (printDetail)
         cat('\nParticle Swarm Optimisation.\n')
     if (printBar)
-        whatGen <- txtProgressBar (min = 1, max = algo$nG, style = 3)
-    for (g in seq_len(algo$nG)) {
+        whatGen <- txtProgressBar (min = 1, max = nG, style = 3)
+    for (g in seq_len(nG)) {
         if(printBar) 
             setTxtProgressBar(whatGen, value = g)
         # update population

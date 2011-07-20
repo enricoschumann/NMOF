@@ -9,7 +9,7 @@ DEopt <- function(OF, algo = list(), ...) {
         pen = NULL, repair = NULL, 
         loopOF = TRUE, loopPen = TRUE, loopRepair = TRUE, 
         printDetail = TRUE, printBar = TRUE,
-        mP = NULL)
+        initP = NULL)
     algoD[names(algo)] <- algo  
     algo <- algoD
     vmax <- as.vector(algo$max)
@@ -38,9 +38,8 @@ DEopt <- function(OF, algo = list(), ...) {
     # ------------------------------------------------------------------
     # auxiliary functions
     # ------------------------------------------------------------------
-    shift <- function(x) c(x[nP], x[1L:(nP - 1L)])
+    shift <- function(x) c(x[nP], x[seq_len(nP - 1L)])
     mRU <- function(m, n) array(runif(m * n), dim = c(m, n)) 
-    mRN <- function(m, n) array(rnorm(m * n), dim = c(m, n)) 
     
     # ------------------------------------------------------------------	
     # main algorithm
@@ -50,11 +49,11 @@ DEopt <- function(OF, algo = list(), ...) {
     vF <- numeric(nP) 
     vF[] <- NA; vPv <- vF; vFv <- vF 
     Fmat <- array(NaN, c(nG, nP))
-    if (is.null(algo$mP)) {
+    if (is.null(algo$initP)) {
         mP <- vmin + diag(vmax - vmin) %*% mRU(d, nP)
     } else {
-        if (is.function(algo$mP))
-            mP <- algo$mP() else mP <- algo$mP
+        if (is.function(algo$initP))
+            mP <- algo$initP() else mP <- algo$initP
         if (any(dim(mP) != c(d,nP)))
             stop("supplied population has wrong dimension")
     }
@@ -68,14 +67,14 @@ DEopt <- function(OF, algo = list(), ...) {
         }
     }
     # 2) evaluate
-    if(algo$loopOF){
+    if (algo$loopOF){
         for (s in seq_len(nP)) vF[s] <- OF1(mP[ ,s])
-    }else{	
+    } else {	
         vF <- OF1(mP)
     }
     # 3) penalise
-    if( !is.null(algo$pen) ) {
-        if(algo$loopPen){
+    if (!is.null(algo$pen)) {
+        if (algo$loopPen) {
             for (s in seq_len(nP)) vPv[s] <- Pe1(mP[,s])
         } else {
             vPv <- Pe1(mP)
@@ -92,7 +91,7 @@ DEopt <- function(OF, algo = list(), ...) {
         if(printBar) 
             setTxtProgressBar(whatGen, value = g)
         # update population
-        vI <- sample(seq_len(nP), nP)
+        vI <- sample.int(nP)
         R1 <- shift(vI)
         R2 <- shift(R1)
         R3 <- shift(R2)
@@ -104,9 +103,9 @@ DEopt <- function(OF, algo = list(), ...) {
         
         # evaluate updated population
         if (!is.null(algo$repair)) {
-            if(algo$loopRepair){
+            if (algo$loopRepair) {
                 for (s in seq_len(nP)) mPv[ ,s] <- Re1(mPv[ ,s])
-            }else{
+            } else {
                 mPv <- Re1(mPv)
             }
         }

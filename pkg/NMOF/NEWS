@@ -1,3 +1,14 @@
+Changes in Version 0.14-0
+
+  o function 'gridSearch' was added
+
+Changes in Version 0.13-6
+
+  o an initial population in 'DEopt', 'GAopt' and 'PSopt' is now passed
+    through 'algo$initP' (before, a population could be passed via 'algo$mP')
+  o directory NMOFex was updated
+  o documentation was updated
+
 Changes in Version 0.13-5
 
   o directory NMOFex was updated

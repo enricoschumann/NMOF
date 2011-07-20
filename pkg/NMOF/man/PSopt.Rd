@@ -67,7 +67,7 @@ makes rarely sense.}
 \item{\code{max}}{a vector of maximum parameter values. See below.}
 \item{\code{pen}}{a penalty function. Default is NULL (no penalty).}
 \item{\code{repair}}{a repair function. Default is NULL (no repairing).}
-\item{\code{mP}}{optional: the initial population. A matrix of size \code{length(algo$min)} times \code{algo$nP}, or a function that creates 
+\item{\code{initP}}{optional: the initial population. A matrix of size \code{length(algo$min)} times \code{algo$nP}, or a function that creates 
 such a matrix. If a function, it should take no arguments.}
 \item{\code{loopOF}}{logical. Should the \code{OF} be evaluated through a loop? Defaults to \code{TRUE}.}
 \item{\code{loopPen}}{logical. Should the penalty function (if specified) be evaluated through a loop? Defaults to \code{TRUE}.}

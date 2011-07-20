@@ -1,9 +1,8 @@
 GAopt <- function (OF, algo = list(), ...) {
-    algoD <- list(nB = NA, nP = 50L, nG = 300L, 
-        prob = 0.01,
+    algoD <- list(nB = NA, nP = 50L, nG = 300L, prob = 0.01,
         pen = NULL, repair = NULL, 
         loopOF = TRUE, loopPen = TRUE, loopRepair = TRUE, 
-        printDetail = TRUE, printBar = TRUE, mP = NULL,
+        printDetail = TRUE, printBar = TRUE, initP = NULL,
         crossover = c("onePoint", "uniform")
     )
     algoD[names(algo)] <- algo
@@ -13,25 +12,26 @@ GAopt <- function (OF, algo = list(), ...) {
     OF1 <- function(x) OF(x, ...)
     Pe1 <- function(x) algo$pen(x, ...)
     Re1 <- function(x) algo$repair(x, ...)
-    if (is.na(algo$nB))
+    if (is.na(algo$nB) || is.null(algo$nB))
         stop("'nB' must be specified")
-    nP <- as.integer(algo$nP)
-    nG <- as.integer(algo$nG)
     if (algo$prob > 1 || algo$prob < 0) 
         stop("'prob' must be between 0 and 1")
+    nB <- as.integer(algo$nB)
+    nP <- as.integer(algo$nP)
+    nG <- as.integer(algo$nG)
     crossover <- algo$crossover[1L]
     crossOver1 <- FALSE; crossOver2 <- FALSE
     if (crossover == "onePoint") {
         crossOver <- function(x,y) {
-            cutoff <- sample.int(algo$nB-1L, 1L) + 1L
-            ii <- cutoff:algo$nB
+            cutoff <- sample.int(nB-1L, 1L) + 1L
+            ii <- cutoff:nB
             x[ii] <- y[ii]
             x
         }
         crossOver1 <- TRUE
     } else if (crossover == "uniform") {
         crossOver <- function(x,y) {
-            ii <- runif(algo$nB) > 0.5 
+            ii <- runif(nB) > 0.5 
             x[ii] <- y[ii]
             x
         }
@@ -50,15 +50,14 @@ GAopt <- function (OF, algo = list(), ...) {
     vFc <- vF
     Fmat <- array(NaN, c(nG, nP))
     # create population
-    if (is.null(algo$mP)) {
-        mP <- array(sample.int(2L, algo$nB * nP, replace = TRUE) - 1L, 
-            dim = c(algo$nB,nP))
+    if (is.null(algo$initP)) {
+        mP <- array(sample.int(2L, nB * nP, replace = TRUE) - 1L, dim = c(nB,nP))
         storage.mode(mP) <- "logical"
     } else {
-        if (is.function(algo$mP)) 
-            mP <- algo$mP()
+        if (is.function(algo$initP)) 
+            mP <- algo$initP()
         else 
-            mP <- algo$mP
+            mP <- algo$initP
         
         if (mode(mP) != "logical") {
             storage.mode(mP) <- "logical"
@@ -107,7 +106,7 @@ GAopt <- function (OF, algo = list(), ...) {
         }
         
         # ... through mutation
-        mutate <- runif(algo$nB*nP) < algo$prob
+        mutate <- runif(nB*nP) < algo$prob
         mC[mutate] <- switch(mC[mutate])
         
         if (!is.null(algo$repair)) {

@@ -183,8 +183,8 @@ sol2$objective
 @
 To compare our two solutions (DE and \texttt{nlminb}), we can plot them together with the true yields curve. But it is important to 
 stress that the results of both algorithms are stochastic: in the case of DE because it deliberately uses randomness; in the 
-case of \texttt{nlminb} because we set the starting value randomly. To get more meaningful results, we should run both algorithms several times. 
-(Here, we do it just 3 times to keep the time to build the vignette reasonable. Typically, one would use more restart.)
+case of \texttt{nlminb} because we set the starting value randomly. To get more meaningful results we should run both algorithms several times. 
+(We do it just 3 times here to keep the time to build the vignette reasonable. Typically, one would use many more restarts.)
 
 <<fig = TRUE, height = 3>>=
 par(ps = 11, bty = "n", las = 1, tck = 0.01, mgp = c(3, 0.2, 0), mar = c(4, 4, 1, 1))
@@ -342,46 +342,26 @@ legend(x = "topright", legend = c("true yields", "DE", "nlminb"),
 A bond is a list of payment dates (given a valuation date, we can translate them into times-to-payment) and associated payments. 
 Suppose we are given the following set of bonds.
 <<>>=
-cf1 <- c(rep(5.75, 8), 105.75)
-tm1 <- 0:8 + 0.5
-cf2 <- c(rep(4.25,17), 104.25)
-tm2 <- 1:18
-cf3 <- c(3.5, 103.5)
-tm3 <- 0:1 + 0.5
-cf4 <- c(3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 103)
-tm4 <- 1:16
-cf5 <- c(3.25, 3.25, 3.25, 3.25, 3.25, 3.25, 3.25, 3.25, 3.25, 3.25, 3.25, 103.25)
-tm5 <- c(0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5, 9.5, 10.5, 11.5)
-cf6 <- c(5.75, 5.75, 5.75, 5.75, 5.75, 5.75, 5.75, 5.75, 5.75, 5.75, 5.75, 5.75, 5.75, 5.75, 5.75, 5.75, 5.75, 105.75)
-tm6 <- c(0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5, 9.5, 10.5, 11.5, 12.5, 13.5, 14.5, 15.5, 16.5, 17.5)
-cf7 <- c(3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 103.5)
-tm7 <- 1:15
-cf8 <- c(5, 5, 5, 5, 5, 5, 5, 5, 105)
-tm8 <- c(0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5)
-cf9 <- 105
-tm9 <- 1
-cf10 <- c(3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 103)
-tm10 <- c(0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5, 9.5, 10.5, 11.5, 12.5)
-cf11 <- c(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 102.5)
-tm11 <- 1:8
-cf12 <- c(4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 104)
-tm12 <- 1:11
-cf13 <- c(3.75, 3.75, 3.75, 3.75, 3.75, 3.75, 3.75, 3.75, 3.75, 3.75, 3.75, 3.75, 3.75, 3.75, 3.75, 3.75, 3.75, 3.75, 103.75)
-tm13 <- c(0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5, 9.5, 10.5, 11.5, 12.5, 13.5, 14.5, 15.5, 16.5, 17.5, 18.5)
-cf14 <- c(4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 104)
-tm14 <- 1:18
-cf15 <- c(2.25, 2.25, 2.25, 2.25, 2.25, 2.25, 2.25, 2.25, 102.25)
-tm15 <- c(0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5)
-cf16 <- c(rep(4, 6), 104)
-tm16 <- 1:7
-cf17 <- c(2.25, 2.25, 2.25, 2.25, 2.25, 2.25, 2.25, 2.25, 2.25, 2.25, 2.25, 2.25, 102.25)
-tm17 <- 1:13
-cf18 <- c(4.5, 4.5, 4.5, 4.5, 4.5, 4.5, 4.5, 4.5, 4.5, 4.5, 4.5, 4.5, 4.5, 4.5, 4.5, 4.5, 4.5, 4.5, 4.5, 104.5)
-tm18 <- 0:19 + 0.5 
-cf19 <- c(2.25, 2.25, 2.25, 2.25, 2.25, 2.25, 2.25, 102.25)
-tm19 <- 1:8
-cf20 <- c(rep(3, 14), 103)
-tm20 <- 1:15
+cf1 <- c(rep(5.75,  8), 105.75); tm1 <- 0:8 + 0.5
+cf2 <- c(rep(4.25, 17), 104.25); tm2 <- 1:18
+cf3 <- c(3.5, 103.5); tm3 <- 0:1 + 0.5
+cf4 <- c(rep(3.00, 15), 103.00); tm4 <- 1:16
+cf5 <- c(rep(3.25, 11), 103.25); tm5 <- 0:11 + 0.5
+cf6 <- c(rep(5.75, 17), 105.75); tm6 <- 0:17 + 0.5
+cf7 <- c(rep(3.50, 14), 103.50); tm7 <- 1:15
+cf8 <- c(rep(5.00,  8), 105.00); tm8 <- 0:8 + 0.5
+cf9 <- 105; tm9 <- 1
+cf10 <- c(rep(3.00, 12), 103.00); tm10 <- 0:12 + 0.5 
+cf11 <- c(rep(2.50,  7), 102.50); tm11 <- 1:8
+cf12 <- c(rep(4.00, 10), 104.00); tm12 <- 1:11
+cf13 <- c(rep(3.75, 18), 103.75); tm13 <- 0:18 + 0.5 
+cf14 <- c(rep(4.00, 17), 104.00); tm14 <- 1:18
+cf15 <- c(rep(2.25,  8), 102.25); tm15 <- 0:8 + 0.5
+cf16 <- c(rep(4.00,  6), 104.00); tm16 <- 1:7
+cf17 <- c(rep(2.25, 12), 102.25); tm17 <- 1:13
+cf18 <- c(rep(4.50, 19), 104.50); tm18 <- 0:19 + 0.5 
+cf19 <- c(rep(2.25,  7), 102.25); tm19 <- 1:8
+cf20 <- c(rep(3.00, 14), 103.00); tm20 <- 1:15
 @
 
 We put all cash flows into a matrix \texttt{cfMatrix}, such that one bond is one column, and one row corresponds to one payment date.

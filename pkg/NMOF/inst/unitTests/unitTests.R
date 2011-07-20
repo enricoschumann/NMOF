@@ -177,19 +177,18 @@ test.DEopt <- function() {
     system.time(sol <- DEopt(OF = OF, algo = algo))
     checkEquals(sol$OFvalue, 0)
     
-    # exception: wrong size of mP
-    algo$mP <- array(0, dim = c(20,20))
+    # exception: wrong size of initP
+    algo$initP <- array(0, dim = c(20,20))
     checkException(res <- DEopt(OF = OF, algo), silent = TRUE)
-    algo$mP <- function() array(0, dim = c(5,20))
+    algo$initP <- function() array(0, dim = c(5,20))
     checkException(res <- DEopt(OF = OF, algo), silent = TRUE)
-    algo$mP <- NULL
+    algo$initP <- NULL
     
     # exception: CR > 1, CR < 0
     algo$CR <- 2
     checkException(res <- DEopt(OF = OF, algo), silent = TRUE)
     algo$CR <- -1
-    checkException(res <- DEopt(OF = OF, algo), silent = TRUE)
-    
+    checkException(res <- DEopt(OF = OF, algo), silent = TRUE)    
 }
 
 
@@ -211,12 +210,12 @@ test.PSopt <- function() {
     sol <- PSopt(OF = OF, algo = algo)
     checkEquals(sol$OFvalue, 0)
     
-    # exception: wrong size of mP
-    algo$mP <- array(0, dim = c(20,20))
+    # exception: wrong size of initP
+    algo$initP <- array(0, dim = c(20,20))
     checkException(res <- PSopt(OF = OF, algo), silent = TRUE)
-    algo$mP <- function() array(0, dim = c(5,20))
+    algo$initP <- function() array(0, dim = c(5,20))
     checkException(res <- PSopt(OF = OF, algo), silent = TRUE)
-    
+    algo$initP <- NULL    
     
 }
 
@@ -308,9 +307,22 @@ test.GAopt <- function() {
     size <- 20L
     y <- runif(size) > 0.5; x <- runif(size) > 0.5
     data <- list(y = y)
-    algo <- list(nB = size, nP = 20L, nG = 150L, prob = 0.002, 
-        printBar = FALSE, crossover = "uniform")
+    algo <- list(nB = size, nP = 25L, nG = 150L, prob = 0.002, 
+        printBar = FALSE, printDetail = FALSE, crossover = "uniform")
     OF <- function(x, data) sum(x != y)
     solGA <- GAopt(OF, algo = algo, data = data)
     checkEqualsNumeric(solGA$OFvalue, 0)
+
+    # wrong size of initP
+    algo$initP <- array(FALSE, dim = c(20,10))
+    checkException(res <- GAopt(OF = OF, algo), silent = TRUE)
+    algo$initP <- function() array(FALSE, dim = c(20,20))
+    checkException(res <- GAopt(OF = OF, algo), silent = TRUE)
+
+    # exception: prob > 1, prob < 0
+    algo$rpob <- 2
+    checkException(res <- GAopt(OF = OF, algo), silent = TRUE)
+    algo$prob <- -0.1
+    checkException(res <- GAopt(OF = OF, algo), silent = TRUE)
+
 }

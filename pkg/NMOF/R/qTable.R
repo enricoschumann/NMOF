@@ -25,8 +25,7 @@ qTable  <- function(
     B[1L, ]    <- pmax(A[1L,] - 1.5 * iqr, apply(X, 2, min))
     B[2L:4L, ] <- A
     B[5L, ]    <- pmin(A[3L,] + 1.5 * iqr, apply(X, 2, max))
-    
-    
+        
     # ranges of plot
     if (is.null(xmin)) xmin <- min(B)
     if (is.null(xmax)) xmax <- max(B)
