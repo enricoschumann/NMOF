@@ -1,8 +1,8 @@
 Package: NMOF
 Type: Package
 Title: Numerical Methods and Optimization in Finance
-Version: 0.14-0
-Date: 2011-07-20
+Version: 0.14-1
+Date: 2011-07-21
 Author: Enrico Schumann
 Author@R: person("Enrico", "Schumann", email = "enricoschumann@yahoo.de")
 Maintainer: Enrico Schumann <enricoschumann@yahoo.de>
