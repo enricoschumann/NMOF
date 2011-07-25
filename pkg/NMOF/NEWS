@@ -1,3 +1,12 @@
+Changes in Version 0.14-2
+
+  o experimental: 'gridSearch' now an has argument 'multicore'; if TRUE, 
+    the function calls 'mclapply' (from the multicore package) to 
+    evaluate argument 'fun'. Currently added only for cross-platform 
+    testing (in particular, to see how R CMD check reacts under Windows). 
+  o directory NMOFex was updated
+  o small correction in output of TAopt
+
 Changes in Version 0.14-1
 
   o test cases for portfolio optimisation added (in unitTests/unitTests.R)
