@@ -8,7 +8,7 @@ Evaluate a function for a given list of possible arguments.
 }
 \usage{
 gridSearch(fun, levels, ..., lower, upper, npar, n = 5L, 
-    printDetail = TRUE)
+    printDetail = TRUE, multicore = FALSE)
 }
 \arguments{
   \item{fun}{
@@ -34,6 +34,9 @@ The number of levels. Default is 5.
 }
   \item{printDetail}{
 Give information on progress. \strong{Not implemented.}
+}  
+  \item{multicore}{
+Use the \pkg{multicore} package?
 }  
 }
 \details{

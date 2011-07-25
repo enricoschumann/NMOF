@@ -328,7 +328,7 @@ test.GAopt <- function() {
 }
 
 # TA portfolio optimisation
-test.TAoptApplications <- function() {
+test.TAopt.Applications <- function() {
     # [requires quadprog]
     # Test if TA can solve two simple portfolio optimisation
     # problems: the minimum-variance portfolio and the tangency

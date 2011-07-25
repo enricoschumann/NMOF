@@ -126,7 +126,7 @@ TAopt <- function(OF, algo = list(), ...) {
         }
     }
     if (printDetail)
-        cat("Finished.\nBest solution overall:", prettyNum(xbestF), "\n", 
+        cat("Finished.\nBest solution overall: ", prettyNum(xbestF), "\n", 
             sep = "")
     if (printBar) 
         close(whatGen)

@@ -79,6 +79,8 @@ Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Opti
 Maringer, D. and Oyewumi, O. (2007). Index Tracking with Constrained Portfolios. \emph{Intelligent Systems in Accounting, Finance and Management}, 
 \bold{15}(1), pp. 57--71.
 
+Schumann, E. (2011) Examples and Extensions for the \pkg{NMOF} Package. \url{http://ssrn.com/abstract=1886522}
+
 Storn, R., and Price, K. (1997) Differential Evolution -- a Simple and Efficient Heuristic for Global Optimization over Continuous Spaces. 
 \emph{Journal of Global Optimization}, \bold{11}(4), pp. 341--359. 
 }

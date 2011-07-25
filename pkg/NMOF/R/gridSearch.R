@@ -1,5 +1,11 @@
 gridSearch <- function(fun, levels, ..., lower, upper, npar, n = 5L, 
-    printDetail = TRUE) {
+    printDetail = TRUE, multicore = FALSE) {
+    
+    if (multicore && 
+        !suppressWarnings(require("multicore", quietly = TRUE))) {
+        multicore <- FALSE
+        warning("package 'multicore not available")
+    }
     
     if (!missing(lower) && !missing(upper)) {
         lower <- as.numeric(lower)
@@ -10,6 +16,7 @@ gridSearch <- function(fun, levels, ..., lower, upper, npar, n = 5L,
             lower <- rep(lower, length(upper))
         }
     }
+    
     if (missing(levels) && length(lower) > 1L) {
         if (length(lower) != length(upper))
             stop("'lower' and 'upper' must be of same length")
@@ -28,7 +35,11 @@ gridSearch <- function(fun, levels, ..., lower, upper, npar, n = 5L,
     lstLevels <- vector("list", length = nrow(dfLevels))
     for (r in seq_len(nrow(dfLevels))) 
         lstLevels[[r]] <- as.numeric(dfLevels[r, ])
-    results <- lapply(lstLevels,fun)
+    if (multicore) {
+        results <- mclapply(lstLevels,fun)
+    } else {
+        results <- lapply(lstLevels,fun)
+    }
     results <- unlist(results)
     i <- which.min(results)
     list(minfun = results[i], minlevels = lstLevels[[i]], 
