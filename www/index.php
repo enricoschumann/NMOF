@@ -17,8 +17,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
   <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title><Numerical Methods and Optimization in Finance></title> 
-    <!-- <title><?php echo $group_name; ?></title> -->
+    <title><?php echo $group_name; ?></title>
 	<link href="<?php echo $themeroot; ?>styles/estilo1.css" rel="stylesheet" type="text/css" />
   </head>
 
@@ -27,13 +26,14 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <!-- R-Forge Logo -->
 <table border="0" width="100%" cellspacing="0" cellpadding="0">
 <tr><td>
-<a href="http://r-forge.r-project.org/"><img src="<?php echo $themeroot; ?>/images/logo.png" border="0" width="75" alt="R-Forge Logo" /> </a> </td> </tr>
+<a href="http://r-forge.r-project.org/"><img src="<?php echo $themeroot; ?>/images/logo.png" border="0" width="125" alt="R-Forge Logo" /> </a> </td> </tr>
 </table>
 
 
 <!-- get project title  -->
 <!-- own website starts here, the following may be changed as you like -->
 
+<!--
 <?php if ($handle=fopen('http://'.$domain.'/export/projtitl.php?group_name='.$group_name,'r')){
 $contents = '';
 while (!feof($handle)) {
@@ -43,14 +43,15 @@ fclose($handle);
 echo $contents; } ?>
 
 <!-- end of project description -->
+-->
 
-<p>
 
-</p>
+<h1>Numerical Methods and Optimization in Finance</h1>
+
 
 <p> <img src = "http://enricoschumann.wikidot.com/local--files/table-of-contents/book.jpg" width="15%"/> </p>
 
-<p> For more information about the book, go <a href="http://www.elsevierdirect.com/ISBN/9780123756626/Numerical-Methods-and-Optimization-in-Finance"><strong>here</strong></a>. </p>
+<p> For more information about the book, please visit the publisher's website <a href="http://www.elsevierdirect.com/ISBN/9780123756626/Numerical-Methods-and-Optimization-in-Finance"><strong>here</strong></a>. </p>
 <p></p>
 <p> To get the NMOF package, go <a href="http://<?php echo $domain; ?>/projects/<?php echo $group_name; ?>/"><strong>here</strong></a>. </p>
 
