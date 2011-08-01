@@ -17,7 +17,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
   <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="keywords" content="Heuristics, Differential Evolution, Particle Swarm Optimisation, Threshold Accepting, Portfolio optimisation, Option pricing">
-    <title><?php echo $group_name; ?></title>
+    <title>Numerical Methods and Optimization in Finance (NMOF)</title>
 	<link href="<?php echo $themeroot; ?>styles/estilo1.css" rel="stylesheet" type="text/css" />
   </head>
 <body>
@@ -57,6 +57,8 @@ The book explains tools for computational finance. It covers fundamental numeric
 <p> For more information about the book, please visit the publisher's website <a href="http://www.elsevierdirect.com/ISBN/9780123756626/Numerical-Methods-and-Optimization-in-Finance"><strong>here</strong></a>. </p>
 <p></p>
 <p> To get the 'NMOF' package, go <a href="http://<?php echo $domain; ?>/projects/<?php echo $group_name; ?>/"><strong>here</strong></a>. </p>
+<p></p>
+<p> The 'NMOF-News' mailing list announces new versions of the package and other news regarding the book. To browse the archives or to subscribe, go <a href="https://lists.r-forge.r-project.org/cgi-bin/mailman/listinfo/nmof-news"><strong>here</strong></a>. </p>
 
 </body>
 </html>
