@@ -14,13 +14,12 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en   ">
-
   <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="keywords" content="Heuristics, Differential Evolution, Particle Swarm Optimisation, Threshold Accepting, Portfolio optimisation, Option pricing">
     <title><?php echo $group_name; ?></title>
 	<link href="<?php echo $themeroot; ?>styles/estilo1.css" rel="stylesheet" type="text/css" />
   </head>
-
 <body>
 
 <!-- R-Forge Logo -->
