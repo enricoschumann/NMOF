@@ -2,7 +2,7 @@
 \name{repairMatrix}
 \alias{repairMatrix}
 \title{
-\sQuote{Repair} an Indefinite Correlation Matrix
+Repair an Indefinite Correlation Matrix
 }
 \description{
 The function \sQuote{repairs} an indefinite correlation matrix by replacing its negative eigenvalues by zero.
