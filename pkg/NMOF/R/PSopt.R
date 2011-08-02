@@ -1,18 +1,30 @@
 PSopt <- function(OF, algo = list(), ...) {
-    # ------------------------------------------------------------------
     # defaults
-    # ------------------------------------------------------------------
     algoD <- list(
-        nP = 100L, nG = 500L,
+        nP = 100L, 
+        nG = 500L,
         c1 = 1, c2 = 1,
         iner = 0.9, initV = 1, maxV = 1,
         min = NULL, max = NULL,
-        pen = NULL, repair = NULL,
-        loopOF = TRUE, loopPen = TRUE, loopRepair = TRUE,
+        pen = NULL, repair = NULL, changeV = NULL,
+        loopOF = TRUE, loopPen = TRUE, 
+        loopRepair  = TRUE, loopChangeV = TRUE,
         printDetail = TRUE, printBar = TRUE,
         initP = NULL)
-    algoD[names(algo)] <- algo	
+    
+    # checks for list 'algo'
+    if ("" %in% names(algo)) 
+        warning("'algo' contained unnamed elements")
+    unusedOptions <- setdiff(names(algo), names(algoD))
+    unusedOptions <- setdiff(unusedOptions, "")
+    if (length(unusedOptions)) 
+        warning("unknown names in 'algo': ", 
+            paste(unusedOptions, collapse = ", "))
+    
+    # add defaults
+    algoD[names(algo)] <- algo  
     algo <- algoD
+    
     vmax <- as.vector(algo$max)
     vmin <- as.vector(algo$min)
     nP <- as.integer(algo$nP)
@@ -34,6 +46,8 @@ PSopt <- function(OF, algo = list(), ...) {
     OF1 <- function(x) OF(x, ...)
     Pe1 <- function(x) algo$pen(x, ...)
     Re1 <- function(x) algo$repair(x, ...)
+    cV1 <- function(x) algo$changeV(x, ...)
+    
     # ------------------------------------------------------------------
     # auxiliary functions
     # ------------------------------------------------------------------
@@ -44,7 +58,8 @@ PSopt <- function(OF, algo = list(), ...) {
     
     Fmat <- array(NaN, c(nG, nP))
     # set up initial population and velocity
-    d <- length(vmax); vF <- numeric(nP); vF[] <- NA; vPv <- vF
+    d <- length(vmax)
+    vF <- numeric(nP); vF[] <- NA; vPv <- vF
     if (is.null(algo$initP)) {
         mP <- vmin + diag(vmax - vmin) %*% mRU(d, nP)
     } else {
@@ -55,6 +70,7 @@ PSopt <- function(OF, algo = list(), ...) {
         
     }
     mV <- algo$initV * mRN(d,nP)
+    
     # evaluate initial population
     if(!is.null(algo$repair)) {
         if(algo$loopRepair) {
@@ -92,37 +108,42 @@ PSopt <- function(OF, algo = list(), ...) {
         if(printBar) 
             setTxtProgressBar(whatGen, value = g)
         # update population
-        mDV <-  algo$c1 * mRU(d,nP) * (mPbest - mP) + 
-                algo$c2 * mRU(d,nP) * (mPbest[ ,sgbest] - mP)
+        mDV <-  algo$c1 * runif(d*nP) * (mPbest - mP) + 
+            algo$c2 * runif(d*nP) * (mPbest[ ,sgbest] - mP)
         mV  <- algo$iner * mV + mDV
-        mV <- pmin2(mV, algo$maxV)
-        mV <- pmax2(mV,-algo$maxV)
-        mP  <- mP + mV
+        mV <- pmin2(mV,  algo$maxV)
+        mV <- pmax2(mV, -algo$maxV)
+        if (!is.null(algo$changeV)) {
+            if (algo$loopChangeV){
+                for (s in seq_len(nP)) mV[ ,s] <- cV1(mV[ ,s])
+            } else                 
+                mV <- cV1(mV)
+        }
+        mP <- mP + mV
         
         # evaluate updated population
         if (!is.null(algo$repair)) {
             if (algo$loopRepair){
-                for (s in seq_len(nP)) mP[,s] <- Re1(mP[ ,s])
-            } else {
-                mPv <- Re1(mPv)
-            }
+                for (s in seq_len(nP)) mP[ ,s] <- Re1(mP[ ,s])
+            } else 
+                mP <- Re1(mP)
         }
+        
         if (algo$loopOF) {
             for (s in seq_len(nP)) vF[s] <- OF1(mP[ ,s])
-        } else {	
+        } else 	
             vF <- OF1(mP)
-        }
+        
         if(!is.null(algo$pen)) {
             if (algo$loopPen){
                 for (s in seq_len(nP)) vPv[s] <- Pe1(mP[ ,s])
-            } else {
+            } else 
                 vPv <- Pe1(mP)
-            }
             vF <- vF + vPv
         }
         # find improvements
         logik <- vF < vFbest        
-        mPbest[,logik] <- mP[ ,logik]
+        mPbest[ ,logik] <- mP[ ,logik]
         vFbest[logik] <- vF[logik]
         # find best solution
         if (min(vF) < sGbest) {

@@ -14,7 +14,8 @@ MA(y, order, pad = NULL)
 a numeric vector.
 }
   \item{order}{
-a scalar. The order of the moving average.
+an integer. The order of the moving average. The function is defined such 
+that order one returns \code{y} (see Examples). 
 }
   \item{pad}{
 defaults to NULL. If not NULL, all elements of the returned 
@@ -31,4 +32,9 @@ Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Opti
 \examples{
 MA(1:10, 3)
 MA(1:10, 3, pad = NA)
+
+y <- seq(1, 4, by = 0.3)
+z <- MA(y, 1)
+all(y == z)      # (typically) FALSE
+all.equal(y, z)  # should be TRUE
 }

@@ -25,7 +25,6 @@ tfRosenbrock <- function(x) {
 
 # tfSchwefel
 tfSchwefel <- function(x) {
-    n <- length(x)
     sum(-x * sin(sqrt(abs(x))))
 }
 

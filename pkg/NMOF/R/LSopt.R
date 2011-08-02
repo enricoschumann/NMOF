@@ -1,16 +1,30 @@
 LSopt <- function(OF, algo = list(), ...) {
+    algoD = list(nS = 1000L, neighbour = NULL, x0 = NULL,
+        printDetail = TRUE, printBar = TRUE)
+    
+    # checks for list 'algo'
+    if ("" %in% names(algo)) 
+        warning("'algo' contained unnamed elements")
+    unusedOptions <- setdiff(names(algo), names(algoD))
+    unusedOptions <- setdiff(unusedOptions, "")
+    if (length(unusedOptions)) 
+        warning("unknown names in 'algo': ", 
+            paste(unusedOptions, collapse = ", "))
+    
+    # add defaults
+    algoD[names(algo)] <- algo  
+    algo <- algoD
+    
     if (is.null(algo$neighbour))
         stop("specify a neighbourhood function")
     if (!is.function(algo$neighbour))
         stop("'algo$neighbour' must be a function")
     if (is.null(algo$x0))
         stop("specify start solution 'algo$x0'")
+    
     OF1 <- function(x) OF(x, ...)
     N1 <- function(x) algo$neighbour(x, ...)
-    algoD = list(nS = 1000L, neighbour = NULL, x0 = NULL,
-        printDetail = TRUE, printBar = TRUE)
-    algoD[names(algo)] <- algo	
-    algo <- algoD
+    
     if(is.function(algo$x0)) xc <- algo$x0() else xc <- algo$x0
     printDetail  <- algo$printDetail
     printBar  <- algo$printBar
@@ -33,5 +47,9 @@ LSopt <- function(OF, algo = list(), ...) {
     }
     if (printBar) 
         close(whatGen)
+    if (printDetail)
+        cat("Finished.\nBest solution overall: ", prettyNum(xcF), "\n", 
+            sep = "")
+    
     list(xbest = xc, OFvalue = xcF, Fmat = Fmat)
 }

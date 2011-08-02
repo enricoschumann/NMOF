@@ -52,7 +52,7 @@ estimate for the remaining computing time will be issued. This estimate is often
 \item{\code{neighbour}}{The neighbourhood function. It takes a solution \code{x} and returns a changed solution.}
 \item{\code{printDetail}}{If \code{TRUE} (the default), information is printed.}
 \item{\code{printBar}}{If \code{TRUE} (the default), information in progress is printed (\code{txtProgressBar} from the \pkg{utils} 
-package is used).}
+package is used). The progress bar is not shown if \code{printDetail} is \code{TRUE}.}
 \item{\code{scale}}{The thresholds are multiplied by \code{scale}. Default is 1.}
 \item{\code{stepUp}}{Defaults to \code{0}. If \code{stepup > 0L}, then the thresholds are \sQuote{recycled}, ie, 
 \code{vT <- rep(vT, algo$stepUp + 1)}. This happens for supplied as well as computed thresholds. Practically, 
@@ -66,12 +66,14 @@ goes by the name of \sQuote{reheating}.}
 \item{\code{OFvalue}}{objective function value of the solution, ie, \code{OF(xbest, algo, \dots)}}
 \item{\code{Fmat}}{a matrix of the best solution found at a point in time and the current solution.}
 }
-\note{In the current implementation, all the arguments passed with \code{\dots} need to go into the objective function and the neighbourhood 
-function. It is recommended to collect all information in a list \code{myList} and then write \code{OF} and \code{neighbour} so that they are 
+\note{If the \code{\dots} argument is used, then all the objects passed with \code{\dots} need to go into 
+the objective function and the neighbourhood function. It is recommended to collect all information in a 
+list \code{myList} and then write \code{OF} and \code{neighbour} so that they are 
 called as \code{OF(x, myList)} and \code{neighbour(x, myList)}. Note that \code{x} need not be a vector but can be 
 any data structure (eg, a \code{matrix} or a \code{list}).
 
-Using thresholds of size 0 makes TA run as a Local Search. The function \code{\link{LSopt}} may be preferred then because of less overhead.
+Using thresholds of size 0 makes TA run as a Local Search. The function \code{\link{LSopt}} may be preferred then 
+because of less overhead.
 }
 \references{
 Dueck, G. and Scheuer, T. (1990) Threshold Accepting. A General Purpose Optimization Algorithm Superior to Simulated Annealing. 

@@ -5,10 +5,24 @@ GAopt <- function (OF, algo = list(), ...) {
         printDetail = TRUE, printBar = TRUE, initP = NULL,
         crossover = c("onePoint", "uniform")
     )
-    algoD[names(algo)] <- algo
+    
+    # checks for list 'algo'
+    if ("" %in% names(algo)) 
+        warning("'algo' contained unnamed elements")
+    unusedOptions <- setdiff(names(algo), names(algoD))
+    unusedOptions <- setdiff(unusedOptions, "")
+    if (length(unusedOptions)) 
+        warning("unknown names in 'algo': ", 
+            paste(unusedOptions, collapse = ", "))
+    
+    # add defaults
+    algoD[names(algo)] <- algo  
     algo <- algoD
+    
     printDetail <- algo$printDetail
     printBar <- algo$printBar
+    if (!is.function(OF))
+        stop("'OF' must be a function")
     OF1 <- function(x) OF(x, ...)
     Pe1 <- function(x) algo$pen(x, ...)
     Re1 <- function(x) algo$repair(x, ...)
@@ -41,8 +55,6 @@ GAopt <- function (OF, algo = list(), ...) {
     }
     switch <- function(x) !x
     shift <- function(x) c(x[nP], x[1L:(nP - 1L)])
-    mRU <- function(m, n) array(runif(m * n), dim = c(m, n))
-    mRN <- function(m, n) array(rnorm(m * n), dim = c(m, n))
     
     vF <- numeric(nP)
     vF[] <- NA

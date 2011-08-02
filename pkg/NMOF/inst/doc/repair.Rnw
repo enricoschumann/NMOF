@@ -30,7 +30,7 @@ of \texttt{length(x)}.
 One strategy is to replace elements of \texttt{x} that violate a constraint with the boundary value. Such a 
 repair function can be implemented very concisely. An example:
 <<>>=
-set.seed(1234)
+set.seed(112233)
 up <- rep(1, 4L)
 lo <- rep(-1, 4L)
 x <- rnorm(4L)

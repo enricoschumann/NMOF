@@ -19,8 +19,9 @@ the code is this vignette uses the scripts \texttt{exampleSquaredRets.R}, \textt
 We start by attaching the package. We will later on need the function \texttt{resample} (see \texttt{?sample}).
 
 <<>>=
-require(NMOF)
+require("NMOF")
 resample <- function(x, ...) x[sample.int(length(x), ...)]
+set.seed(112233)
 @
 
 \section{Minimising squares}

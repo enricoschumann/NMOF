@@ -1,4 +1,4 @@
-% version 2011-05-30
+% version 2011-07-29
 \name{DEopt}
 \alias{DEopt}
 \title{
@@ -46,7 +46,8 @@ The list \code{algo} contains the following items.
 \describe{
 \item{\code{nP}}{population size. Defaults to 50. Using default settings may not be a good idea.}
 \item{\code{nG}}{number of generations. Defaults to 300. Using default settings may not be a good idea.}
-\item{\code{F}}{defaults to 0.5. Using default settings may not be a good idea.}
+\item{\code{F}}{The step size. Typically a numeric vector of length one; default is 0.5. Using default settings may not 
+    be a good idea. (\code{F} can also be a vector with different values for each decision variable.)}
 \item{\code{CR}}{mutation probability. Defaults to 0.9. Using default settings may not be a good idea.}
 \item{\code{min}}{a vector of minimum parameter values. See below.}
 \item{\code{max}}{a vector of maximum parameter values. See below.}
@@ -113,13 +114,13 @@ ts.plot(sol$Fmat, xlab = "generations", ylab = "OF")
 
 ## Example 2: vectorising the evaluation of the population
 OF <- tfRosenbrock  # see ?testFunctions
-size <- 10L         # define dimension
+size <- 5L         # define dimension
 x <- rep(1, size)   # the known solution ...
 OF(x)               # ... should give zero
 
 algo <- list(printBar = FALSE,
-                   nP = 100L, 
-                   nG = 2000L,
+                   nP = 50L, 
+                   nG = 500L,
                     F = 0.5, 
                    CR = 0.9, 
                   min = rep(-100, size), 

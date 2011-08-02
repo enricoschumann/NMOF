@@ -13,6 +13,19 @@ TAopt <- function(OF, algo = list(), ...) {
         stepUp = 0L,
         scale = 1)
     
+    # checks for list 'algo'
+    if ("" %in% names(algo)) 
+        warning("'algo' contained unnamed elements")
+    unusedOptions <- setdiff(names(algo), names(algoD))
+    unusedOptions <- setdiff(unusedOptions, "")
+    if (length(unusedOptions)) 
+        warning("unknown names in 'algo': ", 
+            paste(unusedOptions, collapse = ", "))
+    
+    # add defaults
+    algoD[names(algo)] <- algo  
+    algo <- algoD
+    
     # user *must* specify the following
     if (is.null(algo$neighbour)){
         stop("specify a neighbourhood function") }
@@ -23,7 +36,6 @@ TAopt <- function(OF, algo = list(), ...) {
     
     OF1 <- function(x) OF(x, ...)
     N1 <- function(x) algo$neighbour(x, ...)
-    algoD[names(algo)] <- algo; algo <- algoD
     
     nT <- as.integer(algo$nT)
     if (nT < 1)
@@ -35,7 +47,8 @@ TAopt <- function(OF, algo = list(), ...) {
     
     printDetail <- algo$printDetail
     printBar <- algo$printBar
-    if (printBar && printDetail) printBar <- FALSE 
+    if (printBar && printDetail) 
+        printBar <- FALSE 
     if (printDetail) 
         cat("\nThreshold Accepting.\n")
     # compute thresholds

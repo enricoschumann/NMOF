@@ -20,8 +20,9 @@ the code in a convenient way; for more details, please see \citet{Gilli2011b}. (
 \section{Data and settings}
 We start by attaching the package.
 <<>>=
-require(NMOF)
-require(MASS) 
+require("NMOF")
+require("MASS") 
+set.seed(112233)
 @
 We will use the function \texttt{lqs} from the \texttt{MASS} package \citep{Venables2002}. We will use an artificial data set with 
 \texttt{n}~observations and \texttt{p}~regressors, created with the function \texttt{createData}.

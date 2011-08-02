@@ -12,22 +12,29 @@ interfaces may change in the future; there is little error handling. Comments/co
 \tabular{ll}{
 Package: \tab NMOF\cr
 Type: \tab Package\cr
-Version: \tab 0.14-2\cr
-Date: \tab 2011-07-25\cr
+Version: \tab 0.14-3\cr
+Date: \tab 2011-07-30\cr
 Suggests: \tab MASS, multicore, quadprog, RUnit\cr
 License: \tab GPL-3\cr
 LazyLoad: \tab yes\cr
 LazyData: \tab yes\cr
 Classification/JEL: \tab C61, C63\cr
 }
-The package contains implementations of several general-purpose optimisation heuristics: Differential Evolution (\code{\link{DEopt}}), 
+The package contains implementations of several optimisation heuristics: Differential Evolution (\code{\link{DEopt}}), 
 Genetic Algorithms (\code{\link{GAopt}}), (Stochastic) Local Search (\code{\link{LSopt}}), Particle Swarm (\code{\link{PSopt}}) and 
-Threshold Accepting (\code{\link{TAopt}}).
+Threshold Accepting (\code{\link{TAopt}}). The term heuristic is understood here as a general purpose optimisation method. 
 
-A note on dependencies: the package is completely written in \R. Package \pkg{MASS} is required to run the complete example for 
-\code{\link{PSopt}}, and also in one of the vignettes (\code{PSlms}); \pkg{multicore} is optional for functions \code{gridSearch} 
-and \code{restartOpt} (and may become an option for other functions too); \pkg{quadprog} is needed for a vignette (\code{TAportfolio}) and 
-some tests; \pkg{RUnit} is needed to rerun the tests in directory \sQuote{\code{unitTests}}.
+Dependencies: The package is completely written in \R. A number of packages are \emph{suggested} (they are 
+not necessary to use the \pkg{NMOF} package). Package \pkg{MASS} is required to run the complete example 
+for \code{\link{PSopt}}, and also in one of the vignettes (\code{PSlms}); \pkg{multicore} is optional for 
+functions \code{gridSearch} and \code{restartOpt} (and may become an option for other functions too); 
+\pkg{quadprog} is needed for a vignette (\code{TAportfolio}) and some tests; \pkg{RUnit} is needed to rerun 
+the tests in directory \sQuote{\code{unitTests}}.
+
+Version numbering: minor version numbers (like in \code{x.1-x}) are incremented when a feature is added or an 
+existing feature has been substantially revised. The patch level (\code{x.x-1}) is incremented with any 
+published change.
+
 }
 \author{Enrico Schumann
 

@@ -1,17 +1,27 @@
 DEopt <- function(OF, algo = list(), ...) {
-    # ------------------------------------------------------------------    
-    # default settings and checks
-    # ------------------------------------------------------------------
+    
+    # defaults for list 'algo'
     algoD <- list(
-        nP = 50L, nG = 300L, 
-        F = 0.5, CR = 0.9,
-        min = NULL, max = NULL, 
-        pen = NULL, repair = NULL, 
+        nP = 50L, nG = 300L, F = 0.5, CR = 0.9,
+        min = NULL, max = NULL, pen = NULL, repair = NULL, 
         loopOF = TRUE, loopPen = TRUE, loopRepair = TRUE, 
         printDetail = TRUE, printBar = TRUE,
         initP = NULL)
+    
+    # checks for list 'algo'
+    if ("" %in% names(algo)) 
+        warning("'algo' contained unnamed elements")
+    unusedOptions <- setdiff(names(algo), names(algoD))
+    unusedOptions <- setdiff(unusedOptions, "")
+    if (length(unusedOptions)) 
+        warning("unknown names in 'algo': ", 
+            paste(unusedOptions, collapse = ", "))
+    
+    # add defaults
     algoD[names(algo)] <- algo  
     algo <- algoD
+    
+    # check min/max
     vmax <- as.vector(algo$max)
     vmin <- as.vector(algo$min)
     if(is.null(vmin))
@@ -26,29 +36,46 @@ DEopt <- function(OF, algo = list(), ...) {
         stop("'min' must be a vector")
     if (any(vmin > vmax)) 
         stop("(at least) some 'max' < 'min'")  
+    
+    # get number of decision variables
+    d <- length(vmax)
+    
+    # check other elements
     if (algo$CR > 1 || algo$CR < 0) 
         stop("'CR' must be between 0 and 1")
+    if ( any(algo$F > 1) || any(algo$F < 0) ) 
+        warning("'F' is typically between 0 and 1")
+    if ( length(algo$F) > 1L && length(algo$F) != d ) { 
+        warning("only first value of 'F' will be used")
+        F <- algo$F[1L]
+    }
+    F <- algo$F[1L]
+    
     printDetail <- algo$printDetail
     printBar <- algo$printBar
+    
+    # check integers
+    nP <- as.integer(algo$nP)
+    nG <- as.integer(algo$nG)
+    if (nP < 1L) 
+        stop("'algo$nP' must be a nonnegative integer")
+    if (nG < 1L) 
+        stop("'algo$nG' must be a nonnegative integer")
+    
     OF1 <- function(x) OF(x, ...)
     Pe1 <- function(x) algo$pen(x, ...)
     Re1 <- function(x) algo$repair(x, ...)
-    nP <- as.integer(algo$nP)
-    nG <- as.integer(algo$nG)
-    # ------------------------------------------------------------------
+    
     # auxiliary functions
-    # ------------------------------------------------------------------
     shift <- function(x) c(x[nP], x[seq_len(nP - 1L)])
     mRU <- function(m, n) array(runif(m * n), dim = c(m, n)) 
+
     
-    # ------------------------------------------------------------------	
-    # main algorithm
-    # ------------------------------------------------------------------
+    
+    # MAIN ALGORITHM
     # set up initial population
-    d <- length(vmax)
-    vF <- numeric(nP) 
-    vF[] <- NA; vPv <- vF; vFv <- vF 
-    Fmat <- array(NaN, c(nG, nP))
+    vF <- numeric(nP); vF[] <- NA; vPv <- vF; vFv <- vF 
+    Fmat <- array(NA, c(nG, nP))
     if (is.null(algo$initP)) {
         mP <- vmin + diag(vmax - vmin) %*% mRU(d, nP)
     } else {
@@ -97,9 +124,9 @@ DEopt <- function(OF, algo = list(), ...) {
         R3 <- shift(R2)
         
         # prelim. update
-        mPv <- mP[ ,R1] + algo$F * (mP[ ,R2] - mP[ ,R3])
-        mI <- mRU(d, nP) > algo$CR
-        mPv[mI] <- mP[mI]
+        mPv <- mP[ ,R1] + F * (mP[ ,R2] - mP[ ,R3])
+        vI <- runif(d*nP) > algo$CR
+        mPv[vI] <- mP[vI]
         
         # evaluate updated population
         if (!is.null(algo$repair)) {
@@ -127,7 +154,8 @@ DEopt <- function(OF, algo = list(), ...) {
         mP[ ,logik] <- mPv[ ,logik]
         vF[logik] <- vFv[logik]
         Fmat[g, ] <- vF
-    } # g in 1:nG
+    } # end of generations 
+    
     if (printBar)
         close(whatGen)
     if (printDetail)

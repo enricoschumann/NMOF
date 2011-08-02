@@ -67,11 +67,15 @@ makes rarely sense.}
 \item{\code{max}}{a vector of maximum parameter values. See below.}
 \item{\code{pen}}{a penalty function. Default is NULL (no penalty).}
 \item{\code{repair}}{a repair function. Default is NULL (no repairing).}
+\item{\code{changeV}}{a function to change velocity. Default is \code{NULL} (no change). This function is called before
+    the velocity is added to the current solutions; it can be used to impose restrictions like changing only a number of 
+    decision variables.}
 \item{\code{initP}}{optional: the initial population. A matrix of size \code{length(algo$min)} times \code{algo$nP}, or a function that creates 
 such a matrix. If a function, it should take no arguments.}
 \item{\code{loopOF}}{logical. Should the \code{OF} be evaluated through a loop? Defaults to \code{TRUE}.}
 \item{\code{loopPen}}{logical. Should the penalty function (if specified) be evaluated through a loop? Defaults to \code{TRUE}.}
 \item{\code{loopRepair}}{logical. Should the repair function (if specified) be evaluated through a loop? Defaults to \code{TRUE}.}
+\item{\code{loopChangeV}}{logical. Should the \code{changeV} function (if specified) be evaluated through a loop? Defaults to \code{TRUE}.}
 \item{\code{printDetail}}{If \code{TRUE} (the default), information is printed.}
 \item{\code{printBar}}{If \code{TRUE} (the default), information in progress is printed (\code{txtProgressBar} from package \pkg{utils} 
 is used).}

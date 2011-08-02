@@ -223,6 +223,7 @@ test.PSopt <- function() {
 
 # TAopt
 test.TAopt <- function() {
+    
     # TA should come close to the minimum
     xTRUE <- runif(5)
     data <- list(xTRUE = xTRUE)
@@ -304,8 +305,7 @@ test.testFunctions <- function() {
 
 # GAopt
 test.GAopt <- function() {
-    size <- 20L
-    y <- runif(size) > 0.5; x <- runif(size) > 0.5
+    size <- 20L; y <- runif(size) > 0.5; x <- runif(size) > 0.5
     data <- list(y = y)
     algo <- list(nB = size, nP = 25L, nG = 150L, prob = 0.002, 
         printBar = FALSE, printDetail = FALSE, crossover = "uniform")
@@ -313,18 +313,29 @@ test.GAopt <- function() {
     solGA <- GAopt(OF, algo = algo, data = data)
     checkEqualsNumeric(solGA$OFvalue, 0)
     
-    # wrong size of initP
+    # error -- wrong size of initP
     algo$initP <- array(FALSE, dim = c(20,10))
     checkException(res <- GAopt(OF = OF, algo), silent = TRUE)
     algo$initP <- function() array(FALSE, dim = c(20,20))
     checkException(res <- GAopt(OF = OF, algo), silent = TRUE)
+    algo$initP <- NULL
     
-    # exception: prob > 1, prob < 0
-    algo$rpob <- 2
+    # error -- prob > 1, prob < 0
+    algo$prob <- 2
     checkException(res <- GAopt(OF = OF, algo), silent = TRUE)
     algo$prob <- -0.1
     checkException(res <- GAopt(OF = OF, algo), silent = TRUE)
     
+    # error -- wrong crossover type
+    algo <- list(nB = size, nP = 25L, nG = 150L, prob = 0.002, 
+        printBar = FALSE, printDetail = FALSE, crossover = "twoPoint")
+    checkException(solGA <- GAopt(OF, algo = algo, data = data), silent = TRUE)
+    
+    # error -- OF not a function
+    algo <- list(nB = size, nP = 25L, nG = 150L, prob = 0.002, 
+        printBar = FALSE, printDetail = FALSE, crossover = "uniform")
+    a <- numeric(10)
+    checkException(solGA <- GAopt(a, algo = algo, data = data), silent = TRUE)
 }
 
 # TA portfolio optimisation
@@ -399,4 +410,44 @@ test.TAopt.Applications <- function() {
         dSR <- 1/res$OFvalue - as.numeric(SR)
         checkEquals(as.numeric(round(dSR,3)),0)        
     }
+}
+
+
+
+# GRID SEARCH
+test.gridSearch <- function() {
+    testFun  <- function(x) x[1L]   + x[2L]^2 
+    testFun2 <- function(x) x[[1L]] + x[[2L]]^2
+    testFun3 <- function(x) sum(x^2)
+    testFun4 <- function(x) sum(sapply(x, `^`, 2))
+    
+    # ERROR -- upper not sorted
+    lower <- 1:3; upper <- 5:4; n <- 8
+    checkException(sol <- gridSearch(fun = testFun, 
+            lower = lower, upper = upper, n = n, printDetail = FALSE),
+        silent = TRUE)
+    
+    # ERROR -- upper < lower
+    lower <- 1:3; upper <- 2; n <- 8
+    checkException(sol <- gridSearch(fun = testFun, 
+            lower = lower, upper = upper, n = n, printDetail = FALSE),
+        silent = TRUE)
+    
+    # 
+    lower <- 1:3; upper <- 5; n <- 8
+    sol <- gridSearch(fun = testFun, lower = lower, upper = upper, 
+        n = n, printDetail = FALSE)
+    checkEquals(sol$minlevels,1:3)
+    
+    # 
+    levels <- list(a = 1:2, b = 1:3, c = 4:6)
+    sol <- gridSearch(fun = testFun3, levels = levels, printDetail = FALSE)
+    checkEquals(sol$minlevels,c(1,1,4))
+    
+    # 
+    lower <- 1; upper <- 5; n <- 1
+    sol <- suppressWarnings(
+        gridSearch(fun = testFun3, lower = lower, upper = upper, 
+            n = n, printDetail = FALSE))
+    checkEquals(sol$minlevels,1L)
 }

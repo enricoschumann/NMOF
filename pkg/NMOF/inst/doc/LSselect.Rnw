@@ -19,7 +19,12 @@
 
 \section{Introduction}
 \noindent We provide a code example for a simple asset selection problem. The purpose of this vignette is to provide 
-the code in a convenient way; for more details, please see \citet{Gilli2011b}. 
+the code in a convenient way; for more details, please see \citet{Gilli2011b}. We start by attaching the package. 
+
+<<>>=
+require("NMOF")
+set.seed(112233)
+@
 
 
 \section{The problem}
@@ -38,7 +43,6 @@ is the cardinality of this set, ie, the number of assets in the portfolio.
 We start by attaching the package and creating random data. We simulate 500~assets: each gets a random volatility between 20\% and 40\%, and 
 all pairwise correlations are set to~0.6.
 <<>>=
-require(NMOF)
 na <- 500L
 C <- array(0.6, dim = c(na, na)); diag(C) <- 1
 minVol <- 0.20; maxVol <- 0.40
