@@ -14,7 +14,7 @@
 \end{abstract}
 
 \noindent This vignette provides the code for some of the examples from \citet{Gilli2011b}. For more details, please see Chapter~13 of the book; 
-the code is this vignette uses the scripts \texttt{exampleSquaredRets.R}, \texttt{exampleSquaredRets2.R} and \texttt{exampleRatio.R}.
+the code in this vignette uses the scripts \texttt{exampleSquaredRets.R}, \texttt{exampleSquaredRets2.R} and \texttt{exampleRatio.R}.
 
 We start by attaching the package. We will later on need the function \texttt{resample} (see \texttt{?sample}).
 
