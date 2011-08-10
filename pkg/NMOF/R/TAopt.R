@@ -1,4 +1,5 @@
 TAopt <- function(OF, algo = list(), ...) {
+    
     # defaults
     algoD = list(
         nD = 2000L,  # random steps for computing thresholds 
@@ -8,10 +9,8 @@ TAopt <- function(OF, algo = list(), ...) {
         x0 = NULL, 
         vT = NULL,
         neighbour = NULL,
-        printDetail = TRUE,
-        printBar = TRUE,
-        stepUp = 0L,
-        scale = 1)
+        printDetail = TRUE, printBar = TRUE,
+        stepUp = 0L, scale = 1)
     
     # checks for list 'algo'
     if ("" %in% names(algo)) 
@@ -38,8 +37,14 @@ TAopt <- function(OF, algo = list(), ...) {
     N1 <- function(x) algo$neighbour(x, ...)
     
     nT <- as.integer(algo$nT)
-    if (nT < 1)
+    if (nT < 1L)
         stop("'nT' must be a positive integer")
+    nS <- as.integer(algo$nS)
+    if (nS < 1L)
+        stop("'nS' must be a positive integer")
+    nD <- as.integer(algo$nD)
+    if (nD < 1L)
+        stop("'nD' must be a positive integer")
     
     # evaluate x0 if function
     if(is.function(algo$x0)) 
@@ -59,12 +64,13 @@ TAopt <- function(OF, algo = list(), ...) {
             startTime <- proc.time()
         }
         if (printBar)
-            whatGen <- txtProgressBar (min = 1, max = algo$nD, style = 3)
+            whatGen <- txtProgressBar (min = 1, max = nD, 
+                style = 3)
         xc  <- x0
         xcF <- OF1(xc)
-        diffF <- numeric(algo$nD)
+        diffF <- numeric(nD)
         diffF[] <- NA 
-        for(i in seq_len(algo$nD)){
+        for(i in seq_len(nD)){
             if(printBar) 
                 setTxtProgressBar(whatGen, value = i)
             xn  <- N1(xc)
@@ -73,7 +79,7 @@ TAopt <- function(OF, algo = list(), ...) {
             xc  <- xn
             xcF <- xnF
         }
-        vT <- algo$q * ( ((nT-1L):0L) / nT )
+        vT <- algo$q * ( ((nT - 1L):0L) / nT )
         vT <- quantile(diffF, vT,na.rm = FALSE)
         vT[nT] <- 0 # set last threshold to zero
         if (printBar)
@@ -83,12 +89,12 @@ TAopt <- function(OF, algo = list(), ...) {
             endTime <- proc.time()
             cat("\nEstimated remaining running time:", 
                 as.numeric(endTime[3L] - startTime[3L]) /
-                    algo$nD * nT * algo$nS * (algo$stepUp + 1L), 
+                    nD * nT * nS * (algo$stepUp + 1L), 
                 "secs.\n\n")
             flush.console()
         }
     } else vT <- algo$vT
-    if (algo$stepUp > 0) 
+    if (algo$stepUp > 0L) 
         vT <- rep(vT, as.integer(algo$stepUp) + 1L)
     if (algo$scale < 0) {
         scale <- 0
@@ -103,18 +109,18 @@ TAopt <- function(OF, algo = list(), ...) {
     xbest <- xc; xbestF <- xcF 
     Fmat <- array(NA, dim = c(algo$nS * nT, 2L))
     counter <- 0L
-    # ------------------------------------------------------------------	
+
     # main algorithm
-    # ------------------------------------------------------------------
     if (printDetail) {
         cat("\nRunning Threshold Accepting...\n")
         cat("Initial solution: ", prettyNum(xbestF),"\n")
         flush.console()
     }
     if (printBar) 
-        whatGen <- txtProgressBar (min = 1, max = nT*algo$nS, style = 3)
-    for (t in seq_len(nT)){        
-        for (s in seq_len(algo$nS)){
+        whatGen <- txtProgressBar (min = 1, max = nT * nS, 
+            style = 3)
+    for (t in seq_len(nT)) {        
+        for (s in seq_len(nS)) {
             xn <- N1(xc)
             xnF <- OF1(xn)
             if (xnF <= (xcF + vT[t])) {

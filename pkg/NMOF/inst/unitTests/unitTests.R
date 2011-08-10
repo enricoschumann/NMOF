@@ -2,14 +2,14 @@ require("NMOF")
 
 # MA
 test.MA <- function() {
-    x <- rnorm(100); myMA <- numeric(length(x)); order <- 5 
+    x <- rnorm(100L); myMA <- numeric(length(x)); order <- 5L 
     for (i in order:length(x)) 
         myMA[i] <- sum(x[(i - order + 1):i])/order   
     
     checkEquals(MA(x,order = order)[-(1:(order-1))], 
         myMA[-(1:(order-1))])
     
-    x <- rnorm(100); myMA <- numeric(length(x)); order <- 1
+    x <- rnorm(100L); myMA <- numeric(length(x)); order <- 1L
     checkEquals(x, MA(x, order = order))
     checkEquals(x, MA(x, order = order, pad = NA))
 }
@@ -23,21 +23,21 @@ test.callHestoncf <- function() {
     rho <- -0.5; k <- 0.5; sigma <- 0.5
     result <- callHestoncf(S = S, X = X, tau = tau, r = r, q = q, 
         v0 = v0, vT = vT, rho = rho, k = k, sigma = sigma)
-    checkEquals(round(result[[1]], 3), 7.119)
+    checkEquals(round(result[[1L]], 3), 7.119)
     
     S <- 100; X <- 100; tau <- 1; r <- 0.02; q <- 0.01
     v0  <- 0.2^2; vT  <- 0.2^2
     rho <- -0.5; k <- 0.5; sigma <- 0.01
     result <- callHestoncf(S = S, X = X, tau = tau, r = r, q = q, 
         v0 = v0, vT = vT, rho = rho, k = k, sigma = sigma)
-    checkEquals(round(result[[1]], 3), 8.347)
+    checkEquals(round(result[[1L]], 3), 8.347)
     
     S <- 100; X <- 90; tau <- 1; r <- 0.02; q <- 0.01
     v0  <- 0.2^2; vT  <- 0.2^2
     rho <- -0.5; k <- 0.5; sigma <- 1
     result <- callHestoncf(S = S, X = X, tau = tau, r = r, q = q, 
         v0 = v0, vT = vT, rho = rho, k = k, sigma = sigma)
-    checkEquals(round(result[[1]], 3), 13.362)
+    checkEquals(round(result[[1L]], 3), 13.362)
 }
 
 
@@ -76,6 +76,7 @@ test.EuropeanCall <- function() {
     
 }
 test.EuropeanCallBE <- function() {
+    # EuropeanCall and EuropeanCallBE should give the same results
     S0 <- 10; X <- 10; r <- 0.02; tau <- 1; sigma <- 0.20; M = 101
     res <- EuropeanCall(S0 = S0, X = X, 
         r = r, tau = tau, sigma = sigma, M = M)
@@ -124,7 +125,7 @@ test.EuropeanCallBE <- function() {
 # DE
 test.DEopt <- function() {
     trefethen <- function(xx) {
-        x <- xx[1]; y <- xx[2]
+        x <- xx[1L]; y <- xx[2L]
         res <- exp(sin(50*x)) + sin(60*exp(y)) + sin(70*sin(x)) +
             sin(sin(80*y)) - sin(10*(x+y))  + (x^2+y^2)/4
         res
@@ -174,7 +175,7 @@ test.DEopt <- function() {
         min = rep(-50, size), 
         max = rep( 50, size))
     
-    system.time(sol <- DEopt(OF = OF, algo = algo))
+    sol <- DEopt(OF = OF, algo = algo)
     checkEquals(sol$OFvalue, 0)
     
     # exception: wrong size of initP
@@ -201,9 +202,9 @@ test.PSopt <- function() {
     algo <- list(
         printBar = FALSE, 
         printDetail = FALSE,
-        nP = 50L, nG = 1500L,
+        nP = 50L, nG = 1000L,
         c1 = 0.0, c2 = 1.5,
-        iner = 0.8, initV = 0.00, maxV = 50,
+        iner = 0.8, initV = 0.50, maxV = 50,
         min = rep(-50, size), 
         max = rep( 50, size))
     
@@ -211,7 +212,7 @@ test.PSopt <- function() {
     checkEquals(sol$OFvalue, 0)
     
     # exception: wrong size of initP
-    algo$initP <- array(0, dim = c(20,20))
+    algo$initP <- array(0, dim = c(20L,20L))
     checkException(res <- PSopt(OF = OF, algo), silent = TRUE)
     algo$initP <- function() array(0, dim = c(5,20))
     checkException(res <- PSopt(OF = OF, algo), silent = TRUE)
@@ -226,16 +227,16 @@ test.TAopt <- function() {
     
     # TA should come close to the minimum
     xTRUE <- runif(5)
-    data <- list(xTRUE = xTRUE)
+    data <- list(xTRUE = xTRUE, step = 0.02)
     OF <- function(x, data) max(abs(x - data$xTRUE))
     neighbour <- function(x, data) {
-        bit <- sample.int(length(data$xTRUE), 1L)
-        x <- x + rnorm(length(data$xTRUE))*0.01
+        #bit <- sample.int(length(data$xTRUE), 1L)
+        x <- x + runif(length(data$xTRUE))*data$step - data$step/2
         x
     }
     x0 <- runif(5)
     algo <- list(
-        q = 0.01, nS = 5000L, nT = 15L, 
+        q = 0.05, nS = 1000L, nT = 15L, 
         neighbour = neighbour, x0 = x0,
         printBar = FALSE, 
         printDetail = FALSE)
@@ -267,11 +268,11 @@ test.TAopt <- function() {
 # LSopt
 test.LSopt <- function() {
     xTRUE <- runif(5)
-    data <- list(xTRUE = xTRUE)
+    data <- list(xTRUE = xTRUE, step = 0.02)
     OF <- function(x, data) max(abs(x - data$xTRUE))
     neighbour <- function(x, data) {
-        bit <- sample.int(length(data$xTRUE), 1L)
-        x <- x + rnorm(length(data$xTRUE)) * 0.01
+        #bit <- sample.int(length(data$xTRUE), 1L)
+        x <- x + runif(length(data$xTRUE))*data$step - data$step/2
         x
     }
     x0 <- runif(5)
@@ -443,6 +444,11 @@ test.gridSearch <- function() {
     levels <- list(a = 1:2, b = 1:3, c = 4:6)
     sol <- gridSearch(fun = testFun3, levels = levels, printDetail = FALSE)
     checkEquals(sol$minlevels,c(1,1,4))
+    # check levels
+    l1 <- do.call("rbind",sol$levels)
+    l2 <- as.matrix(expand.grid(levels))
+    dimnames(l2) <- NULL
+    checkEquals(l1,l2)
     
     # 
     lower <- 1; upper <- 5; n <- 1

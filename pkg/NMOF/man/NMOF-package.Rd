@@ -9,17 +9,6 @@ interfaces may change in the future; there is little error handling. Comments/co
 (please contact the maintainer directly).
 }
 \details{
-\tabular{ll}{
-Package: \tab NMOF\cr
-Type: \tab Package\cr
-Version: \tab 0.14-3\cr
-Date: \tab 2011-07-30\cr
-Suggests: \tab MASS, multicore, quadprog, RUnit\cr
-License: \tab GPL-3\cr
-LazyLoad: \tab yes\cr
-LazyData: \tab yes\cr
-Classification/JEL: \tab C61, C63\cr
-}
 The package contains implementations of several optimisation heuristics: Differential Evolution (\code{\link{DEopt}}), 
 Genetic Algorithms (\code{\link{GAopt}}), (Stochastic) Local Search (\code{\link{LSopt}}), Particle Swarm (\code{\link{PSopt}}) and 
 Threshold Accepting (\code{\link{TAopt}}). The term heuristic is understood here as a general purpose optimisation method. 
@@ -48,6 +37,7 @@ Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Opti
 \examples{
 \dontrun{
 require("NMOF")
+packageDescription("NMOF")
 help(package = "NMOF")
 vignette(package = "NMOF")
 nss <- vignette("DEnss")

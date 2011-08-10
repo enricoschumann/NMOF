@@ -99,7 +99,7 @@ Enrico Schumann
 OF <- tfTrefethen  # see ?testFunctions
 algo <- list(nP = 50L, 
              nG = 300L,
-              F = 0.5, 
+              F = 0.6, 
              CR = 0.9, 
             min = c(-10, -10), 
             max = c( 10,  10))
@@ -121,7 +121,7 @@ OF(x)               # ... should give zero
 algo <- list(printBar = FALSE,
                    nP = 50L, 
                    nG = 500L,
-                    F = 0.5, 
+                    F = 0.6, 
                    CR = 0.9, 
                   min = rep(-100, size), 
                   max = rep( 100, size))
@@ -150,4 +150,3 @@ sol2$OFvalue   # should be zero (with luck)
 t1[3L]/t2[3L]  # speedup
 }
 \keyword{optimize}
-

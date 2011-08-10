@@ -1,3 +1,8 @@
+Changes in Version 0.15-1
+
+  o more tests were added (see unitTests.R)
+  o minor changes in code/documentation/examples
+
 Changes in Version 0.15-0
 
   o function 'gridSearch' can now evaluate a function that expects 

@@ -1,7 +1,6 @@
-% version 2011-04-28
+% version 2011-08-05
 \name{restartOpt}
 \alias{restartOpt}
-%\alias{restartOpt2}
 \title{
 Restart an Optimisation Algorithm
 }
@@ -10,8 +9,6 @@ The function provides a simple wrapper for the optimisation algorithms in the pa
 }
 \usage{
 restartOpt(fun, n, OF, algo, ...)
-
-%restartOpt2(fun, n, OF, algo, ..., multicore = FALSE)
 }
 \arguments{
   \item{fun}{
@@ -36,9 +33,15 @@ Additional data that is passed to the particular optimisation function.
 }
 \details{
 The function returns a list of lists. If a specific starting solution is passed, all runs will start from the same solution. 
-If this is not desired, initial solutions can be created randomly. This is done automatically in \code{\link{DEopt}} and \code{\link{PSopt}}. 
-For \code{\link{LSopt}} and \code{\link{TAopt}}, the passed initial solution \code{algo$x0} is checked with 
-\code{is.function}: if \code{TRUE}, the function is evaluated in each single run.
+If this is not desired, initial solutions can be created randomly. (This is done per default in 
+\code{\link{DEopt}}, \code{\link{GAopt}} and \code{\link{PSopt}}, but \code{\link{LSopt}} and \code{\link{TAopt}}
+require to specify a starting solution.)
+
+In case of \code{\link{LSopt}} and \code{\link{TAopt}}, the passed initial solution \code{algo$x0} is checked with 
+\code{is.function}: if \code{TRUE}, the function is evaluated in each single run. For   
+\code{\link{DEopt}}, \code{\link{GAopt}} and \code{\link{PSopt}}, the initial solution (which also can be a function)
+is specified with \code{algo$initP}. 
+
 }
 \value{
 Returns a list of \code{n} lists. Each of the \code{n} lists stores the output of one of the runs.
@@ -86,7 +89,7 @@ legend(x = "right", box.lty = 0, , lty = 1,
     pch = c(NA, 19, 19), col = c("red", "black", "blue"))
 
 \dontrun{
-# with R >= 2.13.0 and the compiler package
+## with R >= 2.13.0 and the compiler package
 algo$nG <- 100L
 system.time(res100 <- restartOpt(DEopt, n = 10, OF = tfTrefethen, algo = algo))
 
@@ -95,9 +98,10 @@ enableJIT(3)
 system.time(res100 <- restartOpt(DEopt, n = 10, OF = tfTrefethen, algo = algo))}
 
 \dontrun{
-# experimental: multicore
+## using the multicore package
 require(multicore)
 algo$nP <- 100L; algo$nG <- 1000L
+# create a new function that takes no arguments
 myOpt <- function(fun, OF, algo) {
     f <- function(ignore) fun(OF = OF, algo = algo)
     f
@@ -109,6 +113,5 @@ system.time(res1000b <- mclapply(1:10, DE))
 res1000Fa <- sapply(res1000a, `[[`, "OFvalue")
 res1000Fb <- sapply(res1000b, `[[`, "OFvalue")
 plot( ecdf(res1000Fa))
-lines(ecdf(res1000Fb), col = "blue")}
-
+lines(ecdf(res1000Fb), col = "blue")}  # should not be too different from res1000Fa
 }
