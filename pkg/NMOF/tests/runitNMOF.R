@@ -2,7 +2,7 @@
 if (require(RUnit, quietly = TRUE)) {
     path <- system.file(package = "NMOF", "unitTests")
     myTestSuite <- defineTestSuite("NMOF1", 
-        dirs = path, testFileRegexp = "unitTests.R")
+        dirs = path, testFileRegexp = "unitTests.+")
     stopifnot(isValidTestSuite(myTestSuite))
     testResult <- runTestSuite(myTestSuite, verbose = 0L)
     printTextProtocol(testResult, showDetails = TRUE,

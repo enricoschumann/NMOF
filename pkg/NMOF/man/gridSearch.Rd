@@ -8,7 +8,8 @@ Evaluate a function for a given list of possible arguments.
 }
 \usage{
 gridSearch(fun, levels, ..., lower, upper, npar = 1L, n = 5L, 
-    printDetail = TRUE, multicore = FALSE, 
+    printDetail = TRUE, 
+    multicore = FALSE, mc.control = list(),
     keepNames = FALSE, asList = FALSE)
 }
 \arguments{
@@ -38,7 +39,11 @@ Print information on the number of objective function evaluations.
 }  
   \item{multicore}{
 Use the \pkg{multicore} package?
-}  
+}
+  \item{mc.control}{
+a list containing settings that will be passed to \code{mclapply} if \code{multicore} is \code{TRUE}. Must be a 
+list with named elements. See the documentation of \code{mclapply}.
+}    
   \item{keepNames}{
 should names of \code{levels} be kept? \strong{Not implemented.}
 }  
@@ -83,7 +88,6 @@ Enrico Schumann
 }
 
 \examples{
-
 testFun <- function(x) x[1L] + x[2L]^2 
 sol <- gridSearch(fun = testFun, levels = list(1:2, c(2,3,5)))
 sol$minfun
@@ -93,6 +97,5 @@ testFun2 <- function(x) sum(x^2)
 sol <- gridSearch(fun = testFun2, lower = rep(1, 3), upper = c(2,8,4), n = 5)
 sol$minfun
 sol$minlevels
-
 }
 \keyword{optimize}

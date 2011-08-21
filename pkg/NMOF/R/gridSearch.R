@@ -1,16 +1,28 @@
-gridSearch <- function(fun, levels, ..., lower, upper, npar = 1L, n = 5L, 
-    printDetail = TRUE, multicore = FALSE, 
+gridSearch <- function(fun, levels, ..., lower, upper, 
+    npar = 1L, n = 5L, 
+    printDetail = TRUE, multicore = FALSE, mc.control = list(), 
     keepNames = FALSE, asList = FALSE) {
     
     if (keepNames) 
         warning("'keepNames' is not supported yet")
     
-    if (multicore && 
-        !suppressWarnings(require("multicore", quietly = TRUE))) {
-        multicore <- FALSE
-        warning("package 'multicore' not available")
+    if (multicore) {
+        # check if 'multicore' is available
+        if (!suppressWarnings(require("multicore", quietly = TRUE))) {
+            multicore <- FALSE
+            warning("package 'multicore' not available")
+        }
+        # make settings
+        mc.settings <- list(
+            mc.preschedule = TRUE, 
+            mc.set.seed = TRUE,
+            mc.silent = FALSE, 
+            mc.cores = getOption("cores"), 
+            mc.cleanup = TRUE)
+        mc.settings[names(mc.control)] <- mc.control
     }
     
+    n <- as.integer(n)
     if (n < 2L) {
         warning("'n' changed to 2")
         n <- 2L
@@ -66,9 +78,15 @@ gridSearch <- function(fun, levels, ..., lower, upper, npar = 1L, n = 5L,
                 as.numeric(sapply(res,`[[`, r))
     }
     if (multicore) {
-        results <- mclapply(lstLevels,fun,...)
+        results <- mclapply(lstLevels, fun, ...,
+            mc.preschedule = mc.settings$mc.preschedule, 
+            mc.set.seed = mc.settings$mc.set.seed,
+            mc.silent = mc.settings$mc.silent, 
+            mc.cores = mc.settings$mc.cores, 
+            mc.cleanup = mc.settings$mc.cleanup
+        )
     } else {
-        results <- lapply(lstLevels,fun,...)
+        results <- lapply(lstLevels, fun, ...)
     }
     results <- unlist(results)
     i <- which.min(results)

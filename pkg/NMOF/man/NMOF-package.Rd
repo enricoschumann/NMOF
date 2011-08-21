@@ -40,7 +40,7 @@ require("NMOF")
 packageDescription("NMOF")
 help(package = "NMOF")
 vignette(package = "NMOF")
-nss <- vignette("DEnss")
+nss <- vignette("DEnss", package = "NMOF")
 print(nss)
 edit(nss)}
 }
