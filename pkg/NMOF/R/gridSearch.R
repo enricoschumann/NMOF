@@ -90,6 +90,15 @@ gridSearch <- function(fun, levels, ..., lower, upper,
     }
     results <- unlist(results)
     i <- which.min(results)
-    list(minfun = results[i], minlevels = lstLevels[[i]], 
-        values = results, levels = lstLevels)    
+    # what to return
+    if (any(is.na(i)) || length(i) == 0L) {
+        # function evaluated to NA, or results are empty
+        warning("NA values in results or length of results is zero")
+        list(minfun = NA, minlevels = NA, 
+            values = results, levels = lstLevels)    
+    } else {
+        # (apparently) no problems
+        list(minfun = results[i], minlevels = lstLevels[[i]], 
+            values = results, levels = lstLevels)    
+    }
 }

@@ -113,14 +113,14 @@ ts.plot(sol$Fmat, xlab = "generations", ylab = "OF")
 
 
 ## Example 2: vectorising the evaluation of the population
-OF <- tfRosenbrock  # see ?testFunctions
-size <- 5L         # define dimension
-x <- rep(1, size)   # the known solution ...
-OF(x)               # ... should give zero
+OF <- tfRosenbrock     # see ?testFunctions
+size <- 3L             # define dimension
+x <- rep.int(1, size)  # the known solution ...
+OF(x)                  # ... should give zero
 
 algo <- list(printBar = FALSE,
-                   nP = 50L, 
-                   nG = 500L,
+                   nP = 30L, 
+                   nG = 300L,
                     F = 0.6, 
                    CR = 0.9, 
                   min = rep(-100, size), 
@@ -131,7 +131,7 @@ algo <- list(printBar = FALSE,
 sol$xbest
 sol$OFvalue  # should be zero (with luck)
 
-# a vectorised OF: works *only* with matrix x
+# a vectorised OF: works only with a *matrix* x
 OF2 <- function(x) {
     n <- dim(x)[1L]
     xi <- x[1L:(n - 1L), ]
