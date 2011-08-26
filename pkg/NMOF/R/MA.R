@@ -7,4 +7,5 @@ MA <- function(y, order, pad = NULL) {
         ma[1L:(order - 1L)] <- pad
     ma
 }
-
+#
+# to be added: mMin, mMax
