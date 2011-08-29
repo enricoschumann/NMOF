@@ -1,3 +1,14 @@
+Changes in Version 0.15-4
+  
+  o experimental: 'DEopt' takes further arguments 'storeF' and 'storeSolutions'
+    (through list 'algo'). If 'storeF' is FALSE, objective function values are
+    not stored ('Fmat' is set to NA; see ?DEopt). If 'storeSolutions' is TRUE, 
+    all population matrices are stored for every generation. This should be 
+    helpful for diagnostic checking (and demonstration purposes), but may use 
+    up a lot of memory for larger problems; hence default is FALSE.
+    (These settings will either be removed from 'DEopt' or be added to all 
+    opt-functions in one of the next package versions.)  
+
 Changes in Version 0.15-3
   
   o new vignette ('Vectorised objective functions') added
