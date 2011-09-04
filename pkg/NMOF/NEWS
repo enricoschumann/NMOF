@@ -1,3 +1,9 @@
+Changes in Version 0.15-5 (2011-09-04)
+
+  o 'qTable' revised 
+  o (very) short vignette for 'qTable' added
+  o minor changes in code/documentation/examples
+  
 Changes in Version 0.15-4
   
   o experimental: 'DEopt' takes further arguments 'storeF' and 'storeSolutions'

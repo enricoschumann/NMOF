@@ -36,7 +36,7 @@ callHestoncf(S, X, tau, r, q, v0, vT, rho, k, sigma, implVol = FALSE)
 \details{
 The function computes the value of a plain vanilla European call under the Heston model. Put values can be computed through put--call-parity. 
 If \code{implVol} is set to \code{TRUE}, the function will compute the implied volatility necessary to obtain the same price under 
-Black--Scholes--Merton. The implied volatility is computed with \code{uniroot} from the \pkg{stats} package.
+Black--Scholes--Merton. The implied volatility is computed with \code{\link{uniroot}} from the \pkg{stats} package.
 
 Note that the function takes variances as inputs (not volatilities).
 }
