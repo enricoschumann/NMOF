@@ -1,0 +1,79 @@
+% \VignetteIndexEntry{An example for the qTable function}
+% \VignetteKeyword{optimize}
+\documentclass[a4paper,11pt]{article}
+\usepackage[left = 2.5cm, top = 2cm, bottom = 3cm, right = 3.5cm]{geometry}
+\usepackage[noae]{Sweave}
+\usepackage{mathptmx}
+\usepackage{amsmath,amstext}
+\usepackage{hyperref}
+\usepackage{natbib}
+
+\SweaveOpts{keep.source = TRUE, eps = TRUE, pdf = FALSE}
+
+\begin{document}
+\title{An example for the \texttt{qTable} function}
+\author{Enrico Schumann}
+\maketitle
+
+\noindent We attach the package and create some random data.
+<<>>=
+require("NMOF")
+x <- rnorm(100L, mean = 0, sd = 1.5)
+y <- rnorm(100L, mean = 1, sd = 1)
+z <- rnorm(100L, mean = 1, sd = 0.5)
+X <- cbind(x, y, z)
+summary(X)
+@
+A call to \texttt{qTable} could like this, and it will result in the
+\LaTeX{} output below.
+<<results=tex>>=
+result <- qTable(X, yoffset = -0.025, unitlength = "5cm",
+    circlesize = 0.0125, xmin = -10, xmax = 10, dec = 2)
+@
+
+\bigskip\bigskip
+
+If you use Sweave, use \verb"<<results=tex>>=" to start a code chunk.
+
+\newpage
+\section*{Examples}
+
+\small
+<<res1,results=tex>>=
+# with limits
+res1 <- qTable(X, yoffset = -0.025, unitlength = "5cm",
+               circlesize = 0.0125, xmin = -10, xmax = 10, dec = 2)
+@
+\bigskip
+
+<<res2,results=tex>>=
+# without specified limits
+res2 <- qTable(X, yoffset = -0.025, unitlength = "5cm",
+               circlesize = 0.0125, dec = 2)
+@
+\bigskip
+
+<<res3,results=tex>>=
+# 3 digits
+res3 <- qTable(X, yoffset = -0.025, unitlength = "5cm",
+               circlesize = 0.0125, dec = 3)
+@
+\bigskip
+
+<<res4,results=tex>>=
+# specific labels, but no limits
+res4 <- qTable(X, yoffset = -0.025, unitlength = "5cm",
+               labels = c(-8,2,8), at = c(-8,2,8),
+               circlesize = 0.0125, dec = 1)
+@
+\bigskip
+
+<<res5,results=tex>>=
+# specific labels and limits, linethickness
+res5 <- qTable(X, yoffset = -0.025, unitlength = "5cm",
+               labels = c("a","b","c"), at = c(-8,2,8),
+               circlesize = 0.02, dec = 1, linethickness = "0.2ex",
+               xmin = -10, xmax = 10)
+@
+
+\end{document}
