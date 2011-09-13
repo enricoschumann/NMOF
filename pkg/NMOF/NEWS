@@ -1,3 +1,8 @@
+Changes in Version 0.16-1 (2011-09-13)
+
+  o fixed: 'bracketing' had not been added to the NAMESPACE file (now it is)
+  o tests for 'bracketing' added (see directory unitTests)
+
 Changes in Version 0.16-0 (2011-09-12)
 
   o function 'bracketing' added

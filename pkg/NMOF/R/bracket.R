@@ -35,12 +35,13 @@ bracketing <- function(fun, interval, ...,
            },
            vectorise = fn <- fun(xs, ...),
            multicore = {
-               fn <- mclapply(lstLevels, fun, ...,
+               fn <- mclapply(xs, fun, ...,
                               mc.preschedule = mc.settings$mc.preschedule,
                               mc.set.seed = mc.settings$mc.set.seed,
                               mc.silent = mc.settings$mc.silent,
                               mc.cores = mc.settings$mc.cores,
                               mc.cleanup = mc.settings$mc.cleanup)
+               fn <- unlist(fn)
            }
            ) ## end switch
 
