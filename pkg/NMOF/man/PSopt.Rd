@@ -79,10 +79,15 @@ such a matrix. If a function, it should take no arguments.}
 \item{\code{printDetail}}{If \code{TRUE} (the default), information is printed.}
 \item{\code{printBar}}{If \code{TRUE} (the default), information in progress is printed (\code{txtProgressBar} from package \pkg{utils} 
 is used).}
-}
+\item{\code{storeF}}{if \code{TRUE} (the default), the
+  objective function values for  every solution in every generation are stored and returned as matrix \code{Fmat}.}
+\item{\code{storeSolutions}}{if \code{TRUE}, the solutions (ie, decision variables) in every generation are stored and returned as list
+  \code{Plist} and \code{Pbestlist}. To check, for instance, the solutions at the end of the \code{i}th iteration, retrieve \code{Plist[[i]]}; the best solutions at the end of this iteration are in \code{Pbestlist[[i]]}. \code{Plist[[i]]}/\code{Pbestlist[[i]]} will be
+  a matrix of size \code{length(algo$min)} times \code{algo$nP}. Default
+  is \code{FALSE}; then \code{Plist} and \code{Pbestlist} are
+  \code{NA}.}}
 The vectors \code{min} and \code{max} are used to determine the dimension of the problem and 
 to randomly initialise the population. They are no constraints: a solution may well be outside these limits.
-
 }
 \value{
 Returns a list:

@@ -1,39 +1,38 @@
 GAopt <- function (OF, algo = list(), ...) {
-    algoD <- list(nB = NA, nP = 50L, nG = 300L, prob = 0.01,
-        pen = NULL, repair = NULL, 
-        loopOF = TRUE, loopPen = TRUE, loopRepair = TRUE, 
-        printDetail = TRUE, printBar = TRUE, initP = NULL,
-        crossover = c("onePoint", "uniform")
-    )
-    
-    # checks for list 'algo'
-    if ("" %in% names(algo)) 
-        warning("'algo' contained unnamed elements")
-    unusedOptions <- setdiff(names(algo), names(algoD))
-    unusedOptions <- setdiff(unusedOptions, "")
-    if (length(unusedOptions)) 
-        warning("unknown names in 'algo': ", 
-            paste(unusedOptions, collapse = ", "))
-    
-    # add defaults
-    algoD[names(algo)] <- algo  
-    algo <- algoD
-    
-    printDetail <- algo$printDetail
-    printBar <- algo$printBar
+    algoD <- list(nB = NA,         ### bits per solution
+                  nP = 50L,
+                  nG = 300L,
+                  prob = 0.01,     ### probability of mutation
+                  pen = NULL, repair = NULL,
+                  loopOF = TRUE, loopPen = TRUE, loopRepair = TRUE,
+                  printDetail = TRUE,
+                  printBar = TRUE,
+                  initP = NULL,
+                  storeF = TRUE,
+                  storeSolutions = FALSE,
+                  crossover = c("onePoint", "uniform")
+                  )
+
+    checkList(algo, algoD)
+    algoD[names(algo)] <- algo
+
+    printDetail <- algoD$printDetail
+    printBar <- algoD$printBar
     if (!is.function(OF))
         stop("'OF' must be a function")
     OF1 <- function(x) OF(x, ...)
-    Pe1 <- function(x) algo$pen(x, ...)
-    Re1 <- function(x) algo$repair(x, ...)
-    if (is.na(algo$nB) || is.null(algo$nB))
+    Pe1 <- function(x) algoD$pen(x, ...)
+    Re1 <- function(x) algoD$repair(x, ...)
+    if (is.null(algoD$nB))
         stop("'nB' must be specified")
-    if (algo$prob > 1 || algo$prob < 0) 
+    if (algoD$prob > 1 || algoD$prob < 0)
         stop("'prob' must be between 0 and 1")
-    nB <- as.integer(algo$nB)
-    nP <- as.integer(algo$nP)
-    nG <- as.integer(algo$nG)
-    crossover <- algo$crossover[1L]
+
+    nB <- makeInteger(algoD$nB, 'algo$nB')
+    nP <- makeInteger(algoD$nP, 'algo$nP')
+    nG <- makeInteger(algoD$nG, 'algo$nG')
+
+    crossover <- algoD$crossover[1L]
     crossOver1 <- FALSE; crossOver2 <- FALSE
     if (crossover == "onePoint") {
         crossOver <- function(x,y) {
@@ -45,69 +44,73 @@ GAopt <- function (OF, algo = list(), ...) {
         crossOver1 <- TRUE
     } else if (crossover == "uniform") {
         crossOver <- function(x,y) {
-            ii <- runif(nB) > 0.5 
+            ii <- runif(nB) > 0.5
             x[ii] <- y[ii]
             x
         }
         crossOver2 <- TRUE
     } else {
-        stop("unknown crossover type")   
+        stop("unknown crossover type")
     }
     switch <- function(x) !x
-    shift <- function(x) c(x[nP], x[1L:(nP - 1L)])
-    
+    shift  <- function(x) c(x[nP], x[1L:(nP - 1L)])
+
     vF <- numeric(nP)
     vF[] <- NA
     vP <- vF
     vFc <- vF
-    Fmat <- array(NaN, c(nG, nP))
-    # create population
-    if (is.null(algo$initP)) {
-        mP <- array(sample.int(2L, nB * nP, replace = TRUE) - 1L, dim = c(nB,nP))
+    if (algoD$storeF)
+        Fmat <- array(NA, c(nG, nP)) else Fmat <- NA
+    if (algoD$storeSolutions)
+        xlist <- list(P = vector("list", length = nG)) else xlist <- NA
+    ## create population
+    if (is.null(algoD$initP)) {
+        mP <- array(sample.int(2L, nB * nP, replace = TRUE) - 1L,
+                    dim = c(nB,nP))
         storage.mode(mP) <- "logical"
     } else {
-        if (is.function(algo$initP)) 
-            mP <- algo$initP()
-        else 
-            mP <- algo$initP
-        
+        if (is.function(algoD$initP))
+            mP <- algoD$initP()
+        else
+            mP <- algoD$initP
+
         if (mode(mP) != "logical") {
             storage.mode(mP) <- "logical"
             warning("'mP' is not of mode logical. 'storage.mode(mP)' will be tried")
         }
     }
-    if (!is.null(algo$repair)) {
-        if (algo$loopRepair) {
+    if (!is.null(algoD$repair)) {
+        if (algoD$loopRepair) {
             for (s in seq_len(nP)) mP[, s] <- Re1(mP[, s])
         } else {
             mP <- Re1(mP)
         }
     }
-    if (algo$loopOF) {
+    if (algoD$loopOF) {
         for (s in seq_len(nP)) vF[s] <- OF1(mP[, s])
     } else {
         vF <- OF1(mP)
     }
-    if (!is.null(algo$pen)) {
-        if (algo$loopPen) {
+    if (!is.null(algoD$pen)) {
+        if (algoD$loopPen) {
             for (s in seq_len(nP)) vP[s] <- Pe1(mP[, s])
         } else {
             vP <- Pe1(mP)
         }
         vF <- vF + vP
     }
-    if (printBar) 
+    if (printBar)
         whatGen <- txtProgressBar(min = 1, max = nG, style = 3)
-    if (printDetail) 
+    if (printDetail)
         cat("\nGenetic Algorithm.\n")
     for (g in seq_len(nG)) {
-        if (printBar) 
+        if (printBar)
             setTxtProgressBar(whatGen, value = g)
-        
-        # create children ...
+
+        ## create children ...
         mC <- array(NA, dim = dim(mP))
-        
-        # ... through crossover
+
+        ## ... through crossover
         o <- sample.int(nP)
         oo <- shift(o)
         if (crossOver1) {
@@ -116,43 +119,47 @@ GAopt <- function (OF, algo = list(), ...) {
         } else if (crossOver2) {
             mC <- crossOver(mP[ ,o],mP[ ,oo])
         }
-        
-        # ... through mutation
-        mutate <- runif(nB*nP) < algo$prob
+
+        ## ... through mutation
+        mutate <- runif(nB*nP) < algoD$prob
         mC[mutate] <- switch(mC[mutate])
-        
-        if (!is.null(algo$repair)) {
-            if (algo$loopRepair) {
+
+        if (!is.null(algoD$repair)) {
+            if (algoD$loopRepair) {
                 for (s in seq_len(nP)) mC[ ,s] <- Re1(mC[ ,s])
             } else {
                 mC <- Re1(mC)
             }
         }
-        if (algo$loopOF) {
+        if (algoD$loopOF) {
             for (s in seq_len(nP)) vFc[s] <- OF1(mC[, s])
         } else {
             vFc <- OF1(mC)
         }
-        if (!is.null(algo$pen)) {
-            if (algo$loopPen) {
+        if (!is.null(algoD$pen)) {
+            if (algoD$loopPen) {
                 for (s in seq_len(nP)) vP[s] <- Pe1(mC[, s])
             } else {
                 vP <- Pe1(mC)
             }
             vFc <- vFc + vP
         }
-        # pairwise comparison
+        ## pairwise comparison
         logik <- vFc < vF
         mP[, logik] <- mC[, logik]
         vF[logik] <- vFc[logik]
-        Fmat[g, ] <- vF
+        if (algoD$storeF)
+            Fmat[g, ] <- vF
+        if (algoD$storeSolutions)
+            xlist[[c(1L, g)]] <- mP
     }
-    if (printBar) 
+    if (printBar)
         close(whatGen)
-    if (printDetail) 
-        cat("\nStandard deviation of OF in final population is ", 
+    if (printDetail)
+        cat("\nStandard deviation of OF in final population is ",
             prettyNum(sd(vF)), ".\n\n", sep = "")
     sGbest <- min(vF)
     sgbest <- which.min(vF)[1L]
-    list(xbest = mP[, sgbest], OFvalue = sGbest, popF = vF, Fmat = Fmat)
+    list(xbest = mP[, sgbest], OFvalue = sGbest, popF = vF,
+         Fmat = Fmat, xlist = xlist)
 }

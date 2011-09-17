@@ -59,13 +59,13 @@ such a matrix. If a function, it should take no arguments.}
 \item{\code{loopRepair}}{logical. Should the repair function (if specified) be evaluated through a loop? Defaults to TRUE.}
 \item{\code{printDetail}}{If \code{TRUE} (the default), information is printed.}
 \item{\code{printBar}}{If \code{TRUE} (the default), information in progress is printed (\code{txtProgressBar} is used).}
-\item{\code{storeF}}{Experimental: if \code{TRUE} (the default), the objective function values for every solution in every generation are stored and returned 
-as matrix \code{Fmat}.}
-\item{\code{storeSolutions}}{
-Experimental: if \code{TRUE}, the solutions (ie, decision variables) in every generation are stored and returned 
-as list \code{Plist}. To check, for instance, the solutions at the end of the \code{i}th generation, retrieve \code{Plist[[i]]}. This will be 
-a matrix of size \code{length(algo$min)} times \code{algo$nP}. Default is \code{FALSE}.
-}
+\item{\code{storeF}}{if \code{TRUE} (the default), the
+  objective function values for  every solution in every generation are stored and returned as matrix \code{Fmat}.}
+\item{\code{storeSolutions}}{if \code{TRUE}, the solutions (ie, decision
+  variables) in every generation are stored and returned as list
+  \code{Plist}. To check, for instance, the solutions at the end of the
+  \code{i}th generation, retrieve \code{Plist[[i]]}. This will be
+  a matrix of size \code{length(algo$min)} times \code{algo$nP}. Default is \code{FALSE}.}
 
 The vectors \code{min} and \code{max} are used to determine the dimension of the problem and to randomly 
 initialise the population. They are no constraints: a solution may well be outside these limits.
@@ -77,7 +77,7 @@ A list:
 \item{OFvalue}{objective function value of best solution.}
 \item{popF}{a vector. The objective function values in the population.}
 \item{Fmat}{if \code{algo$storeF} is TRUE, a matrix of size \code{algo$nG} times \code{algo$nP} containing the objective function values of all solutions over the generations; else \code{NA}.}
-\item{Plist}{if \code{algo$storeSolutions} is TRUE, a list of matrices; else \code{NA}.}
+\item{xlist}{if \code{algo$storeSolutions} is TRUE, a list of matrices; else \code{NA}.}
 }
 \references{
 Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Optimization in Finance}. Elsevier. 

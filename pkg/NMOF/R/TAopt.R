@@ -1,77 +1,66 @@
 TAopt <- function(OF, algo = list(), ...) {
-    
-    # defaults
-    algoD = list(
-        nD = 2000L,  # random steps for computing thresholds 
-        nT = 10L,    # number of thresholds
-        nS = 1000L,  # steps per threshold
-        q = 0.5, 
-        x0 = NULL, 
-        vT = NULL,
-        neighbour = NULL,
-        printDetail = TRUE, printBar = TRUE,
-        stepUp = 0L, scale = 1)
-    
-    # checks for list 'algo'
-    if ("" %in% names(algo)) 
-        warning("'algo' contained unnamed elements")
-    unusedOptions <- setdiff(names(algo), names(algoD))
-    unusedOptions <- setdiff(unusedOptions, "")
-    if (length(unusedOptions)) 
-        warning("unknown names in 'algo': ", 
-            paste(unusedOptions, collapse = ", "))
-    
-    # add defaults
-    algoD[names(algo)] <- algo  
-    algo <- algoD
-    
-    # user *must* specify the following
-    if (is.null(algo$neighbour)){
-        stop("specify a neighbourhood function") }
-    if (!is.function(algo$neighbour)){
+
+    algoD <- list(nD = 2000L, ### random steps for computing thresholds
+                  nT = 10L,   ### number of thresholds
+                  nS = 1000L, ### steps per threshold
+                  q = 0.5,    ### starting quantile for thresholds
+                  x0 = NULL,  ### initial solution
+                  vT = NULL,  ### threshold sequence
+                  neighbour = NULL,
+                  printDetail = TRUE,
+                  printBar = TRUE,
+                  stepUp = 0L,
+                  scale = 1,
+                  storeF = TRUE,
+                  storeSolutions = FALSE)
+
+    checkList(algo, algoD)
+    algoD[names(algo)] <- algo
+
+    ## user *must* specify the following
+    if (is.null(algoD$neighbour)){
+        stop("specify a neighbourhood function 'algo$neighbour'") }
+    if (!is.function(algoD$neighbour)){
         stop("'algo$neighbour' must be a function") }
-    if (is.null(algo$x0)){
+    if (is.null(algoD$x0)){
         stop("specify start solution 'algo$x0'") }
-    
+
     OF1 <- function(x) OF(x, ...)
-    N1 <- function(x) algo$neighbour(x, ...)
-    
-    nT <- as.integer(algo$nT)
-    if (nT < 1L)
-        stop("'nT' must be a positive integer")
-    nS <- as.integer(algo$nS)
-    if (nS < 1L)
-        stop("'nS' must be a positive integer")
-    nD <- as.integer(algo$nD)
-    if (nD < 1L)
-        stop("'nD' must be a positive integer")
-    
-    # evaluate x0 if function
-    if(is.function(algo$x0)) 
-        x0 <- algo$x0() else x0 <- algo$x0
-    
-    printDetail <- algo$printDetail
-    printBar <- algo$printBar
-    if (printBar && printDetail) 
-        printBar <- FALSE 
-    if (printDetail) 
+    N1 <- function(x) algoD$neighbour(x, ...)
+
+    nT <- makeInteger(algoD$nT, "'algo$nT'")
+    nS <- makeInteger(algoD$nS, "'algo$nS'")
+    nD <- makeInteger(algoD$nD, "'algo$nD'")
+    stepUp <- makeInteger(algoD$stepUp, "'algo$stepUp'", 0L)
+    niter <- nS * nT
+
+    ## evaluate x0 if function
+    if (is.function(algoD$x0))
+        x0 <- algoD$x0() else x0 <- algoD$x0
+
+    printDetail <- algoD$printDetail
+    printBar <- algoD$printBar
+    if (printBar && printDetail)
+        printBar <- FALSE
+    if (printDetail)
         cat("\nThreshold Accepting.\n")
-    # compute thresholds
-    if (is.null(algo$vT)) {
+
+    ## compute thresholds
+    if (is.null(algoD$vT)) {
         if (printDetail) {
             cat("\nComputing thresholds ... ")
             gc(FALSE)
             startTime <- proc.time()
         }
         if (printBar)
-            whatGen <- txtProgressBar (min = 1, max = nD, 
-                style = 3)
+            whatGen <- txtProgressBar (min = 1, max = nD,
+                                       style = 3)
         xc  <- x0
         xcF <- OF1(xc)
         diffF <- numeric(nD)
-        diffF[] <- NA 
+        diffF[] <- NA
         for(i in seq_len(nD)){
-            if(printBar) 
+            if(printBar)
                 setTxtProgressBar(whatGen, value = i)
             xn  <- N1(xc)
             xnF <- OF1(xn)
@@ -79,47 +68,55 @@ TAopt <- function(OF, algo = list(), ...) {
             xc  <- xn
             xcF <- xnF
         }
-        vT <- algo$q * ( ((nT - 1L):0L) / nT )
-        vT <- quantile(diffF, vT,na.rm = FALSE)
-        vT[nT] <- 0 # set last threshold to zero
+        vT <- algoD$q * ( ((nT - 1L):0L) / nT )
+        vT <- quantile(diffF, vT, na.rm = FALSE)
+        vT[nT] <- 0  ### set last threshold to zero
         if (printBar)
             close(whatGen)
         if (printDetail) {
             cat("OK.")
             endTime <- proc.time()
-            cat("\nEstimated remaining running time:", 
+            cat("\nEstimated remaining running time:",
                 as.numeric(endTime[3L] - startTime[3L]) /
-                    nD * nT * nS * (algo$stepUp + 1L), 
+                nD * niter * (stepUp + 1L),
                 "secs.\n\n")
             flush.console()
         }
-    } else vT <- algo$vT
-    if (algo$stepUp > 0L) 
-        vT <- rep(vT, as.integer(algo$stepUp) + 1L)
-    if (algo$scale < 0) {
+    } else vT <- algoD$vT
+    if (stepUp > 0L)
+        vT <- rep.int(vT, stepUp + 1L)
+    if (algoD$scale < 0) {
         scale <- 0
         warning("'scale' set to 0 ('scale' must be nonnegative)")
     } else {
-        scale <- algo$scale    
+        scale <- algoD$scale
     }
     vT <- vT * scale
     nT <- length(vT)
-    # evaluate initial solution
-    xc <- x0; xcF <- OF1(xc)
-    xbest <- xc; xbestF <- xcF 
-    Fmat <- array(NA, dim = c(algo$nS * nT, 2L))
+    niter <- nS * nT
+
+    ## evaluate initial solution
+    xc <- x0
+    xcF <- OF1(xc)
+    xbest <- xc; xbestF <- xcF
+
+    if (algoD$storeF)
+        Fmat <- array(NA, dim = c(algoD$nS * nT, 2L)) else Fmat <- NA
+    if (algoD$storeSolutions)
+        xlist <- list(xn = vector("list", length = niter),
+                      xc = vector("list", length = niter)) else xlist <- NA
     counter <- 0L
 
-    # main algorithm
+    ## main algorithm
     if (printDetail) {
         cat("\nRunning Threshold Accepting...\n")
         cat("Initial solution: ", prettyNum(xbestF),"\n")
         flush.console()
     }
-    if (printBar) 
-        whatGen <- txtProgressBar (min = 1, max = nT * nS, 
-            style = 3)
-    for (t in seq_len(nT)) {        
+    if (printBar)
+        whatGen <- txtProgressBar (min = 1, max = nT * nS,
+                                   style = 3)
+    for (t in seq_len(nT)) {
         for (s in seq_len(nS)) {
             xn <- N1(xc)
             xnF <- OF1(xn)
@@ -131,24 +128,36 @@ TAopt <- function(OF, algo = list(), ...) {
                     xbestF <- xnF
                 }
             }
+
+            ## number of iterations
             counter <- counter + 1L
-            if(printBar) 
+
+            if(printBar)
                 setTxtProgressBar(whatGen, value = counter)
-            Fmat[counter, 1L] <- xnF  # proposed solution
-            Fmat[counter, 2L] <- xcF  # accepted solution (cummin = xbestF)
+
+            if (algoD$storeF) {
+                Fmat[counter, 1L] <- xnF  ## proposed sol.
+                Fmat[counter, 2L] <- xcF  ## accepted sol. (cummin=xbestF)
+            }
+            if (algoD$storeSolutions) {
+                xlist[[c(1L, counter)]] <- xn
+                xlist[[c(1L, counter)]] <- xc
+            }
         }
         if (printDetail){
-            cat("Best solution (threshold ", 
-                t, "/", nT, "): ", 
+            cat("Best solution (threshold ",
+                t, "/", nT, "): ",
                 prettyNum(xbestF),"\n", sep = "")
             flush.console()
         }
     }
     if (printDetail)
-        cat("Finished.\nBest solution overall: ", prettyNum(xbestF), "\n", 
-            sep = "")
-    if (printBar) 
+        cat("Finished.\nBest solution overall: ",
+            prettyNum(xbestF), "\n", sep = "")
+    if (printBar)
         close(whatGen)
-    # return best solution
-    list(xbest = xbest, OFvalue = xbestF, Fmat = Fmat, vT = vT)
+
+    ## return best solution
+    list(xbest = xbest, OFvalue = xbestF,
+         Fmat = Fmat, xlist = xlist, vT = vT)
 }

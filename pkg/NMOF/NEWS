@@ -1,24 +1,36 @@
-Changes in Version 0.16-1 (2011-09-13)
+v0.16-2  (2011-09-17)
+
+  o all opt-functions now have arguments 'storeF' and 'storeSolutions'
+    (passed through 'algo'). If the latter is TRUE, intermediary results
+    will be stored in a list 'xlist' that is returned by the function
+    (what exactly 'xlist' contains, depends on the specific function)
+  o minor revision in vignette 'Robust Regression with
+    Particle Swarm Optimisation and Differential Evolution'
+  o NEWS file can now be found under inst/NEWS.Rd
+  o internal changes: a number of test utilities have been added
+    (not exported); see, for instance, ?checkList
+
+v0.16-1  (2011-09-13)
 
   o fixed: 'bracketing' had not been added to the NAMESPACE file (now it is)
   o tests for 'bracketing' added (see directory unitTests)
 
-Changes in Version 0.16-0 (2011-09-12)
+v0.16-0  (2011-09-12)
 
   o function 'bracketing' added
   o minor changes in function 'MA' (added checks)
 
-Changes in Version 0.15-6 (2011-09-11)
+v0.15-6  (2011-09-11)
 
   o vignette for 'qTable' added/corrected
 
-Changes in Version 0.15-5 (2011-09-04)
+v0.15-5  (2011-09-04)
 
   o 'qTable' revised (user-specified labels are now possible)
   o (very) short vignette for 'qTable' added
   o minor changes in code/documentation/examples
 
-Changes in Version 0.15-4
+v0.15-4
 
   o experimental: 'DEopt' takes further arguments 'storeF' and 'storeSolutions'
     (through list 'algo'). If 'storeF' is FALSE, objective function values are
@@ -29,24 +41,24 @@ Changes in Version 0.15-4
     (These settings will either be removed from 'DEopt' or be added to all
     opt-functions in one of the next package versions.)
 
-Changes in Version 0.15-3
+v0.15-3
 
   o new vignette ('Vectorised objective functions') added
   o more safeguards added to 'gridSearch'
 
-Changes in Version 0.15-2
+v0.15-2
 
   o function 'gridSearch' now takes a list 'mc.control' as an argument;
     it allows to pass settings to 'mclapply'
   o more tests were added (see unitTests.R)
   o minor changes in code/documentation/examples
 
-Changes in Version 0.15-1
+v0.15-1
 
   o more tests were added (see unitTests.R)
   o minor changes in code/documentation/examples
 
-Changes in Version 0.15-0
+v0.15-0
 
   o function 'gridSearch' can now evaluate a function that expects
     a list or a vector as its first argument
@@ -61,7 +73,7 @@ Changes in Version 0.15-0
   o small changes in the vignettes (in particular, seeds are set now)
   o minor changes in documentation/examples
 
-Changes in Version 0.14-2
+v0.14-2
 
   o experimental: 'gridSearch' now an has argument 'multicore'; if TRUE,
     the function calls 'mclapply' (from the multicore package) to
@@ -70,67 +82,67 @@ Changes in Version 0.14-2
   o directory NMOFex was updated
   o small correction in output of 'TAopt'
 
-Changes in Version 0.14-1
+v0.14-1
 
   o test cases for portfolio optimisation added (in unitTests/unitTests.R)
 
-Changes in Version 0.14-0
+v0.14-0
 
   o function 'gridSearch' was added
 
-Changes in Version 0.13-6
+v0.13-6
 
   o an initial population in 'DEopt', 'GAopt' and 'PSopt' is now passed
     through 'algo$initP' (before, a population could be passed via 'algo$mP')
   o directory NMOFex was updated
   o documentation was updated
 
-Changes in Version 0.13-5
+v0.13-5
 
   o directory NMOFex was updated
   o internal changes in several functions
   o GAopt.Rd was updated
 
-Changes in Version 0.13-4
+v0.13-4
 
   o directory NMOFex was updated
   o minor internal changes in several functions
 
-Changes in Version 0.13-3
+v0.13-3
 
   o directory NMOFex was added; it contains the code for
     'Examples and Extensions for the NMOF package'
   o documentation updated; minor changes in examples and vignettes
 
-Changes in Version 0.13-2
+v0.13-2
 
   o documentation, checks, unit tests added for function 'GAopt'
 
-Changes in Version 0.13-1
+v0.13-1
 
   o the population in 'GAopt' is now of mode logical (mistaking a logical
     vector for a numeric one is less harmful than the other way around)
 
-Changes in Version 0.13-0
+v0.13-0
 
   o function 'GAopt' added (minimisation by a Genetic Algorithm)
   o several unit tests added
   o documentation revised (thanks to Manfred Gilli for comments)
 
-Changes in Version 0.12-9
+v0.12-9
 
   o fewer simulation runs in vignettes to reduce build time
 
-Changes in Version 0.12-1
+v0.12-1
 
   o documentation has been revised
 
-Changes in Version 0.11-1
+v0.11-1
 
   o a number of test functions have been added (see ?testFunctions)
   o new examples added for 'DEopt' and 'TAopt'
   o vignettes have been revised
 
-Changes in Version 0.1-1
+v0.10-1
 
   o opt-functions now have 'printBar' and 'printDetail' option (set via 'algo')

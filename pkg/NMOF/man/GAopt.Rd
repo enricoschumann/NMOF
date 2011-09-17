@@ -1,7 +1,7 @@
 \name{GAopt}
 \alias{GAopt}
 \title{
-Optimisation with a Genetic Algorithm
+  Optimisation with a Genetic Algorithm  
 }
 \description{
 The implements a simple Genetic Algorithm for minimising a function.
@@ -62,8 +62,13 @@ then \code{storage.mode(mP)} will be tried (and a warning will be issued).}
 \item{\code{loopRepair}}{logical. Should the repair function (if specified) be evaluated through a loop? Defaults to TRUE.}
 \item{\code{printDetail}}{If \code{TRUE} (the default), information is printed.}
 \item{\code{printBar}}{If \code{TRUE} (the default), information in progress is printed (\code{txtProgressBar} is used).}
+\item{\code{storeF}}{if \code{TRUE} (the default), the
+  objective function values for  every solution in every generation are stored and returned as matrix \code{Fmat}.}
+\item{\code{storeSolutions}}{if \code{TRUE}, the solutions (ie, logical matrices) in every generation are stored and returned as list
+  \code{xlist}. To check, for instance, the solutions at the end of the
+  \code{i}th generation, retrieve \code{xlist[[i]]}. This will be
+  a matrix of size \code{length(algo$nB)} times \code{algo$nP}. Default is \code{FALSE}.}
 }
-
 }
 \value{
 A list:
@@ -71,6 +76,7 @@ A list:
 \item{OFvalue}{objective function value of best solution.}
 \item{popF}{a vector. The objective function values in the population.}
 \item{Fmat}{a matrix of size \code{algo$nG} times \code{algo$nP} containing the objective function values of all solutions over the generations.}
+\item{xlist}{if \code{algo$storeSolutions} is TRUE, a list of matrices; else \code{NA}.}
 }
 \references{
 Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Optimization in Finance}. Elsevier. 
@@ -86,9 +92,9 @@ Enrico Schumann
 \code{\link{DEopt}}, \code{\link{PSopt}}
 }
 \examples{
-# a *very* simple problem (why?):
-# match a binary (logical) string y
-#
+## a *very* simple problem (why?):
+## match a binary (logical) string y
+
 size <- 20L  # the length of the string
 OF <- function(x, data) sum(x != y)
 y <- runif(size) > 0.5
@@ -98,16 +104,17 @@ OF(y, data)  # the optimum value is zero
 OF(x, data)
 algo <- list(nB = size, nP = 20L, nG = 100L, prob = 0.002, 
     printBar = TRUE)
-system.time(sol <- GAopt(OF, algo = algo, data = data))
-# show differences (if any: marked by a dot)
+sol <- GAopt(OF, algo = algo, data = data)
+
+## show differences (if any: marked by a '^')
 cat(as.integer(y), "\n", as.integer(sol$xbest), "\n", 
     ifelse(y == sol$xbest , " ", "^"), "\n", sep = "")
 
 algo$nP <- 3L  # that shouldn't work so well
 sol2 <- GAopt(OF, algo = algo, data = data)
-# show differences (if any: marked by a dot)
+
+## show differences (if any: marked by a '^')
 cat(as.integer(y), "\n", as.integer(sol2$xbest), "\n", 
     ifelse(y == sol2$xbest , " ", "^"), "\n", sep = "")
 }
 \keyword{optimize}
-
