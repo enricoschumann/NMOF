@@ -63,7 +63,7 @@ such a matrix. If a function, it should take no arguments.}
   objective function values for  every solution in every generation are stored and returned as matrix \code{Fmat}.}
 \item{\code{storeSolutions}}{if \code{TRUE}, the solutions (ie, decision
   variables) in every generation are stored and returned as list
-  \code{Plist}. To check, for instance, the solutions at the end of the
+  \code{xlist}. To check, for instance, the solutions at the end of the
   \code{i}th generation, retrieve \code{Plist[[i]]}. This will be
   a matrix of size \code{length(algo$min)} times \code{algo$nP}. Default is \code{FALSE}.}
 
