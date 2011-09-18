@@ -2,7 +2,7 @@
 makeInteger <- function(x, label, min = 1L) {
     x <- as.integer(x)
     if (is.na(x) || x < min)
-        stop(label, "must be an integer greater/equal to ", min)
+        stop(label, " must be an integer greater/equal to ", min)
     x
 }
 

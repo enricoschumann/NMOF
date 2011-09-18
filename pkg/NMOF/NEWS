@@ -1,3 +1,12 @@
+v0.17-0  (2011-09-18)
+
+  o functions for Gaussian integration added: 'xwGauss' computes nodes and 
+    weights; 'changeInterval' transforms the nodes/weights to arbitrary 
+    intervals. Currently, only method 'legendre' is supported.
+  o documentation updated
+  o more tests added for opt-functions (for returned objects 'Fmat'
+    and 'xlist')
+
 v0.16-2  (2011-09-17)
 
   o all opt-functions now have arguments 'storeF' and 'storeSolutions'

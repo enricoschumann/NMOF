@@ -1,5 +1,15 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.17-0 (2011-09-18)}{
+  \itemize{
+    \item functions for Gaussian integration added: 'xwGauss' computes nodes and 
+      weights; 'changeInterval' transforms the nodes/weights to arbitrary 
+      intervals. Currently, only method 'legendre' is supported.
+    \item documentation updated
+    \item more tests added for opt-functions (for returned objects 'Fmat'
+      and 'xlist')
+  }
+}
 \section{Changes in NMOF version 0.16-2 (2011-09-17)}{
   \itemize{
     \item all opt-functions now have arguments 'storeF' and 'storeSolutions'

@@ -1,4 +1,3 @@
-% version 2011-05-31
 \name{PSopt}
 \alias{PSopt}
 \title{
@@ -79,13 +78,20 @@ such a matrix. If a function, it should take no arguments.}
 \item{\code{printDetail}}{If \code{TRUE} (the default), information is printed.}
 \item{\code{printBar}}{If \code{TRUE} (the default), information in progress is printed (\code{txtProgressBar} from package \pkg{utils} 
 is used).}
-\item{\code{storeF}}{if \code{TRUE} (the default), the
-  objective function values for  every solution in every generation are stored and returned as matrix \code{Fmat}.}
-\item{\code{storeSolutions}}{if \code{TRUE}, the solutions (ie, decision variables) in every generation are stored and returned as list
-  \code{Plist} and \code{Pbestlist}. To check, for instance, the solutions at the end of the \code{i}th iteration, retrieve \code{Plist[[i]]}; the best solutions at the end of this iteration are in \code{Pbestlist[[i]]}. \code{Plist[[i]]}/\code{Pbestlist[[i]]} will be
-  a matrix of size \code{length(algo$min)} times \code{algo$nP}. Default
-  is \code{FALSE}; then \code{Plist} and \code{Pbestlist} are
-  \code{NA}.}}
+\item{\code{storeF}}{if \code{TRUE} (the default), the objective
+  function values for 
+  every solution in every generation are stored and returned as matrix \code{Fmat}.}
+\item{\code{storeSolutions}}{default
+  is \code{FALSE}. If \code{TRUE}, the solutions (ie, decision
+  variables) in every generation are stored as lists
+  \code{P} and \code{Pbest}, both stored in the list \code{xlist} which the
+  function returns. To check, for instance, the solutions at the end of
+  the \code{i}th iteration, retrieve \code{xlist[[1L, i]]}; the best
+  solutions at the end of this iteration are in \code{xlist[[2L,
+    i]]}. \code{P[[i]]}/\code{Pbest[[i]]} will be
+  a matrix of size \code{length(algo$min)} times \code{algo$nP}. ; then \code{Plist} and \code{Pbestlist} are
+  \code{NA}.}
+} % end describe
 The vectors \code{min} and \code{max} are used to determine the dimension of the problem and 
 to randomly initialise the population. They are no constraints: a solution may well be outside these limits.
 }
@@ -94,7 +100,12 @@ Returns a list:
 \item{xbest}{the solution.}
 \item{OFvalue}{objective function value of best solution.}
 \item{popF}{a vector: the objective function values in the population.}
-\item{Fmat}{a matrix of size \code{nG} times \code{nP}. Each column contains the best objective function value found by the particular solution.}
+\item{Fmat}{if \code{algo$storeF} is TRUE, a matrix of size \code{nG}
+  times \code{nP}. Each column contains the best objective function value found by the particular solution.}
+\item{xlist}{if \code{algo$storeSolutions} is TRUE, this contains two
+  lists \code{P} and \code{Pbest} of matrices; else \code{NA}.
+}
+
 }
 \references{
 Eberhart, R.C. and Kennedy, J. (1995) A New Optimizer using Particle Swarm theory. 
@@ -110,11 +121,11 @@ Enrico Schumann
 \code{\link{DEopt}}
 }
 \examples{
-# Least Median of Squares (LMS) estimation
+## Least Median of Squares (LMS) estimation
 genData <- function(nP, nO, ol, dy) {
-    # create dataset as in Salibian-Barrera & Yohai 2006
-    # nP = regressors, nO  = number of obs
-    # ol = number of outliers, dy  = outlier size 
+    ### create dataset as in Salibian-Barrera & Yohai 2006
+    ### nP = regressors, nO  = number of obs
+    ### ol = number of outliers, dy  = outlier size 
     mRN <- function(m, n) array(rnorm(m * n), dim = c(m, n))
     y <- mRN(nO, 1)
     X <- cbind(as.matrix(numeric(nO) + 1), mRN(nO, nP - 1L))
@@ -158,7 +169,7 @@ if (require("MASS", quietly = TRUE)) {
             method = "lqs", 
             quantile = data$h))
 }
-# check
+## check
 x1 <- sort((y - X \%*\% as.matrix(sol$xbest))^2)[h]
 cat("particle swarm\n",x1,"\n\n")
 

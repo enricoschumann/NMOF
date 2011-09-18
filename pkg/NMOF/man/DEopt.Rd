@@ -61,11 +61,13 @@ such a matrix. If a function, it should take no arguments.}
 \item{\code{printBar}}{If \code{TRUE} (the default), information in progress is printed (\code{txtProgressBar} is used).}
 \item{\code{storeF}}{if \code{TRUE} (the default), the
   objective function values for  every solution in every generation are stored and returned as matrix \code{Fmat}.}
-\item{\code{storeSolutions}}{if \code{TRUE}, the solutions (ie, decision
-  variables) in every generation are stored and returned as list
-  \code{xlist}. To check, for instance, the solutions at the end of the
-  \code{i}th generation, retrieve \code{Plist[[i]]}. This will be
-  a matrix of size \code{length(algo$min)} times \code{algo$nP}. Default is \code{FALSE}.}
+\item{\code{storeSolutions}}{default is \code{FALSE}. If \code{TRUE}, the
+  solutions (ie, decision variables) in every generation are stored and
+  returned as a list \code{P} in \code{xlist}. To check, for instance, the solutions at the end of the
+  \code{i}th generation, retrieve \code{xlist[[c(1L, i)]]}. This will be
+  a matrix of size \code{length(algo$min)} times \code{algo$nP}.
+  (For consistency with other functions, \code{xlist} is
+  itself a list. In the case of \code{DEopt}, it contains just one element.)}
 
 The vectors \code{min} and \code{max} are used to determine the dimension of the problem and to randomly 
 initialise the population. They are no constraints: a solution may well be outside these limits.
@@ -76,8 +78,10 @@ A list:
 \item{xbest}{the solution (the best member of the population).}
 \item{OFvalue}{objective function value of best solution.}
 \item{popF}{a vector. The objective function values in the population.}
-\item{Fmat}{if \code{algo$storeF} is TRUE, a matrix of size \code{algo$nG} times \code{algo$nP} containing the objective function values of all solutions over the generations; else \code{NA}.}
-\item{xlist}{if \code{algo$storeSolutions} is TRUE, a list of matrices; else \code{NA}.}
+\item{Fmat}{if \code{algo$storeF} is TRUE, a matrix of size
+  \code{algo$nG} times 
+  \code{algo$nP} containing the objective function values of all solutions over the generations; else \code{NA}.}
+\item{xlist}{if \code{algo$storeSolutions} is TRUE, this contains a list \code{P} of matrices; else \code{NA}.}
 }
 \references{
 Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Optimization in Finance}. Elsevier. 
@@ -111,9 +115,9 @@ algo <- list(nP = 50L,
             max = c( 10,  10))
 
 sol <- DEopt(OF = OF, algo = algo)
-# correct answer: -3.30686864747523
+## correct answer: -3.30686864747523
 format(sol$OFvalue, digits = 12)
-# check convergence of population
+## check convergence of population
 sd(sol$popF)
 ts.plot(sol$Fmat, xlab = "generations", ylab = "OF")
 
@@ -132,27 +136,27 @@ algo <- list(printBar = FALSE,
                   min = rep(-100, size), 
                   max = rep( 100, size))
 
-# run DEopt
+## run DEopt
 (t1 <- system.time(sol <- DEopt(OF = OF, algo = algo)))
 sol$xbest
-sol$OFvalue  # should be zero (with luck)
+sol$OFvalue  ### should be zero (with luck)
 
-# a vectorised OF: works only with a *matrix* x
+## a vectorised OF: works only with a *matrix* x
 OF2 <- function(x) {
     n <- dim(x)[1L]
     xi <- x[1L:(n - 1L), ]
     colSums(100 * (x[2L:n, ] - xi * xi)^2 + (1 - xi)^2)
 }
 
-# random solution
+## random solution
 x <- matrix(rnorm(size * algo$nP), size, algo$nP)
 all.equal(OF2(x)[1L:3L], c(OF(x[ ,1L]), OF(x[ ,2L]), OF(x[ ,3L])))
 
-# run DEopt and compare computing time
+## run DEopt and compare computing time
 algo$loopOF <- FALSE
 (t2 <- system.time(sol2 <- DEopt(OF = OF2, algo = algo)))
 sol2$xbest
-sol2$OFvalue   # should be zero (with luck)
-t1[3L]/t2[3L]  # speedup
+sol2$OFvalue   ### should be zero (with luck)
+t1[3L]/t2[3L]  ### speedup
 }
 \keyword{optimize}
