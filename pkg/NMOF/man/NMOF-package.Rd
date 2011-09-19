@@ -9,20 +9,28 @@ interfaces may change in the future; there is little error handling. Comments/co
 (please contact the maintainer directly).
 }
 \details{
-The package contains implementations of several optimisation heuristics: Differential Evolution (\code{\link{DEopt}}), 
-Genetic Algorithms (\code{\link{GAopt}}), (Stochastic) Local Search (\code{\link{LSopt}}), Particle Swarm (\code{\link{PSopt}}) and 
-Threshold Accepting (\code{\link{TAopt}}). The term heuristic is understood here as a general purpose optimisation method. 
+The package contains implementations of several optimisation heuristics:
+Differential Evolution (\code{\link{DEopt}}), Genetic Algorithms
+(\code{\link{GAopt}}), (Stochastic) Local Search (\code{\link{LSopt}}),
+Particle Swarm (\code{\link{PSopt}}) and Threshold Accepting
+(\code{\link{TAopt}}). The term heuristic is understood here as a
+general purpose optimisation method.
 
-Dependencies: The package is completely written in \R. A number of packages are \emph{suggested} (they are 
-not necessary to use the \pkg{NMOF} package). Package \pkg{MASS} is required to run the complete example 
-for \code{\link{PSopt}}, and also in one of the vignettes (\code{PSlms}); \pkg{multicore} is optional for 
-functions \code{gridSearch} and \code{restartOpt} (and may become an option for other functions too); 
-\pkg{quadprog} is needed for a vignette (\code{TAportfolio}) and some tests; \pkg{RUnit} is needed to rerun 
-the tests in directory \sQuote{\code{unitTests}}.
+Dependencies: The package is completely written in \R. A number of
+packages are \emph{suggested} (they are not necessary to use the
+\pkg{NMOF} package). Package \pkg{MASS} is required to run the complete
+example for \code{\link{PSopt}}, and also in one of the vignettes
+(\code{PSlms}); \pkg{multicore} is optional for functions
+\code{\link{bracketing}}, \code{\link{gridSearch}} and
+\code{\link{restartOpt}}, and may become an option for other functions;
+\pkg{quadprog} is needed for a vignette (\code{TAportfolio}) and some
+tests; \pkg{RUnit} is needed to run the tests in subdirectory
+\sQuote{\code{unitTests}}.
 
-Version numbering: minor version numbers (like in \code{x.1-x}) are incremented when a feature is added or an 
-existing feature has been substantially revised. The patch level (\code{x.x-1}) is incremented with any 
-published change.
+Version numbering: minor version numbers (like in \code{x.1-x}) are
+incremented when a feature is added or an existing feature is
+substantially revised. The patch level (\code{x.x-1}) is incremented
+with any published change.
 
 }
 \author{Enrico Schumann
@@ -39,6 +47,7 @@ Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Opti
 require("NMOF")
 packageDescription("NMOF")
 help(package = "NMOF")
+news(Version >= "0.17-0", package = "NMOF")
 vignette(package = "NMOF")
 nss <- vignette("DEnss", package = "NMOF")
 print(nss)
