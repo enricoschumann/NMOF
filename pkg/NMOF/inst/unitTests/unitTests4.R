@@ -1,3 +1,5 @@
+require("NMOF")
+
 ## internals
 
 test.checkList <- function() {

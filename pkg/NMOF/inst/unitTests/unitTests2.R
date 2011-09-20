@@ -1,3 +1,5 @@
+require("NMOF")
+
 ## gridSearch
 test.gridSearch <- function() {
     testFun  <- function(x) x[1L]   + x[2L]^2
@@ -7,14 +9,14 @@ test.gridSearch <- function() {
 
     ## ERROR -- upper not sorted
     lower <- 1:3; upper <- 5:4; n <- 8
-    checkException(sol <- gridSearch(fun = testFun,
-                                     lower = lower, upper = upper,
-                                     n = n, printDetail = FALSE),
+    checkException(gridSearch(fun = testFun,
+                              lower = lower, upper = upper,
+                              n = n, printDetail = FALSE),
                    silent = TRUE)
 
     ## ERROR -- upper < lower
     lower <- 1:3; upper <- 2; n <- 8
-    checkException(sol <- gridSearch(fun = testFun,
+    checkException(gridSearch(fun = testFun,
                                      lower = lower, upper = upper, n = n,
                                      printDetail = FALSE), silent = TRUE)
 
@@ -74,10 +76,10 @@ test.bracketing <- function() {
         Sys.sleep(0.1)
         cos(1/x^2)
     }
-    t1 <- system.time(bracketing(testFun, interval = c(0.3, 0.9),
+    system.time(bracketing(testFun, interval = c(0.3, 0.9),
                                  n = 10L, method = "vectorise"))
-    t2 <- suppressWarnings(system.time(bracketing(testFun, interval = c(0.3, 0.9),
-                                                  n = 10L, method = "multicore")))
+    suppressWarnings(system.time(bracketing(testFun, interval = c(0.3, 0.9),
+                                            n = 10L, method = "multicore")))
 
     ## no zero
     testFun <- function(x) 1
@@ -97,4 +99,25 @@ test.bracketing <- function() {
     res <- bracketing(testFun, k = 1, interval = c(0.3,0.9), n = 26L,
                       method = "vectorise")
     checkTrue(all(dim(res) == c(0L, 2L)))
+}
+
+
+## integration
+test.xwGauss <- function() {
+    ## http://dlmf.nist.gov/3.5
+
+    xwGauss(n =   1, "legendre")
+    xwGauss(n =  10, "legendre")
+    xwGauss(n = 200, "legendre")
+
+    xwGauss(n =   1, "laguerre")
+    xwGauss(n =  10, "laguerre")
+    xwGauss(n = 200, "laguerre")
+
+    xwGauss(n =   1, "hermite")
+    xwGauss(n =  10, "hermite")
+    xwGauss(n = 200, "hermite")
+
+    checkException(xwGauss(n = 1, "yo"), silent = TRUE)
+    checkException(xwGauss(n = 0, "legendre"), silent = TRUE)
 }

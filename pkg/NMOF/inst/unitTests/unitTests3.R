@@ -1,5 +1,8 @@
-## TA portfolio optimisation
+require("NMOF")
 
+## APPLICATIONS
+
+## TA portfolio optimisation
 test.TAopt.Applications <- function() {
     ## [requires quadprog]
     ## Test if TA can solve two simple portfolio optimisation

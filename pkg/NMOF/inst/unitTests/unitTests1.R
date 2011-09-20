@@ -1,5 +1,6 @@
 require("NMOF")
 
+## optimisation functions, MA, testFunctions, option pricing
 
 ## MA
 test.MA <- function() {
@@ -159,8 +160,10 @@ test.DEopt <- function() {
     checkException(res <- DEopt(OF = trefethen2, algo), silent = TRUE)
 
     ## 'z' is required and provided
-    checkEquals(round(DEopt(OF = trefethen2, algo, z = 2)$OFvalue,2),-1.31)
-    checkEquals(round(DEopt(OF = trefethen2, algo,     2)$OFvalue,2),-1.31)
+    checkEquals(round(DEopt(OF = trefethen2, algo, z = 2)$OFvalue,2),
+                -1.31)
+    checkEquals(round(DEopt(OF = trefethen2, algo,     2)$OFvalue,2),
+                -1.31)
 
     ## test function: DE should find minimum
     OF <- tfRosenbrock
@@ -277,43 +280,41 @@ test.PSopt <- function() {
 ## TAopt
 test.TAopt <- function() {
 
-	## TA should come close to the minimum
-	xTRUE <- runif(5)
-	data <- list(xTRUE = xTRUE, step = 0.02)
-	OF <- function(x, data) max(abs(x - data$xTRUE))
-	neighbour <- function(x, data) {
-		##bit <- sample.int(length(data$xTRUE), 1L)
-		x <- x + runif(length(data$xTRUE))*data$step - data$step/2
-		x
-	}
-	x0 <- runif(5)
-	algo <- list(
-			q = 0.05, nS = 1000L, nT = 15L,
-			neighbour = neighbour, x0 = x0,
-			printBar = FALSE,
-			printDetail = FALSE)
-	res <- TAopt(OF, algo = algo, data = data)
-	checkTrue(res$OFvalue < 0.005)
+    ## TA should come close to the minimum
+    xTRUE <- runif(5)
+    data <- list(xTRUE = xTRUE, step = 0.02)
+    OF <- function(x, data) max(abs(x - data$xTRUE))
+    neighbour <- function(x, data) {
+        x <- x + runif(length(data$xTRUE))*data$step - data$step/2
+        x
+    }
+    x0 <- runif(5)
+    algo <- list(q = 0.05, nS = 1000L, nT = 15L,
+                 neighbour = neighbour, x0 = x0,
+                 printBar = FALSE,
+                 printDetail = FALSE)
+    res <- TAopt(OF, algo = algo, data = data)
+    checkTrue(res$OFvalue < 0.005)
 
-	## length(returned thresholds) == specified length(thresholds)
-	checkTrue(length(res$vT) == algo$nT)
+    ## length(returned thresholds) == specified length(thresholds)
+    checkTrue(length(res$vT) == algo$nT)
 
-	## specified thresholds are used
-	algo$vT <- c(0.1,0.05,0)
-	algo$nS <- 1000L
-	res <- TAopt(OF, algo = algo, data = data)
-	checkEqualsNumeric(res$vT,algo$vT)
+    ## specified thresholds are used
+    algo$vT <- c(0.1,0.05,0)
+    algo$nS <- 1000L
+    res <- TAopt(OF, algo = algo, data = data)
+    checkEqualsNumeric(res$vT,algo$vT)
 
-	## stepUp is used
-	algo$stepUp <- 2L
-	res <- TAopt(OF, algo = algo, data = data)
-	checkEqualsNumeric(res$vT, rep(algo$vT, 3L))
+    ## stepUp is used
+    algo$stepUp <- 2L
+    res <- TAopt(OF, algo = algo, data = data)
+    checkEqualsNumeric(res$vT, rep(algo$vT, 3L))
 
-	## scale is used
-	algo$stepUp <- 0L
-	algo$scale <- 1.5
-	res <- TAopt(OF, algo = algo, data = data)
-	checkEqualsNumeric(res$vT, algo$scale*c(0.1,0.05,0))
+    ## scale is used
+    algo$stepUp <- 0L
+    algo$scale <- 1.5
+    res <- TAopt(OF, algo = algo, data = data)
+    checkEqualsNumeric(res$vT, algo$scale*c(0.1,0.05,0))
 }
 
 
@@ -337,21 +338,21 @@ test.LSopt <- function() {
 
 ## TESTfunctions
 test.testFunctions <- function() {
-	x <- rep(0,10L)
-	checkEqualsNumeric(tfAckley(x), 0)
-	checkEqualsNumeric(tfGriewank(x), 0)
-	checkEqualsNumeric(tfRastrigin(x), 0)
+    x <- rep(0,10L)
+    checkEqualsNumeric(tfAckley(x), 0)
+    checkEqualsNumeric(tfGriewank(x), 0)
+    checkEqualsNumeric(tfRastrigin(x), 0)
 
-	x <- rep(1,10L)
-	checkEqualsNumeric(tfRosenbrock(x), 0)
+    x <- rep(1,10L)
+    checkEqualsNumeric(tfRosenbrock(x), 0)
 
-	x <- rep(420.9687, 10)
-	checkEqualsNumeric(tfSchwefel(x), -418.9829*10,
-			tolerance = 1e-4)
+    x <- rep(420.9687, 10)
+    checkEqualsNumeric(tfSchwefel(x), -418.9829*10,
+                       tolerance = 1e-4)
 
-	x <- c(-0.0244, 0.2106)
-	checkEqualsNumeric(tfTrefethen(x), -3.306868,
-			tolerance = 1e-4)
+    x <- c(-0.0244, 0.2106)
+    checkEqualsNumeric(tfTrefethen(x), -3.306868,
+                       tolerance = 1e-4)
 }
 
 
@@ -369,7 +370,7 @@ test.GAopt <- function() {
     ## error -- wrong size of initP
     algo$initP <- array(FALSE, dim = c(20,10))
     checkException(res <- GAopt(OF = OF, algo), silent = TRUE)
-    algo$initP <- function() array(FALSE, dim = c(20,20))
+    algo$initP <- function() array(FALSE, dim = c(20L,20L))
     checkException(res <- GAopt(OF = OF, algo), silent = TRUE)
     algo$initP <- NULL
 
@@ -393,4 +394,25 @@ test.GAopt <- function() {
     a <- numeric(10L)
     checkException(solGA <- GAopt(a, algo = algo, data = data),
                    silent = TRUE)
+}
+
+
+## restartOpt
+test.restartOpt <- function() {
+    xTRUE <- runif(5L)
+    data <- list(xTRUE = xTRUE, step = 0.02)
+    OF <- function(x, data)
+        max(abs(x - data$xTRUE))
+
+    neighbour <- function(x, data)
+        x + runif(length(data$xTRUE))*data$step - data$step/2
+
+    x0 <- runif(5L)
+    algo <- list(q = 0.05, nS = 50L, nT = 5L,
+                 neighbour = neighbour, x0 = x0,
+                 printBar = FALSE, printDetail = FALSE)
+
+    sols <- restartOpt(fun = TAopt, n = 10L,
+                       OF = OF, algo = algo, data = data)
+    checkEquals(length(sols), 10L)
 }
