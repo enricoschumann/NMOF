@@ -24,8 +24,10 @@ LSopt <- function(OF, algo = list(), ...) {
     printDetail  <- algoD$printDetail
     printBar  <- algoD$printBar
 
-    if (algoD$storeF)
+    if (algoD$storeF) {
         Fmat <- array(NA, dim = c(nS, 2L))
+        colnames(Fmat) <- c("xnF", "xcF")
+    } else Fmat <- NA
     if (algoD$storeSolutions)
         xlist <- list(xn = vector("list", length = nS),
                       xc = vector("list", length = nS)) else xlist <- NA
