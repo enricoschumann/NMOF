@@ -48,17 +48,37 @@ echo $contents; } ?>
 <h2>Numerical Methods and Optimization in Finance</h2>
 
 <img src = "http://enricoschumann.wikidot.com/local--files/table-of-contents/book.jpg" width="15%" align="left" vspace="5" hspace="20"/>
-<p>
-The book explains tools for computational finance. It covers fundamental numerical analysis and computational techniques, for example for option pricing, but two topics are given special attention: simulation and optimization. Many chapters are organized as case studies, dealing with problems like portfolio insurance or risk estimation; in particular, several chapters explain optimization heuristics and how to use them for portfolio selection or the calibration of option pricing models. Such practical examples allow readers to learn the required steps for solving specific problems, and to apply these steps to other problems, too. At the same time, the chosen applications are relevant enough to make the book a useful reference on how to handle given problems. Matlab and R sample code is provided in the text and can be downloaded from the book's website; an R-package 'NMOF' is also available (see below).
-</p>
+
+<p> The book explains tools for computational finance. It covers
+fundamental numerical analysis and computational techniques, for
+example for option pricing, but two topics are given special
+attention: simulation and optimization. Many chapters are organized as
+case studies, dealing with problems like portfolio insurance or risk
+estimation; in particular, several chapters explain optimization
+heuristics and how to use them for portfolio selection or the
+calibration of option pricing models. Such practical examples allow
+readers to learn the required steps for solving specific problems, and
+to apply these steps to other problems, too. At the same time, the
+chosen applications are relevant enough to make the book a useful
+reference on how to handle given problems. Matlab and R sample code is
+provided in the text and can be downloaded from the book's website; an
+R-package 'NMOF' is also available (see below).  </p>
 
 
+<h3>Links...</h3>
 
-<p> For more information about the book, please visit the publisher's website <a href="http://www.elsevierdirect.com/ISBN/9780123756626/Numerical-Methods-and-Optimization-in-Finance"><strong>here</strong></a>. </p>
-<p></p>
-<p> To get the 'NMOF' package, go <a href="http://<?php echo $domain; ?>/projects/<?php echo $group_name; ?>/"><strong>here</strong></a>. </p>
-<p></p>
-<p> The 'NMOF-News' mailing list announces new versions of the package and other news regarding the book. To browse the archives or to subscribe, go <a href="https://lists.r-forge.r-project.org/cgi-bin/mailman/listinfo/nmof-news"><strong>here</strong></a>. </p>
+<ul type ="circle">
+<li> the book's <a href="http:/nmof.net">offical website</a>
+
+<li> the <a
+href="http://www.elsevierdirect.com/ISBN/9780123756626/Numerical-Methods-and-Optimization-in-Finance">publisher's
+website</a>
+
+<li> instructions <a href="http://<?php echo $domain; ?>/projects/<?php echo $group_name; ?>/">how to get the 'NMOF' package</a>
+
+<li> the <a
+href="https://lists.r-forge.r-project.org/cgi-bin/mailman/listinfo/nmof-news">'NMOF-News' mailing list</a> announces new versions of the package
+and other news regarding the book (browse the list's <a href="http://lists.r-forge.r-project.org/pipermail/nmof-news/">archives</a>)
 
 </body>
 </html>
