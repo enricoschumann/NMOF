@@ -100,8 +100,10 @@ TAopt <- function(OF, algo = list(), ...) {
     xcF <- OF1(xc)
     xbest <- xc; xbestF <- xcF
 
-    if (algoD$storeF)
-        Fmat <- array(NA, dim = c(algoD$nS * nT, 2L)) else Fmat <- NA
+    if (algoD$storeF) {
+        Fmat <- array(NA, dim = c(niter, 2L))
+        colnames(Fmat) <- c("xnF", "xcF")
+    } else Fmat <- NA
     if (algoD$storeSolutions)
         xlist <- list(xn = vector("list", length = niter),
                       xc = vector("list", length = niter)) else xlist <- NA

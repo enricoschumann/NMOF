@@ -1,6 +1,17 @@
+v0.18-0  (2011-09-20)
+
+  o 'restartOpt' now has option 'multicore'
+  o the 'method' option of function 'xwGauss' can now take on values 
+    'hermite' and 'laguerre'
+  o documentation updated 
+  o new examples added in 'Examples and Extensions for the NMOF package'
+    (see subdirectory NMOFex)
+  o test cases added for 'restartOpt' and 'xwGauss' 
+    (see subdirectory unitTests)
+
 v0.17-0  (2011-09-18)
 
-  o functions for Gaussian integration added: 'xwGauss' computes nodes and 
+  o functions for Gaussian integration added: 'xwGauss' computes nodes and
     weights; 'changeInterval' transforms the nodes/weights to arbitrary 
     intervals. Currently, only method 'legendre' is supported.
   o documentation updated

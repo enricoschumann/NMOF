@@ -1,4 +1,3 @@
-% version 2011-08-05
 \name{restartOpt}
 \alias{restartOpt}
 \title{
@@ -8,7 +7,7 @@ Restart an Optimisation Algorithm
 The function provides a simple wrapper for the optimisation algorithms in the package.
 }
 \usage{
-restartOpt(fun, n, OF, algo, ...)
+restartOpt(fun, n, OF, algo, ..., multicore = FALSE, mc.control = list())
 }
 \arguments{
   \item{fun}{
@@ -26,10 +25,15 @@ The list \code{algo} that is passed to the particular optimisation function.
   \item{\dots}{
 Additional data that is passed to the particular optimisation function.
 }
-%  \item{multicore}{
-%Experimental. Uses \code{mclapply} to distribute the restarts. Requires the \pkg{multicore} package.
-%}
-
+\item{multicore}{
+  If \code{TRUE}, \code{mclapply} is used to run the restarts. Requires
+  the \pkg{multicore} package.
+}
+\item{mc.control}{
+  a list containing settings that will be passed to \code{mclapply} if
+  \code{multicore} is \code{TRUE}. Must be a list with named
+  elements. See the documentation of \code{mclapply}.
+}
 }
 \details{
 The function returns a list of lists. If a specific starting solution is passed, all runs will start from the same solution. 

@@ -30,7 +30,8 @@ We will use the function \texttt{lqs} from the \texttt{MASS} package
 \texttt{n}~observations and \texttt{p}~regressors, created with the
 function \texttt{createData}.
 <<>>=
-createData <- function(n, p, constant = TRUE, sigma = 2, oFrac = 0.1) {
+createData <- function(n, p, constant = TRUE,
+                       sigma = 2, oFrac = 0.1) {
     X <- array(rnorm(n * p), dim = c(n, p))
     if (constant) X[ ,1L] <- 1L
     b <- rnorm(p)
@@ -49,16 +50,16 @@ residuals to be minimised. Note that we put \texttt{as.vector(y)} into
 \texttt{data} so that the vector gets `recycled' in the objective
 function.
 <<>>=
-n <- 100L  ## number of observations
-p <- 5L   ## number of regressors
-constant <- TRUE; sigma <- 5; oFrac  <- 0.2
-h <- 75L  ## ... or use something like floor((n+1)/2)
+n <- 100L   ### number of observations
+p <- 10L    ### number of regressors
+constant <- TRUE; sigma <- 3; oFrac  <- 0.1
+h <- 75L    ### ... or use something like floor((n+1)/2)
 
-aux <- createData(n,p,constant,sigma,oFrac)
+aux <- createData(n, p, constant, sigma, oFrac)
 X <- aux$X; y <- aux$y
 data <- list(y = as.vector(y), X = X, h = h)
 @
-The outliers are clearly visible.
+The outliers are visible.
 <<fig = TRUE, height = 3.8>>=
 par(bty = "n", las = 1)
 plot(X[ ,2L], type = "b", ylab = "X values")
@@ -72,14 +73,14 @@ OF <- function(param,data) {
     X <- data$X; y <- data$y
     aux <- y - X %*% param
     aux <- aux * aux
-    aux <- apply(aux, 2, sort, partial = data$h)
+    aux <- apply(aux, 2L, sort, partial = data$h)
     colSums(aux[1:data$h, ])  ### LTS
 }
 OF <- function(param, data) {
     X <- data$X; y <- data$y
     aux <- y - X %*% param
     aux <- aux * aux
-    aux <- apply(aux, 2, sort, partial = data$h)
+    aux <- apply(aux, 2L, sort, partial = data$h)
     aux[data$h, ]  ### LQS
 }
 @
@@ -90,7 +91,7 @@ Both functions are vectorised. They work with a single solution
 \section{Using DE and PSO}
 We run DE and PSO. We compare the result with \texttt{lqs}.
 <<>>=
-popsize <- 50L; generations <- 500L
+popsize <- 100L; generations <- 500L
 ps <- list(min = rep(-10,p),
            max = rep( 10,p),
             c1 = 0.5,
@@ -129,7 +130,6 @@ if (require(MASS, quietly = TRUE)) {
 cat("lqs:   ", res1, "\n",
     "PSopt: ", res2, "\n",
     "DEopt: ", res3, "\n", sep = "")
-
 @
 
 To demonstrate the advantage of a vectorised objective function, we
@@ -159,14 +159,14 @@ t1ps[[3L]]/t2ps[[3L]]
 t1de[[3L]]/t2de[[3L]]
 @
 Finally, we can show the effect that DE performs better with a small
-value for \texttt{F}. (We run only five restarts to keep the time to
-build the vignette acceptable.)
+value for \texttt{F}. (We run only three restarts to keep the time to
+build the vignette acceptable. When redoing this analysis, you should
+increase \texttt{trials}.)
 
 <<fig = TRUE, height = 3.8>>=
-trials <- 5L
+trials <- 3L
 de$nP <- popsize; de$nG <- generations
 ps$nP <- popsize; ps$nG <- generations
-
 
 de$F <- 0.2
 allResF02 <- numeric(trials)
@@ -182,10 +182,10 @@ for (i in seq_len(trials))
 Xlim <- pretty(c(allResF02, allResF08))
 
 plot(ecdf(allResF02), main = "", xlab = "", ylab = "",
-    xlim = c(min(Xlim), max(Xlim)))
+     xlim = c(min(Xlim), max(Xlim)))
 lines(ecdf(allResF08), main = "", xlab = "", ylab = "", col = "blue")
 legend(x = "right", legend = c("F = 0.2", "F = 0.8"),
-     col = c("black", "blue"),lty = 1, pch = 19)
+       col = c("black", "blue"),lty = 1, pch = 19)
 @
 
 But as so often: increasing the computational resources (eg,

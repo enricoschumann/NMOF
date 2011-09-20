@@ -1,8 +1,20 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.18-0 (2011-09-20)}{
+  \itemize{
+    \item 'restartOpt' now has option 'multicore'
+    \item the 'method' option of function 'xwGauss' can now take on values 
+      'hermite' and 'laguerre'
+    \item documentation updated 
+    \item new examples added in 'Examples and Extensions for the NMOF package'
+      (see subdirectory NMOFex)
+    \item test cases added for 'restartOpt' and 'xwGauss' 
+      (see subdirectory unitTests)
+  }
+}
 \section{Changes in NMOF version 0.17-0 (2011-09-18)}{
   \itemize{
-    \item functions for Gaussian integration added: 'xwGauss' computes nodes and 
+    \item functions for Gaussian integration added: 'xwGauss' computes nodes and
       weights; 'changeInterval' transforms the nodes/weights to arbitrary 
       intervals. Currently, only method 'legendre' is supported.
     \item documentation updated
