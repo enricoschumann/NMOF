@@ -68,7 +68,7 @@ R-package 'NMOF' is also available (see below).  </p>
 <h3>Links...</h3>
 
 <ul type ="circle">
-<li> the book's <a href="http:/nmof.net">offical website</a>
+<li> the book's <a href="http://nmof.net">offical website</a>
 
 <li> the <a
 href="http://www.elsevierdirect.com/ISBN/9780123756626/Numerical-Methods-and-Optimization-in-Finance">publisher's
