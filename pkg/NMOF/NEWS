@@ -1,3 +1,13 @@
+v0.18-1  (2011-09-21)
+
+  o fixed: 'restartOpt' with 'multicore = TRUE' did not correctly 
+    pass '...' arguments to 'fun'
+  o fixed: typo in message issued by 'gridSearch'
+  o new file 'multicore' added in subdirectory tests; it contains a number 
+    of timing tests to see if the 'multicore' option works. (The tests are 
+    not run when the package is built.)
+  o minor updates in documentation
+
 v0.18-0  (2011-09-20)
 
   o 'restartOpt' now has option 'multicore'

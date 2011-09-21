@@ -1,5 +1,16 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.18-1 (2011-09-21)}{
+  \itemize{
+    \item fixed: 'restartOpt' with 'multicore = TRUE' did not correctly 
+      pass '...' arguments to 'fun'
+    \item fixed: typo in message issued by 'gridSearch'
+    \item new file 'multicore' added in subdirectory tests; it contains a number 
+      of timing tests to see if the 'multicore' option works. (The tests are 
+      not run when the package is built.)
+    \item minor updates in documentation
+  }
+}
 \section{Changes in NMOF version 0.18-0 (2011-09-20)}{
   \itemize{
     \item 'restartOpt' now has option 'multicore'

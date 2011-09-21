@@ -17,9 +17,14 @@ restartOpt <- function(fun, n, OF, algo, ...,
                             mc.cleanup = TRUE)
         mc.settings[names(mc.control)] <- mc.control
     }
+
+    ## necessary to match the '...' for lapply and fun
+    makefun <- function(fun, OF, algo, ...)
+        f <- function(ignore) fun(OF = OF, algo = algo, ...)
+    fun2 <- makefun(fun, OF, algo, ...)
+
     if (multicore) {
-        allResults <- mclapply(seq_len(n), fun, OF = OF, algo = algo,
-                               ...,
+        allResults <- mclapply(seq_len(n), fun2,
                                mc.preschedule = mc.settings$mc.preschedule,
                                mc.set.seed = mc.settings$mc.set.seed,
                                mc.silent = mc.settings$mc.silent,
@@ -27,9 +32,7 @@ restartOpt <- function(fun, n, OF, algo, ...,
                                mc.cleanup = mc.settings$mc.cleanup)
 
     } else {
-        allResults <- vector("list", n)
-        for (i in seq_len(n))
-            allResults[[i]] <- fun(OF, algo, ...)
+        allResults <- lapply(seq_len(n), fun2)
     }
     allResults
 }
