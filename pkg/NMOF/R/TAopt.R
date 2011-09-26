@@ -18,25 +18,17 @@ TAopt <- function(OF, algo = list(), ...) {
     algoD[names(algo)] <- algo
 
     ## user *must* specify the following
-    if (is.null(algoD$neighbour)){
-        stop("specify a neighbourhood function 'algo$neighbour'") }
-    if (!is.function(algoD$neighbour)){
-        stop("'algo$neighbour' must be a function") }
-    if (is.null(algoD$x0)){
-        stop("specify start solution 'algo$x0'") }
+    if (is.null(algoD$neighbour))
+        stop("specify a neighbourhood function 'algo$neighbour'")
+    if (!is.function(algoD$neighbour))
+        stop("'algo$neighbour' must be a function")
+    if (is.null(algoD$x0))
+        stop("specify start solution 'algo$x0'")
+    if (is.function(algoD$x0)) ### evaluate x0 if function
+        x0 <- algoD$x0() else x0 <- algoD$x0
 
     OF1 <- function(x) OF(x, ...)
     N1 <- function(x) algoD$neighbour(x, ...)
-
-    nT <- makeInteger(algoD$nT, "'algo$nT'")
-    nS <- makeInteger(algoD$nS, "'algo$nS'")
-    nD <- makeInteger(algoD$nD, "'algo$nD'")
-    stepUp <- makeInteger(algoD$stepUp, "'algo$stepUp'", 0L)
-    niter <- nS * nT
-
-    ## evaluate x0 if function
-    if (is.function(algoD$x0))
-        x0 <- algoD$x0() else x0 <- algoD$x0
 
     printDetail <- algoD$printDetail
     printBar <- algoD$printBar
@@ -44,6 +36,15 @@ TAopt <- function(OF, algo = list(), ...) {
         printBar <- FALSE
     if (printDetail)
         cat("\nThreshold Accepting.\n")
+
+
+    nT <- makeInteger(algoD$nT, "'algo$nT'")
+    nS <- makeInteger(algoD$nS, "'algo$nS'")
+    nD <- makeInteger(algoD$nD, "'algo$nD'")
+    stepUp <- makeInteger(algoD$stepUp, "'algo$stepUp'", 0L)
+    niter <- nS * nT * (stepUp+1L)
+
+
 
     ## compute thresholds
     if (is.null(algoD$vT)) {
@@ -53,15 +54,13 @@ TAopt <- function(OF, algo = list(), ...) {
             startTime <- proc.time()
         }
         if (printBar)
-            whatGen <- txtProgressBar (min = 1, max = nD,
-                                       style = 3)
+            whatGen <- txtProgressBar (min = 1, max = nD, style = 3)
         xc  <- x0
         xcF <- OF1(xc)
         diffF <- numeric(nD)
         diffF[] <- NA
-        for(i in seq_len(nD)){
-            if(printBar)
-                setTxtProgressBar(whatGen, value = i)
+        for (i in seq_len(nD)){
+            if (printBar) setTxtProgressBar(whatGen, value = i)
             xn  <- N1(xc)
             xnF <- OF1(xn)
             diffF[i] <- abs(xcF - xnF)
@@ -82,7 +81,9 @@ TAopt <- function(OF, algo = list(), ...) {
                 "secs.\n\n")
             flush.console()
         }
-    } else vT <- algoD$vT
+    } else {
+        vT <- algoD$vT
+    }
     if (stepUp > 0L)
         vT <- rep.int(vT, stepUp + 1L)
     if (algoD$scale < 0) {
@@ -107,17 +108,16 @@ TAopt <- function(OF, algo = list(), ...) {
     if (algoD$storeSolutions)
         xlist <- list(xn = vector("list", length = niter),
                       xc = vector("list", length = niter)) else xlist <- NA
-    counter <- 0L
-
-    ## main algorithm
     if (printDetail) {
         cat("\nRunning Threshold Accepting...\n")
         cat("Initial solution: ", prettyNum(xbestF),"\n")
         flush.console()
     }
     if (printBar)
-        whatGen <- txtProgressBar (min = 1, max = nT * nS,
-                                   style = 3)
+        whatGen <- txtProgressBar(min = 1, max = niter, style = 3)
+
+    ## main algorithm
+    counter <- 0L
     for (t in seq_len(nT)) {
         for (s in seq_len(nS)) {
             xn <- N1(xc)

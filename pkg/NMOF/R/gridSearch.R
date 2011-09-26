@@ -1,32 +1,32 @@
 gridSearch <- function(fun, levels, ..., lower, upper,
-    npar = 1L, n = 5L,
-    printDetail = TRUE, multicore = FALSE, mc.control = list(),
-    keepNames = FALSE, asList = FALSE) {
+                       npar = 1L, n = 5L,
+                       printDetail = TRUE,
+                       method = c("loop", "multicore", "snow"),
+                       mc.control = list(),
+                       cl = NULL,
+                       keepNames = FALSE, asList = FALSE) {
 
     if (keepNames)
         warning("'keepNames' is not supported yet")
 
-    if (multicore) {
-        # check if 'multicore' is available
+    method <- tolower(method[1L])
+    if (method == "multicore") {
         if (!suppressWarnings(require("multicore", quietly = TRUE))) {
-            multicore <- FALSE
-            warning("package 'multicore' not available")
+            method <- "loop"
+            warning("package 'multicore' not available: use method 'loop'")
         }
-        # make settings
-        mc.settings <- list(
-            mc.preschedule = TRUE,
-            mc.set.seed = TRUE,
-            mc.silent = FALSE,
-            mc.cores = getOption("cores"),
-            mc.cleanup = TRUE)
-        mc.settings[names(mc.control)] <- mc.control
+    } else if (method == "snow") {
+        if (!suppressWarnings(require("snow", quietly = TRUE))) {
+            method <- "loop"
+            warning("package 'snow' not available: use method 'loop'")
+        } else if (is.null(cl)) {
+            method <- "loop"
+            warning("no cluster 'cl' passed for method 'snow': use method 'loop'")
+        }
     }
 
-    n <- as.integer(n)
-    if (n < 2L) {
-        warning("'n' changed to 2")
-        n <- 2L
-    }
+    n <- makeInteger(n, "'n'", 2L)
+
     if (missing(levels) && !missing(lower) && !missing(upper)) {
         lower <- as.numeric(lower)
         upper <- as.numeric(upper)
@@ -60,7 +60,7 @@ gridSearch <- function(fun, levels, ..., lower, upper,
         else
             msg <- paste(c(nl[seq_len(4L)],"..."), collapse=", ")
         message(np, " variables with ", msg, " levels: ",
-            nlp, " function evaluations required.")
+                nlp, " function evaluations required.")
     }
     for (i in seq_len(np)) {
         x <- levels[[i]]
@@ -73,31 +73,40 @@ gridSearch <- function(fun, levels, ..., lower, upper,
     lstLevels <- vector("list", length = nlp)
     for (r in seq_len(nlp)) {
         lstLevels[[r]] <- if (asList)
-                as.list(as.numeric(sapply(res,`[[`, r))) else
-                as.numeric(sapply(res,`[[`, r))
+            as.list(as.numeric(sapply(res,`[[`, r))) else
+        as.numeric(sapply(res,`[[`, r))
     }
-    if (multicore) {
+    if (method == "multicore") {
+        mc.settings <- mcList(mc.control)
         results <- mclapply(lstLevels, fun, ...,
-            mc.preschedule = mc.settings$mc.preschedule,
-            mc.set.seed = mc.settings$mc.set.seed,
-            mc.silent = mc.settings$mc.silent,
-            mc.cores = mc.settings$mc.cores,
-            mc.cleanup = mc.settings$mc.cleanup
-        )
+                            mc.preschedule = mc.settings$mc.preschedule,
+                            mc.set.seed = mc.settings$mc.set.seed,
+                            mc.silent = mc.settings$mc.silent,
+                            mc.cores = mc.settings$mc.cores,
+                            mc.cleanup = mc.settings$mc.cleanup
+                            )
+    } else if (method == "snow") {
+        if (is.numeric(cl)) {
+            cl <- makeCluster(c(rep("localhost", cl)),  type = "SOCK")
+            on.exit(stopCluster(cl))
+        }
+        results <- clusterApply(cl, lstLevels, fun, ...)
     } else {
+        ## loop
         results <- lapply(lstLevels, fun, ...)
     }
     results <- unlist(results)
-    i <- which.min(results)
+    i <- try(which.min(results))
+
     ## what to return
-    if (any(is.na(i)) || length(i) == 0L) {
-        # function evaluated to NA, or results are empty
-        warning("NA values in results or length of results is zero")
+    if (inherits(i, "try-error") || any(is.na(i)) || length(i) == 0L) {
+        ## function evaluated to NA, or results are empty
+        warning("cannot compute minimum (NA values in results, ...)")
         list(minfun = NA, minlevels = NA,
-            values = results, levels = lstLevels)
+             values = results, levels = lstLevels)
     } else {
-        # (apparently) no problems
+        ## (apparently) no problems
         list(minfun = results[i], minlevels = lstLevels[[i]],
-            values = results, levels = lstLevels)
+             values = results, levels = lstLevels)
     }
 }

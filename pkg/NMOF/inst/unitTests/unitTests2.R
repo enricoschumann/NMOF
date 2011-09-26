@@ -17,8 +17,9 @@ test.gridSearch <- function() {
     ## ERROR -- upper < lower
     lower <- 1:3; upper <- 2; n <- 8
     checkException(gridSearch(fun = testFun,
-                                     lower = lower, upper = upper, n = n,
-                                     printDetail = FALSE), silent = TRUE)
+                              lower = lower, upper = upper, n = n,
+                              printDetail = FALSE),
+                   silent = TRUE)
 
     ##
     lower <- 1:3; upper <- 5; n <- 8
@@ -39,11 +40,10 @@ test.gridSearch <- function() {
 
     ##
     lower <- 1; upper <- 5; n <- 1
-    sol <- suppressWarnings(
-                            gridSearch(fun = testFun3,
-                                       lower = lower, upper = upper,
-                                       n = n, printDetail = FALSE))
-    checkEquals(sol$minlevels,1L)
+    sol <- checkException(gridSearch(fun = testFun3,
+                                     lower = lower, upper = upper,
+                                     n = n, printDetail = FALSE),
+                          silent =TRUE)
     ##
     ## NSS fit
     tm <- seq_len(10); trueP <- c(2,1,1,5,1,3); y <- NSS(trueP, tm)
@@ -65,21 +65,26 @@ test.gridSearch <- function() {
 test.bracketing <- function() {
     ## example ch. 11/p. 290
     res0 <- structure(c(0.3, 0.348, 0.444, 0.78,
-                       0.324, 0.372, 0.468, 0.804), .Dim = c(4L, 2L))
+                        0.324, 0.372, 0.468, 0.804), .Dim = c(4L, 2L))
     testFun <- function(x) cos(1/x^2)
     checkEquals(res0, bracketing(testFun, interval = c(0.3, 0.9), n = 26L))
     checkEquals(res0, bracketing(testFun, interval = c(0.3, 0.9), n = 26L),
                 method = "vectorise")
+    checkEquals(res0,bracketing(testFun, lower = 0.3, upper = 0.9, n = 26L))
 
-    ## run with multicore (not a formal test)
-    testFun <- function(x,k) {
-        Sys.sleep(0.1)
-        cos(1/x^2)
-    }
-    system.time(bracketing(testFun, interval = c(0.3, 0.9),
-                                 n = 10L, method = "vectorise"))
-    suppressWarnings(system.time(bracketing(testFun, interval = c(0.3, 0.9),
-                                            n = 10L, method = "multicore")))
+    ## 'lower'/'upper' ignored if 'interval' is specified
+    checkEquals(res0, bracketing(testFun, interval = c(0.3, 0.9),
+                                lower = 0.1, upper = 0.99, n = 26L))
+    checkEquals(bracketing(testFun, interval = c(0.1, 0.99)),
+                bracketing(testFun, lower = 0.1, upper = 0.99))
+
+    ## ERROR: lower < upper
+    checkException(bracketing(testFun, lower = 0.3, upper = 0.3, n = 26L),
+                   silent = TRUE)
+    ## ERROR: no interval
+    checkException(bracketing(testFun, n = 26L), silent = TRUE)
+    checkException(bracketing(testFun, lower = 0.1, n = 26L), silent = TRUE)
+    checkException(bracketing(testFun, upper = 0.1, n = 26L), silent = TRUE)
 
     ## no zero
     testFun <- function(x) 1

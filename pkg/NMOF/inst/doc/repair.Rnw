@@ -2,7 +2,7 @@
 % \VignetteKeyword{optimize}
 \documentclass[a4paper,11pt]{article}
 \usepackage[left = 2.5cm, top = 2cm, bottom = 3cm, right = 3.5cm]{geometry}
-\usepackage[noae]{Sweave} 
+\usepackage[noae]{Sweave}
 \usepackage{mathptmx}
 \usepackage{amsmath,amstext}
 \usepackage{hyperref}
@@ -18,23 +18,30 @@
 \end{abstract}
 
 \section{Introduction}
-\noindent There are several approaches for including constraints into heuristics, see Chapter~12 of \citet{Gilli2011b}. 
-The notes give some examples for simple repair mechanisms. These can be called in \texttt{DEopt} or \texttt{PSopt} through 
-the repair function; in \texttt{LSopt}/\texttt{TAopt}, they could be included in the neighbourhood function.
 
-\section{Upper and lower limits}
-Suppose the solution \texttt{x} is to satisfy \texttt{all(x >= lo)} and  \texttt{all(x <= up)}, with \texttt{lo} and \texttt{up} being vectors 
-of \texttt{length(x)}.
-
-\subsection{Setting values to the boundaries}
-One strategy is to replace elements of \texttt{x} that violate a constraint with the boundary value. Such a 
-repair function can be implemented very concisely. An example:
+\noindent There are several approaches for including constraints into
+heuristics, see Chapter~12 of \citet{Gilli2011b}. The notes in this
+vignette give some examples for simple repair mechanisms. These can be
+called in \texttt{DEopt}, \texttt{GAopt} and \texttt{PSopt} through
+the repair function; in \texttt{LSopt}/\texttt{TAopt}, they could be
+included in the neighbourhood function.
 <<>>=
 set.seed(112233)
+options(digits = 3)
+@
+\section{Upper and lower limits}
+Suppose the solution \texttt{x} is to satisfy \texttt{all(x >= lo)}
+and \texttt{all(x <= up)}, with \texttt{lo} and \texttt{up} being
+vectors of \texttt{length(x)}.
+
+\subsection{Setting values to the boundaries}
+One strategy is to replace elements of \texttt{x} that violate a
+constraint with the boundary value. Such a repair function can be
+implemented very concisely. An example:
+<<>>=
 up <- rep(1, 4L)
 lo <- rep(-1, 4L)
 x <- rnorm(4L)
-
 x
 @
 Three of the elements of \texttt{x} actually violate the constraints.
@@ -43,8 +50,9 @@ repair1a <- function(x,up,lo) pmin(up,pmax(lo,x))
 x
 repair1a(x, up, lo)
 @
-We see that indeed all values greater than \texttt{1} are replaced with \texttt{1}, and those smaller than \texttt{-1} become \texttt{-1}. 
-Two other possibilities that achieve the same result:
+We see that indeed all values greater than \texttt{1} are replaced
+with \texttt{1}, and those smaller than \texttt{-1} become
+\texttt{-1}.  Two other possibilities that achieve the same result:
 <<>>=
 repair1b <- function(x, up, lo) {
     ii <- x > up
@@ -61,8 +69,9 @@ repair1c <- function(x, up, lo) {
     x - (xadjU - xadjL)/2
 }
 @
-The function \texttt{repair1b} uses comparisons to replace only the relevant elements in \texttt{x}. The function~\texttt{repair1c} 
-uses the `trick' that
+The function \texttt{repair1b} uses comparisons to replace only the
+relevant elements in \texttt{x}. The function \texttt{repair1c} uses
+the `trick' that
 \begin{align*}
 \mathtt{pmax(x, y)} &=    \frac{x + y}{2} + \left|\frac{x - y}{2}\right|\,,\\
 \mathtt{pmin(x, y)} &=    \frac{x + y}{2} - \left|\frac{x - y}{2}\right|\,.
@@ -74,43 +83,48 @@ repair1b(x, up, lo)
 repair1c(x, up, lo)
 
 trials <- 10000L
-system.time(for(i in 1L:trials) y1 <- repair1a(x, up, lo))
-system.time(for(i in 1L:trials) y2 <- repair1b(x, up, lo))
-system.time(for(i in 1L:trials) y3 <- repair1c(x, up, lo))
+strials <- seq_len(trials)
+system.time(for(i in strials) y1 <- repair1a(x, up, lo))
+system.time(for(i in strials) y2 <- repair1b(x, up, lo))
+system.time(for(i in strials) y3 <- repair1c(x, up, lo))
 @
-The third of these functions would also work on matrices if \texttt{up} or \texttt{lo} were scalars. 
+The third of these functions would also work on matrices if
+\texttt{up} or \texttt{lo} were scalars.
 <<>>=
 X <- array(rnorm(25L), dim = c(5L, 5L))
 X
 repair1c(X, up = 0.5, lo = -0.5)
 @
-The substantial speedup comes at a price, of course, since there is no checking (eg, for \texttt{NA} values) in 
-\texttt{repair1b} and \texttt{repair1c}. We could also define new functions \texttt{pmin2} and \texttt{pmax2}.
+The  considerable speedup comes at a price, of course, since there is
+no checking (eg, for \texttt{NA} values) in \texttt{repair1b} and
+\texttt{repair1c}. We could also define new functions \texttt{pmin2}
+and \texttt{pmax2}.
 <<>>=
-pmax2 <- function(x1,x2) ( (x1 + x2) + abs(x1 - x2) ) / 2
-pmin2 <- function(x1,x2) ( (x1 + x2) - abs(x1 - x2) ) / 2
+pmax2 <- function(x1, x2) ( (x1 + x2) + abs(x1 - x2) ) / 2
+pmin2 <- function(x1, x2) ( (x1 + x2) - abs(x1 - x2) ) / 2
 @
 A test follows.
 <<>>=
 x1 <- rnorm(100L)
 x2 <- rnorm(100L)
 
-t1 <- system.time(for (i in 1L:trials) z1 <- pmax(x1,x2) )
-t2 <- system.time(for (i in 1L:trials) z2 <- pmax2(x1,x2))
-t1/t2
+t1 <- system.time(for (i in strials) z1 <- pmax(x1,x2) )
+t2 <- system.time(for (i in strials) z2 <- pmax2(x1,x2))
+t1[[3L]]/t2[[3L]] ## speedup
 all.equal(z1, z2)
 
-
-t1 <- system.time(for (i in 1L:trials) z1 <- pmin(x1,x2) )
-t2 <- system.time(for (i in 1L:trials) z2 <- pmin2(x1,x2))
-t1/t2
+t1 <- system.time(for (i in strials) z1 <- pmin(x1,x2) )
+t2 <- system.time(for (i in strials) z2 <- pmin2(x1,x2))
+t1[[3L]]/t2[[3L]] ## speedup
 all.equal(z1, z2)
 @
-One downside of this repair mechanism is that a solution may quickly become stuck at the boundaries (but of course, in some cases this is exactly 
-what we want).
+One downside of this repair mechanism is that a solution may quickly
+become stuck at the boundaries (but of course, in some cases this is
+exactly what we want).
 
 \subsection{Reflecting values into the feasible range}
-The function \texttt{repair2} reflects a value that is too large or too small around the boundary. It restricts the change in a 
+The function \texttt{repair2} reflects a value that is too large or
+too small around the boundary. It restricts the change in a
 variable~\texttt{x[i]} to the range \texttt{up[i] - lo[i]}.
 <<>>=
 repair2 <- function(x,up,lo) {
@@ -126,7 +140,7 @@ repair2 <- function(x,up,lo) {
         adjL <- lo - x
         adjL <- adjL + abs(adjL)
         adjL <- adjL + r - abs(adjL - r)
-        
+
         x <- x - (adjU - adjL)/2
         e <- sum(x - up  + abs(x - up) + lo - x  + abs(lo - x))
         if (e < 1e-12) done <- TRUE
@@ -135,8 +149,61 @@ repair2 <- function(x,up,lo) {
 }
 x
 repair2(x, up, lo)
-system.time(for(i in 1L:trials) y4 <- repair2(x,up,lo))
+system.time(for (i in strials) y4 <- repair2(x,up,lo))
 @
+
+\subsection{Adjusting a cardinality limit}
+Let \texttt{x} be a logical vector.
+<<>>=
+T <- 20L
+x <- logical(T)
+x[runif(T) < 0.4] <- TRUE
+x
+@
+Suppose we want to impose a minimum and maximum cardinality,
+\texttt{kmin} and \texttt{kmax}.
+<<>>=
+kmax <- 5L
+kmin <- 3L
+@
+We could use an approach like the following (for the definition of
+\texttt{resample}, see \texttt{?sample}):
+<<>>=
+resample <- function(x, ...) x[sample.int(length(x), ...)]
+repairK <- function(x, kmax, kmin) {
+    sx <- sum(x)
+    if (sx > kmax) {
+        i <- resample(which(x), sx - kmax)
+        x[i] <- FALSE
+    } else if (sx < kmin) {
+        i <- resample(which(!x), kmin - sx)
+        x[i] <- TRUE
+    }
+    x
+}
+printK <- function(x)
+    cat(paste(ifelse(x, "o", "."), collapse = ""),
+        "-- cardinality", sum(x), "\n")
+@
+For \texttt{kmax}:
+<<>>=
+for (i in 1:10) {
+    if (i==1L) printK(x)
+    x1 <- repairK(x, kmax, kmin)
+    printK(x1)
+}
+@
+For \texttt{kmin}:
+<<>>=
+x <- logical(T); x[10L] <- TRUE
+for (i in 1:10) {
+    if (i==1L) printK(x)
+    x1 <- repairK(x, kmax, kmin)
+    printK(x1)
+}
+@
+
+
 
 \nocite{Gilli2011b}
 \bibliographystyle{plainnat}

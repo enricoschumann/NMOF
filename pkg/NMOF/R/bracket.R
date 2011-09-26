@@ -2,45 +2,64 @@ bracketing <- function(fun, interval, ...,
                        lower = min(interval),
                        upper = max(interval),
                        n = 20L,
-                       method = c("loop", "vectorise", "multicore"),
-                       mc.control = list()) {
+                       method = c("loop",
+                       "vectorised", "multicore", "snow"),
+                       mc.control = list(),
+                       cl = NULL) {
 
-    n <- as.integer(n)
-    if (n < 2L)
-        stop("'n' must be at least 2")
-
-    method <- method[1L]
-    if (tolower(method) == "vectorize")
-        method <- "vectorise"
-    if (method == "multicore"){
+    n <- makeInteger(n, "'n'", 2)
+    method <- tolower(method[1L])
+    if (method == "vectorize" ||
+        method == "vectorized" ||
+        method == "vectorise")
+        method <- "vectorised"
+    if (method == "multicore") {
         if (!suppressWarnings(require("multicore", quietly = TRUE))) {
             method <- "loop"
             warning("package 'multicore' not available: use method 'loop'")
         }
-        mc.settings <- list(mc.preschedule = TRUE, mc.set.seed = TRUE,
-                            mc.silent = FALSE, mc.cores = getOption("cores"),
-                            mc.cleanup = TRUE)
-        mc.settings[names(mc.control)] <- mc.control
+    } else if (method == "snow") {
+        if (!suppressWarnings(require("snow", quietly = TRUE))) {
+            method <- "loop"
+            warning("package 'snow' not available: use method 'loop'")
+        } else if (is.null(cl)) {
+            method <- "loop"
+            warning("no cluster 'cl' passed for method 'snow'")
+        }
     }
+    if (!missing(interval)) {
+        if (length(interval) > 2L)
+            warning("'interval' is of length > 2")
+        lower <- min(interval)
+        upper <- max(interval)
+    }
+    if (!is.numeric(lower) || !is.numeric(upper) || lower >=upper)
+        stop("'lower' must be smaller than 'upper'")
 
-    lower <- min(interval)
-    upper <- max(interval)
-
-    xs <- seq(from = lower,to = upper, length.out = n)
-    switch(tolower(method),
+    xs <- seq(from = lower, to = upper, length.out = n)
+    switch(method,
            loop = {
                fn <- numeric(n)
                for (i in seq_len(n))
                    fn[i] <- fun(xs[i], ...)
            },
-           vectorise = fn <- fun(xs, ...),
+           vectorised = fn <- fun(xs, ...),
            multicore = {
+               mc.settings <- mcList(mc.control)
                fn <- mclapply(xs, fun, ...,
                               mc.preschedule = mc.settings$mc.preschedule,
                               mc.set.seed = mc.settings$mc.set.seed,
                               mc.silent = mc.settings$mc.silent,
                               mc.cores = mc.settings$mc.cores,
                               mc.cleanup = mc.settings$mc.cleanup)
+               fn <- unlist(fn)
+           },
+           snow = {
+               if (is.numeric(cl)) {
+                   cl <- makeCluster(c(rep("localhost", cl)), type = "SOCK")
+                   on.exit(stopCluster(cl))
+               }
+               fn <- clusterApply(cl, xs, fun, ...)
                fn <- unlist(fn)
            }
            ) ## end switch

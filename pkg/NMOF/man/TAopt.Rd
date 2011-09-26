@@ -11,35 +11,30 @@ The function implements the Threshold Accepting algorithm.
 TAopt(OF, algo = list(), \dots)
 }
 \arguments{
-  \item{OF}{
-The objective function, to be minimised. Its first argument needs to be a solution; \code{\dots} arguments are also passed.
-}
-  \item{algo}{
-A list of settings for the algorithm. See Details.
-}
-  \item{\dots}{
-other variables passed to \code{OF} and \code{algo$neighbour}. See Details.
-}
+\item{OF}{The objective function, to be minimised. Its first argument
+needs to be a solution \code{x}; it will be called as \code{OF(x, \dots)}.}
+\item{algo}{A list of settings for the algorithm. See Details.}
+\item{\dots}{other variables passed to \code{OF} and \code{algo$neighbour}. See Details.}
 }
 \details{
-Threshold Accepting (TA) changes an initial solution iteratively; the
-algorithm stops after a fixed number of iterations. Conceptually, TA
-consists of just one loop than runs for a number of iterations. In each
+
+  Threshold Accepting (\acronym{TA}) changes an initial solution iteratively; the
+algorithm stops after a fixed number of iterations. Conceptually, \acronym{TA}
+consists of a loop than runs for a number of iterations. In each
 iteration, a current solution \code{xc} is changed through a function
-\code{algo$neighbour}. This function returns a new solution
-\code{xn}. If \code{xn} is not worse than \code{xc}, ie, if
-\code{OF(xn,\dots)<=OF(xc,\dots)}, then \code{xn} replaces \code{xc}. If
-\code{xn} is worse, it still replaces \code{xc} as long as the
-difference in \sQuote{quality} between the two solutions is less than a
-threshold \code{tau}.  That is, as long as \code{OF(xn,\dots) - tau <=
-OF(xc,\dots)}. Thus, we also accept a new solution that is worse than
-its predecessor; just not too much worse. The threshold is typically
-decreased over the course of the optimisation. For zero thresholds TA
-becomes a stochastic local search.
+\code{algo$neighbour}. If this new (or neighbour) solution \code{xn} is not worse than
+\code{xc}, ie, if \code{OF(xn,\dots) <= OF(xc,\dots)}, then \code{xn}
+replaces \code{xc}. If \code{xn} is worse, it still replaces \code{xc}
+as long as the difference in \sQuote{quality} between the two solutions
+is less than a threshold \code{tau}; more precisely, as long as
+\code{OF(xn,\dots) - tau <= OF(xc,\dots)}. Thus, we also accept a new
+solution that is worse than its predecessor; just not too much
+worse. The threshold is typically decreased over the course of the
+optimisation. For zero thresholds TA becomes a stochastic local search.
 
 The thresholds can be passed through the list \code{algo} (see
-below). Otherwise, they are computed through the procedure described in
-Gilli et al. (2006).
+below). Otherwise, they are automatically computed through the procedure
+described in Gilli et al. (2006).
 
 
 The list \code{algo} contains the following items.
@@ -47,7 +42,8 @@ The list \code{algo} contains the following items.
   \item{\code{nS}}{The number of steps per threshold. The default is
     1000; but this setting depends heavily on the problem.}
   \item{\code{nT}}{The number of thresholds. Default is 10.}
-  \item{\code{nD}}{The number of random steps to compute the threshold sequence. Defaults to 2000.}
+  \item{\code{nD}}{The number of random steps to compute the threshold
+    sequence. Defaults to 2000. Only used if \code{algo$vT} is \code{NULL}.}
   \item{\code{q}}{The highest quantile for the threshold sequence. Defaults to 0.5.}
   \item{\code{x0}}{The initial solution. If this is a function, it will
     be called once without arguments to compute an initial solution, ie,
@@ -58,29 +54,49 @@ The list \code{algo} contains the following items.
     default), \code{TAopt} will compute \code{algo$nT} thresholds.
     Passing threshold can be useful when similar problems are
     handled. Then the time to sample the objective function to compute
-    the thresholds can be saved. If the thresholds are computed and
+    the thresholds can be saved (ie, we save \code{algo$nD} function
+    evaluations). If the thresholds are computed and
     \code{algo$printDetail} is \code{TRUE}, the time required to
     evaluate the objective function will be measured and an estimate for
-    the remaining computing time will be issued. This estimate is often
+    the remaining computing time is issued. This estimate is often
     very crude.}
-  \item{\code{neighbour}}{The neighbourhood function. It takes a
-    solution \code{x} and returns a changed solution.}
+  \item{\code{neighbour}}{The neighbourhood function, called as
+    \code{neighbour(x, \dots)}. Its first argument must be a solution
+    \code{x}; it must return a changed
+    solution.}
 \item{\code{printDetail}}{If \code{TRUE} (the default), information is printed.}
-\item{\code{printBar}}{If \code{TRUE} (the default), information in progress is printed (\code{txtProgressBar} from the \pkg{utils}
-package is used). The progress bar is not shown if \code{printDetail} is \code{TRUE}.}
+\item{\code{printBar}}{If \code{TRUE} (default is \code{FALSE}), a
+  \code{\link{txtProgressBar}} (from package \pkg{utils}) is
+  printed. The progress bar is not shown if \code{printDetail} is \code{TRUE}.}
 \item{\code{scale}}{The thresholds are multiplied by \code{scale}. Default is 1.}
-\item{\code{stepUp}}{Defaults to \code{0}. If \code{stepup > 0L}, then the thresholds are \sQuote{recycled}, ie,
-\code{vT <- rep(vT, algo$stepUp + 1)}. This happens for supplied as well as computed thresholds. Practically,
-this will have the same effect as restarting from a returned solution. In Simulated Annealing, this strategy
-goes by the name of \sQuote{reheating}.}
+\item{\code{stepUp}}{Defaults to \code{0}. If \code{stepup > 0}, then
+  the thresholds are recycled, ie, \code{vT <- rep(vT,
+    algo$stepUp + 1)} (and the number of thresholds will be increased by
+\code{algo$nT * algo$stepUp}). This option works for supplied as well as
+computed thresholds. Practically, this will have the same effect as
+restarting from a returned
+solution. (In Simulated Annealing, this strategy
+goes by the name of \sQuote{reheating}.)}
 } % end describe
+The total number of iterations equals \code{algo$nT * (algo$stepUp+1) *
+  algo$nS} (plus possibly \code{algo$nD}).
 } % end details
 \value{
-\code{TAopt} returns a list with three components:
+\code{TAopt} returns a list with four components:
 \item{\code{xbest}}{the solution}
-\item{\code{OFvalue}}{objective function value of the solution, ie, \code{OF(xbest, algo, \dots)}}
-\item{\code{Fmat}}{a matrix of the best solution found at a point in time and the current solution.}
-\item{\code{xlist}}{a list of the best solution found at a point in time and the current solution.}
+\item{\code{OFvalue}}{objective function value of the solution, ie, \code{OF(xbest, \dots)}}
+\item{\code{Fmat}}{if \code{algo$storeF} is \code{TRUE}, a matrix with
+  one row for each iteration (excluding the initial \code{algo$nD}
+  steps) and two columns. The first column contains the objective
+  function values of the neighbour solution at a given iteration; the second
+  column contains the value of the current solution. Since \acronym{TA}
+  can walk away from locally-optimal solutions, the best solution can be
+  monitored through \code{cummin(Fmat[ ,2L])}.}
+\item{\code{xlist}}{if \code{algo$storeSolutions} is \code{TRUE}, a
+  list; else \code{NA}. Contains the neighbour solutions at a given
+  iteration (\code{xn}) and the current solutions (\code{xc}). Example:
+  \code{Fmat[i, 2L]} is the objective function value associated with
+  \code{xlist[[c(2L, i)]]}.}
 }
 \note{If the \code{\dots} argument is used, then all the objects passed
   with \code{\dots} need to go into the objective function and the
@@ -90,8 +106,8 @@ goes by the name of \sQuote{reheating}.}
   myList)}. Note that \code{x} need not be a vector but can be any data
   structure (eg, a \code{matrix} or a \code{list}).
 
-  Using thresholds of size 0 makes TA run as a Local Search. The
-function \code{\link{LSopt}} may be preferred then because of less
+  Using thresholds of size 0 makes \acronym{TA} run as a Local Search. The
+function \code{\link{LSopt}} may be preferred then because of smaller
 overhead.
 }
 \references{
@@ -115,10 +131,6 @@ Winker, P. (2001). \emph{Optimization Heuristics in Econometrics: Applications o
 \author{
 Enrico Schumann
 }
-\note{
-TA is similar to Simulated Annealing.
-}
-
 
 \seealso{
 \code{\link{LSopt}}
@@ -130,19 +142,19 @@ TA is similar to Simulated Annealing.
 ##      and in the other lowly (negatively) correlated.
 ##      constraint: a single subset should have at least 40 rows
 
-# create data with specified correlation
+## create data with specified correlation
 n <- 100L
 rho <- 0.7
 C <- matrix(rho, 2L, 2L); diag(C) <- 1
 x <- matrix(rnorm(n * 2L), n, 2L) \%*\% chol(C)
 
-# collect data
+## collect data
 data <- list(x = x, n = n, nmin = 40L)
 
-# a random initial solution
+## a random initial solution
 x0 <- runif(n) > 0.5
 
-# a neighbourhood function
+## a neighbourhood function
 neighbour <- function(xc, data) {
     xn <- xc
     p <- sample.int(data$n, size = 1L)
@@ -154,34 +166,34 @@ neighbour <- function(xc, data) {
     as.logical(res)
 }
 
-# check (should be 1 FALSE and n-1 TRUE)
+## check (should be 1 FALSE and n-1 TRUE)
 x0 == neighbour(x0, data)
 
-# objective function
+## objective function
 OF <- function(xc, data)
     -abs(cor(data$x[xc, ])[1L, 2L] - cor(data$x[!xc, ])[1L, 2L])
 
-# check
+## check
 OF(x0, data)
-# check
+## check
 OF(neighbour(x0, data), data)
 
-# plot data
+## plot data
 par(mfrow = c(1,3), bty = "n")
 plot(data$x,
      xlim = c(-3,3), ylim = c(-3,3),
      main = "all data", col = "darkgreen")
 
-# *Local Search*
+## *Local Search*
 algo <- list(nS = 3000L,
-             nT = 10L,
              neighbour = neighbour,
              x0 = x0,
              printBar = FALSE)
 sol1 <- LSopt(OF, algo = algo, data=data)
 sol1$OFvalue
 
-# *Threshold Accepting*
+## *Threshold Accepting*
+algo$nT <- 10L
 algo$nS <- ceiling(algo$nS/algo$nT)
 sol <- TAopt(OF, algo = algo, data = data)
 sol$OFvalue
@@ -202,9 +214,9 @@ plot(data$x[!sol$xbest, ], col = "darkgreen",
 # compare LS/TA
 par(mfrow = c(1,1), bty = "n")
 plot(sol1$Fmat[ ,2L],type="l", ylim=c(-1.5,0.5),
-    ylab = "OF", xlab = "iterations")
+     ylab = "OF", xlab = "iterations")
 lines(sol$Fmat[ ,2L],type = "l", col = "blue")
 legend(x = "topright",legend = c("LS", "TA"),
-    lty = 1, lwd = 2,col = c("black", "blue"))
+       lty = 1, lwd = 2,col = c("black", "blue"))
 }
 \keyword{optimize}

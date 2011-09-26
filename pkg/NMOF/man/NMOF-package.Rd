@@ -4,8 +4,10 @@
 \docType{package}
 \title{Numerical Methods and Optimization in Finance}
 \description{
-Functions, data and other \R code from the book \sQuote{Numerical Methods and Optimization in Finance}. Many functions are still experimental; 
-interfaces may change in the future; there is little error handling. Comments/corrections/remarks/suggestions are very welcome 
+Functions, data and other \R code from the book \sQuote{Numerical
+Methods and Optimization in Finance}. Many functions are still
+experimental; interfaces may change in the future; there is little error
+handling. Comments/corrections/remarks/suggestions are very welcome
 (please contact the maintainer directly).
 }
 \details{
@@ -20,7 +22,7 @@ Dependencies: The package is completely written in \R. A number of
 packages are \emph{suggested} (they are not necessary to use the
 \pkg{NMOF} package). Package \pkg{MASS} is required to run the complete
 example for \code{\link{PSopt}}, and also in one of the vignettes
-(\code{PSlms}); \pkg{multicore} is optional for functions
+(\code{PSlms}); \pkg{multicore} and \pkg{multicore} are optional for functions
 \code{\link{bracketing}}, \code{\link{gridSearch}} and
 \code{\link{restartOpt}}, and may become an option for other functions;
 \pkg{quadprog} is needed for a vignette (\code{TAportfolio}) and some
@@ -47,7 +49,7 @@ Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Opti
 require("NMOF")
 packageDescription("NMOF")
 help(package = "NMOF")
-news(Version >= "0.17-0", package = "NMOF")
+news(Version >= "0.18-0", package = "NMOF")
 vignette(package = "NMOF")
 nss <- vignette("DEnss", package = "NMOF")
 print(nss)

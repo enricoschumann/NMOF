@@ -1,12 +1,34 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.19-0 (2011-09-25)}{
+  \itemize{
+    \item 'bracketing', 'gridSearch' and 'restartOpt' now support distributed
+      evaluation of 'fun' via 'clusterApply' from the 'snow' package. As a
+      side effect, the interface of 'gridSearch' and 'restartOpt' has
+      changed: instead of an option 'multicore', they now have an argument
+      'method', which can be 'loop', 'multicore' or 'snow'. See the 
+      documentation of these functions.
+    \item in accordance with the documentation, the 'method' argument of 
+      'bracketing' expects 'vectorised' rather than 'vectorise' (but both 
+      work, and also the '-ize' spellings) 
+    \item substantial revision of documentation/examples
+    \item more intelligible error/warning messages in 'bracketing' added
+    \item small changes in vignettes 'Robust Regression with Particle Swarm
+      Optimisation and Differential Evolution' and 'Repairing solutions'
+    \item file 'multicore.R' was moved to subdirectory inst/unitTests;
+      thus, it is installed with the package. Some tests for package 'snow'
+      were added.
+    \item more tests added (subdirectory unitTests); in particular, tests are
+      more comprehensively commented now
+  }
+}
 \section{Changes in NMOF version 0.18-1 (2011-09-21)}{
   \itemize{
-    \item fixed: 'restartOpt' with 'multicore = TRUE' did not correctly 
+    \item fixed: 'restartOpt' with 'multicore = TRUE' did not correctly
       pass '...' arguments to 'fun'
     \item fixed: typo in message issued by 'gridSearch'
-    \item new file 'multicore' added in subdirectory tests; it contains a number 
-      of timing tests to see if the 'multicore' option works. (The tests are 
+    \item new file 'multicore.R' added in subdirectory tests; it contains a number
+      of timing tests to see if the 'multicore' option works. (The tests are
       not run when the package is built.)
     \item minor updates in documentation
   }
@@ -14,19 +36,19 @@
 \section{Changes in NMOF version 0.18-0 (2011-09-20)}{
   \itemize{
     \item 'restartOpt' now has option 'multicore'
-    \item the 'method' option of function 'xwGauss' can now take on values 
+    \item the 'method' option of function 'xwGauss' can now take on values
       'hermite' and 'laguerre'
-    \item documentation updated 
+    \item documentation updated
     \item new examples added in 'Examples and Extensions for the NMOF package'
       (see subdirectory NMOFex)
-    \item test cases added for 'restartOpt' and 'xwGauss' 
+    \item test cases added for 'restartOpt' and 'xwGauss'
       (see subdirectory unitTests)
   }
 }
 \section{Changes in NMOF version 0.17-0 (2011-09-18)}{
   \itemize{
     \item functions for Gaussian integration added: 'xwGauss' computes nodes and
-      weights; 'changeInterval' transforms the nodes/weights to arbitrary 
+      weights; 'changeInterval' transforms the nodes/weights to arbitrary
       intervals. Currently, only method 'legendre' is supported.
     \item documentation updated
     \item more tests added for opt-functions (for returned objects 'Fmat'

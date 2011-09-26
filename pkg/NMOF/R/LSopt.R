@@ -41,6 +41,12 @@ LSopt <- function(OF, algo = list(), ...) {
             whatGen <- txtProgressBar(min = 1, max = nS, style = 3)
         }
     }
+    if (printDetail) {
+        cat("\nLocal Search.\n")
+        cat("Initial solution: ", prettyNum(xcF),"\n")
+        flush.console()
+    }
+
     for (s in seq_len(nS)){
         if(printBar)
             setTxtProgressBar(whatGen, value = s)

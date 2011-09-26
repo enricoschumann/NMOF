@@ -18,14 +18,14 @@ checkList <- function(passedList, defaultList, label = "'algo'") {
 
     ## unnamed elements in list
     if ("" %in% names(passedList))
-        warning("'algo' contained unnamed elements",
+        warning(label, " contained unnamed elements",
                 call. = FALSE)
 
     ## ununsed elements in list
     unusedOptions <- setdiff(names(passedList), names(defaultList))
     unusedOptions <- setdiff(unusedOptions, "")
     if (length(unusedOptions))
-        warning("unknown names in 'algo': ",
+        warning("unknown names in ", label, ": ",
                 paste(unusedOptions, collapse = ", "),
                 call. = FALSE)
 }
@@ -33,3 +33,13 @@ checkList <- function(passedList, defaultList, label = "'algo'") {
 ##
 mRU <- function(m, n) array(runif(m*n), dim = c(m,n))
 mRN <- function(m, n) array(rnorm(m*n), dim = c(m,n))
+
+##
+mcList <- function(mc.control) {
+    mc.settings <- list(mc.preschedule = TRUE, mc.set.seed = TRUE,
+                        mc.silent = FALSE, mc.cores = getOption("cores"),
+                        mc.cleanup = TRUE)
+    checkList(mc.control, mc.settings, "'mc.control'")
+    mc.settings[names(mc.control)] <- mc.control
+    mc.settings
+}
