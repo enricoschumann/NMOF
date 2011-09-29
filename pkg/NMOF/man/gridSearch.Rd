@@ -8,35 +8,36 @@
 }
 \usage{
 gridSearch(fun, levels, ..., lower, upper, npar = 1L, n = 5L,
-    printDetail = TRUE,
-    method = c("loop", "multicore", "snow"),
-    mc.control = list(), cl = NULL,
-    keepNames = FALSE, asList = FALSE)
+           printDetail = TRUE,
+           method = c("loop", "multicore", "snow"),
+           mc.control = list(), cl = NULL,
+           keepNames = FALSE, asList = FALSE)
 }
 \arguments{
   \item{fun}{
-    A function of the form \code{fun(x, \dots)}, with \code{x} being a numeric vector or a list.
+    a function of the form \code{fun(x, \dots)}, with \code{x} being a numeric vector or a list
   }
   \item{levels}{
-    A list of levels for the arguments (see Examples).
+    a list of levels for the arguments (see Examples)
   }
   \item{\dots}{
-    Objects passed to \code{fun}.
+    objects passed to \code{fun}
   }
   \item{lower}{
-    A numeric vector.
+    a numeric vector. Ignored if levels are explicitly specified.
   }
   \item{upper}{
-    A numeric vector.
+    a numeric vector.Ignored if levels are explicitly specified.
   }
   \item{npar}{
-    The number of parameters. Must be supplied if lower and upper are to be expaned; see Details.
+    the number of parameters. Must be supplied if \code{lower} and
+    \code{upper} are to be expanded; see Details. Ignored if levels are explicitly specified.
   }
   \item{n}{
-    The number of levels. Default is 5.
+    the number of levels. Default is 5. Ignored if levels are explicitly specified.
   }
   \item{printDetail}{
-    Print information on the number of objective function evaluations.
+    print information on the number of objective function evaluations
   }
   \item{method}{
     can be \code{loop} (the default), \code{multicore}
@@ -44,8 +45,8 @@ gridSearch(fun, levels, ..., lower, upper, npar = 1L, n = 5L,
   }
   \item{mc.control}{
     a list containing settings that will be passed to \code{mclapply} if
-    \code{multicore} is \code{TRUE}. Must be a list with named
-    elements. See the documentation of \code{mclapply}.
+    \code{method} is \code{multicore}. Must be a list with named
+    elements; see the documentation of \code{mclapply}.
   }
   \item{cl}{default is \code{NULL}. If method \code{snow} is used, this must be a
     cluster object or an integer (the number of cores).}
@@ -59,7 +60,6 @@ gridSearch(fun, levels, ..., lower, upper, npar = 1L, n = 5L,
 
 }
 \details{
-
   A grid search can be used to find \sQuote{good} parameter values for a
   function. In principle, a grid search has an obvious deficiency: as the
   length of \code{x} (the first argument to \code{fun}) increases, the

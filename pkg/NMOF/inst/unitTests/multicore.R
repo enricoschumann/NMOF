@@ -58,17 +58,17 @@ if (runMC) {
     algo <- list(q = 0.05, nS = 50L, nT = 5L,
                  neighbour = neighbour, x0 = x0,
                  printBar = FALSE, printDetail = FALSE)
-    sols1 <- restartOpt(fun = TAopt, n = 100L,
-                       OF = OF, algo = algo, data = data)
-    checkEquals(length(sols1), 10L)
-    sols2 <- restartOpt(fun = TAopt, n = 100L,
+    system.time(sols1 <- restartOpt(fun = TAopt, n = 100L,
+                       OF = OF, algo = algo, data = data))
+    checkEquals(length(sols1), 100L)
+    system.time(sols2 <- restartOpt(fun = TAopt, n = 100L,
                        OF = OF, algo = algo, data = data,
-                        method = "multicore")
-    checkEquals(length(sols2), 10L)
-    sols3 <- restartOpt(fun = TAopt, n = 100L,
+                        method = "multicore"))
+    checkEquals(length(sols2), 100L)
+    system.time(sols3 <- restartOpt(fun = TAopt, n = 100L,
                        OF = OF, algo = algo, data = data,
-                        method = "snow", cl = 2L)
-    checkEquals(length(sols3), 10L)
+                        method = "snow", cl = 2L))
+    checkEquals(length(sols3), 100L)
 
 
 

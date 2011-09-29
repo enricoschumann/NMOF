@@ -22,7 +22,7 @@ Dependencies: The package is completely written in \R. A number of
 packages are \emph{suggested} (they are not necessary to use the
 \pkg{NMOF} package). Package \pkg{MASS} is required to run the complete
 example for \code{\link{PSopt}}, and also in one of the vignettes
-(\code{PSlms}); \pkg{multicore} and \pkg{multicore} are optional for functions
+(\code{PSlms}); \pkg{multicore} and \pkg{snow} are optional for functions
 \code{\link{bracketing}}, \code{\link{gridSearch}} and
 \code{\link{restartOpt}}, and may become an option for other functions;
 \pkg{quadprog} is needed for a vignette (\code{TAportfolio}) and some

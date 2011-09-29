@@ -37,7 +37,7 @@ DEopt(OF, algo = list(), ...)
   functions default to \code{NULL}. A penalty is a positive number added
   to the \sQuote{clean} objective function value, so it can also be
   directly written in the \code{OF}. Writing a separate penalty function
-  is clearer and can be more efficient if either only the objective
+  is often clearer; it can be more efficient if either only the objective
   function or only the penalty function can be vectorised.  (Constraints
   can also be added without these mechanisms. Solutions that violate
   constraints can, for instance, be mapped to feasible solutions, but
@@ -187,7 +187,7 @@ all.equal(OF2(x)[1:3],
 algo$loopOF <- FALSE
 (t2 <- system.time(sol2 <- DEopt(OF = OF2, algo = algo)))
 sol2$xbest
-sol2$OFvalue   ### should be zero (with luck)
+sol2$OFvalue       ### should be zero (with luck)
 t1[[3L]]/t2[[3L]]  ### speedup
 }
 \keyword{optimize}

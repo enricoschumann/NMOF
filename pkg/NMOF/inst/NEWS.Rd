@@ -1,6 +1,12 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
-\section{Changes in NMOF version 0.19-0 (2011-09-25)}{
+\section{Changes in NMOF version 0.19-1 (2011-09-29)}{
+  \itemize{
+    \item minor cleanups in documentation
+    \item small changes in 'restartOpt' (passing '...')
+  }
+}
+\section{Changes in NMOF version 0.19-0 (2011-09-26)}{
   \itemize{
     \item 'bracketing', 'gridSearch' and 'restartOpt' now support distributed
       evaluation of 'fun' via 'clusterApply' from the 'snow' package. As a
@@ -8,9 +14,8 @@
       changed: instead of an option 'multicore', they now have an argument
       'method', which can be 'loop', 'multicore' or 'snow'. See the 
       documentation of these functions.
-    \item in accordance with the documentation, the 'method' argument of 
-      'bracketing' expects 'vectorised' rather than 'vectorise' (but both 
-      work, and also the '-ize' spellings) 
+    \item for consistency, the 'method' argument of 'bracketing' expects 'vectorised' 
+      rather than 'vectorise' (but both work, and also the '-ize' spellings) 
     \item substantial revision of documentation/examples
     \item more intelligible error/warning messages in 'bracketing' added
     \item small changes in vignettes 'Robust Regression with Particle Swarm

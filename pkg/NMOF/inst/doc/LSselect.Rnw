@@ -4,7 +4,7 @@
 \title{Asset selection with Local Search}
 \author{Enrico Schumann}
 \usepackage[left=2.5cm,top=2cm, bottom=3cm, right=3.5cm]{geometry}
-\usepackage[noae]{Sweave} 
+\usepackage[noae]{Sweave}
 \usepackage{mathptmx}
 \usepackage{amsmath,amstext}
 \usepackage{hyperref}
@@ -18,8 +18,10 @@
 
 
 \section{Introduction}
-\noindent We provide a code example for a simple asset selection problem. The purpose of this vignette is to provide 
-the code in a convenient way; for more details, please see \citet{Gilli2011b}. We start by attaching the package. 
+\noindent We provide a code example for a simple asset selection
+problem. The purpose of this vignette is to provide the code in a
+convenient way; for more details, please see \citet{Gilli2011b}. We
+start by attaching the package.
 
 <<>>=
 require("NMOF")
@@ -28,7 +30,7 @@ set.seed(112233)
 
 
 \section{The problem}
-\noindent We wish to select between $K_{\inf}$ and $K_{\sup}$ out of $n_{\mathrm{A}}$ assets such that an equally-weighted portfolio of these 
+\noindent We wish to select between $K_{\inf}$ and $K_{\sup}$ out of $n_{\mathrm{A}}$ assets such that an equally-weighted portfolio of these
 assets has the lowest-possible variance. The formal model is:
 \begin{align}\label{Eeq:portfolio:modelSelect}
 \min_{w}\ &w' \Sigma w&
@@ -36,12 +38,13 @@ assets has the lowest-possible variance. The formal model is:
 \nonumber w_j  &= \nicefrac{1}{K} \ \text{\quad  for }  j \in J\, ,    \\[-0.25ex]
 \nonumber K_{\inf} &\leq K  \leq K_{\sup} \, .
 \end{align}
-Thw weights are stored in the vector $w$; the symbol $J$ stands for the set of assets in the portfolio; and $K = \#\{J\}$ 
+Thw weights are stored in the vector $w$; the symbol $J$ stands for the set of assets in the portfolio; and $K = \#\{J\}$
 is the cardinality of this set, ie, the number of assets in the portfolio.
 
 \section{Setting up the algorithm}
-We start by attaching the package and creating random data. We simulate 500~assets: each gets a random volatility between 20\% and 40\%, and 
-all pairwise correlations are set to~0.6.
+We start by attaching the package and creating random data. We
+simulate 500~assets: each gets a random volatility between 20\% and
+40\%, and all pairwise correlations are set to~0.6.
 <<>>=
 na <- 500L
 C <- array(0.6, dim = c(na, na)); diag(C) <- 1
@@ -74,37 +77,41 @@ neighbour <- function(xc, data) {
     p <- sample.int(data$na, data$nn, replace = FALSE)
     xn[p] <- abs(xn[p] - 1L)
     # reject infeasible solution
-    if((sum(xn) > data$Ksup) || (sum(xn) < data$Kinf)) 
+    if((sum(xn) > data$Ksup) || (sum(xn) < data$Kinf))
         xc else xn
 }
-@
-We collect all necessary information in the list \texttt{data}: the variance--corvariance matrix \texttt{Sigma}, the cardinality 
-limits~\texttt{Kinf} and \texttt{Ksup}, the total number of assets \texttt{na} (ie, the cardinality of the asset universe), and the 
-parameter~\texttt{nn}. This parameter controls the neighbourhood: it gives the number of assets that are to be changed when a 
-new solution is computed.
+@ We collect all necessary information in the list \texttt{data}: the
+variance--corvariance matrix \texttt{Sigma}, the cardinality
+limits~\texttt{Kinf} and \texttt{Ksup}, the total number of assets
+\texttt{na} (ie, the cardinality of the asset universe), and the
+parameter~\texttt{nn}. This parameter controls the neighbourhood: it
+gives the number of assets that are to be changed when a new solution
+is computed.
+
 <<>>=
-data <- list(Sigma = Sigma, 
-              Kinf = 30L, 
-              Ksup = 60L, 
-                na = na, 
+data <- list(Sigma = Sigma,
+            Kinf = 30L,
+              Ksup = 60L,
+                na = na,
                 nn = 1L)
 @
 \section{Solving the model}
 As an initial solution we use a random portfolio.
 <<>>=
-card0 <- sample(data$Kinf:data$Ksup, 1L, replace = FALSE) 
+card0 <- sample(data$Kinf:data$Ksup, 1L, replace = FALSE)
 assets <- sample.int(na, card0, replace = FALSE)
 x0 <- numeric(na)
 x0[assets] <- 1L
 @
-With this implementation we need assume that \texttt{data\$Ksup > data\$Kinf}. (If \texttt{data\$Ksup == data\$Kinf}, then \texttt{sample} returns 
-a draw \texttt{1:data\$Kinf}.) 
+With this implementation we need assume that \texttt{data\$Ksup >
+  data\$Kinf}. (If \texttt{data\$Ksup == data\$Kinf}, then
+\texttt{sample} returns a draw \texttt{1:data\$Kinf}.)
 
 We collect all settings in the list \texttt{algo}.
 <<>>=
-# settings
-algo <- list(x0 = x0, 
-      neighbour = neighbour, 
+## settings
+algo <- list(x0 = x0,
+      neighbour = neighbour,
              nS = 5000L,
     printDetail = FALSE,
        printBar = FALSE)
@@ -113,18 +120,21 @@ It remains to run the algorithm.
 <<fig = TRUE, height = 4>>=
 system.time(sol1 <- LSopt(OF, algo, data))
 sqrt(sol1$OFvalue)
-par(ylog = TRUE)
-plot(sqrt(sol1$Fmat[,2L]), type = "l", xlab = "", ylab = "Portfolio volatility")
+par(ylog = TRUE, bty = "n", las = 1, tck = 0.01)
+plot(sqrt(sol1$Fmat[,2L]),
+     type = "l", xlab = "", ylab = "Portfolio volatility")
 @
 
 (Recall that the simulated data had volatilities between~0.2 and~0.4.)
 
-We can also run the search repeatedly with the same starting value.  
+We can also run the search repeatedly with the same starting value.
 <<fig = TRUE, height = 4>>=
 trials <- 5L
 allRes <- restartOpt(LSopt, n = trials, OF, algo = algo, data = data)
 allResOF <- numeric(trials)
-for (i in 1L:trials) allResOF[i] <- sqrt(allRes[[i]]$OFvalue)
+for (i in seq_len(trials))
+    allResOF[i] <- sqrt(allRes[[i]]$OFvalue)
+par(bty = "n")
 plot(ecdf(allResOF), main = "Portfolio volatility")
 @
 

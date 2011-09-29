@@ -13,19 +13,20 @@ restartOpt(fun, n, OF, algo, ...,
 }
 \arguments{
   \item{fun}{
-    The optimisation function: \code{TAopt}, \code{LSopt}, \code{DEopt}, \code{PSopt}.
+    the optimisation function: \code{DEopt}, \code{GAopt}, \code{LSopt},
+    \code{TAopt} or \code{PSopt}
   }
   \item{n}{
-    The number of restarts.
+    the number of restarts
   }
   \item{OF}{
-    The objective function.
+    the objective function
   }
   \item{algo}{
-    The list \code{algo} that is passed to the particular optimisation function.
+    the list \code{algo} that is passed to the particular optimisation function
   }
   \item{\dots}{
-    Additional data that is passed to the particular optimisation function.
+    additional data that is passed to the particular optimisation function
   }
   \item{method}{
     can be \code{loop} (the default), \code{multicore}
@@ -33,22 +34,40 @@ restartOpt(fun, n, OF, algo, ...,
   }
   \item{mc.control}{
     a list containing settings that will be passed to \code{mclapply} if
-    \code{multicore} is \code{TRUE}. Must be a list with named
+    \code{method} is \code{multicore}. Must be a list with named
     elements. See the documentation of \code{mclapply}.
   }
   \item{cl}{default is \code{NULL}. If method \code{snow} is used, this must be a
     cluster object or an integer (the number of cores).}
 }
 \details{
-  The function returns a list of lists. If a specific starting solution is passed, all runs will start from the same solution. 
-  If this is not desired, initial solutions can be created randomly. (This is done per default in 
+  The function returns a list of lists. If a specific starting solution is passed, all runs will start from this solution. 
+  If this is not desired, initial solutions can be created randomly. This is done per default in 
   \code{\link{DEopt}}, \code{\link{GAopt}} and \code{\link{PSopt}}, but \code{\link{LSopt}} and \code{\link{TAopt}}
-  require to specify a starting solution.)
+  require to specify a starting solution.
 
   In case of \code{\link{LSopt}} and \code{\link{TAopt}}, the passed initial solution \code{algo$x0} is checked with 
   \code{is.function}: if \code{TRUE}, the function is evaluated in each single run. For   
   \code{\link{DEopt}}, \code{\link{GAopt}} and \code{\link{PSopt}}, the initial solution (which also can be a function)
   is specified with \code{algo$initP}. 
+
+  The argument \code{method} determines how \code{fun} is
+  evaluated. Default is \code{loop}. If \code{method == "multicore"},
+  function \code{mclapply} from package \pkg{multicore} is used. Further
+  settings for \code{mclapply} can be passed through the list
+  \code{mc.control}. If \code{multicore} is chosen but the package is
+  not available, then \code{method} will be
+  set to \code{loop} and a warning is issued. If \code{method ==
+  "snow"}, function \code{clusterApply} from package \pkg{snow} is
+  used. In this case, the argument \code{cl} must either be a cluster
+  object (see the documentation of \code{clusterApply}) or an
+  integer. If an integer, a cluster will be set up via
+  \code{makeCluster(c(rep("localhost", cl)), type = "SOCK")}, and
+  \code{stopCluster} is called when the function is exited. If
+  \code{snow} is chosen but the package is not available or \code{cl} is
+  not specified, then \code{method} will be set to \code{loop} and a
+  warning is issued. In case that \code{cl} is an cluster object,
+  \code{stopCluster} will not be called automatically.
 
 }
 \value{
@@ -66,7 +85,8 @@ restartOpt(fun, n, OF, algo, ...,
 }
 
 \seealso{
-  \code{\link{TAopt}}, \code{\link{LSopt}}, \code{\link{DEopt}}, \code{\link{PSopt}}
+  \code{\link{DEopt}}, \code{\link{GAopt}}, \code{\link{LSopt}},
+  \code{\link{PSopt}}, \code{\link{TAopt}}
 }
 \examples{
 ## see example(DEopt)
@@ -93,8 +113,8 @@ plot(ecdf(res100F), main = "optimum is -3.306",
 abline(v = -3.3069, col = "red")  ### optimum
 lines(ecdf(res300F), col = "blue")
 legend(x = "right", box.lty = 0, , lty = 1,
-    legend = c("optimum", "100 generations", "300 generations"),
-    pch = c(NA, 19, 19), col = c("red", "black", "blue"))
+      legend = c("optimum", "100 generations", "300 generations"),
+      pch = c(NA, 19, 19), col = c("red", "black", "blue"))
 
 \dontrun{
 ## with R >= 2.13.0 and the compiler package

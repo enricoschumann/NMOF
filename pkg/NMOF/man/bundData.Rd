@@ -33,7 +33,9 @@
 \examples{
 bundData
 str(bundData)
-names(bundData$cfList)  ### get ISINs of bonds
+
+## get ISINs of bonds
+names(bundData$cfList)  
 
 ## get a specific bond
 thisBond <- "DE0001135358"
