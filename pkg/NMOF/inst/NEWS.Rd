@@ -1,9 +1,15 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.19-2 (2011-09-30)}{
+  \itemize{
+    \item minor cleanups in documentation
+  }
+}
 \section{Changes in NMOF version 0.19-1 (2011-09-29)}{
   \itemize{
     \item minor cleanups in documentation
-    \item minor internal changes in 'restartOpt' (passing of the '...' arguments)
+    \item minor internal changes in 'restartOpt' (passing of the '...' arguments 
+      for method 'snow')
   }
 }
 \section{Changes in NMOF version 0.19-0 (2011-09-26)}{
