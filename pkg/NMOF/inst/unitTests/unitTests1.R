@@ -394,6 +394,38 @@ test.GAopt <- function() {
     a <- numeric(10L)
     checkException(solGA <- GAopt(a, algo = algo, data = data),
                    silent = TRUE)
+
+    ## check repair
+    resample <- function(x, ...) x[sample.int(length(x), ...)]
+    repairK <- function(x, data) {
+        sx <- sum(x)
+        if (sx > data$kmax) {
+            i <- resample(which(x), sx - data$kmax)
+            x[i] <- FALSE
+        }
+        x
+    }
+    repairK2 <- function(x, data) {
+        sx <- colSums(x)
+        whichCols <- which(sx > data$kmax)
+        for (j in seq(along.with = whichCols)) {
+            jj <- whichCols[j]
+            i <- resample(which(x[ ,jj]), sx[jj] - data$kmax)
+            x[i, jj] <- FALSE
+        }
+        x
+    }
+    data$kmax <- 5
+    tempP <- array(TRUE, dim = c(20,10))
+    checkTrue(all(colSums(repairK2(tempP,data))<=data$kmax))
+
+    algo$repair <- repairK
+    solGA <- GAopt(OF, algo = algo, data = data)
+    checkTrue(sum(solGA$xbest)<=data$kmax)
+
+    algo$repair <- repairK2; algo$loopRepair <- FALSE
+    solGA <- GAopt(OF, algo = algo, data = data)
+    checkTrue(sum(solGA$xbest)<=data$kmax)
 }
 
 

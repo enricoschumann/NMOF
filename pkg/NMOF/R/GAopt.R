@@ -1,9 +1,10 @@
 GAopt <- function (OF, algo = list(), ...) {
-    algoD <- list(nB = NA,         ### bits per solution
-                  nP = 50L,
-                  nG = 300L,
-                  prob = 0.01,     ### probability of mutation
-                  pen = NULL, repair = NULL,
+    algoD <- list(nB = NA,     ### bits per solution
+                  nP = 50L,    ### population size
+                  nG = 300L,   ### number of generations
+                  prob = 0.01, ### probability of mutation
+                  pen = NULL,
+                  repair = NULL,
                   loopOF = TRUE, loopPen = TRUE, loopRepair = TRUE,
                   printDetail = TRUE,
                   printBar = TRUE,
@@ -23,18 +24,21 @@ GAopt <- function (OF, algo = list(), ...) {
     OF1 <- function(x) OF(x, ...)
     Pe1 <- function(x) algoD$pen(x, ...)
     Re1 <- function(x) algoD$repair(x, ...)
+
+
     if (is.null(algoD$nB))
-        stop("'nB' must be specified")
+        stop("'algo$nB' must be specified")
     if (algoD$prob > 1 || algoD$prob < 0)
-        stop("'prob' must be between 0 and 1")
+        stop("'algo$prob' must be between 0 and 1")
 
     nB <- makeInteger(algoD$nB, 'algo$nB')
     nP <- makeInteger(algoD$nP, 'algo$nP')
     nG <- makeInteger(algoD$nG, 'algo$nG')
 
-    crossover <- algoD$crossover[1L]
-    crossOver1 <- FALSE; crossOver2 <- FALSE
-    if (crossover == "onePoint") {
+    crossover <- tolower(algoD$crossover[1L])
+    crossOver1 <- FALSE
+    crossOver2 <- FALSE
+    if (crossover == "onepoint") {
         crossOver <- function(x,y) {
             cutoff <- sample.int(nB-1L, 1L) + 1L
             ii <- cutoff:nB
@@ -52,13 +56,17 @@ GAopt <- function (OF, algo = list(), ...) {
     } else {
         stop("unknown crossover type")
     }
+
+    snP <- seq_len(nP)
+    snP1 <- c(nP, snP[-nP])
+
     switch <- function(x) !x
-    shift  <- function(x) c(x[nP], x[1L:(nP - 1L)])
+    shift  <- function(x) c(x[nP], x[snP1])
 
     vF <- numeric(nP)
     vF[] <- NA
-    vP <- vF
-    vFc <- vF
+    vFc <- vP <- vF
+
     if (algoD$storeF)
         Fmat <- array(NA, c(nG, nP)) else Fmat <- NA
     if (algoD$storeSolutions)
@@ -73,27 +81,26 @@ GAopt <- function (OF, algo = list(), ...) {
             mP <- algoD$initP()
         else
             mP <- algoD$initP
-
         if (mode(mP) != "logical") {
             storage.mode(mP) <- "logical"
-            warning("'mP' is not of mode logical. 'storage.mode(mP)' will be tried")
+            warning("'mP' is not of mode logical, 'storage.mode(mP)' will be tried")
         }
     }
     if (!is.null(algoD$repair)) {
         if (algoD$loopRepair) {
-            for (s in seq_len(nP)) mP[, s] <- Re1(mP[, s])
+            for (s in snP) mP[, s] <- Re1(mP[, s])
         } else {
             mP <- Re1(mP)
         }
     }
     if (algoD$loopOF) {
-        for (s in seq_len(nP)) vF[s] <- OF1(mP[, s])
+        for (s in snP) vF[s] <- OF1(mP[, s])
     } else {
         vF <- OF1(mP)
     }
     if (!is.null(algoD$pen)) {
         if (algoD$loopPen) {
-            for (s in seq_len(nP)) vP[s] <- Pe1(mP[, s])
+            for (s in snP) vP[s] <- Pe1(mP[, s])
         } else {
             vP <- Pe1(mP)
         }
@@ -114,7 +121,7 @@ GAopt <- function (OF, algo = list(), ...) {
         o <- sample.int(nP)
         oo <- shift(o)
         if (crossOver1) {
-            for (s in seq_len(nP))
+            for (s in snP)
                 mC[ ,s] <- crossOver(mP[ ,o[s]],mP[ ,oo[s]])
         } else if (crossOver2) {
             mC <- crossOver(mP[ ,o],mP[ ,oo])
@@ -126,19 +133,19 @@ GAopt <- function (OF, algo = list(), ...) {
 
         if (!is.null(algoD$repair)) {
             if (algoD$loopRepair) {
-                for (s in seq_len(nP)) mC[ ,s] <- Re1(mC[ ,s])
+                for (s in snP) mC[ ,s] <- Re1(mC[ ,s])
             } else {
                 mC <- Re1(mC)
             }
         }
         if (algoD$loopOF) {
-            for (s in seq_len(nP)) vFc[s] <- OF1(mC[, s])
+            for (s in snP) vFc[s] <- OF1(mC[, s])
         } else {
             vFc <- OF1(mC)
         }
         if (!is.null(algoD$pen)) {
             if (algoD$loopPen) {
-                for (s in seq_len(nP)) vP[s] <- Pe1(mC[, s])
+                for (s in snP) vP[s] <- Pe1(mC[, s])
             } else {
                 vP <- Pe1(mC)
             }

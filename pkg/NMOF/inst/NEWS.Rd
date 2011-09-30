@@ -3,7 +3,7 @@
 \section{Changes in NMOF version 0.19-1 (2011-09-29)}{
   \itemize{
     \item minor cleanups in documentation
-    \item small changes in 'restartOpt' (passing '...')
+    \item minor internal changes in 'restartOpt' (passing of the '...' arguments)
   }
 }
 \section{Changes in NMOF version 0.19-0 (2011-09-26)}{
