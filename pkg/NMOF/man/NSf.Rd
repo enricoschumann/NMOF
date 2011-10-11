@@ -51,10 +51,10 @@ Enrico Schumann
 \code{\link{NS}}, \code{\link{NSS}}
 }
 \examples{
-# Nelson-Siegel
+## Nelson-Siegel
 cor(NSf(lambda = 6, tm = 1:10)[-1L, -1L])
 
-# Nelson-Siegel-Svensson
+## Nelson-Siegel-Svensson
 cor(NSSf(lambda1 = 1, lambda2 = 5, tm = 1:10)[-1L, -1L])
 cor(NSSf(lambda1 = 4, lambda2 = 9, tm = 1:10)[-1L, -1L])
 }

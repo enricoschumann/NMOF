@@ -18,7 +18,7 @@ the objective function, to be minimised. Its first argument needs to be a soluti
 list of settings. See Details.
 }
   \item{\dots}{
-other variables to be passed to the objective function and the neighbourhood function. See Details.
+other variables to be passed to the objective function and to the neighbourhood function. See Details.
 }
 }
 \details{
@@ -28,19 +28,23 @@ is changed through a function \code{algo$neighbour}. This function takes \code{x
 If \code{xn} is not worse than \code{xc}, ie, if \code{OF(xn,\dots)<=OF(xc,\dots)}, then \code{xn} replaces \code{xc}. 
 
 
-The list \code{algo} contains the following items.
+The list \code{algo} contains the following items:
 \describe{
-\item{\code{nS}}{The number of steps. The default is 1000; but this setting depends heavily on the problem.}
+\item{\code{nS}}{The number of steps. The default is 1000; but this
+  setting depends very much on the problem.}
 \item{\code{x0}}{The initial solution. This can be a function; it will then be called once without arguments to compute an initial solution, ie, 
- \code{x0 <- algo$x0()}. This can be useful when the routine is called in a loop of restarts and each restart is to have its own starting value.}
-\item{\code{neighbour}}{The neighbourhood function. It takes a solution \code{x} and returns a changed solution.}
+ \code{x0 <- algo$x0()}. This can be useful when \code{LSopt} is called in a loop of restarts and each restart is to have its own starting value.}
+\item{\code{neighbour}}{The neighbourhood function, called as
+    \code{neighbour(x, \dots)}. Its first argument must be a solution
+    \code{x}; it must return a changed
+    solution.}
 \item{\code{printDetail}}{If \code{TRUE} (the default), information is printed.}
-\item{\code{printBar}}{If \code{TRUE} (the default), information on progress is printed (\code{txtProgressBar} from the \pkg{utils} 
-package is used).}
+\item{\code{printBar}}{If \code{TRUE} (the default), a
+  \code{txtProgressBar} (from package \pkg{utils}) is printed).}
 }
 
-\acronym{LS} works on solutions through the functions \code{neighbour} and \code{OF} which are specified by the user. Thus, a solution 
-need not be a numeric vector, but can be another data structure as well (eg, a list or a matrix).
+\acronym{LS} works on solutions through the functions \code{neighbour} and \code{OF}, which are specified by the user. Thus, a solution 
+need not be a numeric vector, but can be any other data structure as well (eg, a list or a matrix).
 
 }
 
@@ -64,14 +68,14 @@ Enrico Schumann
 \examples{
 ## Aim: find the columns of X that, when summed, give y
 
-# random data set
+## random data set
 nc <- 25L; nr <- 5L; howManyCols <- 5L
 X <- array(runif(nr*nc), dim = c(nr, nc))
 xTRUE <- sample(1L:nc, howManyCols)
-Xt <- X[ ,xTRUE]
+Xt <- X[ , xTRUE, drop = FALSE]
 y <- rowSums(Xt)
 
-# a random solution x0
+## a random solution x0 ...
 makeRandomSol <- function(nc) {
     ii <- sample.int(nc, sample.int(nc, 1L))
     x0 <- numeric(nc); x0[ii] <- 1L
@@ -79,12 +83,12 @@ makeRandomSol <- function(nc) {
 }
 x0 <- makeRandomSol(nc)
 
-# ... but probably not the correct one
-sum(y - rowSums(X[ ,as.logical(x0), drop = FALSE]))
-sum(y - rowSums(X[ ,xTRUE]))
+## ... but probably not a good one
+sum(y - rowSums(X[ , as.logical(x0), drop = FALSE]))
+sum(y - rowSums(X[ , xTRUE, drop = FALSE]))
 
 
-# a neighbourhood function: switch n elements in solution
+## a neighbourhood function: switch n elements in solution
 neighbour <- function(xc, data) {
     xn <- xc
     p <- sample.int(data$nc, data$n)
@@ -92,7 +96,7 @@ neighbour <- function(xc, data) {
     if (sum(xn) < 1L) xn <- xc 
     xn
 }
-# a greedy neighbourhood function
+## a greedy neighbourhood function
 neighbourG <- function(xc, data) {
     of <- function(x)
         abs(sum(data$y - rowSums(data$X[,as.logical(x), drop = FALSE])))
@@ -111,15 +115,15 @@ neighbourG <- function(xc, data) {
     xbest
 }
 
-# an objective function
+## an objective function
 OF <- function(xn, data)
     abs(sum(data$y - rowSums(data$X[ ,as.logical(xn), drop = FALSE])))
 
 
-# (1) *greedy search*
-# note: this could be done in a simpler fashion. but the 
-#       redundancies/overhead here are small; and the example is to
-#       show how LSopt can be used for such a search
+## (1) *greedy search*
+## note: this could be done in a simpler fashion. but the 
+##       redundancies/overhead here are small; and the example is to
+##       show how LSopt can be used for such a search
 data <- list(X = X, y = y, nc = nc, nr = nr, n = 1L)
 algo <- list(nS = 500L, neighbour = neighbourG, x0 = x0,
              printBar = FALSE, printDetail = FALSE)
@@ -130,10 +134,10 @@ sort(xTRUE)
 sol$OFvalue
 par(ylog = TRUE)
 plot(sol$Fmat[ ,2L],type = "l", log = "y", 
-    ylim = c(1e-4, max(pretty(sol$Fmat[ ,2L]))), 
-    xlab = "iterations", ylab = "OF value")
+     ylim = c(1e-4, max(pretty(sol$Fmat[ ,2L]))), 
+     xlab = "iterations", ylab = "OF value")
 
-# (2) *Local Search*
+## (2) *Local Search*
 algo$neighbour <- neighbour
 sol <- LSopt(OF, algo = algo, data = data)
 sort(which(as.logical(sol$xbest)))
@@ -141,7 +145,7 @@ sort(xTRUE)
 sol$OFvalue
 lines(sol$Fmat[ ,2L], type = "l", lty = 2)
 
-# (3) *Threshold Accepting*
+## (3) *Threshold Accepting*
 algo$nT <- 10L
 algo$nS <- ceiling(algo$nS/algo$nT)
 sol2 <- TAopt(OF, algo = algo, data = data)

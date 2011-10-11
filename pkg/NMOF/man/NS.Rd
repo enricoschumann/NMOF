@@ -19,11 +19,13 @@ NSS(param, tm)
     \eqn{\beta_4}{beta4}, \eqn{\lambda_1}{lambda1}, \eqn{\lambda_2}{lambda2}.
     }
   \item{tm}{
-    a vector of maturities.
+    a vector of maturities
     }
 }
 \details{
-Maturities (\code{tm}) need to be given in time (not dates).
+  See Chapter 14 in Gilli/Maringer/Schumann (2011).
+
+  Maturities (\code{tm}) need to be given in time (not dates).
 }
 \value{
 The function returns a vector of length \code{length(tm)}.
@@ -51,7 +53,7 @@ Enrico Schumann
 \code{\link{NSf}}, \code{\link{NSSf}}
 }
 \examples{
-tm <- c(c(1, 3, 6, 9) / 12, 1:10)  # in years
+tm <- c(c(1, 3, 6, 9) / 12, 1:10)  ### in years
 param <- c(6, 3, 8, 1)
 yM <- NS(param, tm)
 plot(tm, yM, xlab = "maturity in years", 
@@ -64,7 +66,7 @@ plot(tm, yM, xlab = "maturity in years",
 
 
 \dontrun{
-# get Bliss/Diebold/Li data (used in some of the papers in References)
+## get Bliss/Diebold/Li data (used in some of the papers in References)
 u <- url("http://www.ssc.upenn.edu/~fdiebold/papers/paper49/FBFITTED.txt")
 open(u); BliDiLi <- scan(u, skip = 14); close(u)
 mat <- NULL
@@ -72,9 +74,10 @@ for (i in 1:372)
     mat <- rbind(mat,BliDiLi[(19*(i-1)+1):(19*(i-1)+19)])
 mats  <- c(1,3,6,9,12,15,18,21,24,30,36,48,60,72,84,96,108,120)/12
 
-# the obligatory perspective plot
+## the obligatory perspective plot
 persp(x = mat[,1], y = mats,mat[,-1],
-        phi = 40, theta = 20, ticktype = "detailed",
-        xlab = "time", ylab = "time to maturity in years",
-        zlab = "zero rates in \%")}
+      phi = 40, theta = 20, ticktype = "detailed",
+      xlab = "time",
+      ylab = "time to maturity in years",
+      zlab = "zero rates in \%")}
 }

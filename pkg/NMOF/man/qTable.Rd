@@ -62,7 +62,7 @@ a LaTeX file (the matrix holds a tabular). It relies on LaTeX's
 \code{picture} environment and should work for
 LaTeX and pdfLaTeX. Note that the tabular needs generally be refined, depending on the settings and the data.
 
-The tabular one every row for every column of \code{X} (and header
+The tabular has one row for every column of \code{X} (and header
 and footer rows). A given row contains the median, the minimum and the
 maximum of the column; it also includes a \code{picture} environment the
 shows a quartile plot of the distribution of the elements in that column.
@@ -110,13 +110,12 @@ cat(res)
 
 \dontrun{
 ## create a simple LaTeX file 'test.tex'
-#\documentclass{article}
-#\begin{document}
-#\input{res.tex}
-#\end{document}
+##\documentclass{article}
+##\begin{document}
+##\input{res.tex}
+##\end{document}
 
 res <- qTable(X, filename = "res.tex", yoffset = -0.025, unitlength = "5cm",
-       circlesize = 0.0125, xmin = -10, xmax = 10, dec = 2)
-}
+       circlesize = 0.0125, xmin = -10, xmax = 10, dec = 2)}
 }
 

@@ -40,11 +40,12 @@ described in Gilli et al. (2006).
 The list \code{algo} contains the following items.
 \describe{
   \item{\code{nS}}{The number of steps per threshold. The default is
-    1000; but this setting depends heavily on the problem.}
+    1000; but this setting depends very much on the problem.}
   \item{\code{nT}}{The number of thresholds. Default is 10.}
   \item{\code{nD}}{The number of random steps to compute the threshold
     sequence. Defaults to 2000. Only used if \code{algo$vT} is \code{NULL}.}
-  \item{\code{q}}{The highest quantile for the threshold sequence. Defaults to 0.5.}
+  \item{\code{q}}{The highest quantile for the threshold
+    sequence. Defaults to 0.5. Only used if \code{algo$vT} is \code{NULL}.}
   \item{\code{x0}}{The initial solution. If this is a function, it will
     be called once without arguments to compute an initial solution, ie,
     \code{x0 <- algo$x0()}. This can be useful when the routine is
@@ -69,7 +70,7 @@ The list \code{algo} contains the following items.
   \code{\link{txtProgressBar}} (from package \pkg{utils}) is
   printed. The progress bar is not shown if \code{printDetail} is \code{TRUE}.}
 \item{\code{scale}}{The thresholds are multiplied by \code{scale}. Default is 1.}
-\item{\code{stepUp}}{Defaults to \code{0}. If \code{stepup > 0}, then
+\item{\code{stepUp}}{Defaults to \code{0}. If \code{stepUp > 0}, then
   the thresholds are recycled, ie, \code{vT <- rep(vT,
     algo$stepUp + 1)} (and the number of thresholds will be increased by
 \code{algo$nT * algo$stepUp}). This option works for supplied as well as
@@ -211,7 +212,7 @@ plot(data$x[!sol$xbest, ], col = "darkgreen",
      xlim = c(-3,3), ylim = c(-3,3),
      main = paste("subset 2, corr.", format(c2, digits = 3)))
 
-# compare LS/TA
+## compare LS/TA
 par(mfrow = c(1,1), bty = "n")
 plot(sol1$Fmat[ ,2L],type="l", ylim=c(-1.5,0.5),
      ylab = "OF", xlab = "iterations")

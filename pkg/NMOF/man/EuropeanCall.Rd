@@ -24,7 +24,8 @@ EuropeanCallBE(S0, X, r, tau, sigma, M = 101)
 Prices a European Call with the tree approach of Cox, Ross, Rubinstein.
 
 The algorithm in \code{EuropeanCallBE} does not construct and traverse a
-tree, but computes the terminal prices via a binomial expansion (see Higham, 2002).
+tree, but computes the terminal prices via a binomial expansion (see
+Higham, 2002, and Chapter 5 in Gilli/Maringer/Schumann, 2011).
 }
 \value{
 Returns the value of the call (\code{numeric}).
@@ -51,7 +52,7 @@ Enrico Schumann
 }
 \examples{
 ## price
-EuropeanCall(S0 = 100, X = 100, r = 0.02, tau = 1, sigma = 0.20, M = 50)
+EuropeanCall(  S0 = 100, X = 100, r = 0.02, tau = 1, sigma = 0.20, M = 50)
 EuropeanCallBE(S0 = 100, X = 100, r = 0.02, tau = 1, sigma = 0.20, M = 50)
 
 ## a Greek: delta

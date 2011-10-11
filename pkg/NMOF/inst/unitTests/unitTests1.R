@@ -419,6 +419,7 @@ test.GAopt <- function() {
     tempP <- array(TRUE, dim = c(20,10))
     checkTrue(all(colSums(repairK2(tempP,data))<=data$kmax))
 
+
     algo$repair <- repairK
     solGA <- GAopt(OF, algo = algo, data = data)
     checkTrue(sum(solGA$xbest)<=data$kmax)

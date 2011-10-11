@@ -1,3 +1,9 @@
+v0.19-3  (2011-10-07)
+
+  o fixed: a bug had been introduced into 'GAopt' in version 0.19-2 
+    (revision 88), which let the population grow to algo$nP+1 
+  o minor changes in documentation/examples
+
 v0.19-2  (2011-09-30)
 
   o minor cleanups in documentation

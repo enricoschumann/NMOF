@@ -34,7 +34,7 @@ restartOpt(fun, n, OF, algo, ...,
   }
   \item{mc.control}{
     a list containing settings that will be passed to \code{mclapply} if
-    \code{method} is \code{multicore}. Must be a list with named
+    \code{method} is \code{multicore}. Must be a list of named
     elements. See the documentation of \code{mclapply}.
   }
   \item{cl}{default is \code{NULL}. If method \code{snow} is used, this must be a

@@ -11,6 +11,9 @@
 makeInteger(x, label, min = 1L)
 anyNA(x)
 checkList(passedList, defaultList, label = "'algo'")
+mRU(m,n)
+mRN(m,n)
+mcList(mc.control)
 }
 \details{
   \code{makeInteger} coerces the scalar \code{x} to integer. If the

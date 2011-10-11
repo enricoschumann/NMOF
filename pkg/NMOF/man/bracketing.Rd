@@ -24,10 +24,10 @@ bracketing(fun, interval, ...,
     further arguments passed to \code{fun}
   }
   \item{lower}{
-    lower end-point. Ignored if interval is specified.
+    lower end-point. Ignored if \code{interval} is specified.
   }
   \item{upper}{
-    upper end-point. Ignored if interval is specified.
+    upper end-point. Ignored if \code{interval} is specified.
   }
   \item{n}{
     the number of function evaluations. Must be at least 2 (in which
@@ -39,8 +39,8 @@ bracketing(fun, interval, ...,
   }
   \item{mc.control}{
     a list containing settings that will be passed to \code{mclapply} if
-    \code{method} is \code{multicore}. Must be a list with named
-  elements. See the documentation of \code{mclapply} of package \pkg{multicore}.
+    \code{method} is \code{multicore}. Must be a list of named
+  elements. See the documentation of \code{mclapply} in package \pkg{multicore}.
 }
   \item{cl}{default is \code{NULL}. If \code{method} is \code{snow}, this must be a
 cluster object or an integer (the number of cores to be used). See the
@@ -69,9 +69,9 @@ documentation of package \pkg{snow}.}
   integer. If an integer, a cluster will be set up via
   \code{makeCluster(c(rep("localhost", cl)), type = "SOCK")}, and
   \code{stopCluster} is called when the function is exited. If
-  \code{snow} is chosen but the packageis not available or \code{cl} is
+  \code{snow} is chosen but the package is not available or \code{cl} is
   not specified, then \code{method} will be set to \code{loop} and a
-  warning is issued. In case that \code{cl} is an cluster object,
+  warning is issued. In case that \code{cl} is a cluster object,
   \code{stopCluster} will not be called automatically. 
 }
 \value{

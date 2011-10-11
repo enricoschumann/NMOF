@@ -41,7 +41,7 @@ DEopt(OF, algo = list(), ...)
   function or only the penalty function can be vectorised.  (Constraints
   can also be added without these mechanisms. Solutions that violate
   constraints can, for instance, be mapped to feasible solutions, but
-  without actually changing them. See Maringer and Oyewumi (2007) for an
+  without actually changing them. See Maringer and Oyewumi, 2007, for an
   example.)
 
   Conceptually, \acronym{DE} consists of two loops: one loop across the
@@ -66,8 +66,11 @@ The list \code{algo} collects the following settings for the algorithm:
     idea. (\code{F} can also be a vector with different values for each decision variable.)}
   \item{\code{CR}}{probability for crossover. Defaults to 0.9. Using
     default settings may not be a good idea.}
-  \item{\code{min}}{a vector of minimum parameter values. See below.}
-  \item{\code{max}}{a vector of maximum parameter values. See below.}
+  \item{\code{min}, \code{max}}{vectors of minimum and maximum parameter
+    values. The vectors \code{min} and \code{max} are used to determine the
+  dimension of the problem and to randomly initialise the
+  population. They are no constraints: a solution may well be outside
+  these limits.}
   \item{\code{pen}}{a penalty function. Default is \code{NULL} (no penalty).}
   \item{\code{initP}}{optional: the initial population. A matrix of size
     \code{length(algo$min)} times \code{algo$nP}, or a function that
@@ -80,8 +83,7 @@ The list \code{algo} collects the following settings for the algorithm:
   \item{\code{loopRepair}}{logical. Should the repair function (if
     specified) be evaluated through a loop? Defaults to \code{TRUE}.}
   \item{\code{printDetail}}{If \code{TRUE} (the default), information is printed.}
-  \item{\code{printBar}}{If \code{TRUE} (the default), information in
-    progress is printed (\code{\link{txtProgressBar}} is used).}
+  \item{\code{printBar}}{If \code{TRUE} (the default), a \code{\link{txtProgressBar}} is printed.}
   \item{\code{storeF}}{if \code{TRUE} (the default), the objective
     function values for every solution in every generation are stored
     and returned as matrix \code{Fmat}.}
@@ -93,22 +95,18 @@ The list \code{algo} collects the following settings for the algorithm:
     a matrix of size \code{length(algo$min)} times \code{algo$nP}.
     (To be consistent with other functions, \code{xlist} is
     itself a list. In the case of \code{DEopt}, it contains just one element.)}
-} % end describe
-  The vectors \code{min} and \code{max} are used to determine the
-  dimension of the problem and to randomly initialise the
-  population. They are no constraints: a solution may well be outside
-  these limits.
+} % end describe  
 } % end Details
 \value{
 A list:
 \item{\code{xbest}}{the solution (the best member of the population), which is
   a numeric vector}
 \item{\code{OFvalue}}{objective function value of best solution}
-\item{\code{popF}}{a vector. The objective function values in the population.}
+\item{\code{popF}}{a vector. The objective function values in the final population.}
 \item{\code{Fmat}}{if \code{algo$storeF} is \code{TRUE}, a matrix of size
   \code{algo$nG} times \code{algo$nP} containing the objective function
   values of all solutions over the generations; else \code{NA}.}
-\item{\code{xlist}}{if \code{algo$storeSolutions} is TRUE, a list that
+\item{\code{xlist}}{if \code{algo$storeSolutions} is \code{TRUE}, a list that
   contains a list \code{P} of matrices; else \code{NA}.}
 } % end value
 \references{
@@ -171,14 +169,14 @@ algo <- list(printBar = FALSE,
 sol$xbest
 sol$OFvalue  ### should be zero (with luck)
 
-## a vectorised OF: works only with a *matrix* x
+## a vectorised Rosenbrock function: works only with a *matrix* x
 OF2 <- function(x) {
     n <- dim(x)[1L]
     xi <- x[seq_len(n - 1L), ]
     colSums(100 * (x[2L:n, ] - xi * xi)^2 + (1 - xi)^2)
 }
 
-## random solution
+## random solutions (every column of 'x' is one solution)
 x <- matrix(rnorm(size * algo$nP), size, algo$nP)
 all.equal(OF2(x)[1:3],
           c(OF(x[ ,1L]), OF(x[ ,2L]), OF(x[ ,3L])))

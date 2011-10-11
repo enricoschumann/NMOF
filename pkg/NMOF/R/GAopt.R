@@ -61,7 +61,7 @@ GAopt <- function (OF, algo = list(), ...) {
     snP1 <- c(nP, snP[-nP])
 
     switch <- function(x) !x
-    shift  <- function(x) c(x[nP], x[snP1])
+    shift  <- function(x,ind) x[ind]
 
     vF <- numeric(nP)
     vF[] <- NA
@@ -119,7 +119,7 @@ GAopt <- function (OF, algo = list(), ...) {
 
         ## ... through crossover
         o <- sample.int(nP)
-        oo <- shift(o)
+        oo <- shift(o, snP1)
         if (crossOver1) {
             for (s in snP)
                 mC[ ,s] <- crossOver(mP[ ,o[s]],mP[ ,oo[s]])

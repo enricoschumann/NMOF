@@ -1,7 +1,7 @@
 # path <- "C:/packages/RForge/Test/NMOF/inst/unitTests"
 if (require(RUnit, quietly = TRUE)) {
     path <- system.file(package = "NMOF", "unitTests")
-    myTestSuite <- defineTestSuite("NMOF1", 
+    myTestSuite <- defineTestSuite("NMOF1",
         dirs = path, testFileRegexp = "unitTests.+")
     stopifnot(isValidTestSuite(myTestSuite))
     testResult <- runTestSuite(myTestSuite, verbose = 0L)

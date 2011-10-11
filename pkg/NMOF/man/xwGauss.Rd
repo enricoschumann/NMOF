@@ -16,7 +16,8 @@ changeInterval(nodes, weights, oldmin, oldmax, newmin, newmax)
 number of nodes
 }
   \item{method}{
-currently only \code{legendre} is supported (anything else gives an error)
+character. default is \code{"legendre"}; also possible are
+\code{"laguerre"} and \code{"hermite"}
 }
 % changeInterval
   \item{nodes}{

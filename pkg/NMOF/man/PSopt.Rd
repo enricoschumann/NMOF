@@ -34,7 +34,7 @@ To allow for constraints, the evaluation works as follows: after a new solution 
 can also be directly written in the \code{OF}, since it amounts to a positive number added to the \sQuote{clean} objective function value. 
 It can be advantageous to write a separate penalty function if either only the objective function or only the penalty function can be vectorised.
 (Constraints can also be added without these mechanisms. Solutions that violate constraints can, for instance, be mapped to feasible solutions, 
-but without actually changing them. See Maringer and Oyewumi (2007) for an example with Differential Evolution.)
+but without actually changing them. See Maringer and Oyewumi, 2007, for an example with Differential Evolution.)
 
 Conceptually, \acronym{PS} consists of two loops: one loop across the iterations and, in any given generation, one loop across the solutions. 
 This is the default, controlled by the variables \code{algo$loopOF}, \code{algo$loopRepair} and \code{algo$loopPen}, which all 
@@ -42,10 +42,10 @@ default to \code{TRUE}. But it does not matter in what order the solutions are e
 so the second loop can be vectorised. Examples are given in the vignettes and in the book. The respective 
 \code{algo$loopFun} must then be set to \code{FALSE}.
 
-All objects that are passed through \code{\dots} will be passed to the objective function, to the repair function and 
-to the penalty function.
+The objective function \code{OF}, the repair function and and the
+penalty function will be called as \code{fun(solution, \dots)}.
 
-The list \code{algo} contains the following items.
+The list \code{algo} contains the following items:
 \describe{
 \item{\code{nP}}{population size. Defaults to 100. Using default settings may not be a good idea.}
 \item{\code{nG}}{number of iterations. Defaults to 500. Using default settings may not be a good idea.}
@@ -64,8 +64,8 @@ velocities (\sQuote{overshooting}): for instance, if a decision variable may lie
 makes rarely sense.}
 \item{\code{min}}{a vector of minimum parameter values. See below.}
 \item{\code{max}}{a vector of maximum parameter values. See below.}
-\item{\code{pen}}{a penalty function. Default is NULL (no penalty).}
-\item{\code{repair}}{a repair function. Default is NULL (no repairing).}
+\item{\code{pen}}{a penalty function. Default is \code{NULL} (no penalty).}
+\item{\code{repair}}{a repair function. Default is \code{NULL} (no repairing).}
 \item{\code{changeV}}{a function to change velocity. Default is \code{NULL} (no change). This function is called before
     the velocity is added to the current solutions; it can be used to impose restrictions like changing only a number of 
     decision variables.}
@@ -76,33 +76,30 @@ such a matrix. If a function, it should take no arguments.}
 \item{\code{loopRepair}}{logical. Should the repair function (if specified) be evaluated through a loop? Defaults to \code{TRUE}.}
 \item{\code{loopChangeV}}{logical. Should the \code{changeV} function (if specified) be evaluated through a loop? Defaults to \code{TRUE}.}
 \item{\code{printDetail}}{If \code{TRUE} (the default), information is printed.}
-\item{\code{printBar}}{If \code{TRUE} (the default), information in progress is printed (\code{txtProgressBar} from package \pkg{utils} 
-is used).}
-\item{\code{storeF}}{if \code{TRUE} (the default), the objective
-  function values for 
-  every solution in every generation are stored and returned as matrix \code{Fmat}.}
+\item{\code{printBar}}{If \code{TRUE} (the default), a
+  \code{txtProgressBar} (from package \pkg{utils}) is printed).}
+\item{\code{storeF}}{If \code{TRUE} (the default), the objective
+  function values for every solution in every generation are stored and returned as matrix \code{Fmat}.}
 \item{\code{storeSolutions}}{default
   is \code{FALSE}. If \code{TRUE}, the solutions (ie, decision
   variables) in every generation are stored as lists
   \code{P} and \code{Pbest}, both stored in the list \code{xlist} which the
   function returns. To check, for instance, the solutions at the end of
-  the \code{i}th iteration, retrieve \code{xlist[[1L, i]]}; the best
-  solutions at the end of this iteration are in \code{xlist[[2L,
-    i]]}. \code{P[[i]]}/\code{Pbest[[i]]} will be
-  a matrix of size \code{length(algo$min)} times \code{algo$nP}. ; then \code{Plist} and \code{Pbestlist} are
-  \code{NA}.}
+  the \code{i}th iteration, retrieve \code{xlist[[c(1L, i)]]}; the best
+  solutions at the end of this iteration are in \code{xlist[[c(2L, i)]]}. \code{P[[i]]}/\code{Pbest[[i]]} will be
+  a matrix of size \code{length(algo$min)} times \code{algo$nP}.}
 } % end describe
 The vectors \code{min} and \code{max} are used to determine the dimension of the problem and 
 to randomly initialise the population. They are no constraints: a solution may well be outside these limits.
 }
 \value{
 Returns a list:
-\item{xbest}{the solution.}
-\item{OFvalue}{objective function value of best solution.}
-\item{popF}{a vector: the objective function values in the population.}
-\item{Fmat}{if \code{algo$storeF} is TRUE, a matrix of size \code{nG}
-  times \code{nP}. Each column contains the best objective function value found by the particular solution.}
-\item{xlist}{if \code{algo$storeSolutions} is TRUE, this contains two
+\item{xbest}{the solution}
+\item{OFvalue}{objective function value of best solution}
+\item{popF}{a vector: the objective function values in the final population}
+\item{Fmat}{if \code{algo$storeF} is \code{TRUE}, a matrix of size \code{algo$nG}
+  times \code{algo$nP}. Each column contains the best objective function value found by the particular solution.}
+\item{xlist}{if \code{algo$storeSolutions} is \code{TRUE}, a list that contains two
   lists \code{P} and \code{Pbest} of matrices; else \code{NA}.
 }
 
@@ -171,7 +168,7 @@ if (require("MASS", quietly = TRUE)) {
 }
 ## check
 x1 <- sort((y - X \%*\% as.matrix(sol$xbest))^2)[h]
-cat("particle swarm\n",x1,"\n\n")
+cat("Particle Swarm\n",x1,"\n\n")
 
 if (require("MASS", quietly = TRUE)) {
     x2 <- sort((y - X \%*\% as.matrix(coef(test1)))^2)[h]

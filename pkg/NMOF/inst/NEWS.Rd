@@ -1,5 +1,12 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.19-3 (2011-10-07)}{
+  \itemize{
+    \item fixed: a bug had been introduced into 'GAopt' in version 0.19-2 
+      (revision 88), which let the population grow to algo$nP+1 
+    \item minor changes in documentation/examples
+  }
+}
 \section{Changes in NMOF version 0.19-2 (2011-09-30)}{
   \itemize{
     \item minor cleanups in documentation

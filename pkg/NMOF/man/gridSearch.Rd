@@ -27,7 +27,7 @@ gridSearch(fun, levels, ..., lower, upper, npar = 1L, n = 5L,
     a numeric vector. Ignored if levels are explicitly specified.
   }
   \item{upper}{
-    a numeric vector.Ignored if levels are explicitly specified.
+    a numeric vector. Ignored if levels are explicitly specified.
   }
   \item{npar}{
     the number of parameters. Must be supplied if \code{lower} and
@@ -45,8 +45,8 @@ gridSearch(fun, levels, ..., lower, upper, npar = 1L, n = 5L,
   }
   \item{mc.control}{
     a list containing settings that will be passed to \code{mclapply} if
-    \code{method} is \code{multicore}. Must be a list with named
-    elements; see the documentation of \code{mclapply}.
+    \code{method} is \code{multicore}. Must be a list of named
+    elements; see the documentation of \code{mclapply} in pkg{multicore}.
   }
   \item{cl}{default is \code{NULL}. If method \code{snow} is used, this must be a
     cluster object or an integer (the number of cores).}
@@ -75,7 +75,7 @@ gridSearch(fun, levels, ..., lower, upper, npar = 1L, n = 5L,
   The function uses the mechanism of \code{\link{expand.grid}} to create
   the list of parameter combinations for which \code{fun} is evaluated; it
   calls \code{\link{lapply}} to evaluate \code{fun} if
-  \code{method=="loop"} (the default).
+  \code{method == "loop"} (the default).
 
   If \code{method == "multicore"}, the function \code{mclapply} from
   package \pkg{multicore} is used. Further settings for \code{mclapply}
