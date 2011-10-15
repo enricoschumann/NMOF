@@ -162,39 +162,7 @@ Speedup:
 t1ps[[3L]]/t2ps[[3L]]
 t1de[[3L]]/t2de[[3L]]
 @
-Finally, we can show the effect that DE performs better with a small
-value for \texttt{F}. (We run only three restarts to keep the time to
-build the vignette acceptable. When redoing this analysis, you should
-increase \texttt{trials}.)
 
-<<fig = TRUE, height = 3.8>>=
-trials <- 3L
-de$nP <- popsize; de$nG <- generations
-ps$nP <- popsize; ps$nG <- generations
-
-de$F <- 0.2
-allResF02 <- numeric(trials)
-resF02 <- restartOpt(DEopt, n = trials, OF, algo = de, data = data)
-de$F <- 0.8
-allResF08 <- numeric(trials)
-resF08 <- restartOpt(DEopt, n = trials, OF, algo = de, data = data)
-
-for (i in seq_len(trials))
-    allResF02[i] <- resF02[[i]]$OFvalue
-for (i in seq_len(trials))
-    allResF08[i] <- resF08[[i]]$OFvalue
-Xlim <- pretty(c(allResF02, allResF08))
-
-plot(ecdf(allResF02), main = "", xlab = "", ylab = "",
-     xlim = c(min(Xlim), max(Xlim)))
-lines(ecdf(allResF08), main = "", xlab = "", ylab = "", col = "blue")
-legend(x = "right", legend = c("F = 0.2", "F = 0.8"),
-       col = c("black", "blue"),lty = 1, pch = 19)
-@
-
-But as so often: increasing the computational resources (eg,
-increasing generations) helps. (Check whether the populations have
-converged.)
 
 \bibliographystyle{plainnat}
 \bibliography{NMOF}
