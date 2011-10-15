@@ -16,11 +16,11 @@ DEopt <- function(OF, algo = list(), ...) {
     ## check min/max
     vmax <- as.vector(algoD$max)
     vmin <- as.vector(algoD$min)
-    if(is.null(vmin))
+    if (is.null(vmin))
         stop("specify 'min' vector")
-    if(is.null(vmax))
+    if (is.null(vmax))
         stop("specify 'max' vector")
-    if(length(vmax) != length(vmin))
+    if (length(vmax) != length(vmin))
         stop("'max' and 'min' have different lengths")
     if (!is.vector(vmax))
         stop("'max' must be a vector")
@@ -57,9 +57,6 @@ DEopt <- function(OF, algo = list(), ...) {
     snP <- seq_len(nP)
     snP1 <- c(nP, snP[-nP])
 
-    ## auxiliary functions
-    shift <- function(x) x[snP1]
-
     ## MAIN ALGORITHM
     ## set up initial population
     vF <- numeric(nP); vF[] <- NA
@@ -80,7 +77,7 @@ DEopt <- function(OF, algo = list(), ...) {
     ## evaluate initial population
     ## 1) repair
     if ( !is.null(algoD$repair) ){
-        if(algoD$loopRepair){
+        if (algoD$loopRepair){
             for (s in snP) mP[ ,s] <- Re1(mP[ ,s])
         } else {
             mP <- Re1(mP)
@@ -113,9 +110,9 @@ DEopt <- function(OF, algo = list(), ...) {
 
         ## update population
         vI <- sample.int(nP)
-        R1 <- shift(vI)
-        R2 <- shift(R1)
-        R3 <- shift(R2)
+        R1 <- vI[snP1]
+        R2 <- R1[snP1]
+        R3 <- R2[snP1]
 
         ## prelim. update
         mPv <- mP[ ,R1] + F * (mP[ ,R2] - mP[ ,R3])
@@ -150,7 +147,7 @@ DEopt <- function(OF, algo = list(), ...) {
         if (algoD$storeF)
             Fmat[g, ] <- vF
         if (algoD$storeSolutions)
-            xlist[[c(1L,g)]] <- mP
+            xlist[[c(1L, g)]] <- mP
     } ## end of generations
 
     if (printBar)

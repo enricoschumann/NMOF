@@ -40,7 +40,7 @@ constraint with the boundary value. Such a repair function can be
 implemented very concisely. An example:
 <<>>=
 up <- rep(1, 4L)
-lo <- rep(-1, 4L)
+lo <- rep(0, 4L)
 x <- rnorm(4L)
 x
 @
@@ -51,8 +51,8 @@ x
 repair1a(x, up, lo)
 @
 We see that indeed all values greater than \texttt{1} are replaced
-with \texttt{1}, and those smaller than \texttt{-1} become
-\texttt{-1}.  Two other possibilities that achieve the same result:
+with \texttt{1}, and those smaller than \texttt{0} become
+\texttt{0}.  Two other possibilities that achieve the same result:
 <<>>=
 repair1b <- function(x, up, lo) {
     ii <- x > up

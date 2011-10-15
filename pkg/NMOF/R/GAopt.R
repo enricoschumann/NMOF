@@ -60,9 +60,6 @@ GAopt <- function (OF, algo = list(), ...) {
     snP <- seq_len(nP)
     snP1 <- c(nP, snP[-nP])
 
-    switch <- function(x) !x
-    shift  <- function(x,ind) x[ind]
-
     vF <- numeric(nP)
     vF[] <- NA
     vFc <- vP <- vF
@@ -83,7 +80,7 @@ GAopt <- function (OF, algo = list(), ...) {
             mP <- algoD$initP
         if (mode(mP) != "logical") {
             storage.mode(mP) <- "logical"
-            warning("'mP' is not of mode logical, 'storage.mode(mP)' will be tried")
+            warning("'initP' is not of mode logical; 'storage.mode(initP)' will be tried")
         }
     }
     if (!is.null(algoD$repair)) {
@@ -119,7 +116,7 @@ GAopt <- function (OF, algo = list(), ...) {
 
         ## ... through crossover
         o <- sample.int(nP)
-        oo <- shift(o, snP1)
+        oo <- o[snP1]
         if (crossOver1) {
             for (s in snP)
                 mC[ ,s] <- crossOver(mP[ ,o[s]],mP[ ,oo[s]])
@@ -129,7 +126,7 @@ GAopt <- function (OF, algo = list(), ...) {
 
         ## ... through mutation
         mutate <- runif(nB*nP) < algoD$prob
-        mC[mutate] <- switch(mC[mutate])
+        mC[mutate] <- !mC[mutate]
 
         if (!is.null(algoD$repair)) {
             if (algoD$loopRepair) {

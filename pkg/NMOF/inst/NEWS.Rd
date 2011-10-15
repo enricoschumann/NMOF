@@ -1,5 +1,13 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.19-4 (2011-10-15)}{
+  \itemize{
+    \item small changes in vignette 'Repairing solutions'  
+    \item small internal changes in 'GAopt' and 'DEopt' (auxiliary functions 
+      like 'switch' and 'shift' have been inlined)
+    \item code examples in subdirectory 'NMOFex' updated
+  }
+}
 \section{Changes in NMOF version 0.19-3 (2011-10-07)}{
   \itemize{
     \item fixed: a bug had been introduced into 'GAopt' in version 0.19-2 

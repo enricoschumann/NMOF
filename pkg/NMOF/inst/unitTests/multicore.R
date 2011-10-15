@@ -35,16 +35,18 @@ if (runMC) {
 
 
     ## bracketing ##
-    testFun <- function(x,k) {
+    testFun <- function(x) {
         Sys.sleep(0.1)
         cos(1/x^2)
     }
-    system.time(bracketing(testFun, interval = c(0.3, 0.9),
+    system.time(sol1 <- bracketing(testFun, interval = c(0.3, 0.9),
                            n = 100L))
-    system.time(bracketing(testFun, interval = c(0.3, 0.9),
+    system.time(sol2 <- bracketing(testFun, interval = c(0.3, 0.9),
                            n = 100L, method = "multicore"))
-    system.time(bracketing(testFun, interval = c(0.3, 0.9),
+    system.time(sol3 <- bracketing(testFun, interval = c(0.3, 0.9),
                            n = 100L, method = "snow", cl = 4))
+    checkEquals(sol1, sol2)
+    checkEquals(sol1, sol3)
 
 
     ## restartOpt ##

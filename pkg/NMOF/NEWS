@@ -1,3 +1,10 @@
+v0.19-4  (2011-10-15)
+
+  o small changes in vignette 'Repairing solutions'  
+  o small internal changes in 'GAopt' and 'DEopt' (auxiliary functions 
+    like 'switch' and 'shift' have been inlined)
+  o code examples in subdirectory 'NMOFex' updated
+
 v0.19-3  (2011-10-07)
 
   o fixed: a bug had been introduced into 'GAopt' in version 0.19-2 

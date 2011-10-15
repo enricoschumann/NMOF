@@ -3,7 +3,7 @@
 ###################################################
 ### code chunk number 1: NMOFex.Rnw:74-76
 ###################################################
-## version 2011-09-30
+## version 2011-10-15
 options(continue = " ", digits = 3, width = 70)
 
 
@@ -28,7 +28,26 @@ set.seed(1112233344)
 
 
 ###################################################
-### code chunk number 5: NMOFex.Rnw:137-144
+### code chunk number 5: NMOFex.Rnw:123-137
+###################################################
+## using several cores
+testFun  <- function(x) {
+        Sys.sleep(0.1)  ## wasting time :)
+        x[1L] + x[2L]^2
+}
+lower <- 1:3; upper <- 5; n <- 5L
+system.time(sol1 <- gridSearch(fun = testFun,
+                               lower = lower, upper = upper,
+                               n = n, printDetail = TRUE))
+system.time(sol2 <- gridSearch(fun = testFun,
+                               lower = lower, upper = upper,
+                               n = n, printDetail = FALSE,
+                               method = "snow", cl = 4L))
+all.equal(sol1, sol2)
+
+
+###################################################
+### code chunk number 6: NMOFex.Rnw:153-160
 ###################################################
 ## create random data with vols between minVol and maxVol
 ## and pairwise correlation of 0.6
@@ -40,7 +59,7 @@ Sigma <- outer(Vols,Vols) * C
 
 
 ###################################################
-### code chunk number 6: NMOFex.Rnw:156-174
+### code chunk number 7: NMOFex.Rnw:172-190
 ###################################################
 ## objective function for LS/TA
 OF <- function(x, data) {
@@ -63,7 +82,7 @@ neighbour <- function(xc, data) {
 
 
 ###################################################
-### code chunk number 7: NMOFex.Rnw:181-187
+### code chunk number 8: NMOFex.Rnw:197-203
 ###################################################
 ## data
 data <- list(Sigma = Sigma,   ### cov-matrix
@@ -74,7 +93,7 @@ data <- list(Sigma = Sigma,   ### cov-matrix
 
 
 ###################################################
-### code chunk number 8: NMOFex.Rnw:191-196
+### code chunk number 9: NMOFex.Rnw:207-212
 ###################################################
 ## a random solution x0
 card0 <- sample(data$Kinf:data$Ksup, 1L, replace = FALSE)
@@ -84,7 +103,7 @@ x0[assets] <- TRUE
 
 
 ###################################################
-### code chunk number 9: NMOFex.Rnw:202-210
+### code chunk number 10: NMOFex.Rnw:218-226
 ###################################################
 ## *Local Search*
 algo <- list(x0 = x0, neighbour = neighbour, nS = 5000L,
@@ -97,7 +116,7 @@ system.time(solTA <- TAopt(OF, algo = algo, data = data))
 
 
 ###################################################
-### code chunk number 10: NMOFex.Rnw:291-299
+### code chunk number 11: NMOFex.Rnw:308-316
 ###################################################
 ## *Genetic Algorithm*
 OF2 <- function(x, data) {
@@ -110,7 +129,7 @@ OF2 <- function(x, data) {
 
 
 ###################################################
-### code chunk number 11: NMOFex.Rnw:305-308
+### code chunk number 12: NMOFex.Rnw:322-325
 ###################################################
 algo <- list(nB = na, nP = 100L, nG = 500L, prob = 0.002,
              printBar = FALSE, loopOF = FALSE)
@@ -118,7 +137,7 @@ system.time(solGA <- GAopt(OF = OF2, algo = algo, data = data))
 
 
 ###################################################
-### code chunk number 12: NMOFex.Rnw:311-316
+### code chunk number 13: NMOFex.Rnw:328-333
 ###################################################
 cat(
     "Local Search        ", format(sqrt(solLS$OFvalue), digits = 4), "\n",
@@ -128,7 +147,7 @@ cat(
 
 
 ###################################################
-### code chunk number 13: NMOFex.Rnw:340-348
+### code chunk number 14: NMOFex.Rnw:357-365
 ###################################################
 na <- 100L                                 ### number of assets
 ns <- 200L                                 ### number of scenarios
@@ -141,7 +160,7 @@ R <- R %*% diag(vols)
 
 
 ###################################################
-### code chunk number 14: NMOFex.Rnw:369-380
+### code chunk number 15: NMOFex.Rnw:386-397
 ###################################################
 data <- list(R = t(R),              ### scenarios
               theta = 0.005,         ### return threshold
@@ -157,7 +176,7 @@ data <- list(R = t(R),              ### scenarios
 
 
 ###################################################
-### code chunk number 15: NMOFex.Rnw:385-388
+### code chunk number 16: NMOFex.Rnw:402-405
 ###################################################
 x0 <- data$min + runif(data$na)*(data$max - data$min)
 x0[1:5]
@@ -165,7 +184,7 @@ sum(x0)
 
 
 ###################################################
-### code chunk number 16: NMOFex.Rnw:391-395
+### code chunk number 17: NMOFex.Rnw:408-412
 ###################################################
 temp <- R %*% x0             ### compute portfolio returns
 temp <- temp - data$theta
@@ -174,7 +193,7 @@ sum(temp)/ns                 ### semivariance
 
 
 ###################################################
-### code chunk number 17: NMOFex.Rnw:399-406
+### code chunk number 18: NMOFex.Rnw:416-423
 ###################################################
 OF <- function(x, data) {
     Rx <- crossprod(data$R, x)
@@ -186,14 +205,14 @@ OF <- function(x, data) {
 
 
 ###################################################
-### code chunk number 18: NMOFex.Rnw:414-416
+### code chunk number 19: NMOFex.Rnw:431-433
 ###################################################
 OF(x0, data)
 OF(cbind(x0, x0), data)
 
 
 ###################################################
-### code chunk number 19: NMOFex.Rnw:423-433
+### code chunk number 20: NMOFex.Rnw:440-450
 ###################################################
 repair <- function(x, data) {
     myFun <- function(x) x/sum(x)
@@ -208,7 +227,7 @@ repair2 <- function(x, data) {
 
 
 ###################################################
-### code chunk number 20: NMOFex.Rnw:437-442
+### code chunk number 21: NMOFex.Rnw:454-459
 ###################################################
 sum(x0)
 sum(repair(x0, data))
@@ -218,7 +237,7 @@ colSums(repair2(cbind(x0, x0), data))
 
 
 ###################################################
-### code chunk number 21: NMOFex.Rnw:445-456
+### code chunk number 22: NMOFex.Rnw:462-473
 ###################################################
 penalty <- function(x, data) {
     up <- data$max
@@ -234,7 +253,7 @@ penalty <- function(x, data) {
 
 
 ###################################################
-### code chunk number 22: NMOFex.Rnw:462-468
+### code chunk number 23: NMOFex.Rnw:479-485
 ###################################################
 x0[1L] <- 0.30
 penalty(x0, data)
@@ -245,7 +264,7 @@ penalty(cbind(x0, x0), data)
 
 
 ###################################################
-### code chunk number 23: NMOFex.Rnw:472-482
+### code chunk number 24: NMOFex.Rnw:489-499
 ###################################################
 algo <- list(nP = 100,        ### population size
              nG = 1000,       ### number of generations
@@ -260,7 +279,7 @@ algo <- list(nP = 100,        ### population size
 
 
 ###################################################
-### code chunk number 24: NMOFex.Rnw:487-494
+### code chunk number 25: NMOFex.Rnw:504-511
 ###################################################
 system.time(sol <- DEopt(OF = OF,algo = algo,data = data))
 16 * 100 * sqrt(sol$OFvalue)   ### solution quality
@@ -272,7 +291,7 @@ all(all.equal(sum(sol$xbest), 1),  ### budget constraint
 
 
 ###################################################
-### code chunk number 25: NMOFex.Rnw:503-510
+### code chunk number 26: NMOFex.Rnw:520-527
 ###################################################
 ## looping over the population
 algo$loopOF <- TRUE; algo$loopPen <- TRUE; algo$loopRepair <- TRUE
@@ -284,7 +303,7 @@ system.time(sol <- DEopt(OF = OF,algo = algo, data = data))
 
 
 ###################################################
-### code chunk number 26: NMOFex.Rnw:519-532
+### code chunk number 27: NMOFex.Rnw:536-549
 ###################################################
 algo$printDetail <- FALSE
 restartsDE <- restartOpt(fun = DEopt,      ### what function
@@ -302,7 +321,7 @@ weightsDE <- sapply(restartsDE, `[[`, "xbest")
 
 
 ###################################################
-### code chunk number 27: NMOFex.Rnw:535-540
+### code chunk number 28: NMOFex.Rnw:552-557
 ###################################################
 par(bty = "n", las = 1, mar = c(3, 4, 0, 0),
     ps = 8, tck = 0.001, mgp = c(3, 0.2, 0))
@@ -312,7 +331,7 @@ mtext("OF value",  side = 1, line = 1)
 
 
 ###################################################
-### code chunk number 28: NMOFex.Rnw:544-550
+### code chunk number 29: NMOFex.Rnw:561-567
 ###################################################
 par(bty = "n", las = 1, mar = c(3, 4, 0, 0),
     ps = 8, tck = 0.001, mgp = c(3, 0.2, 0))
@@ -323,7 +342,7 @@ mtext("weights", side = 2, line = 1.3, las = 1, padj = -5)
 
 
 ###################################################
-### code chunk number 29: NMOFex.Rnw:562-600
+### code chunk number 30: NMOFex.Rnw:579-617
 ###################################################
 algo$printDetail <- FALSE;  algo$nP <- 200L; restarts <- 20L
 nGs <- c(500L, 1000L, 2500L)
@@ -366,7 +385,7 @@ for (i in 1:3) lines(ecdf(res2[ ,i]), col = "blue", cex = 0.4)
 
 
 ###################################################
-### code chunk number 30: NMOFex.Rnw:609-616
+### code chunk number 31: NMOFex.Rnw:626-633
 ###################################################
 weightsDE <- sapply(restartsDE, `[[`, "xbest")
 par(bty = "n", las = 1, mar = c(3, 4, 0, 0),
@@ -378,7 +397,7 @@ mtext("weights", side = 2, line = 1.3, las = 1, padj = -5)
 
 
 ###################################################
-### code chunk number 31: NMOFex.Rnw:622-639
+### code chunk number 32: NMOFex.Rnw:639-656
 ###################################################
 algo <- list(nP = 100L,        ### population size
     nG = 1000L,                ### number of generations
@@ -400,7 +419,7 @@ all(all.equal(sum(sol$xbest),1),  ### budget constraint
 
 
 ###################################################
-### code chunk number 32: NMOFex.Rnw:645-677
+### code chunk number 33: NMOFex.Rnw:662-694
 ###################################################
 ## adjusting velocity
 changeV <- function(x, data) {
@@ -437,7 +456,7 @@ system.time(sol <- PSopt(OF = OF, algo = algo, data = data))
 
 
 ###################################################
-### code chunk number 33: NMOFex.Rnw:680-695
+### code chunk number 34: NMOFex.Rnw:697-712
 ###################################################
 algo$printDetail <- FALSE
 restartsPS <- restartOpt(fun = PSopt,
@@ -457,7 +476,7 @@ mtext("OF value",  side = 1, line = 1)
 
 
 ###################################################
-### code chunk number 34: NMOFex.Rnw:703-726
+### code chunk number 35: NMOFex.Rnw:720-743
 ###################################################
 data$R <- R  ## not transposed any more
 
@@ -485,7 +504,7 @@ OF <- function(x, data) {
 
 
 ###################################################
-### code chunk number 35: NMOFex.Rnw:729-742
+### code chunk number 36: NMOFex.Rnw:746-759
 ###################################################
 ## a random initial weights
 w0 <- runif(data$na); w0 <- w0/sum(w0)
@@ -503,7 +522,7 @@ system.time(sol2 <- TAopt(OF,algo,data))
 
 
 ###################################################
-### code chunk number 36: NMOFex.Rnw:746-766
+### code chunk number 37: NMOFex.Rnw:763-783
 ###################################################
 restartsTA <- restartOpt(fun = TAopt,
                          n = 20L,
@@ -528,7 +547,7 @@ lines(ecdf(OFvaluesTA), cex = 0.4)
 
 
 ###################################################
-### code chunk number 37: NMOFex.Rnw:788-817
+### code chunk number 38: NMOFex.Rnw:805-834
 ###################################################
 randomData <- function(
     p = 200L,      ### number of available regressors
@@ -562,7 +581,7 @@ data <- list(X = rD$X,
 
 
 ###################################################
-### code chunk number 38: NMOFex.Rnw:823-827
+### code chunk number 39: NMOFex.Rnw:840-844
 ###################################################
 x0 <- logical(data$p)
 temp <- sample.int(data$maxk, 1L)
@@ -571,7 +590,7 @@ x0[temp] <- TRUE
 
 
 ###################################################
-### code chunk number 39: NMOFex.Rnw:836-847
+### code chunk number 40: NMOFex.Rnw:853-864
 ###################################################
 require(rbenchmark)
 benchmark(lm(data$y ~ -1 + data$X[ ,x0]),
@@ -587,7 +606,7 @@ all.equal(as.numeric(coef(ignore1)), as.numeric(ignore2))
 
 
 ###################################################
-### code chunk number 40: NMOFex.Rnw:856-862
+### code chunk number 41: NMOFex.Rnw:873-879
 ###################################################
 OF <- function(x, data) {
     q <- qr(data$X[ ,x])
@@ -598,7 +617,7 @@ OF(x0, data)
 
 
 ###################################################
-### code chunk number 41: NMOFex.Rnw:867-876
+### code chunk number 42: NMOFex.Rnw:884-893
 ###################################################
 neighbour <- function(xc, data) {
     xn <- xc
@@ -612,7 +631,7 @@ neighbour(x0, data)[1:10]
 
 
 ###################################################
-### code chunk number 42: NMOFex.Rnw:881-889
+### code chunk number 43: NMOFex.Rnw:898-906
 ###################################################
 algo <- list(
     nT = 10L,    ### number of thresholds
@@ -625,7 +644,7 @@ system.time(sol1 <- TAopt(OF, algo = algo, data = data))
 
 
 ###################################################
-### code chunk number 43: NMOFex.Rnw:894-897
+### code chunk number 44: NMOFex.Rnw:911-914
 ###################################################
 sol1$OFvalue
 which(sol1$xbest)  ### the selected regressors
@@ -633,7 +652,7 @@ rD$K               ### the true regressors
 
 
 ###################################################
-### code chunk number 44: NMOFex.Rnw:904-908
+### code chunk number 45: NMOFex.Rnw:921-925
 ###################################################
 xtrue <- logical(data$p)
 xtrue[rD$K] <- TRUE
@@ -642,7 +661,7 @@ OF(xtrue, data)
 
 
 ###################################################
-### code chunk number 45: NMOFex.Rnw:915-924
+### code chunk number 46: NMOFex.Rnw:932-941
 ###################################################
 restarts <- 50L
 algo$printDetail <- FALSE
@@ -656,7 +675,7 @@ plot(ecdf(sapply(res, `[[`, "OFvalue")),  ### extract solution quality
 
 
 ###################################################
-### code chunk number 46: NMOFex.Rnw:929-937
+### code chunk number 47: NMOFex.Rnw:946-954
 ###################################################
 xbestAll <- sapply(res, `[[`, "xbest")    ### extract all solutions
 inclReg  <- which(rowSums(xbestAll) > 0L) ### get included regressors
@@ -669,7 +688,7 @@ data.frame(
 
 
 ###################################################
-### code chunk number 47: NMOFex.Rnw:1031-1038
+### code chunk number 48: NMOFex.Rnw:1048-1055
 ###################################################
 OF <- tfTrefethen
 n <- 100L
@@ -681,7 +700,7 @@ for (i in seq_len(n))
 
 
 ###################################################
-### code chunk number 48: NMOFex.Rnw:1045-1051
+### code chunk number 49: NMOFex.Rnw:1062-1068
 ###################################################
 par(bty = "n", las = 1, mar = c(3,4,0,0),
     ps = 8, tck = 0.001, mgp = c(3, 0.2, 0))
@@ -692,7 +711,7 @@ abline(v = -0.02440308, h = 0.21061243, col = grey(0.6))
 
 
 ###################################################
-### code chunk number 49: NMOFex.Rnw:1056-1062
+### code chunk number 50: NMOFex.Rnw:1073-1079
 ###################################################
 algo <- list(nP = 50L, nG = 300L,
              F = 0.6, CR = 0.9,
@@ -703,7 +722,7 @@ sol <- DEopt(OF = OF, algo = algo)
 
 
 ###################################################
-### code chunk number 50: NMOFex.Rnw:1065-1071
+### code chunk number 51: NMOFex.Rnw:1082-1088
 ###################################################
 names(sol)
 sd(sol$popF)
@@ -714,7 +733,7 @@ xlist <- sol$xlist[[1L]]
 
 
 ###################################################
-### code chunk number 51: NMOFex.Rnw:1079-1094
+### code chunk number 52: NMOFex.Rnw:1096-1111
 ###################################################
 ## show solution 1 (column 1) in population over time
 xlist[[  1L]][ ,1L]  ### at the end of generation 1
@@ -734,7 +753,7 @@ res[ ,300L]
 
 
 ###################################################
-### code chunk number 52: NMOFex.Rnw:1098-1112
+### code chunk number 53: NMOFex.Rnw:1115-1129
 ###################################################
 ## show parameter 2 (row 2) in population over time
 xlist[[  1L]][2L, ]  ### at the end of generation 1
@@ -753,7 +772,7 @@ res[ ,300L]
 
 
 ###################################################
-### code chunk number 53: NMOFex.Rnw:1117-1126 (eval = FALSE)
+### code chunk number 54: NMOFex.Rnw:1134-1143 (eval = FALSE)
 ###################################################
 ## ## transposing xlist[[i]] gives a two-column matrix -- see ?points
 ## ## initial solutions
@@ -767,7 +786,7 @@ res[ ,300L]
 
 
 ###################################################
-### code chunk number 54: NMOFex.Rnw:1129-1157
+### code chunk number 55: NMOFex.Rnw:1146-1174
 ###################################################
 setEPS()
 postscript(file = "figures/c1.eps", width = 2, height = 2)
@@ -800,7 +819,7 @@ sep = "")
 
 
 ###################################################
-### code chunk number 55: NMOFex.Rnw:1168-1183
+### code chunk number 56: NMOFex.Rnw:1185-1200
 ###################################################
 OF <- function(par, Data) {
     ## compute model yields
@@ -820,7 +839,7 @@ OF <- function(par, Data) {
 
 
 ###################################################
-### code chunk number 56: NMOFex.Rnw:1188-1205
+### code chunk number 57: NMOFex.Rnw:1205-1222
 ###################################################
 algo <- list(nP = 200L, nG = 100L,
              F = 0.50, CR = 0.99,
@@ -842,7 +861,7 @@ p1 <- sapply(P, `[`, 1L, TRUE)
 
 
 ###################################################
-### code chunk number 57: NMOFex.Rnw:1212-1221
+### code chunk number 58: NMOFex.Rnw:1229-1238
 ###################################################
 par(bty = "n", las = 1, mar = c(4,4,0,0),
     ps = 8, tck = 0.001, mgp = c(3, 0.2, 0))
@@ -856,7 +875,7 @@ mtext("parameter\nvalue", 2, line = 1)
 
 
 ###################################################
-### code chunk number 58: NMOFex.Rnw:1228-1263
+### code chunk number 59: NMOFex.Rnw:1245-1280
 ###################################################
 OF2 <- function(par, Data) {
     ## compute model yields
@@ -896,7 +915,22 @@ mtext("parameter\nvalue", 2, line = 1)
 
 
 ###################################################
-### code chunk number 59: NMOFex.Rnw:1312-1313
+### code chunk number 60: NMOFex.Rnw:1292-1302
+###################################################
+testFun <- function(x) {
+    Sys.sleep(0.1) ## wasting time :)
+    cos(1/x^2)
+}
+system.time(sol1 <- bracketing(testFun, interval = c(0.3, 0.9),
+                           n = 100L))
+system.time(sol2 <- bracketing(testFun, interval = c(0.3, 0.9),
+                           n = 100L, method = "snow", cl = 4))
+
+all.equal(sol1, sol2)
+
+
+###################################################
+### code chunk number 61: NMOFex.Rnw:1344-1345
 ###################################################
 toLatex(sessionInfo())
 

@@ -84,6 +84,8 @@ documentation of package \pkg{snow}.}
     Methods and Optimization in Finance}. Elsevier.
   \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
 
+  Schumann, E. (2011) Examples and Extensions for the \pkg{NMOF}
+  Package. \url{http://ssrn.com/abstract=1886522}
 }
 \author{
   Enrico Schumann

@@ -3,8 +3,12 @@
 \documentclass[a4paper]{article}
 \title{Robust Regression with
   Particle Swarm Optimisation and Differential Evolution}
-\author{Enrico Schumann} \usepackage[noae]{Sweave}
-\usepackage{mathptmx} \usepackage{natbib} \usepackage{amsmath,amstext}
+\author{Enrico Schumann}
+\usepackage[noae]{Sweave}
+\usepackage{mathptmx}
+\usepackage{natbib}
+\usepackage{amsmath,amstext}
+\usepackage[left = 2.5cm, top = 2cm, bottom = 3cm, right = 3.5cm]{geometry}
 \begin{document}
 \maketitle
 \begin{abstract}
