@@ -17,7 +17,7 @@ if (runMC) {
         Sys.sleep(0.1)
         x[1L] + x[2L]^2
     }
-    lower <- 1:3; upper <- 5; n <- 3
+    lower <- 1:2; upper <- 5; n <- 3
     system.time(sol1 <- gridSearch(fun = testFun,
                                    lower = lower, upper = upper,
                                    n = n, printDetail = FALSE))
@@ -31,7 +31,38 @@ if (runMC) {
                                    method = "snow", cl = 2L))
     checkEquals(sol1, sol2)
     checkEquals(sol1, sol3)
-    checkEquals(sol3$minlevels, 1:3)
+    checkEquals(sol3$minlevels, 1:2)
+
+    testFun  <- function(x,k) {
+        Sys.sleep(0.1)
+        x[1L] + x[2L]^2+k
+    }
+    lower <- 1:2; upper <- 5; n <- 3; k <- 1
+    system.time(sol1 <- gridSearch(fun = testFun,k=k,
+                                   lower = lower, upper = upper,
+                                   n = n, printDetail = FALSE))
+    system.time(sol2 <- gridSearch(fun = testFun,k=k,
+                                   lower = lower, upper = upper,
+                                   n = n, printDetail = FALSE,
+                                   method = "multicore"))
+    system.time(sol3 <- gridSearch(fun = testFun,k=k,
+                                   lower = lower, upper = upper,
+                                   n = n, printDetail = FALSE,
+                                   method = "snow", cl = 2L))
+    checkEquals(sol1, sol2)
+    checkEquals(sol1, sol3)
+    checkEquals(sol3$minlevels, 1:2)
+
+    testFun  <- function(x) {
+        Sys.sleep(0.1)
+        x[1L] + x[2L]^2 + runif(1)
+    }
+    lower <- 1:2; upper <- 5; n <- 3
+    sol2 <- gridSearch(fun = testFun,
+                       lower = lower, upper = upper,
+                       n = n, printDetail = FALSE,
+                       method = "multicore",
+                       mc.control = list(mc.set.seed = FALSE))
 
 
     ## bracketing ##
