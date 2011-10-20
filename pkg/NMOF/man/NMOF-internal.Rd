@@ -28,7 +28,11 @@ mcList(mc.control)
   \code{passedList} are unnamed, or if an element in
   \code{names(passedList)} is not found in \code{names(defaultList)}.
 
-\code{mRU} and \code{mRN} create matrices of uniform/Gaussian variates. 
+  \code{mRU} and \code{mRN} create matrices (of size \code{m} times
+  \code{n}) of uniform/Gaussian variates.
+
+  \code{mcList} takes a list of named elements and \sQuote{merges} them with
+  the default settings of \code{mclapply} from package \pkg{multicore}.
 }
 
 \author{

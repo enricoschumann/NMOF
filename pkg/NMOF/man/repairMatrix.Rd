@@ -45,11 +45,11 @@ eigen(C, only.values = TRUE)
 vols <- c(.3, .3, .3)      ### volatilities
 S <- C * outer(vols,vols)  ### covariance matrix
 w <- c(-1, 1, 1)           ### a portfolio
-w \%*\% S \%*\% w          ### variance of portfolio is negative!
+w \%*\% S \%*\% w              ### variance of portfolio is negative!
 sqrt(as.complex(w \%*\% S \%*\% w))
 
 S <- repairMatrix(C) * outer(vols,vols)       
-w \%*\% S \%*\% w          ### more reasonable
+w \%*\% S \%*\% w              ### more reasonable
 sqrt(w \%*\% S \%*\% w)
 }
 

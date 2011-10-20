@@ -38,7 +38,9 @@ The list \code{algo} contains the following items:
     \code{neighbour(x, \dots)}. Its first argument must be a solution
     \code{x}; it must return a changed
     solution.}
-\item{\code{printDetail}}{If \code{TRUE} (the default), information is printed.}
+\item{\code{printDetail}}{If \code{TRUE} (the default), information is
+  printed. If an integer \code{i} greater then one, information is
+  printed at very \code{i}th step.}
 \item{\code{printBar}}{If \code{TRUE} (the default), a
   \code{txtProgressBar} (from package \pkg{utils}) is printed).}
 }
@@ -46,6 +48,8 @@ The list \code{algo} contains the following items:
 \acronym{LS} works on solutions through the functions \code{neighbour} and \code{OF}, which are specified by the user. Thus, a solution 
 need not be a numeric vector, but can be any other data structure as well (eg, a list or a matrix).
 
+To run silently (except for warnings and errors), \code{algo$printDetail} and
+\code{algo$printBar} must be \code{FALSE}.
 }
 
 \value{

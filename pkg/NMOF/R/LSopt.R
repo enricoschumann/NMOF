@@ -61,6 +61,14 @@ LSopt <- function(OF, algo = list(), ...) {
             xcF <- xnF
         }
 
+        ## print info
+        if (printDetail > 1) {
+            if (s %% printDetail == 0L) {
+            cat("Best solution (step ", s, "/", nS, "): ",
+                prettyNum(xcF),"\n", sep = "")
+            flush.console()
+            }
+        }
         ## store information
         if (algoD$storeF) {
             Fmat[s, 1L] <- xnF

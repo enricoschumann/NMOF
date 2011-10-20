@@ -36,7 +36,7 @@ the maximum of the interval (typically as tabulated)
 the desired minimum of the interval
 }
   \item{newmax}{
-the desired minimum of the interval
+the desired maximum of the interval
 }
 
 }

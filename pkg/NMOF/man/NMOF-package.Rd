@@ -47,11 +47,24 @@ Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Opti
 \examples{
 \dontrun{
 require("NMOF")
+
+## overview
 packageDescription("NMOF")
 help(package = "NMOF")
+
+## show NEWS file
 news(Version >= "0.18-0", package = "NMOF")
+
+## vignettes
 vignette(package = "NMOF")
 nss <- vignette("DEnss", package = "NMOF")
 print(nss)
-edit(nss)}
+edit(nss)
+
+## book website
+browseURL("http://nmof.net")
+
+## more examples
+file.show(system.file("NMOFex/README",   package = "NMOF"))
+file.show(system.file("NMOFex/NMOFex.R", package = "NMOF"))}
 }

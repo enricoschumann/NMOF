@@ -1,5 +1,15 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.20-0 (2011-10-20)}{
+  \itemize{
+    \item **first CRAN release**
+    \item the 'printDetail' argument for 'LSopt' now recognises 
+      TRUE and FALSE (as before), but also an integer 'i' 
+      greater than 1. In the latter case, information on the best 
+      solution is printed at every 'i'th step.
+    \item minor cleanups in documentation
+  }
+}
 \section{Changes in NMOF version 0.19-4 (2011-10-15)}{
   \itemize{
     \item small changes in vignette 'Repairing solutions'  
@@ -251,6 +261,7 @@
 }
 \section{Changes in NMOF version 0.10-1}{
   \itemize{
-    \item opt-functions now have 'printBar' and 'printDetail' option (set via 'algo')
+    \item opt-functions now have 'printBar' and 'printDetail' option 
+      (set via 'algo')
   }
 }

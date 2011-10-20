@@ -116,6 +116,6 @@ cat(res)
 ##\end{document}
 
 res <- qTable(X, filename = "res.tex", yoffset = -0.025, unitlength = "5cm",
-       circlesize = 0.0125, xmin = -10, xmax = 10, dec = 2)}
+              circlesize = 0.0125, xmin = -10, xmax = 10, dec = 2)}
 }
 

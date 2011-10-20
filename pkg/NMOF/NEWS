@@ -1,3 +1,12 @@
+v0.20-0  (2011-10-20)
+
+  o **first CRAN release**
+  o the 'printDetail' argument for 'LSopt' now recognises 
+    TRUE and FALSE (as before), but also an integer 'i' 
+    greater than 1. In the latter case, information on the best 
+    solution is printed at every 'i'th step.
+  o minor cleanups in documentation
+
 v0.19-4  (2011-10-15)
 
   o small changes in vignette 'Repairing solutions'  
@@ -218,4 +227,5 @@ v0.11-1
 
 v0.10-1
 
-  o opt-functions now have 'printBar' and 'printDetail' option (set via 'algo')
+  o opt-functions now have 'printBar' and 'printDetail' option 
+    (set via 'algo')

@@ -50,7 +50,7 @@ documentation of package \pkg{snow}.}
   \code{bracketing} evaluates \code{fun} at equal-spaced values of \code{x}
   between (and including) \code{lower} and \code{upper}. If the sign of
   \code{fun} changes between two consecutive \code{x}-values,
-  \code{bracketing} reports these two \code{x}-values as containing (`bracketing')
+  \code{bracketing} reports these two \code{x}-values as containing (\sQuote{bracketing})
   a root. There is no guarantee that there is only one root
   within a reported interval. \code{bracketing} will not narrow the chosen intervals.
 

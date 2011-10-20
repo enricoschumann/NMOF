@@ -141,7 +141,7 @@ OF <- function(param, data) {
     X <- data$X
     y <- data$y
     aux <- as.vector(y) - X \%*\% param
-    # as.vector(y) for recycling; param is a matrix
+    ### as.vector(y) for recycling; param is a matrix
     aux <- aux * aux
     aux <- apply(aux, 2, sort, partial = data$h)
     aux[h, ]
@@ -160,8 +160,8 @@ algo <- list(min = rep(-10, nP), max = rep( 10, nP),
 
 system.time(sol <- PSopt(OF = OF, algo = algo, data = data))
 if (require("MASS", quietly = TRUE)) {
-    # for nsamp = "best", in this case, complete enumeration 
-    # will be tried. See ?lqs
+    ### for nsamp = "best", in this case, complete enumeration 
+    ### will be tried. See ?lqs
     system.time(test1 <- lqs(data$y ~ data$X[ ,-1L], 
             adjust = TRUE, 
             nsamp = "best", 

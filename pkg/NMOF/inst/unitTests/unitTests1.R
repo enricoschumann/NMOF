@@ -333,6 +333,13 @@ test.LSopt <- function() {
                  printBar = FALSE, printDetail = FALSE)
     res <- LSopt(OF, algo = algo, data = data)
     checkTrue(res$OFvalue < 0.005)
+
+    algo <- list(nS = 10000L,
+                 neighbour = neighbour, x0 = x0,
+                 printBar = FALSE, printDetail = 1000)
+    res <- LSopt(OF, algo = algo, data = data)
+    checkTrue(res$OFvalue < 0.005)
+
 }
 
 
