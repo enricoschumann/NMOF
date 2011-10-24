@@ -60,7 +60,7 @@ calibration of option pricing models. Such practical examples allow
 readers to learn the required steps for solving specific problems, and
 to apply these steps to other problems, too. At the same time, the
 chosen applications are relevant enough to make the book a useful
-reference on how to handle given problems. Matlab and R sample code is
+reference on how to handle given problems. MATLAB and R sample code is
 provided in the text and can be downloaded from the book's website; an
 R-package 'NMOF' is also available (see below).  </p>
 
