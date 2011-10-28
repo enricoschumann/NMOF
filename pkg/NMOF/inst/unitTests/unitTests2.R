@@ -2,12 +2,70 @@ require("NMOF")
 
 ## gridSearch
 test.gridSearch <- function() {
-    testFun  <- function(x) x[1L]   + x[2L]^2
+    testFun  <- function(x) x[1L] + x[2L]^2
+    testFun1 <- function(x,k) x[1L] + x[2L]^2 + k
     testFun2 <- function(x) x[[1L]] + x[[2L]]^2
     testFun3 <- function(x) sum(x^2)
     testFun4 <- function(x) sum(sapply(x, `^`, 2L))
 
-    ## ERROR -- upper not sorted
+    ## use 1 -- specify all levels
+    levels <- list(a = 1:2, b = 1:3)
+    res <- gridSearch(testFun, levels, printDetail = FALSE)
+    checkEquals(res$minfun,2)
+    checkEquals(res$values,
+                apply(as.matrix(expand.grid(levels)), 1L, testFun))
+
+    ## use 2 -- specify lower, upper and npar
+    lower <- 1; upper <- 3; npar <- 2
+    res <- gridSearch(testFun, lower = lower, upper = upper,
+                      npar = npar, printDetail = FALSE)
+    checkEquals(res$minfun,2)
+
+    ## use 3 -- specify lower, upper, npar and n
+    lower <- 1; upper <- 3; npar <- 2; n <- 4
+    res <- gridSearch(testFun, lower = lower, upper = upper,
+                      npar = npar, n = n, printDetail = FALSE)
+    checkEquals(res$minfun,2)
+
+    ## use 4 -- specify lower, upper and n (same result as 'use 3')
+    lower <- c(1,1); upper <- c(3,3); n <- 4
+    res1 <- gridSearch(testFun, lower = lower, upper = upper, n = n)
+    checkEquals(res, res1)
+
+    ## use 5 -- specify lower, upper (auto-expanded) and n
+    ## (same result as 'use 3')
+    lower <- c(1,1); upper <- 3; n <- 4
+    res2 <- gridSearch(testFun, lower = lower, upper = upper,
+                       n = n, printDetail = FALSE)
+    checkEquals(res1, res2)
+
+    ## use 6 -- specify lower (auto-expanded), upper and n
+    ## (same result as 'use 3')
+    lower <- 1; upper <- c(3,3); n <- 4
+    res3 <- gridSearch(testFun, lower = lower, upper = upper,
+                       n = n, printDetail = FALSE)
+    checkEquals(res2, res3)
+
+    ## additional argument passed with '...'
+    levels <- list(a = 1:2, b = 1:3); k <- 5
+    res <- gridSearch(testFun1, levels, k = k, printDetail = FALSE)
+    checkEquals(res$minfun, 7)
+
+    ## 'keepNames'
+    testFunNames  <- function(x) x[["a"]] + x[["b"]]^2
+    levels <- list(a = 1:2, b = 1:3)
+    res <- gridSearch(testFunNames, levels, printDetail = FALSE,
+                      keepNames = TRUE)
+    checkEquals(res$minfun, 2)
+    res <- gridSearch(testFunNames, levels, printDetail = FALSE,
+                      keepNames = TRUE, asList = TRUE)
+    checkEquals(res$minfun, 2)
+    testFunNames  <- function(x) x[["a"]] + x[["C"]]^2
+    checkException(gridSearch(testFunNames, keepNames = TRUE,
+                              levels, printDetail = FALSE),
+                   silent = TRUE)
+
+    ## ERROR -- length(upper) != length(lower)
     lower <- 1:3; upper <- 5:4; n <- 8
     checkException(gridSearch(fun = testFun,
                               lower = lower, upper = upper,
@@ -28,22 +86,22 @@ test.gridSearch <- function() {
                       n = n, printDetail = FALSE)
     checkEquals(sol$minlevels,1:3)
 
-    ##
+    ## compare levels with 'expand.grid' results
     levels <- list(a = 1:2, b = 1:3, c = 4:6)
     sol <- gridSearch(fun = testFun3, levels = levels, printDetail = FALSE)
     checkEquals(sol$minlevels,c(1,1,4))
     ## check levels
-    l1 <- do.call("rbind",sol$levels)
+    l1 <- do.call("rbind", sol$levels)
     l2 <- as.matrix(expand.grid(levels))
     dimnames(l2) <- NULL
     checkEquals(l1,l2)
 
-    ##
+    ## error: must be greater than 1
     lower <- 1; upper <- 5; n <- 1
     sol <- checkException(gridSearch(fun = testFun3,
                                      lower = lower, upper = upper,
                                      n = n, printDetail = FALSE),
-                          silent =TRUE)
+                          silent = TRUE)
     ##
     ## NSS fit
     tm <- seq_len(10); trueP <- c(2,1,1,5,1,3); y <- NSS(trueP, tm)
@@ -111,17 +169,35 @@ test.bracketing <- function() {
 test.xwGauss <- function() {
     ## http://dlmf.nist.gov/3.5
 
-    xwGauss(n =   1, "legendre")
-    xwGauss(n =  10, "legendre")
-    xwGauss(n = 200, "legendre")
+    tab <- list(nodes = 0, weights = 2)
+    res <- xwGauss(n =  1L, "legendre")
+    checkEquals(tab, res)
 
-    xwGauss(n =   1, "laguerre")
-    xwGauss(n =  10, "laguerre")
-    xwGauss(n = 200, "laguerre")
+    tab <- structure(list(nodes =
+                          c(-0.97390652851717, -0.865063366688983,
+                            -0.679409568299024, -0.433395394129246,
+                            -0.148874338981631, 0.148874338981632,
+                            0.433395394129248, 0.679409568299025,
+                            0.865063366688984, 0.973906528517172),
+                          weights =
+                          c(0.0666713443086876, 0.149451349150583,
+                            0.219086362515984, 0.269266719309995,
+                            0.29552422471475, 0.295524224714753,
+                            0.269266719309995, 0.219086362515983,
+                            0.149451349150581, 0.066671344308688)),
+                     .Names = c("nodes", "weights"))
+    res <- xwGauss(n =  10L, "legendre")
+    checkEquals(tab, res)
 
-    xwGauss(n =   1, "hermite")
-    xwGauss(n =  10, "hermite")
-    xwGauss(n = 200, "hermite")
+    ##xwGauss(n = 200, "legendre")
+
+    ##xwGauss(n =   1, "laguerre")
+    ##xwGauss(n =  10, "laguerre")
+    ##xwGauss(n = 200, "laguerre")
+
+    ##xwGauss(n =   1, "hermite")
+    ##xwGauss(n =  10, "hermite")
+    ##xwGauss(n = 200, "hermite")
 
     checkException(xwGauss(n = 1, "yo"), silent = TRUE)
     checkException(xwGauss(n = 0, "legendre"), silent = TRUE)

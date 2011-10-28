@@ -136,13 +136,13 @@ GAopt <- function (OF, algo = list(), ...) {
             }
         }
         if (algoD$loopOF) {
-            for (s in snP) vFc[s] <- OF1(mC[, s])
+            for (s in snP) vFc[s] <- OF1(mC[ ,s])
         } else {
             vFc <- OF1(mC)
         }
         if (!is.null(algoD$pen)) {
             if (algoD$loopPen) {
-                for (s in snP) vP[s] <- Pe1(mC[, s])
+                for (s in snP) vP[s] <- Pe1(mC[ ,s])
             } else {
                 vP <- Pe1(mC)
             }

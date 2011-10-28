@@ -68,11 +68,21 @@ if (runMC) {
         x[1L] + x[2L] + runif(1)
     }
     lower <- 1:2; upper <- 5; n <- 3
+    set.seed(5)
     sol2 <- gridSearch(fun = testFun,
                        lower = lower, upper = upper,
                        n = n, printDetail = FALSE,
                        method = "multicore",
                        mc.control = list(mc.set.seed = FALSE))
+    temp <- sol2$values
+    set.seed(5)
+    sol2 <- gridSearch(fun = testFun,
+                       lower = lower, upper = upper,
+                       n = n, printDetail = FALSE,
+                       method = "multicore",
+                       mc.control = list(mc.set.seed = FALSE))
+    checkEquals(sol2$values, temp)
+
 
     cl <- makeCluster(c(rep("localhost", 2)), type = "SOCK")
     clusterSetupSPRNG(cl, seed=rep(12345, 2))

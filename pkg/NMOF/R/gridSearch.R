@@ -7,7 +7,7 @@ gridSearch <- function(fun, levels, ..., lower, upper,
                        keepNames = FALSE, asList = FALSE) {
 
     if (keepNames)
-        warning("'keepNames' is not supported yet")
+        lNames <- names(levels)
 
     method <- tolower(method[1L])
     if (method == "multicore") {
@@ -56,11 +56,13 @@ gridSearch <- function(fun, levels, ..., lower, upper,
     nlp <- prod(nl)
     if (printDetail) {
         if (np < 5L)
-            msg <- paste(nl, collapse=", ")
-        else
-            msg <- paste(c(nl[seq_len(4L)],"..."), collapse=", ")
-        message(np, " variables with ", msg, " levels: ",
-                nlp, " function evaluations required.")
+            msg <- paste(nl, collapse = ", ")
+        else {
+            msg <- paste(c(nl[seq_len(4L)],"..."), collapse = ", ")
+            msg <- paste(np, " variables with ", msg, " levels: ",
+                         nlp, " function evaluations required.", sep = "")
+        }
+        message(msg)
     }
     for (i in seq_len(np)) {
         x <- levels[[i]]
@@ -69,12 +71,14 @@ gridSearch <- function(fun, levels, ..., lower, upper,
         res[[i]] <- x[rep.int(rep.int(seq_len(nx), rep.int(rep.fac, nx)), nlp)]
         rep.fac <- rep.fac * nx
     }
+    if (keepNames)
+        names(res) <- lNames
     nlp <- prod(nl)
     lstLevels <- vector("list", length = nlp)
     for (r in seq_len(nlp)) {
         lstLevels[[r]] <- if (asList)
-            as.list(as.numeric(sapply(res,`[[`, r))) else
-        as.numeric(sapply(res,`[[`, r))
+            as.list(sapply(res, `[[`, r)) else
+        sapply(res, `[[`, r)
     }
     if (method == "multicore") {
         mc.settings <- mcList(mc.control)

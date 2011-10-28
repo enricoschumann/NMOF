@@ -1,27 +1,36 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.20-1 (2011-10-28)}{
+  \itemize{
+    \item the 'keepNames' argument of function 'gridSearch' is now
+      supported
+    \item more examples added for 'gridSearch' (and corresponding tests
+      in 'unitTests/unitTests2.R')
+    \item fixed: some typos in vignette 'Vectorised objective functions'
+  }
+}
 \section{Changes in NMOF version 0.20-0 (2011-10-20)}{
   \itemize{
-    \item **first CRAN release**
-    \item the 'printDetail' argument for 'LSopt' now recognises 
-      TRUE and FALSE (as before), but also an integer 'i' 
-      greater than 1. In the latter case, information on the best 
+    \item *first CRAN release*
+    \item the 'printDetail' argument for 'LSopt' now recognises
+      TRUE and FALSE (as before), but also an integer 'i'
+      greater than 1. In the latter case, information on the best
       solution is printed at every 'i'th step.
     \item minor cleanups in documentation
   }
 }
 \section{Changes in NMOF version 0.19-4 (2011-10-15)}{
   \itemize{
-    \item small changes in vignette 'Repairing solutions'  
-    \item small internal changes in 'GAopt' and 'DEopt' (auxiliary functions 
+    \item small changes in vignette 'Repairing solutions'
+    \item small internal changes in 'GAopt' and 'DEopt' (auxiliary functions
       like 'switch' and 'shift' have been inlined)
     \item code examples in subdirectory 'NMOFex' updated
   }
 }
 \section{Changes in NMOF version 0.19-3 (2011-10-07)}{
   \itemize{
-    \item fixed: a bug had been introduced into 'GAopt' in version 0.19-2 
-      (revision 88), which let the population grow to algo$nP+1 
+    \item fixed: a bug had been introduced into 'GAopt' in version 0.19-2
+      (revision 88), which let the population grow to algo$nP+1
     \item minor changes in documentation/examples
   }
 }
@@ -33,7 +42,7 @@
 \section{Changes in NMOF version 0.19-1 (2011-09-29)}{
   \itemize{
     \item minor cleanups in documentation
-    \item minor internal changes in 'restartOpt' (passing of the '...' arguments 
+    \item minor internal changes in 'restartOpt' (passing of the '...' arguments
       for method 'snow')
   }
 }
@@ -43,10 +52,10 @@
       evaluation of 'fun' via 'clusterApply' from the 'snow' package. As a
       side effect, the interface of 'gridSearch' and 'restartOpt' has
       changed: instead of an option 'multicore', they now have an argument
-      'method', which can be 'loop', 'multicore' or 'snow'. See the 
+      'method', which can be 'loop', 'multicore' or 'snow'. See the
       documentation of these functions.
-    \item for consistency, the 'method' argument of 'bracketing' expects 'vectorised' 
-      rather than 'vectorise' (but both work, and also the '-ize' spellings) 
+    \item for consistency, the 'method' argument of 'bracketing' expects 'vectorised'
+      rather than 'vectorise' (but both work, and also the '-ize' spellings)
     \item substantial revision of documentation/examples
     \item more intelligible error/warning messages in 'bracketing' added
     \item small changes in vignettes 'Robust Regression with Particle Swarm
@@ -261,7 +270,7 @@
 }
 \section{Changes in NMOF version 0.10-1}{
   \itemize{
-    \item opt-functions now have 'printBar' and 'printDetail' option 
+    \item opt-functions now have 'printBar' and 'printDetail' option
       (set via 'algo')
   }
 }

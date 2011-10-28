@@ -15,7 +15,8 @@ gridSearch(fun, levels, ..., lower, upper, npar = 1L, n = 5L,
 }
 \arguments{
   \item{fun}{
-    a function of the form \code{fun(x, \dots)}, with \code{x} being a numeric vector or a list
+    a function of the form \code{fun(x, \dots)}, with \code{x} being a
+    numeric vector or a list of numeric vectors (of length one)
   }
   \item{levels}{
     a list of levels for the arguments (see Examples)
@@ -31,7 +32,9 @@ gridSearch(fun, levels, ..., lower, upper, npar = 1L, n = 5L,
   }
   \item{npar}{
     the number of parameters. Must be supplied if \code{lower} and
-    \code{upper} are to be expanded; see Details. Ignored if levels are explicitly specified.
+    \code{upper} are to be expanded; see Details. Ignored when \code{levels} are
+    explicitly specified, or when \code{lower}/\code{upper} are used and
+    at least one has lenght greater than one. See Examples.
   }
   \item{n}{
     the number of levels. Default is 5. Ignored if levels are explicitly specified.
@@ -50,9 +53,9 @@ gridSearch(fun, levels, ..., lower, upper, npar = 1L, n = 5L,
   }
   \item{cl}{default is \code{NULL}. If method \code{snow} is used, this must be a
     cluster object or an integer (the number of cores).}
-  
+
   \item{keepNames}{
-    should the names of \code{levels} be kept? \strong{Not implemented.}
+    \code{logical}: should the names of \code{levels} be kept?
   }
   \item{asList}{
     does \code{fun} expect a list? Default is \code{FALSE}.
@@ -116,9 +119,34 @@ sol <- gridSearch(fun = testFun, levels = list(1:2, c(2, 3, 5)))
 sol$minfun
 sol$minlevels
 
-testFun2 <- function(x) sum(x^2)
-sol <- gridSearch(fun = testFun2, lower = rep(1, 3), upper = c(2, 8, 4), n = 5L)
-sol$minfun
+## specify all levels
+levels <- list(a = 1:2, b = 1:3)
+res <- gridSearch(testFun, levels)
+res$minfun
+sol$minlevels
+
+## specify lower, upper and npar
+lower <- 1; upper <- 3; npar <- 2
+res <- gridSearch(testFun, lower = lower, upper = upper, npar = npar)
+res$minfun
+sol$minlevels
+
+## specify lower, upper, npar and n
+lower <- 1; upper <- 3; npar <- 2; n <- 4
+res <- gridSearch(testFun, lower = lower, upper = upper, npar = npar, n = n)
+res$minfun
+sol$minlevels
+
+## specify lower, upper and n
+lower <- c(1,1); upper <- c(3,3); n <- 4
+res <- gridSearch(testFun, lower = lower, upper = upper, n = n)
+res$minfun
+sol$minlevels
+
+## specify lower, upper (auto-expanded) and n
+lower <- c(1,1); upper <- 3; n <- 4
+res <- gridSearch(testFun, lower = lower, upper = upper, n = n)
+res$minfun
 sol$minlevels
 }
 \keyword{optimize}
