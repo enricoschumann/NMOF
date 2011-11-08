@@ -9,7 +9,7 @@ citEntry(entry = "book",
          author = aa,
          year = "2011",
          publisher = "Academic Press",
-         url  = "http://www.elsevierdirect.com/product.jsp?isbn=9780123756626",
+         url  = "http://nmof.net",
          textVersion = 
          paste("Gilli, Manfred; Maringer, Dietmar; and Schumann, Enrico. ", 
                "Numerical Methods and Optimization in Finance. ",

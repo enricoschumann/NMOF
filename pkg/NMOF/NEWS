@@ -1,3 +1,14 @@
+v0.21-0  (2011-11-08)
+
+  o added function 'callCF' as a wrapper for pricing 
+    European calls with the characteristic function; 
+    characteristic functions for BSM, Merton, Bates, Heston 
+    and Variance-Gamma were also added
+  o when 'algo$q' in 'TAopt' is zero, all thresholds are set 
+    to zero
+  o code examples in subdirectory 'NMOFex' updated
+  o CITATION file now points to the book's homepage http://nmof.net
+
 v0.20-1  (2011-10-28)
 
   o the 'keepNames' argument of function 'gridSearch' is now

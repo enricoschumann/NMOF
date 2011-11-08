@@ -315,6 +315,15 @@ test.TAopt <- function() {
     algo$scale <- 1.5
     res <- TAopt(OF, algo = algo, data = data)
     checkEqualsNumeric(res$vT, algo$scale*c(0.1,0.05,0))
+
+    ## q is zero
+    algo <- list(q = 0, nS = 1000L, nT = 15L,
+                 neighbour = neighbour, x0 = x0,
+                 printBar = FALSE,
+                 printDetail = FALSE)
+    res <- TAopt(OF, algo = algo, data = data)
+    checkEqualsNumeric(res$vT, numeric(algo$nT))
+    checkEquals(length(res$vT), algo$nT)
 }
 
 

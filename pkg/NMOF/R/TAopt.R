@@ -48,38 +48,42 @@ TAopt <- function(OF, algo = list(), ...) {
 
     ## compute thresholds
     if (is.null(algoD$vT)) {
-        if (printDetail) {
-            cat("\nComputing thresholds ... ")
-            gc(FALSE)
-            startTime <- proc.time()
-        }
-        if (printBar)
-            whatGen <- txtProgressBar (min = 1, max = nD, style = 3)
-        xc  <- x0
-        xcF <- OF1(xc)
-        diffF <- numeric(nD)
-        diffF[] <- NA
-        for (i in seq_len(nD)){
-            if (printBar) setTxtProgressBar(whatGen, value = i)
-            xn  <- N1(xc)
-            xnF <- OF1(xn)
-            diffF[i] <- abs(xcF - xnF)
-            xc  <- xn
-            xcF <- xnF
-        }
-        vT <- algoD$q * ( ((nT - 1L):0L) / nT )
-        vT <- quantile(diffF, vT, na.rm = FALSE)
-        vT[nT] <- 0  ### set last threshold to zero
-        if (printBar)
-            close(whatGen)
-        if (printDetail) {
-            cat("OK.")
-            endTime <- proc.time()
-            cat("\nEstimated remaining running time:",
-                as.numeric(endTime[3L] - startTime[3L]) /
-                nD * niter * (stepUp + 1L),
-                "secs.\n\n")
-            flush.console()
+        if (algoD$q < 1e-13) {
+            vT <- numeric(nT)
+        } else {
+            if (printDetail) {
+                cat("\nComputing thresholds ... ")
+                gc(FALSE)
+                startTime <- proc.time()
+            }
+            if (printBar)
+                whatGen <- txtProgressBar (min = 1, max = nD, style = 3)
+            xc  <- x0
+            xcF <- OF1(xc)
+            diffF <- numeric(nD)
+            diffF[] <- NA
+            for (i in seq_len(nD)){
+                if (printBar) setTxtProgressBar(whatGen, value = i)
+                xn  <- N1(xc)
+                xnF <- OF1(xn)
+                diffF[i] <- abs(xcF - xnF)
+                xc  <- xn
+                xcF <- xnF
+            }
+            vT <- algoD$q * ( ((nT - 1L):0L) / nT )
+            vT <- quantile(diffF, vT, na.rm = FALSE)
+            vT[nT] <- 0 ### set last threshold to zero
+            if (printBar)
+                close(whatGen)
+            if (printDetail) {
+                cat("OK.")
+                endTime <- proc.time()
+                cat("\nEstimated remaining running time:",
+                    as.numeric(endTime[3L] - startTime[3L]) /
+                    nD * niter * (stepUp + 1L),
+                    "secs.\n\n")
+                flush.console()
+            }
         }
     } else {
         vT <- algoD$vT

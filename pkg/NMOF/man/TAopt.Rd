@@ -34,14 +34,16 @@ optimisation. For zero thresholds TA becomes a stochastic local search.
 
 The thresholds can be passed through the list \code{algo} (see
 below). Otherwise, they are automatically computed through the procedure
-described in Gilli et al. (2006).
+described in Gilli et al. (2006). When the thresholds are created
+automatically, the final threshold is always zero.
 
 
 The list \code{algo} contains the following items.
 \describe{
   \item{\code{nS}}{The number of steps per threshold. The default is
     1000; but this setting depends very much on the problem.}
-  \item{\code{nT}}{The number of thresholds. Default is 10.}
+  \item{\code{nT}}{The number of thresholds. Default is 10; ignored if
+    \code{algo$vT} is specified.}
   \item{\code{nD}}{The number of random steps to compute the threshold
     sequence. Defaults to 2000. Only used if \code{algo$vT} is \code{NULL}.}
   \item{\code{q}}{The highest quantile for the threshold

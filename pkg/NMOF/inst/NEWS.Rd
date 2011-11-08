@@ -1,5 +1,17 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.21-0 (2011-11-15)}{
+  \itemize{
+    \item added function 'callCF' as a wrapper for pricing 
+      European calls with the characteristic function; 
+      characteristic functions for BSM, Merton, Bates, Heston 
+      and Variance-Gamma were also added
+    \item when 'algo$q' in 'TAopt' is zero, all thresholds are set 
+      to zero
+    \item code examples in subdirectory 'NMOFex' updated
+    \item CITATION file now points to the book's homepage http://nmof.net
+  }
+}
 \section{Changes in NMOF version 0.20-1 (2011-10-28)}{
   \itemize{
     \item the 'keepNames' argument of function 'gridSearch' is now

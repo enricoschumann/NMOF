@@ -1,5 +1,6 @@
 export(bracketing,
 callHestoncf, changeInterval,
+callCF, cfBates, cfBSM, cfHeston, cfMerton, cfVG,
 DEopt, EuropeanCall, EuropeanCallBE,
 GAopt, gridSearch,
 LSopt, MA, NS, NSf, NSS, NSSf,
