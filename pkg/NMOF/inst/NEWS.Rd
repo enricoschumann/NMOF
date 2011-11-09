@@ -1,6 +1,6 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
-\section{Changes in NMOF version 0.21-0 (2011-11-15)}{
+\section{Changes in NMOF version 0.21-0 (2011-11-08)}{
   \itemize{
     \item added function 'callCF' as a wrapper for pricing 
       European calls with the characteristic function; 
