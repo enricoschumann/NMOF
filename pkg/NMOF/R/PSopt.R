@@ -33,6 +33,9 @@ PSopt <- function(OF, algo = list(), ...) {
         stop("(at least) some max < min")
     printDetail <- algoD$printDetail
     printBar <- algoD$printBar
+    if (printBar && printDetail > 1)
+        printBar <- FALSE
+
     OF1 <- function(x) OF(x, ...)
     Pe1 <- function(x) algoD$pen(x, ...)
     Re1 <- function(x) algoD$repair(x, ...)
@@ -144,11 +147,21 @@ PSopt <- function(OF, algo = list(), ...) {
         }
 
         if (algoD$storeF)
-        Fmat[g, ] <- vFbest
+            Fmat[g, ] <- vFbest
         if (algoD$storeSolutions) {
             xlist[[c(1L, g)]] <- mP
             xlist[[c(2L, g)]] <- mPbest
         }
+
+        ## print info
+        if (printDetail > 1) {
+            if (g %% printDetail == 0L) {
+            cat("Best solution (iteration ", g, "/", nG, "): ",
+                prettyNum(sGbest[1L]), "\n", sep = "")
+            flush.console()
+            }
+        }
+
     } ## end generations
 
     if (printDetail)

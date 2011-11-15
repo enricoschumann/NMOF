@@ -1,10 +1,18 @@
+v0.21-1  (2011-11-15)
+
+  o the 'printDetail' option for opt-functions is now more consistent:
+    a positive integer 'i' greater than one means that information
+    is printed at every 'i'th iteration
+  o minor changes in vignettes
+  o unit tests for 'callCF' added (in file 'unitTests/unitTests5.R')
+
 v0.21-0  (2011-11-08)
 
-  o added function 'callCF' as a wrapper for pricing 
-    European calls with the characteristic function; 
-    characteristic functions for BSM, Merton, Bates, Heston 
+  o added function 'callCF' as a wrapper for pricing
+    European calls with the characteristic function;
+    characteristic functions for BSM, Merton, Bates, Heston
     and Variance-Gamma were also added
-  o when 'algo$q' in 'TAopt' is zero, all thresholds are set 
+  o when 'algo$q' in 'TAopt' is zero, all thresholds are set
     to zero
   o code examples in subdirectory 'NMOFex' updated
   o CITATION file now points to the book's homepage http://nmof.net

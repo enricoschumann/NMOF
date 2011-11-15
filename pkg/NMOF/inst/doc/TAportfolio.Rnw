@@ -27,23 +27,30 @@ set.seed(112233)
 
 \section{Minimising squares}
 \subsection{A first implementation}
-This problem serves as a benchmark: we wish to find a long-only portfolio~$w$ (weights) that minimises squared returns across all return scenarios.
-These scenarios are stored in a matrix~$R$ of size number of scenarions~\texttt{ns} times number of assets~\texttt{na}.
+This problem serves as a benchmark: we wish to find a long-only
+portfolio~$w$ (weights) that minimises squared returns across all
+return scenarios.  These scenarios are stored in a matrix~$R$ of size
+number of scenarions~\texttt{ns} times number of assets~\texttt{na}.
 More formally, we want to solve the following problem:
-        \begin{align}\label{Eeq:portfolio:problem1}
+
+\begin{align}\label{Eeq:portfolio:problem1}
          \min_{w}\ \Phi \\[1.75ex]
          \nonumber w'\iota &= 1\,,\\
          \nonumber 0  \leq  w_j &\leq  w_j^{\sup}\quad \text{ for }  j = 1, 2, \ldots, n_A\, .
-        \end{align}
-We set $w_j^{\sup}$ to 5\% for all assets. $\Phi$ is the squared return of the portfolio, $w'R'Rw$, which is similar to the
-portfolio return's variance. We have
+\end{align}
+We set $w_j^{\sup}$ to 5\% for all assets. $\Phi$ is the squared
+return of the portfolio, $w'R'Rw$, which is similar to the portfolio
+return's variance. We have
 \begin{align*}
     \frac{1}{n_S}R'R = \operatorname{Cov}(R) + mm'
 \end{align*}
-in which $\operatorname{Cov}$ is the variance--covariance matrix operator, which maps the columns of~$R$ into their
-variance--covariance matrix; $m$ is a column vector that holds the column means of $R$, ie, $m' = \frac{1}{n_S}\,\iota'R$.
-For short time horizons, the mean of a column is small compared with the average squared return of the column.
-Hence, we ignore the matrix $mm'$, and variance and squared returns become equivalent.
+in which $\operatorname{Cov}$ is the variance--covariance matrix
+operator, which maps the columns of~$R$ into their
+variance--covariance matrix; $m$ is a column vector that holds the
+column means of $R$, ie, $m' = \frac{1}{n_S}\,\iota'R$.  For short
+time horizons, the mean of a column is small compared with the average
+squared return of the column.  Hence, we ignore the matrix $mm'$, and
+variance and squared returns become equivalent.
 
 For testing purposes we use the matrix \texttt{fundData} for $R$.
 <<>>=
@@ -56,17 +63,18 @@ data <- list(R = t(fundData),
             ns = ns,
            eps = 0.5/100,
           winf = winf,
-          wsup = wsup)
+          wsup = wsup,
+      resample = resample)
 @
 
 The neighbourhood function automatically enforces the bugdet constraint.
 <<>>=
 neighbour <- function(w, data){
-    eps <- runif(1) * data$eps
+    eps <- runif(1L) * data$eps
     toSell <- w > data$winf
     toBuy  <- w < data$wsup
-    i <- resample(which(toSell), size = 1L)
-    j <- resample(which(toBuy), size = 1L)
+    i <- data$resample(which(toSell), size = 1L)
+    j <- data$resample(which(toBuy),  size = 1L)
     eps <- min(w[i] - data$winf, data$wsup - w[j], eps)
     w[i] <- w[i] - eps
     w[j] <- w[j] + eps
@@ -77,79 +85,91 @@ neighbour <- function(w, data){
 The objective function.
 <<>>=
 OF1 <- function(w, data) {
-    Rw <- crossprod(data$R,w)
+    Rw <- crossprod(data$R, w)
     crossprod(Rw)
 }
 OF2 <- function(w, data) {
-    aux <- crossprod(data$RR,w)
-    crossprod(w,aux)
+    aux <- crossprod(data$RR, w)
+    crossprod(w, aux)
 }
 @
 
-\texttt{OF2} uses $R'R$; thus, it does not depend on the number of scenarios. But this is only possible for this very specific problem.
+\texttt{OF2} uses $R'R$; thus, it does not depend on the number of
+scenarios. But this is only possible for this very specific problem.
 
-So, we specify a random initial solution \texttt{w0}; set up \texttt{algo}; and run \texttt{TAopt}.
+We specify a random initial solution \texttt{w0} and define all
+settings in a list \texttt{algo}.
 <<>>=
 w0 <- runif(na); w0 <- w0/sum(w0)
 
 algo <- list(x0 = w0,
-      neighbour = neighbour,
-             nS = 2000L,
-             nT = 10L,
-             nD = 5000L,
-              q = 0.20,
-       printBar = FALSE,
-    printDetail = FALSE)
-
+     neighbour = neighbour,
+            nS = 2000L,
+            nT = 10L,
+            nD = 5000L,
+             q = 0.20,
+      printBar = FALSE,
+   printDetail = FALSE)
+@
+We can now run \texttt{TAopt}, first with \texttt{OF1} \ldots
+<<>>=
 system.time(res <- TAopt(OF1,algo,data))
 100*sqrt(crossprod(fundData %*% res$xbest)/ns)
+@
+\ldots and then with \texttt{OF2}.
+<<>>=
 system.time(res <- TAopt(OF2,algo,data))
 100*sqrt(crossprod(fundData %*% res$xbest)/ns)
-
-cat("Check constraints ...\n")
-min(res$xbest); max(res$xbest); sum(res$xbest) # TA
-
+@
+Note that we have rescaled the results (see the book for details).
+Both results are similar, but \texttt{OF2} typically requires less
+time. We check the contraints.
+<<>>=
+min(res$xbest) ## should not be smaller than data$winf
+max(res$xbest) ## should not be greater than data$wsup
+sum(res$xbest) ## should be one
 @
 
-Note that we have rescaled the result.
+The problem can actually be solved quadratic programming; we use the
+quadprog package \citep{quadprog2007}.
 
-The problem can actually be solved quadratic programming; we use the quadprog package \citep{quadprog2007}.
 <<>>=
-# benchmark
 if (require(quadprog, quietly = TRUE)) {
-  covMatrix <- crossprod(fundData)
-  A <- rep(1, na); a <- 1
-  B <- rbind(-diag(na),
-              diag(na))
-  b <- rbind(array(-data$wsup, dim = c(na,1)),
-             array( data$winf, dim = c(na,1)))
-  system.time({
-      result <- solve.QP(Dmat = covMatrix,
-                         dvec = rep(0,na),
-                         Amat = t(rbind(A,B)),
-                         bvec = rbind(a,b),
-                          meq = 1L)
-  })
-  wqp <- result$solution
+    covMatrix <- crossprod(fundData)
+    A <- rep(1, na); a <- 1
+    B <- rbind(-diag(na), diag(na))
+    b <- rbind(array(-data$wsup, dim = c(na, 1L)),
+               array( data$winf, dim = c(na, 1L)))
+    system.time({
+        result <- solve.QP(Dmat = covMatrix,
+                           dvec = rep(0,na),
+                           Amat = t(rbind(A,B)),
+                           bvec = rbind(a,b),
+                           meq = 1L)
+    })
+    wqp <- result$solution
 
-  cat("Compare results...\n")
-  100 * sqrt( crossprod(fundData %*% wqp)/ns )
-  100 * sqrt( crossprod(fundData %*% res$xbest)/ns )
+    cat("Compare results...\n")
+    cat("QP:", 100 * sqrt( crossprod(fundData %*% wqp)/ns ),"\n")
+    cat("TA:", 100 * sqrt( crossprod(fundData %*% res$xbest)/ns ) ,"\n")
 
-  cat("Check constraints ...\n")
-  min(wqp); max(wqp); sum(wqp)  # QP
+    cat("Check constraints ...\n")
+    cat("min weight:", min(wqp), "\n")
+    cat("max weight:", max(wqp), "\n")
+    cat("sum of weights:", sum(wqp), "\n")
 }
 @
 
 \subsection{Updating}
-Here we implement the updating of the objective function as described in \citet{Gilli2011b}.
+Here we implement the updating of the objective function as described
+in \citet{Gilli2011b}.
 <<>>=
 neighbourU <- function(sol, data){
     wn <- sol$w
     toSell <- wn > data$winf
     toBuy  <- wn < data$wsup
-    i <- resample(which(toSell), size = 1L)
-    j <- resample(which(toBuy), size = 1L)
+    i <- data$resample(which(toSell), size = 1L)
+    j <- data$resample(which(toBuy), size = 1L)
     eps <- runif(1) * data$eps
     eps <- min(wn[i] - data$winf, data$wsup - wn[j], eps)
     wn[i] <- wn[i] - eps
@@ -160,20 +180,14 @@ neighbourU <- function(sol, data){
 OF <- function(sol, data) crossprod(sol$Rw)
 @
 
-Prepare the data.
+Prepare the \texttt{data} list (we reuse several items used before).
 <<>>=
-na <- dim(fundData)[2L]; ns <- dim(fundData)[1L]
-winf <- 0.0; wsup <- 0.05
-data <- list(R = fundData,
-            na = na,
-            ns = ns,
-           eps = 0.5/100,
-          winf = winf,
-          wsup = wsup)
+data <- list(R = fundData, na = na, ns = ns,
+             eps = 0.5/100, winf = winf, wsup = wsup,
+             resample = resample)
 @
-
-Start with a random solution.
-
+We start, again, with a random solution, and also use the same number of
+iterations as before.
 <<>>=
 w0 <- runif(data$na); w0 <- w0/sum(w0)
 x0 <- list(w = w0, Rw = fundData %*% w0)
@@ -185,11 +199,10 @@ algo <- list(x0 = x0,
               q = 0.20,
        printBar = FALSE,
     printDetail = FALSE)
-system.time(res2 <- TAopt(OF,algo,data))
+system.time(res2 <- TAopt(OF, algo, data))
 100*sqrt(crossprod(fundData %*% res2$xbest$w)/ns)
 @
-
-Compare computing times.
+This should be faster, and we arrive at the same solution as before.
 
 \bibliographystyle{plainnat}
 \bibliography{NMOF}

@@ -47,7 +47,9 @@ The list \code{algo} contains the following items.
   \item{\code{nD}}{The number of random steps to compute the threshold
     sequence. Defaults to 2000. Only used if \code{algo$vT} is \code{NULL}.}
   \item{\code{q}}{The highest quantile for the threshold
-    sequence. Defaults to 0.5. Only used if \code{algo$vT} is \code{NULL}.}
+    sequence. Defaults to 0.5. Only used if \code{algo$vT} is
+    \code{NULL}. If \code{q} is zero, \code{TAopt} will run with
+    zero-thresholds (ie, like a Local Search).}
   \item{\code{x0}}{The initial solution. If this is a function, it will
     be called once without arguments to compute an initial solution, ie,
     \code{x0 <- algo$x0()}. This can be useful when the routine is
@@ -67,7 +69,9 @@ The list \code{algo} contains the following items.
     \code{neighbour(x, \dots)}. Its first argument must be a solution
     \code{x}; it must return a changed
     solution.}
-\item{\code{printDetail}}{If \code{TRUE} (the default), information is printed.}
+\item{\code{printDetail}}{If \code{TRUE} (the default), information is
+  printed. If an integer \code{i} greater then one, information is
+  printed at very \code{i}th iteration.}
 \item{\code{printBar}}{If \code{TRUE} (default is \code{FALSE}), a
   \code{\link{txtProgressBar}} (from package \pkg{utils}) is
   printed. The progress bar is not shown if \code{printDetail} is \code{TRUE}.}

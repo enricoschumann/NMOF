@@ -75,7 +75,9 @@ such a matrix. If a function, it should take no arguments.}
 \item{\code{loopPen}}{logical. Should the penalty function (if specified) be evaluated through a loop? Defaults to \code{TRUE}.}
 \item{\code{loopRepair}}{logical. Should the repair function (if specified) be evaluated through a loop? Defaults to \code{TRUE}.}
 \item{\code{loopChangeV}}{logical. Should the \code{changeV} function (if specified) be evaluated through a loop? Defaults to \code{TRUE}.}
-\item{\code{printDetail}}{If \code{TRUE} (the default), information is printed.}
+\item{\code{printDetail}}{If \code{TRUE} (the default), information is
+  printed. If an integer \code{i} greater then one, information is
+  printed at very \code{i}th iteration.}
 \item{\code{printBar}}{If \code{TRUE} (the default), a
   \code{txtProgressBar} (from package \pkg{utils}) is printed).}
 \item{\code{storeF}}{If \code{TRUE} (the default), the objective

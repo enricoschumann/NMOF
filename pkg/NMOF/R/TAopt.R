@@ -32,7 +32,7 @@ TAopt <- function(OF, algo = list(), ...) {
 
     printDetail <- algoD$printDetail
     printBar <- algoD$printBar
-    if (printBar && printDetail)
+    if (printBar && printDetail > 1)
         printBar <- FALSE
     if (printDetail)
         cat("\nThreshold Accepting.\n")
@@ -141,20 +141,28 @@ TAopt <- function(OF, algo = list(), ...) {
             if(printBar)
                 setTxtProgressBar(whatGen, value = counter)
 
+            ## store OF values
             if (algoD$storeF) {
-                Fmat[counter, 1L] <- xnF  ## proposed sol.
-                Fmat[counter, 2L] <- xcF  ## accepted sol. (cummin=xbestF)
+                Fmat[counter, 1L] <- xnF ## proposed sol.
+                Fmat[counter, 2L] <- xcF ## accepted sol. (cummin=xbestF)
             }
+
+            ## store solutions
             if (algoD$storeSolutions) {
                 xlist[[c(1L, counter)]] <- xn
                 xlist[[c(1L, counter)]] <- xc
             }
-        }
-        if (printDetail){
-            cat("Best solution (threshold ",
-                t, "/", nT, "): ",
-                prettyNum(xbestF),"\n", sep = "")
-            flush.console()
+
+            ## print info
+            if (printDetail > 1) {
+                if (counter %% printDetail == 0L) {
+                    cat("Best solution (iteration ", counter,
+                        "/", niter, "): ",
+                        prettyNum(xcF),"\n", sep = "")
+                    flush.console()
+                }
+            }
+
         }
     }
     if (printDetail)

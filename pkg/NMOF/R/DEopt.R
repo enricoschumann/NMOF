@@ -46,6 +46,9 @@ DEopt <- function(OF, algo = list(), ...) {
     printDetail <- algoD$printDetail
     printBar <- algoD$printBar
 
+    if (printBar && printDetail > 1)
+        printBar <- FALSE
+
     ## check integers
     nG <- makeInteger(algoD$nG, "'algoD$nG'", 1L)
     nP <- makeInteger(algoD$nP, "'algoD$nP'", 1L)
@@ -148,6 +151,16 @@ DEopt <- function(OF, algo = list(), ...) {
             Fmat[g, ] <- vF
         if (algoD$storeSolutions)
             xlist[[c(1L, g)]] <- mP
+
+        ## print info
+        if (printDetail > 1) {
+            if (g %% printDetail == 0L) {
+            cat("Best solution (iteration ", g, "/", nG, "): ",
+                prettyNum(min(vF)[1L]),"\n", sep = "")
+            flush.console()
+            }
+        }
+
     } ## end of generations
 
     if (printBar)

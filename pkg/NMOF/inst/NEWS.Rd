@@ -1,12 +1,21 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.21-1 (2011-11-15)}{
+  \itemize{
+    \item the 'printDetail' option for opt-functions is now more consistent:
+      a positive integer 'i' greater than one means that information
+      is printed at every 'i'th iteration
+    \item minor changes in vignettes
+    \item unit tests for 'callCF' added (in file 'unitTests/unitTests5.R')
+  }
+}
 \section{Changes in NMOF version 0.21-0 (2011-11-08)}{
   \itemize{
-    \item added function 'callCF' as a wrapper for pricing 
-      European calls with the characteristic function; 
-      characteristic functions for BSM, Merton, Bates, Heston 
+    \item added function 'callCF' as a wrapper for pricing
+      European calls with the characteristic function;
+      characteristic functions for BSM, Merton, Bates, Heston
       and Variance-Gamma were also added
-    \item when 'algo$q' in 'TAopt' is zero, all thresholds are set 
+    \item when 'algo$q' in 'TAopt' is zero, all thresholds are set
       to zero
     \item code examples in subdirectory 'NMOFex' updated
     \item CITATION file now points to the book's homepage http://nmof.net

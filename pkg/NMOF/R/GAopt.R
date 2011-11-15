@@ -19,6 +19,10 @@ GAopt <- function (OF, algo = list(), ...) {
 
     printDetail <- algoD$printDetail
     printBar <- algoD$printBar
+    if (printBar && printDetail > 1)
+        printBar <- FALSE
+
+
     if (!is.function(OF))
         stop("'OF' must be a function")
     OF1 <- function(x) OF(x, ...)
@@ -156,6 +160,15 @@ GAopt <- function (OF, algo = list(), ...) {
             Fmat[g, ] <- vF
         if (algoD$storeSolutions)
             xlist[[c(1L, g)]] <- mP
+
+        ## print info
+        if (printDetail > 1) {
+            if (g %% printDetail == 0L) {
+            cat("Best solution (iteration ", g, "/", nG, "): ",
+                prettyNum(min(vF)[1L]),"\n", sep = "")
+            flush.console()
+            }
+        }
     }
     if (printBar)
         close(whatGen)

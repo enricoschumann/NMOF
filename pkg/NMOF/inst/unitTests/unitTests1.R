@@ -1,3 +1,5 @@
+## -*- truncate-lines: t; -*-
+
 require("NMOF")
 
 ## optimisation functions, MA, testFunctions, option pricing
@@ -19,23 +21,19 @@ test.MA <- function() {
 
 ## HESTON
 test.callHestoncf <- function() {
-    S <- 100; X <- 100; tau <- 1; r <- 0.02; q <- 0.01
-    v0  <- 0.2^2; vT  <- 0.2^2
+    S <- 100; X <- 100; tau <- 1; r <- 0.02; q <- 0.01; v0 <- 0.2^2; vT <- 0.2^2
     rho <- -0.5; k <- 0.5; sigma <- 0.5
     result <- callHestoncf(S = S, X = X, tau = tau, r = r, q = q,
-                           v0 = v0, vT = vT,
-                           rho = rho, k = k, sigma = sigma)
+                           v0 = v0, vT = vT, rho = rho, k = k, sigma = sigma)
     checkEquals(round(result[[1L]], 3), 7.119)
 
-    S <- 100; X <- 100; tau <- 1; r <- 0.02; q <- 0.01
-    v0  <- 0.2^2; vT  <- 0.2^2
+    S <- 100; X <- 100; tau <- 1; r <- 0.02; q <- 0.01; v0 <- 0.2^2; vT <- 0.2^2
     rho <- -0.5; k <- 0.5; sigma <- 0.01
     result <- callHestoncf(S = S, X = X, tau = tau, r = r, q = q,
                            v0 = v0, vT = vT, rho = rho, k = k, sigma = sigma)
     checkEquals(round(result[[1L]], 3), 8.347)
 
-    S <- 100; X <- 90; tau <- 1; r <- 0.02; q <- 0.01
-    v0  <- 0.2^2; vT  <- 0.2^2
+    S <- 100; X <- 90; tau <- 1; r <- 0.02; q <- 0.01; v0 <- 0.2^2; vT <- 0.2^2
     rho <- -0.5; k <- 0.5; sigma <- 1
     result <- callHestoncf(S = S, X = X, tau = tau, r = r, q = q,
                            v0 = v0, vT = vT, rho = rho, k = k, sigma = sigma)
@@ -47,76 +45,64 @@ test.callHestoncf <- function() {
 ## EUROPEAN
 test.EuropeanCall <- function() {
     S0 <- 10; X <- 10; r <- 0.02; tau <- 1; sigma <- 0.20; M = 101
-    res <- EuropeanCall(S0 = S0, X = X,
-			r = r, tau = tau, sigma = sigma, M = M)
+    res <- EuropeanCall(S0 = S0, X = X, r = r, tau = tau, sigma = sigma, M = M)
     checkEquals(round(res,2), 0.89)
 
     S0 <- 10; X <- 6; r <- 0.02; tau <- 1; sigma <- 0.20; M = 101
-    res <- EuropeanCall(S0 = S0, X = X,
-			r = r, tau = tau, sigma = sigma, M = M)
+    res <- EuropeanCall(S0 = S0, X = X, r = r, tau = tau, sigma = sigma, M = M)
     checkEquals(round(res,2), 4.12)
 
     S0 <- 10; X <- 10; r <- 0.00; tau <- 1; sigma <- 0.20; M = 101
-    res <- EuropeanCall(S0 = S0, X = X,
-			r = r, tau = tau, sigma = sigma, M = M)
+    res <- EuropeanCall(S0 = S0, X = X, r = r, tau = tau, sigma = sigma, M = M)
     checkEquals(round(res,2), 0.80)
 
     S0 <- 10; X <- 10; r <- 0.02; tau <- 1/12; sigma <- 0.20; M = 101
-    res <- EuropeanCall(S0 = S0, X = X,
-			r = r, tau = tau, sigma = sigma, M = M)
+    res <- EuropeanCall(S0 = S0, X = X, r = r, tau = tau, sigma = sigma, M = M)
     checkEquals(round(res,2), 0.24)
 
     S0 <- 10; X <- 10; r <- 0.02; tau <- 1/12; sigma <- 0.80; M = 101
-    res <- EuropeanCall(S0 = S0, X = X,
-			r = r, tau = tau, sigma = sigma, M = M)
+    res <- EuropeanCall(S0 = S0, X = X, r = r, tau = tau, sigma = sigma, M = M)
     checkEquals(round(res,2), 0.93)
 
     S0 <- 10; X <- 10; r <- 0.02; tau <- 1/12; sigma <- 0.02; M = 101
-    res <- EuropeanCall(S0 = S0, X = X,
-			r = r, tau = tau, sigma = sigma, M = M)
+    res <- EuropeanCall(S0 = S0, X = X, r = r, tau = tau, sigma = sigma, M = M)
     checkEquals(round(res,2), 0.03)
 
 }
 test.EuropeanCallBE <- function() {
     ## EuropeanCall and EuropeanCallBE should give the same results
     S0 <- 10; X <- 10; r <- 0.02; tau <- 1; sigma <- 0.20; M = 101
-    res <- EuropeanCall(S0 = S0, X = X,
-			r = r, tau = tau, sigma = sigma, M = M)
-    res2 <- EuropeanCallBE(S0 = S0, X = X,
-                           r = r, tau = tau, sigma = sigma, M = M)
+    res <- EuropeanCall(S0 = S0, X = X, r = r, tau = tau, sigma = sigma, M = M)
+    res2 <- EuropeanCallBE(S0 = S0, X = X, r = r, tau = tau, sigma = sigma, M = M)
     checkEquals(res,res2)
 
     S0 <- 10; X <- 6; r <- 0.02; tau <- 1; sigma <- 0.20; M = 101
-    res <- EuropeanCall(S0 = S0, X = X,
-			r = r, tau = tau, sigma = sigma, M = M)
-    res2 <- EuropeanCallBE(S0 = S0, X = X,
-                           r = r, tau = tau, sigma = sigma, M = M)
+    res <- EuropeanCall(   S0 = S0, X = X, r = r, tau = tau, sigma = sigma, M = M)
+    res2 <- EuropeanCallBE(S0 = S0, X = X, r = r, tau = tau, sigma = sigma, M = M)
     checkEquals(res,res2)
 
     S0 <- 10; X <- 10; r <- 0.00; tau <- 1; sigma <- 0.20; M = 101
-    res <- EuropeanCall(S0 = S0, X = X,
-			r = r, tau = tau, sigma = sigma, M = M)
-    res2 <- EuropeanCallBE(S0 = S0, X = X,
-                           r = r, tau = tau, sigma = sigma, M = M)
+    res <- EuropeanCall(S0 = S0, X = X, r = r, tau = tau, sigma = sigma, M = M)
+    res2 <- EuropeanCallBE(S0 = S0, X = X, r = r, tau = tau, sigma = sigma, M = M)
     checkEquals(res,res2)
 
     S0 <- 10; X <- 10; r <- 0.02; tau <- 1/12; sigma <- 0.20; M = 101
     res <- EuropeanCall(S0 = S0, X = X,
-			r = r, tau = tau, sigma = sigma, M = M)
+                        r = r, tau = tau, sigma = sigma, M = M)
     res2 <- EuropeanCallBE(S0 = S0, X = X,
                            r = r, tau = tau, sigma = sigma, M = M)
     checkEquals(res,res2)
 
     S0 <- 10; X <- 10; r <- 0.02; tau <- 1/12; sigma <- 0.80; M = 101
     res <- EuropeanCall(S0 = S0, X = X,
-			r = r, tau = tau, sigma = sigma, M = M)
+                        r = r, tau = tau, sigma = sigma, M = M)
     res2 <- EuropeanCallBE(S0 = S0, X = X,
                            r = r, tau = tau, sigma = sigma, M = M)
     checkEquals(res,res2)
 
     S0 <- 10; X <- 10; r <- 0.02; tau <- 1/12; sigma <- 0.02; M = 101
     res <- EuropeanCall(S0 = S0, X = X,
-			r = r, tau = tau, sigma = sigma, M = M)
+                        r = r, tau = tau, sigma = sigma, M = M)
     res2 <- EuropeanCallBE(S0 = S0, X = X,
                            r = r, tau = tau, sigma = sigma, M = M)
     checkEquals(res,res2)
@@ -132,10 +118,9 @@ test.DEopt <- function() {
             sin(sin(80*y)) - sin(10*(x+y))  + (x^2+y^2)/4
     }
 
-    algo <- list(nP = 100, nG = 300,
-                 F = 0.5, CR = 0.9,
-                 min = c(-3, -3), max = c( 3,  3),
-                 printBar = FALSE, printDetail = FALSE)
+    algo <- list(nP = 100, nG = 300, F = 0.5, CR = 0.9,
+                 min = c(-3, -3), max = c( 3, 3),
+                 printBar = FALSE, printDetail = TRUE)
 
     ## DE should solve the problem
     sol <- DEopt(OF = trefethen, algo)
@@ -160,16 +145,13 @@ test.DEopt <- function() {
     checkException(res <- DEopt(OF = trefethen2, algo), silent = TRUE)
 
     ## 'z' is required and provided
-    checkEquals(round(DEopt(OF = trefethen2, algo, z = 2)$OFvalue,2),
-                -1.31)
-    checkEquals(round(DEopt(OF = trefethen2, algo,     2)$OFvalue,2),
-                -1.31)
+    checkEquals(round(DEopt(OF = trefethen2, algo, z = 2)$OFvalue,2), -1.31)
+    checkEquals(round(DEopt(OF = trefethen2, algo,     2)$OFvalue,2), -1.31)
 
     ## test function: DE should find minimum
     OF <- tfRosenbrock
     size <- 5L ## define dimension
-    algo <- list(
-                 printBar = FALSE,
+    algo <- list(printBar = FALSE,
                  printDetail = FALSE,
                  nP = 100L, nG = 500L,
                  F = 0.5, CR = 0.9,
@@ -324,6 +306,14 @@ test.TAopt <- function() {
     res <- TAopt(OF, algo = algo, data = data)
     checkEqualsNumeric(res$vT, numeric(algo$nT))
     checkEquals(length(res$vT), algo$nT)
+
+    ## check printDetail
+    algo <- list(q = 0, nS = 100L, nT = 5L,
+                 neighbour = neighbour, x0 = x0,
+                 printBar = TRUE,
+                 printDetail = 50)
+    res <- capture.output(ignore <- TAopt(OF, algo = algo, data = data))
+    checkEquals(sum(grepl("Best solution", res)), 11L)
 }
 
 
