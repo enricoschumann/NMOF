@@ -30,8 +30,9 @@ set.seed(112233)
 
 
 \section{The problem}
-\noindent We wish to select between $K_{\inf}$ and $K_{\sup}$ out of $n_{\mathrm{A}}$ assets such that an equally-weighted portfolio of these
-assets has the lowest-possible variance. The formal model is:
+\noindent We wish to select between $K_{\inf}$ and $K_{\sup}$ out of
+$n_{\mathrm{A}}$ assets such that an equally-weighted portfolio of
+these assets has the lowest-possible variance. The formal model is:
 \begin{align}\label{Eeq:portfolio:modelSelect}
 \min_{w}\ &w' \Sigma w&
 \intertext{subject to the constraints}
@@ -57,7 +58,7 @@ The objective function.
 OF <- function(x, data) {
     xx <- as.logical(x)
     w <- x/sum(x)
-    res <- crossprod(w[xx], data$Sigma[xx, xx])
+    res <-  crossprod(w[xx], data$Sigma[xx, xx])
     res <- tcrossprod(w[xx], res)
     res
 }
@@ -76,11 +77,12 @@ neighbour <- function(xc, data) {
     xn <- xc
     p <- sample.int(data$na, data$nn, replace = FALSE)
     xn[p] <- abs(xn[p] - 1L)
-    # reject infeasible solution
+    ## reject infeasible solution
     if((sum(xn) > data$Ksup) || (sum(xn) < data$Kinf))
         xc else xn
 }
-@ We collect all necessary information in the list \texttt{data}: the
+@
+We collect all necessary information in the list \texttt{data}: the
 variance--corvariance matrix \texttt{Sigma}, the cardinality
 limits~\texttt{Kinf} and \texttt{Ksup}, the total number of assets
 \texttt{na} (ie, the cardinality of the asset universe), and the
@@ -90,7 +92,7 @@ is computed.
 
 <<>>=
 data <- list(Sigma = Sigma,
-            Kinf = 30L,
+              Kinf = 30L,
               Ksup = 60L,
                 na = na,
                 nn = 1L)
@@ -125,11 +127,11 @@ plot(sqrt(sol1$Fmat[,2L]),
      type = "l", xlab = "", ylab = "Portfolio volatility")
 @
 
-(Recall that the simulated data had volatilities between~0.2 and~0.4.)
+(Recall that the simulated data had volatilities between 20 and 40\%.)
 
 We can also run the search repeatedly with the same starting value.
 <<fig = TRUE, height = 4>>=
-trials <- 5L
+trials <- 3L
 allRes <- restartOpt(LSopt, n = trials, OF, algo = algo, data = data)
 allResOF <- numeric(trials)
 for (i in seq_len(trials))
@@ -137,6 +139,11 @@ for (i in seq_len(trials))
 par(bty = "n")
 plot(ecdf(allResOF), main = "Portfolio volatility")
 @
+
+(We run \texttt{LSopt} only three times, to keep the build time for
+the vignette acceptable. To get more meaningful results, we should run
+more trials.)
+
 
 \bibliographystyle{plainnat}
 \bibliography{NMOF}

@@ -1,5 +1,20 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.21-2 (2011-11-22)}{
+  \itemize{
+    \item fixed: with 'printDetail' greater than zero, 'TAopt' did
+      not print the best solution, but the current solution
+      (but internal book keeping worked correctly, and the best
+      solution was returned)
+    \item 'bracketing', 'gridSearch', 'restartOpt': when 'cl' argument 
+      is not NULL, then argument 'method' is set to 'snow' (but as 
+      before it is checked whether package 'snow' is available)
+    \item the latest pdf-version of 'Examples and Extensions
+      for the NMOF package' is now available from
+      http://enricoschumann.net/files/NMOFex.pdf
+    \item code examples in subdirectory 'NMOFex' updated
+  }
+}
 \section{Changes in NMOF version 0.21-1 (2011-11-15)}{
   \itemize{
     \item the 'printDetail' option for opt-functions is now more consistent:

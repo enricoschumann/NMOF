@@ -3,7 +3,7 @@
 % \SweaveOpts{keep.source = FALSE}
 \documentclass[a4paper,11pt]{article}
 \usepackage[left=2.5cm,top=2cm, bottom=3cm, right=3.5cm]{geometry}
-\usepackage[noae]{Sweave} 
+\usepackage[noae]{Sweave}
 \usepackage{mathptmx}
 \usepackage{amsmath,amstext}
 \usepackage{hyperref}
@@ -17,13 +17,13 @@
 \end{abstract}
 
 \section{Introduction}
-\noindent In this tutorial we look into fitting the Nelson--Siegel--Svensson (NSS) model to data. The purpose of this vignette is to provide 
-the code in a convenient way; for more details, please see the book \citep{Gilli2011b}. Further information can be found in \citet{Gilli2010h} and 
+\noindent In this tutorial we look into fitting the Nelson--Siegel--Svensson (NSS) model to data. The purpose of this vignette is to provide
+the code in a convenient way; for more details, please see the book \citep{Gilli2011b}. Further information can be found in \citet{Gilli2010h} and
 \citet{Gilli2010i}.
 
 \section{Fitting the NS model to given zero rates}
 \subsection*{The NS model}
-We start by attaching the package and creating a `true' yield curve \texttt{yM} with given parameters \texttt{betaTRUE}. 
+We start by attaching the package and creating a `true' yield curve \texttt{yM} with given parameters \texttt{betaTRUE}.
 The times-to-payment, measured in years, are collected in the vector \texttt{tm}. We also set a seed to make the computations reproducible.
 <<fig = TRUE, height = 3>>=
 require("NMOF")
@@ -35,43 +35,43 @@ par(ps = 11, bty = "n", las = 1, tck = 0.01, mgp = c(3, 0.2, 0), mar = c(4, 4, 1
 plot(tm, yM, xlab = "maturities in years", ylab = "yields in %")
 @
 
-The aim is to fit a smooth curve through these points. Since we have used the model to create the points, we should be able to 
-obtain a perfect fit. We start with the objective 
-function \texttt{OF}. It takes two arguments: \texttt{param}, 
-which is a candidate solution (a numeric vector), and the list 
-\texttt{data}, which holds all other variables. 
+The aim is to fit a smooth curve through these points. Since we have used the model to create the points, we should be able to
+obtain a perfect fit. We start with the objective
+function \texttt{OF}. It takes two arguments: \texttt{param},
+which is a candidate solution (a numeric vector), and the list
+\texttt{data}, which holds all other variables.
 
-<<>>= 
-OF <- function(param, data) {		
+<<>>=
+OF <- function(param, data) {
     y <- data$model(param, data$tm)
     aux <- y - data$yM
     aux <- max(abs(aux))
     if (is.na(aux)) aux <- 1e10
     aux
-} 
-@ 
- 
-We have a added a crude but effective safeguard against 
-`strange' parameter values that lead to \texttt{NA} values: the objective function returns a large positive value. We minimise, and 
+}
+@
+
+We have a added a crude but effective safeguard against
+`strange' parameter values that lead to \texttt{NA} values: the objective function returns a large positive value. We minimise, and
 hence parameters that produce \texttt{NA} values are marked as bad.
 
-In this first example, we set up \texttt{data} as follows: 
-<<>>= 
+In this first example, we set up \texttt{data} as follows:
+<<>>=
 data <- list(
-             yM = yM, 
+             yM = yM,
              tm = tm,
-          model = NS, 
+          model = NS,
              ww = 0.1,
-            min = c( 0,-15,-30, 0), 
+            min = c( 0,-15,-30, 0),
             max = c(15, 30, 30,10))
 @
-We add a \texttt{model} (a function; in this case \texttt{NS}) that describes the mapping from parameters to a yield curve, and vectors \texttt{min} and \texttt{max} 
+We add a \texttt{model} (a function; in this case \texttt{NS}) that describes the mapping from parameters to a yield curve, and vectors \texttt{min} and \texttt{max}
 that we will later use as constraints. \texttt{ww} is a penalty weight, explained below.
 
-\texttt{OF} will take a candidate solution \texttt{param}, transform this solution via \texttt{data\$model} into yields, and compare 
-these yields with \texttt{yM}, which here means to compute the maximum absolute difference. 
+\texttt{OF} will take a candidate solution \texttt{param}, transform this solution via \texttt{data\$model} into yields, and compare
+these yields with \texttt{yM}, which here means to compute the maximum absolute difference.
 <<>>=
-param1 <- betaTRUE 
+param1 <- betaTRUE
 OF(param1, data)
 param2 <- c(5.7, 3, 8, 2)
 OF(param2, data)
@@ -82,7 +82,7 @@ par(ps = 11, bty = "n", las = 1, tck = 0.01, mgp = c(3, 0.2, 0), mar = c(4, 4, 1
 plot(tm, yM, xlab = "maturities in years", ylab = "yields in %")
 lines(tm, NS(param1, tm), col = "blue")
 lines(tm, NS(param2, tm), col = "red")
-legend(x = "topright", 
+legend(x = "topright",
     legend = c("true yields", "param1", "param2"),
     col = c("black", "blue", "red"),
     pch = c(1, NA, NA), lty = c(0, 1, 1))
@@ -104,7 +104,7 @@ penalty <- function(mP, data) {
     A
 }
 @
-We already have \texttt{data}, so let us see what the function does to solutions that violate a constraint. 
+We already have \texttt{data}, so let us see what the function does to solutions that violate a constraint.
 Suppose we have a population \texttt{mP} of three solutions (the \texttt{m} in \texttt{mP} is to remind us that we deal with a matrix).
 <<>>=
 param1 <- c( 6,3,8,-1)
@@ -115,7 +115,7 @@ mP <- cbind(param1,param2,param3)
 rownames(mP) <- c("b1","b2","b3","lambda")
 mP
 @
-The first and the third solution violate the constraints: in the first solution, $\lambda$ is negative; in the third solution, 
+The first and the third solution violate the constraints: in the first solution, $\lambda$ is negative; in the third solution,
 $\beta_1$ is negative.
 <<>>=
 penalty(mP,data)
@@ -137,20 +137,20 @@ penalty(mP,data)
 @
 Note that \texttt{penalty} works on the complete population at once; there is no need to loop over the solutions.
 
-So we can run a test. We start by defining the parameters of DE. Note in particular that we pass the penalty function, and that we set 
+So we can run a test. We start by defining the parameters of DE. Note in particular that we pass the penalty function, and that we set
 \texttt{loopPen} to \texttt{FALSE}.
 <<>>=
 # initialize algo settings
-algo <- list(nP = 100L, 
-             nG = 500L, 
-              F = 0.50, 
+algo <- list(nP = 100L,
+             nG = 500L,
+              F = 0.50,
              CR = 0.99,
-            min = c( 0,-15,-30, 0), 
+            min = c( 0,-15,-30, 0),
             max = c(15, 30, 30,10),
-            pen = penalty, 
+            pen = penalty,
          repair = NULL,
-         loopOF = TRUE, 
-        loopPen = FALSE, 
+         loopOF = TRUE,
+        loopPen = FALSE,
      loopRepair = TRUE,
        printBar = FALSE)
 @
@@ -158,32 +158,32 @@ algo <- list(nP = 100L,
 <<>>=
 system.time(sol <- DEopt(OF = OF, algo = algo, data = data))
 @
-Just to check whether the objective function works properly, we compare the maximum error with the returned objective function value -- 
+Just to check whether the objective function works properly, we compare the maximum error with the returned objective function value --
 they should be the same.
 <<>>=
 max( abs(data$model(sol$xbest,tm) - data$model(betaTRUE,tm)) )
 sol$OFvalue
 @
-As a benchmark, we run the function \texttt{nlminb} from the \textsf{stats} package. This is not a fair test: 
-\texttt{nlminb} is not appropriate for such problems. (But then, 
-if we found that it performs better than DE, we would have a strong indication that something is wrong with our implementation of DE.) 
+As a benchmark, we run the function \texttt{nlminb} from the \textsf{stats} package. This is not a fair test:
+\texttt{nlminb} is not appropriate for such problems. (But then,
+if we found that it performs better than DE, we would have a strong indication that something is wrong with our implementation of DE.)
 We use a random starting value \texttt{s0}.
 <<>>=
 s0 <- algo$min + (algo$max-algo$min) * runif(length(algo$min))
 system.time(sol2 <- nlminb(s0, OF, data = data,
-                           lower = data$min, 
-                           upper = data$max, 
+                           lower = data$min,
+                           upper = data$max,
                            control = list(eval.max = 50000L,
                                           iter.max = 50000L)))
 @
 Again, we compare the returned objective function value and the maximum error.
 <<>>=
 max(abs(data$model(sol2$par,tm)-data$model(betaTRUE,tm)))
-sol2$objective	
+sol2$objective
 @
-To compare our two solutions (DE and \texttt{nlminb}), we can plot them together with the true yields curve. But it is important to 
-stress that the results of both algorithms are stochastic: in the case of DE because it deliberately uses randomness; in the 
-case of \texttt{nlminb} because we set the starting value randomly. To get more meaningful results we should run both algorithms several times. 
+To compare our two solutions (DE and \texttt{nlminb}), we can plot them together with the true yields curve. But it is important to
+stress that the results of both algorithms are stochastic: in the case of DE because it deliberately uses randomness; in the
+case of \texttt{nlminb} because we set the starting value randomly. To get more meaningful results we should run both algorithms several times.
 (We do it just 3 times here to keep the time to build the vignette reasonable. Typically, one would use many more restarts.)
 
 <<fig = TRUE, height = 3>>=
@@ -196,8 +196,8 @@ for (i in 1L:3L) {
     lines(tm, data$model(sol$xbest,tm), col = "blue")
     s0 <- algo$min + (algo$max-algo$min) * runif(length(algo$min))
     sol2 <- nlminb(s0, OF, data = data,
-                           lower = data$min, 
-                           upper = data$max, 
+                           lower = data$min,
+                           upper = data$max,
                            control = list(eval.max = 50000L,
                                           iter.max = 50000L))
 
@@ -214,7 +214,7 @@ It is no error that there appears to be only one curve for DE: there are, in fac
 
 \subsection*{Other constraints}
 
-The parameter constraints on the NS (and NSS) model are to make sure that the resulting zero rates are nonnegative. But in fact, they do not 
+The parameter constraints on the NS (and NSS) model are to make sure that the resulting zero rates are nonnegative. But in fact, they do not
 guarantee positive rates.
 <<fig = TRUE, height = 3>>=
 tm <- seq(1, 10, length.out = 100)   # 1 to 10 years
@@ -225,7 +225,7 @@ plot(tm, yM, xlab = "maturities in years", ylab = "yields in %")
 abline(h = 0)
 @
 
-This is really a made-up example, but nevertheless we may want to include safeguards against such parameter vectors: we could include just one 
+This is really a made-up example, but nevertheless we may want to include safeguards against such parameter vectors: we could include just one
 constraint that all rates are greater than zero. This can be done, again, with a penalty function.
 <<>>=
 penalty2 <- function(param,data) {
@@ -240,12 +240,12 @@ penalty2(c(3, -2, -8, 1.5),data)
 @
 This penalty function only works for a single solution, so it is actually simplest to write it directly into the objective function.
 <<>>=
-OFa <- function(param,data) {		
+OFa <- function(param,data) {
     y <- data$model(param,data$tm)
     aux <- y - data$yM
     res <- max(abs(aux))
     # compute the penalty
-    aux <- y - abs(y) # aux == zero for nonnegative y 
+    aux <- y - abs(y) # aux == zero for nonnegative y
     aux <- -sum(aux) * data$ww
     res <- res + aux
     if (is.na(res)) res <- 1e10
@@ -268,17 +268,17 @@ legend(x = "topleft", legend = c("true yields", "DE (constrained)"),
 
 
 \section{Fitting the NSS model to given zero rates}
-There is little that we need to change if we want to use the NSS model instead. We just have to pass a different \texttt{model} to the objective 
+There is little that we need to change if we want to use the NSS model instead. We just have to pass a different \texttt{model} to the objective
 function (and change the \texttt{min}/\texttt{max}-vectors). An example follows. Again, we fix true parameters and try to recover them.
 <<>>=
 tm <- c(c(1,3,6,9)/12,1:10)
 betaTRUE <- c(5,-2,5,-5,1,6)
-yM <- NSS(betaTRUE, tm) 
+yM <- NSS(betaTRUE, tm)
 @
 The lists \texttt{data} and \texttt{algo} are almost the same as before; the objective function stays exactly the same.
 <<>>=
 data <- list(yM = yM,
-             tm = tm, 
+             tm = tm,
           model = NSS,
             min = c( 0,-15,-30,-30,  0,5),
             max = c(15, 30, 30, 30,  5,  10),
@@ -292,7 +292,7 @@ algo <- list(nP = 100L,
             max = c(15, 30, 30, 30,  5,  10),
             pen = penalty,
          repair = NULL,
-         loopOF = TRUE, 
+         loopOF = TRUE,
         loopPen = FALSE,
      loopRepair = TRUE,
        printBar = FALSE,
@@ -306,14 +306,14 @@ sol$OFvalue
 
 s0 <- algo$min + (algo$max - algo$min) * runif(length(algo$min))
 system.time(sol2 <- nlminb(s0,OF,data = data,
-                           lower = data$min, 
-                           upper = data$max, 
+                           lower = data$min,
+                           upper = data$max,
                          control = list(eval.max = 50000L,
                                         iter.max = 50000L)))
 max(abs(data$model(sol2$par,tm) - data$model(betaTRUE,tm)))
 sol2$objective
 @
-Finally, we compare the yield curves resulting from three runs. (Again, the low number of restarts is chosen only to keep the time to build the 
+Finally, we compare the yield curves resulting from three runs. (Again, the low number of restarts is chosen only to keep the time to build the
 vignette reasonable. A better number would 100.)
 <<fig = TRUE, height = 3>>=
 par(ps = 11, bty = "n", las = 1, tck = 0.01, mgp = c(3, 0.2, 0), mar = c(4, 4, 1, 1))
@@ -323,8 +323,8 @@ for (i in 1:3) {
     lines(tm, data$model(sol$xbest,tm), col = "blue")
     s0 <- algo$min + (algo$max - algo$min) * runif(length(algo$min))
     sol2 <- nlminb(s0, OF, data = data,
-                           lower = data$min, 
-                           upper = data$max, 
+                           lower = data$min,
+                           upper = data$max,
                            control = list(eval.max = 50000L,
                                           iter.max = 50000L))
 
@@ -339,7 +339,7 @@ legend(x = "topright", legend = c("true yields", "DE", "nlminb"),
 
 
 \section{Fitting the NSS model to given bond prices}
-A bond is a list of payment dates (given a valuation date, we can translate them into times-to-payment) and associated payments. 
+A bond is a list of payment dates (given a valuation date, we can translate them into times-to-payment) and associated payments.
 Suppose we are given the following set of bonds.
 <<>>=
 cf1 <- c(rep(5.75,  8), 105.75); tm1 <- 0:8 + 0.5
@@ -351,15 +351,15 @@ cf6 <- c(rep(5.75, 17), 105.75); tm6 <- 0:17 + 0.5
 cf7 <- c(rep(3.50, 14), 103.50); tm7 <- 1:15
 cf8 <- c(rep(5.00,  8), 105.00); tm8 <- 0:8 + 0.5
 cf9 <- 105; tm9 <- 1
-cf10 <- c(rep(3.00, 12), 103.00); tm10 <- 0:12 + 0.5 
+cf10 <- c(rep(3.00, 12), 103.00); tm10 <- 0:12 + 0.5
 cf11 <- c(rep(2.50,  7), 102.50); tm11 <- 1:8
 cf12 <- c(rep(4.00, 10), 104.00); tm12 <- 1:11
-cf13 <- c(rep(3.75, 18), 103.75); tm13 <- 0:18 + 0.5 
+cf13 <- c(rep(3.75, 18), 103.75); tm13 <- 0:18 + 0.5
 cf14 <- c(rep(4.00, 17), 104.00); tm14 <- 1:18
 cf15 <- c(rep(2.25,  8), 102.25); tm15 <- 0:8 + 0.5
 cf16 <- c(rep(4.00,  6), 104.00); tm16 <- 1:7
 cf17 <- c(rep(2.25, 12), 102.25); tm17 <- 1:13
-cf18 <- c(rep(4.50, 19), 104.50); tm18 <- 0:19 + 0.5 
+cf18 <- c(rep(4.50, 19), 104.50); tm18 <- 0:19 + 0.5
 cf19 <- c(rep(2.25,  7), 102.25); tm19 <- 1:8
 cf20 <- c(rep(3.00, 14), 103.00); tm20 <- 1:15
 @
@@ -377,15 +377,15 @@ nR <- length(tm)
 nC <- length(cfList)
 
 cfMatrix <- array(0, dim = c(nR, nC))
-for(j in seq(nC)) 
+for(j in seq(nC))
     cfMatrix[tm %in% tmList[[j]], j] <- cfList[[j]]
 rownames(cfMatrix) <- tm
 
 cfMatrix[1L:10L, 1L:10L]
 @
 
-Suppose we have zero rates for all maturities (ie, one for each row of \texttt{cfMatrix}), then we can transform this vector of rates into 
-discount factors. Premultiplying \texttt{cfMatrix} by the row vector of discount factors then gives us a row vector of bond prices. 
+Suppose we have zero rates for all maturities (ie, one for each row of \texttt{cfMatrix}), then we can transform this vector of rates into
+discount factors. Premultiplying \texttt{cfMatrix} by the row vector of discount factors then gives us a row vector of bond prices.
 
 <<>>=
 betaTRUE <- c(5,-2,1,10,1,3)
@@ -396,21 +396,21 @@ bM <- diFa %*% cfMatrix
 
 So, with a vector of `true' bond prices \texttt{bm}, we can set up DE.
 <<>>=
-data <- list(bM = bM, 
-             tm = tm, 
-       cfMatrix = cfMatrix, 
-          model = NSS, 
+data <- list(bM = bM,
+             tm = tm,
+       cfMatrix = cfMatrix,
+          model = NSS,
              ww = 1,
             min = c( 0,-15,-30,-30,0  ,2.5),
             max = c(15, 30, 30, 30,2.5,5  ))
 @
 
-The objective function takes the path that we just saw: given parameters for the NSS model, it computes zero rates, and transforms these into 
-discount factors. Given the matrix \texttt{cfMatrix}, it then computes theoretical bond prices, and compares these with the given prices \texttt{bm}. As 
+The objective function takes the path that we just saw: given parameters for the NSS model, it computes zero rates, and transforms these into
+discount factors. Given the matrix \texttt{cfMatrix}, it then computes theoretical bond prices, and compares these with the given prices \texttt{bm}. As
 the optimisation criterion, we use the maximum absolute difference.
 
 <<>>=
-OF2 <- function(param, data) {			
+OF2 <- function(param, data) {
     tm <- data$tm; bM <- data$bM
     model <- data$model; cfMatrix <- data$cfMatrix
     diFa  <- 1 / ((1 + model(param,tm)/100)^tm)
@@ -443,19 +443,19 @@ system.time(sol <- DEopt(OF = OF2, algo = algo, data = data))
 max(abs(data$model(sol$xbest,tm) - data$model(betaTRUE,tm)))
 sol$OFvalue
 @
-Note that now the objective function value (the difference in bond prices) does not correspond to the yield difference anymore. It is instructive 
+Note that now the objective function value (the difference in bond prices) does not correspond to the yield difference anymore. It is instructive
 to compare them nevertheless.
 
 <<fig = TRUE, height = 3>>=
 s0 <- algo$min + (algo$max - algo$min) * runif(length(algo$min))
 system.time(sol2 <- nlminb(s0,OF2,data = data,
-                                 lower = data$min, 
-                                 upper = data$max, 
+                                 lower = data$min,
+                                 upper = data$max,
                                control = list(eval.max = 50000,
                                               iter.max = 50000)))
 # maximum error yield and value of OF
 max(abs(data$model(sol2$par,tm) - data$model(betaTRUE,tm)))
-sol2$objective	
+sol2$objective
 
 par(ps = 11, bty = "n", las = 1, tck = 0.01, mgp = c(3, 0.2, 0), mar = c(4, 4, 1, 1))
 plot(tm, yM, xlab = "maturities in years", ylab = "yields in %")
@@ -474,13 +474,13 @@ b <- diFa %*% cfMatrix
 b - bM
 @
 
-We can also plot the rate errors against time-to-payment. 
+We can also plot the rate errors against time-to-payment.
 <<fig = TRUE, height = 3>>=
 par(ps = 11, bty = "n", las = 1, tck = 0.01, mgp = c(3, 0.2, 0), mar = c(4, 4, 1, 1))
 plot(tm, NSS(sol$xbest,tm) - NSS(betaTRUE,tm), xlab = "maturities in years", ylab = "yield error in %")
 @
 
-These apparently systematic (albeit small) errors are less visible when we plot price errors against time-to-maturity 
+These apparently systematic (albeit small) errors are less visible when we plot price errors against time-to-maturity
 (see the book for a discussion).
 <<fig = TRUE, height = 3>>=
 par(ps = 11, bty = "n", las = 1, tck = 0.01, mgp = c(3, 0.2, 0), mar = c(4, 4, 1, 1))
@@ -491,12 +491,12 @@ plot(as.numeric(unlist(lapply(tmList, max))), as.vector(b - bM),
 
 
 \section{Fitting the NSS model to given yields-to-maturity}
-We will need the following function; it converts cash flows and times-to-payment into present values, and those present values 
+We will need the following function; it converts cash flows and times-to-payment into present values, and those present values
 into yields-to-maturities.
 <<>>=
 compYield <- function(cf,tm, guess = NULL) {
     fy <- function(ytm,cf,tm) sum( cf / ( (1+ytm)^tm ) )
-    logik <- cf != 0 
+    logik <- cf != 0
     cf <- cf[logik]
     tm <- tm[logik]
     if(is.null(guess)) {ytm <- 0.05} else {ytm <- guess}
@@ -515,7 +515,7 @@ compYield <- function(cf,tm, guess = NULL) {
 
 The objective function, \texttt{OF3}, looks as follows.
 <<>>=
-OF3 <- function(param,data) {		
+OF3 <- function(param,data) {
     tm <- data$tm; rM <- data$rM
     model <- data$model; cfMatrix<- data$cfMatrix
     nB <- dim(cfMatrix)[2L]
@@ -524,10 +524,10 @@ OF3 <- function(param,data) {
         diFa <- 1 / ((1 + zrates/100)^tm)
         b <- diFa %*% cfMatrix
         r <- numeric(nB)
-        if( all(!is.na(b), diFa < 1, diFa > 0, b > 1) ) { 
+        if( all(!is.na(b), diFa < 1, diFa > 0, b > 1) ) {
             # compute theoretical yields
             for (bb in 1:nB) {
-                r[bb] <- compYield(c(-b[bb],cfMatrix[,bb]),c(0,tm))	
+                r[bb] <- compYield(c(-b[bb],cfMatrix[,bb]),c(0,tm))
             }
             aux <- abs(r - rM)
             aux <- sum(aux)
@@ -536,9 +536,9 @@ OF3 <- function(param,data) {
     aux
 }
 @
-So the game plan is as follows: we compute prices \texttt{b} as in the last section, but then we convert 
-them into yields-to-maturity \texttt{r} with the function \texttt{compYield}. 
-The objective function evaluates the discrepancy between the market yields-to-maturity \texttt{rM} and our 
+So the game plan is as follows: we compute prices \texttt{b} as in the last section, but then we convert
+them into yields-to-maturity \texttt{r} with the function \texttt{compYield}.
+The objective function evaluates the discrepancy between the market yields-to-maturity \texttt{rM} and our
 model yields \texttt{r}. We start by defining the `true' \texttt{rM}.
 <<>>=
 betaTRUE <- c(5,-2,1,10,1,3)
@@ -550,25 +550,24 @@ rM <- apply(rbind(-bM, cfMatrix), 2, compYield, c(0, tm))
 
 We set up \texttt{data} and \texttt{algo}.
 <<>>=
-data <- list(rM = rM, tm = tm, 
-        cfMatrix = cfMatrix, 
-        model = NSS, 
+data <- list(rM = rM, tm = tm,
+        cfMatrix = cfMatrix,
+        model = NSS,
         min = c( 0,-15,-30,-30,0  ,2.5),
         max = c(15, 30, 30, 30,2.5,5  ), ww = 0.1)
-algo <- list(
-        nP = 50L,
-        nG = 600L,
-        F   = 0.50,
-        CR  = 0.99,
-        min = c( 0,-15,-30,-30,0  ,2.5),
-        max = c(15, 30, 30, 30,2.5,5  ),
-        pen = penalty,
-        repair = NULL,
-        loopOF = TRUE,
-        loopPen = FALSE,
-        loopRepair = FALSE, 
-        printBar = FALSE,
-        printDetail = FALSE)
+algo <- list(nP = 50L,
+             nG = 600L,
+             F   = 0.50,
+             CR  = 0.99,
+             min = c( 0,-15,-30,-30,0  ,2.5),
+             max = c(15, 30, 30, 30,2.5,5  ),
+             pen = penalty,
+             repair = NULL,
+             loopOF = TRUE,
+             loopPen = FALSE,
+             loopRepair = FALSE,
+             printBar = FALSE,
+             printDetail = FALSE)
 @
 
 <<>>=
@@ -581,12 +580,12 @@ With \texttt{nlminb}:
 <<>>=
 s0 <- algo$min + (algo$max - algo$min) * runif(length(algo$min))
 system.time(sol2 <- nlminb(s0, OF3, data = data,
-                                   lower = algo$min, 
-                                   upper = algo$max, 
+                                   lower = algo$min,
+                                   upper = algo$max,
                                  control = list(eval.max = 50000L,
                                                 iter.max = 50000L)))
 max(abs(data$model(sol2$par,tm)-data$model(betaTRUE,tm)))
-sol2$objective	
+sol2$objective
 @
 
 <<fig = TRUE, height = 4>>=
@@ -605,7 +604,7 @@ Compare the recovered parameters.
 betaTRUE
 round(sol$xbest,3)
 @
-While the returned \texttt{OF} value seems acceptable, we need many more iterations to have the parameters converge. But compare the fitted 
+While the returned \texttt{OF} value seems acceptable, we need many more iterations to have the parameters converge. But compare the fitted
 yield curve: the fitted yields are generally fine.
 
 
