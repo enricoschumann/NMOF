@@ -9,10 +9,11 @@ bracketing <- function(fun, interval, ...,
 
     n <- makeInteger(n, "'n'", 2)
     method <- tolower(method[1L])
-    if (method == "vectorize" ||
+    if (method == "vectorize"  ||
         method == "vectorized" ||
         method == "vectorise")
         method <- "vectorised"
+    if (!is.null(cl)) method <- "snow"
     if (method == "multicore") {
         if (!suppressWarnings(require("multicore", quietly = TRUE))) {
             method <- "loop"

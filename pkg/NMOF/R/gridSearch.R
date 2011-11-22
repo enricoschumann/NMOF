@@ -10,6 +10,7 @@ gridSearch <- function(fun, levels, ..., lower, upper,
         lNames <- names(levels)
 
     method <- tolower(method[1L])
+    if (!is.null(cl)) method <- "snow"
     if (method == "multicore") {
         if (!suppressWarnings(require("multicore", quietly = TRUE))) {
             method <- "loop"

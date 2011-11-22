@@ -158,7 +158,7 @@ TAopt <- function(OF, algo = list(), ...) {
                 if (counter %% printDetail == 0L) {
                     cat("Best solution (iteration ", counter,
                         "/", niter, "): ",
-                        prettyNum(xcF),"\n", sep = "")
+                        prettyNum(xbestF),"\n", sep = "")
                     flush.console()
                 }
             }

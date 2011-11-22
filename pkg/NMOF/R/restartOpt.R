@@ -4,8 +4,7 @@ restartOpt <- function(fun, n, OF, algo, ...,
                        cl = NULL) {
     n <- makeInteger(n, "'n'", 1L)
     method <- tolower(method[1L])
-
-    ## check if multicore is available and prepare settings
+    if (!is.null(cl)) method <- "snow"
     if (method == "multicore") {
         if (!suppressWarnings(require("multicore", quietly = TRUE))) {
             method <- "loop"
