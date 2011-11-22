@@ -113,7 +113,9 @@ Eberhart, R.C. and Kennedy, J. (1995) A New Optimizer using Particle Swarm theor
 Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Optimization in Finance}. Elsevier. 
 \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
 
-Schumann, E. (2011) Examples and Extensions for the \pkg{NMOF} Package. \url{http://ssrn.com/abstract=1886522}
+  Schumann, E. (2011) Examples and Extensions for the \pkg{NMOF}
+  Package. \url{http://enricoschumann.net/files/NMOFex.pdf}
+
 }
 \author{
 Enrico Schumann

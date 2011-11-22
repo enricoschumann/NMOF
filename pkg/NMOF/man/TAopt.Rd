@@ -130,7 +130,8 @@ Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Opti
 Moscato, P.  and Fontanari, J.F. (1990). Stochastic Versus Deterministic Update in Simulated Annealing.
 Physics Letters A. \strong{146}, 4, pp. 204--208.
 
-Schumann, E. (2011) Examples and Extensions for the \pkg{NMOF} Package. \url{http://ssrn.com/abstract=1886522}
+  Schumann, E. (2011) Examples and Extensions for the \pkg{NMOF}
+  Package. \url{http://enricoschumann.net/files/NMOFex.pdf}
 
 Winker, P. (2001). \emph{Optimization Heuristics in Econometrics: Applications of Threshold Accepting}. Wiley.
 
