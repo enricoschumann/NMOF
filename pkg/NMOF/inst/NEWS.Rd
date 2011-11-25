@@ -1,5 +1,17 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.21-3 (2011-11-25)}{
+  \itemize{
+    \item fixed: 'gridSearch' with 'printDetail=TRUE' did not give
+      a meaningful message
+    \item experimental: 'GAopt' now has an argument 'algo$methodOF' 
+      that can be 'loop' (default) but also 'snow' or 'multicore'
+      (currently, only 'snow' is operational). If 'algo$methodOF' 
+      is not 'loop', the evaluation of the objective function will 
+      be distributed. See 'Examples and Extensions for the NMOF 
+      package'(with code in subdirectory 'NMOFex') for an example.
+  }
+}
 \section{Changes in NMOF version 0.21-2 (2011-11-22)}{
   \itemize{
     \item fixed: with 'printDetail' greater than zero, 'TAopt' did

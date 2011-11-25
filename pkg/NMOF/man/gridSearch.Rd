@@ -9,7 +9,7 @@
 \usage{
 gridSearch(fun, levels, ..., lower, upper, npar = 1L, n = 5L,
            printDetail = TRUE,
-           method = c("loop", "multicore", "snow"),
+           method = NULL,
            mc.control = list(), cl = NULL,
            keepNames = FALSE, asList = FALSE)
 }

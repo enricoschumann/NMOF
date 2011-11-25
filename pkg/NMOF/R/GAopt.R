@@ -5,7 +5,11 @@ GAopt <- function (OF, algo = list(), ...) {
                   prob = 0.01, ### probability of mutation
                   pen = NULL,
                   repair = NULL,
-                  loopOF = TRUE, loopPen = TRUE, loopRepair = TRUE,
+                  loopOF = TRUE,
+                  loopPen = TRUE,
+                  loopRepair = TRUE,
+                  methodOF = "loop",  ### or 'vectorised','snow','multicore'
+                  cl = NULL,          ###
                   printDetail = TRUE,
                   printBar = TRUE,
                   initP = NULL,
@@ -14,14 +18,47 @@ GAopt <- function (OF, algo = list(), ...) {
                   crossover = c("onePoint", "uniform")
                   )
 
+    ## called for its side effect: gives warning/error
     checkList(algo, algoD)
+
+    ## add default settings
     algoD[names(algo)] <- algo
+
+    ## --------------------------------------------------
+    ## NEW: snow
+    if (algoD$methodOF == "vectorised" && identical(algoD$loopOF, TRUE))
+        algoD$loopOF <- FALSE
+
+    dosnow <- FALSE
+    domc <- FALSE
+    cl <- algoD$cl
+
+    if (algoD$methodOF == "snow") {
+        if (!suppressWarnings(require("snow", quietly = TRUE))) {
+            method <- "loop"
+            warning("package 'snow' not available: use method 'loop'")
+        } else if (is.null(cl)) {
+            method <- "loop"
+            warning("no cluster 'cl' passed for method 'snow': use method 'loop'")
+        } else {
+            dosnow <- TRUE
+            ignore <- list(...)
+            if (is.numeric(cl)) {
+                cl <- makeCluster(c(rep("localhost", cl)), type = "SOCK")
+                on.exit(stopCluster(cl))
+            }
+        }
+    } else if (algoD$methodOF == "multicore") {
+        domc <- TRUE
+        stop("not implemented")
+    }
+    ## /NEW: snow
+    ## --------------------------------------------------
 
     printDetail <- algoD$printDetail
     printBar <- algoD$printBar
     if (printBar && printDetail > 1)
         printBar <- FALSE
-
 
     if (!is.function(OF))
         stop("'OF' must be a function")
@@ -38,6 +75,7 @@ GAopt <- function (OF, algo = list(), ...) {
     nB <- makeInteger(algoD$nB, 'algo$nB')
     nP <- makeInteger(algoD$nP, 'algo$nP')
     nG <- makeInteger(algoD$nG, 'algo$nG')
+    lP <- vector(mode = "list", length = nP)
 
     crossover <- tolower(algoD$crossover[1L])
     crossOver1 <- FALSE
@@ -72,6 +110,7 @@ GAopt <- function (OF, algo = list(), ...) {
         Fmat <- array(NA, c(nG, nP)) else Fmat <- NA
     if (algoD$storeSolutions)
         xlist <- list(P = vector("list", length = nG)) else xlist <- NA
+
     ## create population
     if (is.null(algoD$initP)) {
         mP <- array(sample.int(2L, nB * nP, replace = TRUE) - 1L,
@@ -87,6 +126,8 @@ GAopt <- function (OF, algo = list(), ...) {
             warning("'initP' is not of mode logical; 'storage.mode(initP)' will be tried")
         }
     }
+
+    ## repair initial population
     if (!is.null(algoD$repair)) {
         if (algoD$loopRepair) {
             for (s in snP) mP[, s] <- Re1(mP[, s])
@@ -94,8 +135,20 @@ GAopt <- function (OF, algo = list(), ...) {
             mP <- Re1(mP)
         }
     }
+
+    ## evaluate initial population
     if (algoD$loopOF) {
-        for (s in snP) vF[s] <- OF1(mP[, s])
+        if (dosnow) {
+            ## run clusterApply
+            for (s in seq_len(nP)) lP[[s]] <- mP[ ,s]
+            vF <- unlist(clusterApply(cl, lP, OF, ...))
+        } else if (domc) {
+            ## run mclapply
+            ## ...
+        } else {
+            ## run loop
+            for (s in snP) vF[s] <- OF1(mP[, s])
+        }
     } else {
         vF <- OF1(mP)
     }
@@ -140,7 +193,17 @@ GAopt <- function (OF, algo = list(), ...) {
             }
         }
         if (algoD$loopOF) {
-            for (s in snP) vFc[s] <- OF1(mC[ ,s])
+            if (dosnow) {
+                ## run clusterApply
+                for (s in seq_len(nP)) lP[[s]] <- mC[ ,s]
+                vFc <- unlist(clusterApply(cl, lP, OF, ...))
+            } else if (domc) {
+                ## run mclapply
+
+            } else {
+                ## run loop
+                for (s in snP) vFc[s] <- OF1(mC[, s])
+            }
         } else {
             vFc <- OF1(mC)
         }
@@ -164,9 +227,9 @@ GAopt <- function (OF, algo = list(), ...) {
         ## print info
         if (printDetail > 1) {
             if (g %% printDetail == 0L) {
-            cat("Best solution (iteration ", g, "/", nG, "): ",
-                prettyNum(min(vF)[1L]),"\n", sep = "")
-            flush.console()
+                cat("Best solution (iteration ", g, "/", nG, "): ",
+                    prettyNum(min(vF)[1L]),"\n", sep = "")
+                flush.console()
             }
         }
     }

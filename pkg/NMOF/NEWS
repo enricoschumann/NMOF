@@ -1,3 +1,14 @@
+v0.21-3  (2011-11-25)
+
+  o fixed: 'gridSearch' with 'printDetail=TRUE' did not give
+    a meaningful message
+  o experimental: 'GAopt' now has an argument 'algo$methodOF' 
+    that can be 'loop' (default) but also 'snow' or 'multicore'
+    (currently, only 'snow' is operational). If 'algo$methodOF' 
+    is not 'loop', the evaluation of the objective function will 
+    be distributed. See 'Examples and Extensions for the NMOF 
+    package'(with code in subdirectory 'NMOFex') for an example.
+
 v0.21-2  (2011-11-22)
 
   o fixed: with 'printDetail' greater than zero, 'TAopt' did

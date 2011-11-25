@@ -1,7 +1,7 @@
 gridSearch <- function(fun, levels, ..., lower, upper,
                        npar = 1L, n = 5L,
                        printDetail = TRUE,
-                       method = c("loop", "multicore", "snow"),
+                       method = NULL,
                        mc.control = list(),
                        cl = NULL,
                        keepNames = FALSE, asList = FALSE) {
@@ -9,8 +9,13 @@ gridSearch <- function(fun, levels, ..., lower, upper,
     if (keepNames)
         lNames <- names(levels)
 
-    method <- tolower(method[1L])
-    if (!is.null(cl)) method <- "snow"
+    if (!is.null(method)) {
+        method <- tolower(method[1L])
+    } else if (!is.null(cl)) {
+        method <- "snow"
+    } else {
+        method <- "loop"
+    }
     if (method == "multicore") {
         if (!suppressWarnings(require("multicore", quietly = TRUE))) {
             method <- "loop"
@@ -60,9 +65,9 @@ gridSearch <- function(fun, levels, ..., lower, upper,
             msg <- paste(nl, collapse = ", ")
         else {
             msg <- paste(c(nl[seq_len(4L)],"..."), collapse = ", ")
-            msg <- paste(np, " variables with ", msg, " levels: ",
-                         nlp, " function evaluations required.", sep = "")
         }
+        msg <- paste(np, " variables with ", msg, " levels: ",
+                     nlp, " function evaluations required.", sep = "")
         message(msg)
     }
     for (i in seq_len(np)) {
