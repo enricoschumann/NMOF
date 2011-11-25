@@ -3,7 +3,7 @@
 ###################################################
 ### code chunk number 1: NMOFex.Rnw:74-76
 ###################################################
-## version 2011-11-02
+## version 2011-11-25
 options(continue = " ", digits = 3, width = 70)
 
 
@@ -751,7 +751,44 @@ compareLogicals(x, neighbour(x, Data))
 
 
 ###################################################
-### code chunk number 52: NMOFex.Rnw:1118-1125
+### code chunk number 52: NMOFex.Rnw:1085-1099
+###################################################
+## match a binary (logical) string y
+size <- 20L             ## the length of the string
+OF <- function(x, y)    ## the objective function
+    sum(x != y)
+y <- runif(size) > 0.5  ## the true solution
+OF(y, y)                ## the optimum value is zero
+algo <- list(nB = size, nP = 100L, nG = 20L, prob = 0.002,
+             printBar = FALSE, methodOF = "loop")
+system.time(sol <- GAopt(OF, algo = algo, y = y))
+OF(sol$xbest, y)
+algo <- list(nB = size, nP = 100L, nG = 20L, prob = 0.002,
+             printBar = FALSE, methodOF = "snow", cl = 2L)
+system.time(sol <- GAopt(OF, algo = algo, y = y))
+OF(sol$xbest, y)
+
+
+###################################################
+### code chunk number 53: NMOFex.Rnw:1103-1116
+###################################################
+OF <- function(x, y) {
+    Sys.sleep(0.0005)
+    sum(x != y)
+}
+algo <- list(nB = size, nP = 100L, nG = 20L, prob = 0.002,
+             printBar = FALSE, methodOF = "loop")
+system.time(sol <- GAopt(OF, algo = algo, y = y))
+OF(sol$xbest, y)
+
+algo <- list(nB = size, nP = 100L, nG = 20L, prob = 0.002,
+             printBar = FALSE, methodOF = "snow", cl = 8L)
+system.time(sol <- GAopt(OF, algo = algo, y = y))
+OF(sol$xbest, y)
+
+
+###################################################
+### code chunk number 54: NMOFex.Rnw:1156-1163
 ###################################################
 OF <- tfTrefethen
 n <- 100L
@@ -763,7 +800,7 @@ for (i in seq_len(n))
 
 
 ###################################################
-### code chunk number 53: NMOFex.Rnw:1132-1138
+### code chunk number 55: NMOFex.Rnw:1170-1176
 ###################################################
 par(bty = "n", las = 1, mar = c(3,4,0,0),
     ps = 8, tck = 0.001, mgp = c(3, 0.2, 0))
@@ -774,7 +811,7 @@ abline(v = -0.02440308, h = 0.21061243, col = grey(0.6))
 
 
 ###################################################
-### code chunk number 54: NMOFex.Rnw:1143-1149
+### code chunk number 56: NMOFex.Rnw:1181-1187
 ###################################################
 algo <- list(nP = 50L, nG = 300L,
              F = 0.6, CR = 0.9,
@@ -785,7 +822,7 @@ sol <- DEopt(OF = OF, algo = algo)
 
 
 ###################################################
-### code chunk number 55: NMOFex.Rnw:1152-1158
+### code chunk number 57: NMOFex.Rnw:1190-1196
 ###################################################
 names(sol)
 sd(sol$popF)
@@ -796,7 +833,7 @@ xlist <- sol$xlist[[1L]]
 
 
 ###################################################
-### code chunk number 56: NMOFex.Rnw:1166-1181
+### code chunk number 58: NMOFex.Rnw:1204-1219
 ###################################################
 ## show solution 1 (column 1) in population over time
 xlist[[  1L]][ ,1L]  ### at the end of generation 1
@@ -816,7 +853,7 @@ res[ ,300L]
 
 
 ###################################################
-### code chunk number 57: NMOFex.Rnw:1185-1199
+### code chunk number 59: NMOFex.Rnw:1223-1237
 ###################################################
 ## show parameter 2 (row 2) in population over time
 xlist[[  1L]][2L, ]  ### at the end of generation 1
@@ -835,7 +872,7 @@ res[ ,300L]
 
 
 ###################################################
-### code chunk number 58: NMOFex.Rnw:1204-1213 (eval = FALSE)
+### code chunk number 60: NMOFex.Rnw:1242-1251 (eval = FALSE)
 ###################################################
 ## ## transposing xlist[[i]] gives a two-column matrix -- see ?points
 ## ## initial solutions
@@ -849,7 +886,7 @@ res[ ,300L]
 
 
 ###################################################
-### code chunk number 59: NMOFex.Rnw:1216-1244
+### code chunk number 61: NMOFex.Rnw:1254-1282
 ###################################################
 setEPS()
 postscript(file = "figures/c1.eps", width = 2, height = 2)
@@ -882,7 +919,7 @@ sep = "")
 
 
 ###################################################
-### code chunk number 60: NMOFex.Rnw:1255-1270
+### code chunk number 62: NMOFex.Rnw:1293-1308
 ###################################################
 OF <- function(par, Data) {
     ## compute model yields
@@ -902,7 +939,7 @@ OF <- function(par, Data) {
 
 
 ###################################################
-### code chunk number 61: NMOFex.Rnw:1275-1292
+### code chunk number 63: NMOFex.Rnw:1313-1330
 ###################################################
 algo <- list(nP = 200L, nG = 100L,
              F = 0.50, CR = 0.99,
@@ -924,7 +961,7 @@ p1 <- sapply(P, `[`, 1L, TRUE)
 
 
 ###################################################
-### code chunk number 62: NMOFex.Rnw:1299-1308
+### code chunk number 64: NMOFex.Rnw:1337-1346
 ###################################################
 par(bty = "n", las = 1, mar = c(4,4,0,0),
     ps = 8, tck = 0.001, mgp = c(3, 0.2, 0))
@@ -938,7 +975,7 @@ mtext("parameter\nvalue", 2, line = 1)
 
 
 ###################################################
-### code chunk number 63: NMOFex.Rnw:1315-1350
+### code chunk number 65: NMOFex.Rnw:1353-1388
 ###################################################
 OF2 <- function(par, Data) {
     ## compute model yields
@@ -978,7 +1015,7 @@ mtext("parameter\nvalue", 2, line = 1)
 
 
 ###################################################
-### code chunk number 64: NMOFex.Rnw:1362-1372
+### code chunk number 66: NMOFex.Rnw:1400-1410
 ###################################################
 testFun <- function(x) {
     Sys.sleep(0.1) ## wasting time :-)
@@ -993,7 +1030,7 @@ all.equal(sol1, sol2)
 
 
 ###################################################
-### code chunk number 65: NMOFex.Rnw:1414-1415
+### code chunk number 67: NMOFex.Rnw:1452-1453
 ###################################################
 toLatex(sessionInfo())
 
