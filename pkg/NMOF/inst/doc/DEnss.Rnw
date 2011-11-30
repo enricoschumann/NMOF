@@ -21,10 +21,20 @@
 the code in a convenient way; for more details, please see the book \citep{Gilli2011b}. Further information can be found in \citet{Gilli2010h} and
 \citet{Gilli2010i}.
 
+The variable \texttt{nRuns} sets the number of restarts for the
+examples to come. It is set to only two here to keep the build-time of
+the package acceptable; feel free to increase it.
+<<>>=
+nRuns <- 2
+@
+
 \section{Fitting the NS model to given zero rates}
 \subsection*{The NS model}
-We start by attaching the package and creating a `true' yield curve \texttt{yM} with given parameters \texttt{betaTRUE}.
-The times-to-payment, measured in years, are collected in the vector \texttt{tm}. We also set a seed to make the computations reproducible.
+We start by attaching the package and creating a `true' yield curve
+\texttt{yM} with given parameters \texttt{betaTRUE}.  The
+times-to-payment, measured in years, are collected in the vector
+\texttt{tm}. We set a seed to make the computations reproducible.
+
 <<fig = TRUE, height = 3>>=
 require("NMOF")
 set.seed(112233)
@@ -191,7 +201,7 @@ par(ps = 11, bty = "n", las = 1, tck = 0.01, mgp = c(3, 0.2, 0), mar = c(4, 4, 1
 plot(tm, yM, xlab = "maturities in years",
              ylab = "yields in %")
 algo$printDetail <- FALSE
-for (i in 1L:3L) {
+for (i in seq_len(nRuns)) {
     sol <- DEopt(OF = OF, algo = algo, data = data)
     lines(tm, data$model(sol$xbest,tm), col = "blue")
     s0 <- algo$min + (algo$max-algo$min) * runif(length(algo$min))
@@ -318,7 +328,7 @@ vignette reasonable. A better number would 100.)
 <<fig = TRUE, height = 3>>=
 par(ps = 11, bty = "n", las = 1, tck = 0.01, mgp = c(3, 0.2, 0), mar = c(4, 4, 1, 1))
 plot(tm, yM, xlab = "maturities in years", ylab = "yields in %")
-for (i in 1:3) {
+for (i in seq_len(nRuns)) {
     sol <- DEopt(OF = OF, algo = algo, data = data)
     lines(tm, data$model(sol$xbest,tm), col = "blue")
     s0 <- algo$min + (algo$max - algo$min) * runif(length(algo$min))
@@ -381,7 +391,7 @@ for(j in seq(nC))
     cfMatrix[tm %in% tmList[[j]], j] <- cfList[[j]]
 rownames(cfMatrix) <- tm
 
-cfMatrix[1L:10L, 1L:10L]
+cfMatrix[1:10, 1:10]
 @
 
 Suppose we have zero rates for all maturities (ie, one for each row of \texttt{cfMatrix}), then we can transform this vector of rates into
@@ -439,7 +449,7 @@ algo <- list(
         printDetail = FALSE)
 
 system.time(sol <- DEopt(OF = OF2, algo = algo, data = data))
-# maximum yield error and value of OF
+## maximum yield error and value of OF
 max(abs(data$model(sol$xbest,tm) - data$model(betaTRUE,tm)))
 sol$OFvalue
 @
