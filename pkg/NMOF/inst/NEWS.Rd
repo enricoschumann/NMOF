@@ -1,5 +1,15 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.21-4 (2011-11-29)}{
+  \itemize{
+    \item 'GAopt' now has an argument 'algo$methodOF' that supports  
+      'loop' (default) but also 'snow' or 'multicore'. See 
+      'Examples and Extensions for the NMOF package'(with code 
+      in subdirectory 'NMOFex') for an example.
+    \item vignette 'TAportfolio' updated (now with example for 
+      rank-deficient matrix)
+  }
+}
 \section{Changes in NMOF version 0.21-3 (2011-11-25)}{
   \itemize{
     \item fixed: 'gridSearch' with 'printDetail=TRUE' did not give

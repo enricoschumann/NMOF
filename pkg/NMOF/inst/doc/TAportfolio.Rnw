@@ -14,10 +14,14 @@
 \noindent A brief tutorial on using TA for portfolio optimisation.
 \end{abstract}
 
-\noindent This vignette provides the code for some of the examples from \citet{Gilli2011b}. For more details, please see Chapter~13 of the book;
-the code in this vignette uses the scripts \texttt{exampleSquaredRets.R}, \texttt{exampleSquaredRets2.R} and \texttt{exampleRatio.R}.
+\noindent This vignette provides the code for some of the examples
+from \citet{Gilli2011b}. For more details, please see Chapter~13 of
+the book; the code in this vignette uses the scripts
+\texttt{exampleSquaredRets.R}, \texttt{exampleSquaredRets2.R} and
+\texttt{exampleRatio.R}.
 
-We start by attaching the package. We will later on need the function \texttt{resample} (see \texttt{?sample}).
+We start by attaching the package. We will later on need the function
+\texttt{resample} (see \texttt{?sample}).
 
 <<>>=
 require("NMOF")
@@ -114,7 +118,7 @@ algo <- list(x0 = w0,
 We can now run \texttt{TAopt}, first with \texttt{OF1} \ldots
 <<>>=
 system.time(res <- TAopt(OF1,algo,data))
-100*sqrt(crossprod(fundData %*% res$xbest)/ns)
+100 * sqrt(crossprod(fundData %*% res$xbest)/ns)
 @
 \ldots and then with \texttt{OF2}.
 <<>>=
@@ -203,6 +207,72 @@ system.time(res2 <- TAopt(OF, algo, data))
 100*sqrt(crossprod(fundData %*% res2$xbest$w)/ns)
 @
 This should be faster, and we arrive at the same solution as before.
+
+\subsection{Redundant assets}
+We duplicate the last column of \texttt{fundData}.
+<<>>=
+fundData <- cbind(fundData, fundData[, 200L])
+@
+Thus, while the dimension inceases, the column rank stays unchanged.
+<<>>=
+dim(fundData)
+qr(fundData)$rank
+qr(cov(fundData))$rank
+@
+Checking the weight of the last asset (which was zero), we know that
+the solution to our model must be unchanged, too.
+<<>>=
+if (require(quadprog, quietly = TRUE))
+    wqp[200L]
+@
+We redo our example.
+<<>>=
+na <- dim(fundData)[2L]
+ns <- dim(fundData)[1L]
+winf <- 0.0; wsup <- 0.05
+data <- list(R = fundData, na = na, ns = ns,
+             eps = 0.5/100, winf = winf, wsup = wsup,
+             resample = resample)
+
+@
+But a number of QP solvers have problems with such cases.
+<<>>=
+if (require(quadprog, quietly = TRUE)) {
+    covMatrix <- crossprod(fundData)
+    A <- rep(1, na); a <- 1
+    B <- rbind(-diag(na), diag(na))
+    b <- rbind(array(-data$wsup, dim = c(na, 1L)),
+               array( data$winf, dim = c(na, 1L)))
+    print(try(result <- solve.QP(Dmat = covMatrix,
+                                 dvec = rep(0,na),
+                                 Amat = t(rbind(A,B)),
+                                 bvec = rbind(a,b),
+                                 meq = 1L)
+              ))
+}
+@
+But TA can handle this case.
+<<>>=
+w0 <- runif(data$na); w0 <- w0/sum(w0)
+x0 <- list(w = w0, Rw = fundData %*% w0)
+algo <- list(x0 = x0,
+      neighbour = neighbourU,
+             nS = 2000L,
+             nT = 10L,
+             nD = 5000L,
+              q = 0.20,
+       printBar = FALSE,
+    printDetail = FALSE)
+system.time(res3 <- TAopt(OF, algo, data))
+100*sqrt(crossprod(fundData %*% res3$xbest$w)/ns)
+@
+Final check: weights for asset 200 and its twin, asset 201.
+<<>>=
+res3$xbest$w[200:201]
+@
+See \citet[Section 13.2.5]{Gilli2011b} for a discussion of
+rank-deficiency and its (computational and empirical) consequences for
+such problems.
 
 \bibliographystyle{plainnat}
 \bibliography{NMOF}

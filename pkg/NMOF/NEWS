@@ -1,3 +1,12 @@
+v0.21-4  (2011-11-29)
+
+  o 'GAopt' now has an argument 'algo$methodOF' that supports  
+    'loop' (default) but also 'snow' or 'multicore'. See 
+    'Examples and Extensions for the NMOF package'(with code 
+    in subdirectory 'NMOFex') for an example.
+  o vignette 'TAportfolio' updated (now with example for 
+    rank-deficient matrix)
+
 v0.21-3  (2011-11-25)
 
   o fixed: 'gridSearch' with 'printDetail=TRUE' did not give

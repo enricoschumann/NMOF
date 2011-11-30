@@ -78,6 +78,10 @@ then \code{storage.mode(mP)} will be tried (and a warning will be issued).}
 \item{\code{loopOF}}{logical. Should the \code{OF} be evaluated through a loop? Defaults to \code{TRUE}.}
 \item{\code{loopPen}}{logical. Should the penalty function (if specified) be evaluated through a loop? Defaults to \code{TRUE}.}
 \item{\code{loopRepair}}{logical. Should the repair function (if specified) be evaluated through a loop? Defaults to \code{TRUE}.}
+\item{\code{methodOF}}{\code{loop} (the default), \code{vectorised},
+  \code{snow} or \code{multicore}}
+\item{\code{cl}}{a cluster object or the number of cores}
+\item{\code{mc.control}}{a list of named elements; optional settings for \code{mclapply}}
 \item{\code{printDetail}}{If \code{TRUE} (the default), information is printed.}
 \item{\code{printBar}}{If \code{TRUE} (the default), a \code{txtProgressBar} is printed.}
 \item{\code{storeF}}{If \code{TRUE} (the default), the

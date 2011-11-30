@@ -46,8 +46,7 @@ test.callCF <- function() {
     }
 
 
-                                        # HESTON
-
+    ## HESTON
     S <- 100; X <- 100; tau <- 1; r <- 0.02; q <- 0.08;
     v0 <- 0.2^2; vT <- 0.2^2            ## variance, not volatility
     rho <- -0.3; k <- 0.2; sigma <- 0.3 ## stoch. vol: Heston/Bates
@@ -82,8 +81,7 @@ test.callCF <- function() {
     checkEquals(round(temp,3), 10.586)
 
 
-                                        # BSM
-
+    ## BSM
     S <- 100; X <- 100; tau <- 1; r <- 0.02; q <- 0.08; v <- 0.2^2
     temp1 <- callCF(cf = cfBSM, S = S, X = X, tau = tau, r = r, q = q,
                     v = v, implVol = FALSE)

@@ -8,8 +8,9 @@ GAopt <- function (OF, algo = list(), ...) {
                   loopOF = TRUE,
                   loopPen = TRUE,
                   loopRepair = TRUE,
-                  methodOF = "loop",  ### or 'vectorised','snow','multicore'
-                  cl = NULL,          ###
+                  methodOF = "loop",    ## or 'vectorised','snow','multicore'
+                  cl = NULL,            ##
+                  mc.control = list(),  ##
                   printDetail = TRUE,
                   printBar = TRUE,
                   initP = NULL,
@@ -25,7 +26,7 @@ GAopt <- function (OF, algo = list(), ...) {
     algoD[names(algo)] <- algo
 
     ## --------------------------------------------------
-    ## NEW: snow
+    ## NEW: snow/multicore
     if (algoD$methodOF == "vectorised" && identical(algoD$loopOF, TRUE))
         algoD$loopOF <- FALSE
 
@@ -36,23 +37,26 @@ GAopt <- function (OF, algo = list(), ...) {
     if (algoD$methodOF == "snow") {
         if (!suppressWarnings(require("snow", quietly = TRUE))) {
             method <- "loop"
-            warning("package 'snow' not available: use method 'loop'")
+            warning("package 'snow' not available")
         } else if (is.null(cl)) {
             method <- "loop"
-            warning("no cluster 'cl' passed for method 'snow': use method 'loop'")
+            warning("no cluster 'cl' passed for method 'snow'")
         } else {
             dosnow <- TRUE
-            ignore <- list(...)
             if (is.numeric(cl)) {
                 cl <- makeCluster(c(rep("localhost", cl)), type = "SOCK")
                 on.exit(stopCluster(cl))
             }
         }
     } else if (algoD$methodOF == "multicore") {
-        domc <- TRUE
-        stop("not implemented")
+        if (!suppressWarnings(require("multicore", quietly = TRUE))) {
+            warning("package 'multicore' not available: use method 'loop'")
+        } else {
+            domc <- TRUE
+            mc.settings <- mcList(mc.control)
+        }
     }
-    ## /NEW: snow
+    ## /NEW: snow/multicore
     ## --------------------------------------------------
 
     printDetail <- algoD$printDetail
@@ -140,11 +144,19 @@ GAopt <- function (OF, algo = list(), ...) {
     if (algoD$loopOF) {
         if (dosnow) {
             ## run clusterApply
-            for (s in seq_len(nP)) lP[[s]] <- mP[ ,s]
+            for (s in snP) lP[[s]] <- mP[ ,s]
             vF <- unlist(clusterApply(cl, lP, OF, ...))
         } else if (domc) {
             ## run mclapply
-            ## ...
+            for (s in snP) lP[[s]] <- mP[ ,s]
+            vF <- unlist(mclapply(lP, OF, ...,
+                                  mc.preschedule = mc.settings$mc.preschedule,
+                                  mc.set.seed = mc.settings$mc.set.seed,
+                                  mc.silent = mc.settings$mc.silent,
+                                  mc.cores = mc.settings$mc.cores,
+                                  mc.cleanup = mc.settings$mc.cleanup
+                                  )
+                         )
         } else {
             ## run loop
             for (s in snP) vF[s] <- OF1(mP[, s])
@@ -195,11 +207,19 @@ GAopt <- function (OF, algo = list(), ...) {
         if (algoD$loopOF) {
             if (dosnow) {
                 ## run clusterApply
-                for (s in seq_len(nP)) lP[[s]] <- mC[ ,s]
+                for (s in snP) lP[[s]] <- mC[ ,s]
                 vFc <- unlist(clusterApply(cl, lP, OF, ...))
             } else if (domc) {
                 ## run mclapply
-
+                for (s in snP) lP[[s]] <- mC[ ,s]
+                vFc <- unlist(mclapply(lP, OF, ...,
+                                    mc.preschedule = mc.settings$mc.preschedule,
+                                    mc.set.seed = mc.settings$mc.set.seed,
+                                    mc.silent = mc.settings$mc.silent,
+                                    mc.cores = mc.settings$mc.cores,
+                                    mc.cleanup = mc.settings$mc.cleanup
+                                    )
+                              )
             } else {
                 ## run loop
                 for (s in snP) vFc[s] <- OF1(mC[, s])
