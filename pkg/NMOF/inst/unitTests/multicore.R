@@ -5,6 +5,9 @@ runMC <- FALSE
 if (runMC) {
 
     require("NMOF")
+    require("RUnit")
+    require("rbenchmark")
+
 
     ## packages for distr. computing/testing
     if (!require("multicore", quietly = TRUE))
@@ -19,6 +22,24 @@ if (runMC) {
         warning("package 'rlecuyer' not available")
     if (!require("rsprng", quietly = TRUE))
         warning("package 'rsprng' not available")
+
+
+
+    ## a generic test: is function slow enough for multicore?
+    testFun <- function(ignore, delay) {
+        Sys.sleep(delay)
+        1
+    }
+    delay <- 0.01  ## running time of function
+    n <- 8         ## how many calls per lapply
+    repl <- 10     ## how many restarts
+    sq <- seq_len(n)
+    benchmark(lapply(sq, testFun, delay),
+              mclapply(sq, testFun, delay),
+              columns = c("test", "replications", "elapsed", "relative"),
+              order = "relative", replications = repl)
+
+
 
     ## gridSearch ##
     testFun  <- function(x) {
@@ -159,5 +180,35 @@ if (runMC) {
                                     OF = OF, algo = algo, data = data,
                                     method = "snow", cl = 2L))
     checkEquals(length(sols3), 100L)
+
+
+
+    ## GAopt ##
+    size <- 20L            ## the length of the string
+    OF <- function(x, y) { ## the objective function
+        Sys.sleep(0.02)
+        sum(x != y)
+    }
+    y <- runif(size) > 0.5 ## the true solution
+    algo <- list(nB = size, nP = 20L, nG = 10L, prob = 0.002,
+                 printBar = FALSE, methodOF = "loop")
+    system.time(sol <- GAopt(OF, algo = algo, y = y))
+
+    algo <- list(nB = size, nP = 20L, nG = 10L, prob = 0.002,
+                 printBar = FALSE, methodOF = "snow", cl = 2L)
+    system.time(sol <- GAopt(OF, algo = algo, y = y))
+
+    algo <- list(nB = size, nP = 20L, nG = 10L, prob = 0.002,
+                 printBar = FALSE, methodOF = "multicore")
+    system.time(sol <- GAopt(OF, algo = algo, y = y))
+
+    ## test: pass argument to multicore
+    algo <- list(nB = size, nP = 20L, nG = 10L, prob = 0.002,
+                 printBar = FALSE, methodOF = "multicore",
+                 ## nothing to gain from mc
+                 mc.control = list(mc.cores = 1L))
+    system.time(sol <- GAopt(OF, algo = algo, y = y))
+
+
 }
 

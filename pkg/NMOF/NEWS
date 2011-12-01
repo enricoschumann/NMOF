@@ -1,3 +1,11 @@
+v0.21-5  (2011-12-01)
+
+  o fixed: in 'GAopt', optional arguments for 'mclapply' 
+    (multicore) were not passed. An example for passing an 
+    argument was added to file 'unitTests/multicore.R'.
+  o documentation for 'GAopt' updated
+  o code examples in subdirectory 'NMOFex' updated
+
 v0.21-4  (2011-11-29)
 
   o 'GAopt' now has an argument 'algo$methodOF' that supports  

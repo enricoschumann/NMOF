@@ -53,7 +53,7 @@ GAopt <- function (OF, algo = list(), ...) {
             warning("package 'multicore' not available: use method 'loop'")
         } else {
             domc <- TRUE
-            mc.settings <- mcList(mc.control)
+            mc.settings <- mcList(algoD$mc.control)
         }
     }
     ## /NEW: snow/multicore

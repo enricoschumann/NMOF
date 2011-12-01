@@ -1,5 +1,14 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.21-5 (2011-12-01)}{
+  \itemize{
+    \item fixed: in 'GAopt', optional arguments for 'mclapply' 
+      (multicore) were not passed. An example for passing an 
+      argument was added to file 'unitTests/multicore.R'.
+    \item documentation for 'GAopt' updated
+    \item code examples in subdirectory 'NMOFex' updated
+  }
+}
 \section{Changes in NMOF version 0.21-4 (2011-11-29)}{
   \itemize{
     \item 'GAopt' now has an argument 'algo$methodOF' that supports  
