@@ -1,5 +1,12 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.22-0 (2011-12-08)}{
+  \itemize{
+    \item documentation updated
+    \item slight changes in vignette 'DEnss.Rnw' (to reduce time 
+      to build package)
+  }
+}
 \section{Changes in NMOF version 0.21-5 (2011-12-01)}{
   \itemize{
     \item fixed: in 'GAopt', optional arguments for 'mclapply' 

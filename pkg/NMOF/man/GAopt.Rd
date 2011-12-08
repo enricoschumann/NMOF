@@ -61,6 +61,10 @@ vectorised. The respective \code{algo$loopFun} must then be set to
 \code{FALSE}. (See also the examples for \code{\link{DEopt}} and
 \code{\link{PSopt}}.)
 
+The evaluation of the objective function in a given generation can even
+be distributed. For this, an argument \code{algo$methodOF} needs to be
+set; see below for details (and Schumann, 2011, for examples).
+
 All objects that are passed through \code{\dots} will be passed to the
 objective function, to the repair function and to the penalty function.
 
@@ -78,10 +82,19 @@ then \code{storage.mode(mP)} will be tried (and a warning will be issued).}
 \item{\code{loopOF}}{logical. Should the \code{OF} be evaluated through a loop? Defaults to \code{TRUE}.}
 \item{\code{loopPen}}{logical. Should the penalty function (if specified) be evaluated through a loop? Defaults to \code{TRUE}.}
 \item{\code{loopRepair}}{logical. Should the repair function (if specified) be evaluated through a loop? Defaults to \code{TRUE}.}
+
 \item{\code{methodOF}}{\code{loop} (the default), \code{vectorised},
-  \code{snow} or \code{multicore}}
-\item{\code{cl}}{a cluster object or the number of cores}
-\item{\code{mc.control}}{a list of named elements; optional settings for \code{mclapply}}
+  \code{snow} or \code{multicore}. Setting \code{vectorised} is
+  equivalent to having \code{algo$loopOF} set to \code{FALSE} (and
+  \code{methodOF} overrides \code{loopOF}). \code{snow} and \code{multicore} use functions
+  \code{clusterApply} and \code{mclapply}, respectively. For \code{snow}, an object
+  \code{algo$cl} needs to be specified (see below). For
+  \code{multicore}, optional arguments can be passed
+  through \code{algo$mc.control} (see below).}
+\item{\code{cl}}{a cluster object or the number of cores. See
+  documentation of package \code{snow}.}
+\item{\code{mc.control}}{a list of named elements; optional settings for
+  \code{mclapply} (for instance, \code{list(mc.set.seed = FALSE)})}
 \item{\code{printDetail}}{If \code{TRUE} (the default), information is printed.}
 \item{\code{printBar}}{If \code{TRUE} (the default), a \code{txtProgressBar} is printed.}
 \item{\code{storeF}}{If \code{TRUE} (the default), the

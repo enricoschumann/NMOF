@@ -1,11 +1,11 @@
 TAopt <- function(OF, algo = list(), ...) {
 
-    algoD <- list(nD = 2000L, ### random steps for computing thresholds
-                  nT = 10L,   ### number of thresholds
-                  nS = 1000L, ### steps per threshold
-                  q = 0.5,    ### starting quantile for thresholds
-                  x0 = NULL,  ### initial solution
-                  vT = NULL,  ### threshold sequence
+    algoD <- list(nD = 2000L, ## random steps for computing thresholds
+                  nT = 10L,   ## number of thresholds
+                  nS = 1000L, ## steps per threshold
+                  q = 0.5,    ## starting quantile for thresholds
+                  x0 = NULL,  ## initial solution
+                  vT = NULL,  ## threshold sequence
                   neighbour = NULL,
                   printDetail = TRUE,
                   printBar = TRUE,

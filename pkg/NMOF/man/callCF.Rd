@@ -12,15 +12,10 @@ Price a European plain-vanilla call with the characteric function.
 }
 \usage{
 callCF(cf, S, X, tau, r, q = 0, ..., implVol = FALSE)
-
 cfBSM(om, S, tau, r, q, v)
-
 cfMerton(om, S, tau, r, q, v, lambda, muJ, vJ)
-
 cfBates(om, S, tau, r, q, v0, vT, rho, k, sigma, lambda, muJ, vJ)
-
 cfHeston(om, S, tau, r, q, v0, vT, rho, k, sigma)
-
 cfVG(om, S, tau, r, q, nu, theta, sigma)
 }
 \arguments{
@@ -84,13 +79,11 @@ Enrico Schumann
 }
 \examples{
 S <- 100; X <- 100; tau <- 1
-r   <- 0.02
-q   <- 0.08
-v0  <- 0.2^2  # variance, not volatility
-vT  <- 0.2^2  #
+r <- 0.02; q <- 0.08
+v0 <- 0.2^2  # variance, not volatility
+vT <- 0.2^2  #
 v <- vT
-rho <- -0.3
-k   <- .2
+rho <- -0.3; k <- .2
 sigma <- 0.3
 #
 lambda <- 0.1

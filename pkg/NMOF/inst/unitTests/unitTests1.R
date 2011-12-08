@@ -433,6 +433,20 @@ test.GAopt <- function() {
     algo$repair <- repairK2; algo$loopRepair <- FALSE
     solGA <- GAopt(OF, algo = algo, data = data)
     checkTrue(sum(solGA$xbest)<=data$kmax)
+
+
+    ## warning changed to error/reset on.exit
+    op <- options("warn"); on.exit(options(op))
+    options(warn = 2)
+    size <- 20L
+    OF <- function(x, y) {
+        sum(x != y)
+    }
+    y <- runif(size) > 0.5 ## the true solution
+    algo <- list(nB = size, nP = 20L, nG = 10L, prob = 0.002,
+                 printBar = FALSE, methodOF = "snow")
+    checkException(sol <- GAopt(OF, algo = algo, y = y), silent = TRUE)
+
 }
 
 

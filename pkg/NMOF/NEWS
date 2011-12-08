@@ -1,3 +1,9 @@
+v0.22-0  (2011-12-08)
+
+  o documentation updated
+  o slight changes in vignette 'DEnss.Rnw' (to reduce time 
+    to build package)
+
 v0.21-5  (2011-12-01)
 
   o fixed: in 'GAopt', optional arguments for 'mclapply' 
