@@ -109,101 +109,6 @@ test.EuropeanCallBE <- function() {
 }
 
 
-
-## DE
-test.DEopt <- function() {
-    trefethen <- function(xx) {
-        x <- xx[1L]; y <- xx[2L]
-        exp(sin(50*x)) + sin(60*exp(y)) + sin(70*sin(x)) +
-            sin(sin(80*y)) - sin(10*(x+y))  + (x^2+y^2)/4
-    }
-
-    algo <- list(nP = 100, nG = 300, F = 0.5, CR = 0.9,
-                 min = c(-3, -3), max = c( 3, 3),
-                 printBar = FALSE, printDetail = TRUE)
-
-    ## DE should solve the problem
-    sol <- DEopt(OF = trefethen, algo)
-    format(sol$OFvalue, digits = 12)
-    checkEquals(round(sol$OFvalue,2), -3.31)
-
-    ## without max vector, DE should give error
-    algo$max <- NULL
-    checkException(res <- DEopt(OF = trefethen, algo), silent = TRUE)
-
-    ## unused parameter 'z' should cause error
-    algo$max <- c( 3,  3)
-    checkException(res <- DEopt(OF = trefethen, algo, z = 2), silent = TRUE)
-
-    ## 'z' is required but not provided >> error
-    trefethen2 <- function(xx, z) {
-        x <- xx[1]; y <- xx[2]
-        res <- exp(sin(50*x)) + sin(60*exp(y)) + sin(70*sin(x)) +
-            sin(sin(80*y)) - sin(10*(x+y))  + (x^2+y^2)/4
-        res + z
-    }
-    checkException(res <- DEopt(OF = trefethen2, algo), silent = TRUE)
-
-    ## 'z' is required and provided
-    checkEquals(round(DEopt(OF = trefethen2, algo, z = 2)$OFvalue,2), -1.31)
-    checkEquals(round(DEopt(OF = trefethen2, algo,     2)$OFvalue,2), -1.31)
-
-    ## test function: DE should find minimum
-    OF <- tfRosenbrock
-    size <- 5L ## define dimension
-    algo <- list(printBar = FALSE,
-                 printDetail = FALSE,
-                 nP = 100L, nG = 500L,
-                 F = 0.5, CR = 0.9,
-                 min = rep(-50, size),
-                 max = rep( 50, size))
-
-    sol <- DEopt(OF = OF, algo = algo)
-    checkEquals(sol$OFvalue, 0)
-
-    ## exception: wrong size of initP
-    algo$initP <- array(0, dim = c(20,20))
-    checkException(res <- DEopt(OF = OF, algo), silent = TRUE)
-    algo$initP <- function() array(0, dim = c(5,20))
-    checkException(res <- DEopt(OF = OF, algo), silent = TRUE)
-    algo$initP <- NULL
-
-    ## exception: CR > 1, CR < 0
-    algo$CR <- 2
-    checkException(res <- DEopt(OF = OF, algo), silent = TRUE)
-    algo$CR <- -1
-    checkException(res <- DEopt(OF = OF, algo), silent = TRUE)
-
-    ## check if Fmat/xlist are returned
-    ## ...if FALSE
-    trefethen <- function(xx) {
-        x <- xx[1L]; y <- xx[2L]
-        res <- exp(sin(50*x)) + sin(60*exp(y)) + sin(70*sin(x)) +
-            sin(sin(80*y)) - sin(10*(x+y))  + (x^2+y^2)/4
-        res
-    }
-    algo <- list(nP = 100, nG = 300, F = 0.5, CR = 0.9,
-                 min = c(-3, -3), max = c( 3,  3),
-                 printBar = FALSE, printDetail = FALSE,
-                 storeF = FALSE, storeSolutions = FALSE)
-    sol <- DEopt(OF = trefethen, algo)
-    checkTrue(is.na(sol$Fmat))
-    checkTrue(is.na(sol$xlist))
-    ## ...if TRUE
-    algo <- list(nP = 100, nG = 300, F = 0.5, CR = 0.9,
-                 min = c(-3, -3), max = c( 3,  3),
-                 printBar = FALSE, printDetail = FALSE,
-                 storeF = TRUE, storeSolutions = TRUE)
-    sol <- DEopt(OF = trefethen, algo)
-    checkEquals(dim(sol$Fmat), c(algo$nG, algo$nP))
-    checkEquals(length(sol$xlist[[1L]]), algo$nG)
-    checkEquals( dim(sol$xlist[[c(1L,algo$nG)]]),
-                c(length(algo$min), algo$nP) )
-
-}
-
-
-
 ## PSopt
 test.PSopt <- function() {
     ## test function: PS should find minimum
@@ -232,7 +137,7 @@ test.PSopt <- function() {
     ## ...if FALSE
     algo <- list(printBar = FALSE,
                  printDetail = FALSE,
-                 nP = 50L, nG = 1000L,
+                 nP = 50L, nG = 100L,
                  c1 = 0.0, c2 = 1.5,
                  iner = 0.8, initV = 0.50, maxV = 50,
                  min = rep(-50, size),
@@ -242,6 +147,9 @@ test.PSopt <- function() {
     sol <- PSopt(OF = OF, algo = algo)
     checkTrue(is.na(sol$Fmat))
     checkTrue(is.na(sol$xlist))
+    checkEquals(length(sol$Fmat), 1L)
+    checkEquals(length(sol$xlist), 1L)
+
     ## ...if TRUE
     algo$storeF <- TRUE
     algo$storeSolutions <- TRUE
@@ -256,7 +164,6 @@ test.PSopt <- function() {
     ## xlist[[i]] stores only algo$nG elements
     checkException(sol$xlist[[c(2L, algo$nG + 1L)]], silent = TRUE)
 }
-
 
 
 ## TAopt
@@ -299,7 +206,7 @@ test.TAopt <- function() {
     checkEqualsNumeric(res$vT, algo$scale*c(0.1,0.05,0))
 
     ## q is zero
-    algo <- list(q = 0, nS = 1000L, nT = 15L,
+    algo <- list(q = 0, nS = 100L, nT = 15L,
                  neighbour = neighbour, x0 = x0,
                  printBar = FALSE,
                  printDetail = FALSE)
@@ -361,93 +268,6 @@ test.testFunctions <- function() {
                        tolerance = 1e-4)
 }
 
-
-## GAopt
-test.GAopt <- function() {
-    size <- 20L; y <- runif(size) > 0.5; x <- runif(size) > 0.5
-    data <- list(y = y)
-    algo <- list(nB = size, nP = 25L, nG = 150L, prob = 0.002,
-                 printBar = FALSE, printDetail = FALSE,
-                 crossover = "uniform")
-    OF <- function(x, data) sum(x != y)
-    solGA <- GAopt(OF, algo = algo, data = data)
-    checkEqualsNumeric(solGA$OFvalue, 0)
-
-    ## error -- wrong size of initP
-    algo$initP <- array(FALSE, dim = c(20,10))
-    checkException(res <- GAopt(OF = OF, algo), silent = TRUE)
-    algo$initP <- function() array(FALSE, dim = c(20L,20L))
-    checkException(res <- GAopt(OF = OF, algo), silent = TRUE)
-    algo$initP <- NULL
-
-    ## error -- prob > 1, prob < 0
-    algo$prob <- 2
-    checkException(res <- GAopt(OF = OF, algo), silent = TRUE)
-    algo$prob <- -0.1
-    checkException(res <- GAopt(OF = OF, algo), silent = TRUE)
-
-    ## error -- wrong crossover type
-    algo <- list(nB = size, nP = 25L, nG = 150L, prob = 0.002,
-                 printBar = FALSE, printDetail = FALSE,
-                 crossover = "twoPoint")
-    checkException(solGA <- GAopt(OF, algo = algo, data = data),
-                   silent = TRUE)
-
-    ## error -- OF not a function
-    algo <- list(nB = size, nP = 25L, nG = 150L, prob = 0.002,
-                 printBar = FALSE, printDetail = FALSE,
-                 crossover = "uniform")
-    a <- numeric(10L)
-    checkException(solGA <- GAopt(a, algo = algo, data = data),
-                   silent = TRUE)
-
-    ## check repair
-    resample <- function(x, ...) x[sample.int(length(x), ...)]
-    repairK <- function(x, data) {
-        sx <- sum(x)
-        if (sx > data$kmax) {
-            i <- resample(which(x), sx - data$kmax)
-            x[i] <- FALSE
-        }
-        x
-    }
-    repairK2 <- function(x, data) {
-        sx <- colSums(x)
-        whichCols <- which(sx > data$kmax)
-        for (j in seq(along.with = whichCols)) {
-            jj <- whichCols[j]
-            i <- resample(which(x[ ,jj]), sx[jj] - data$kmax)
-            x[i, jj] <- FALSE
-        }
-        x
-    }
-    data$kmax <- 5
-    tempP <- array(TRUE, dim = c(20,10))
-    checkTrue(all(colSums(repairK2(tempP,data))<=data$kmax))
-
-
-    algo$repair <- repairK
-    solGA <- GAopt(OF, algo = algo, data = data)
-    checkTrue(sum(solGA$xbest)<=data$kmax)
-
-    algo$repair <- repairK2; algo$loopRepair <- FALSE
-    solGA <- GAopt(OF, algo = algo, data = data)
-    checkTrue(sum(solGA$xbest)<=data$kmax)
-
-
-    ## warning changed to error/reset on.exit
-    op <- options("warn"); on.exit(options(op))
-    options(warn = 2)
-    size <- 20L
-    OF <- function(x, y) {
-        sum(x != y)
-    }
-    y <- runif(size) > 0.5 ## the true solution
-    algo <- list(nB = size, nP = 20L, nG = 10L, prob = 0.002,
-                 printBar = FALSE, methodOF = "snow")
-    checkException(sol <- GAopt(OF, algo = algo, y = y), silent = TRUE)
-
-}
 
 
 ## restartOpt

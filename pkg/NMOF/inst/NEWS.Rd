@@ -1,5 +1,21 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.22-1 (2011-12-15)}{
+  \itemize{
+    \item tests for distributed computing have been organised into a
+      report, 'Distributed computations with the NMOF package', 
+      available as a pdf-file from 
+      http://enricoschumann.net/files/NMOFdist_Windows.pdf
+      and
+      http://enricoschumann.net/files/NMOFdist_Linux.pdf
+      (package 'multicore' is only available on Linux)
+    \item the code for 'Distributed computations with the NMOF package' 
+      is available in file 'NMOFdist.R', stored in subdirectory 
+      'NMOFex' (the file 'multicore.R' has been removed from 
+      subdirectory 'unitTests')
+    \item unit tests updated
+  }
+}
 \section{Changes in NMOF version 0.22-0 (2011-12-08)}{
   \itemize{
     \item documentation updated

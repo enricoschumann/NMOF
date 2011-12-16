@@ -1,5 +1,9 @@
 The file NMOFex.R contains the code from the report  
 'Examples and Extensions for the NMOF package'. 
 
-The pdf-version of the report is available from  
-http://enricoschumann.net/files/NMOFex.pdf
+The file NMOFdist.R contains the code from the report  
+'Distributed computations with the NMOF package'. 
+
+The pdf-versions of the reports are available from  
+http://enricoschumann.net/files/NMOFex.pdf and 
+http://enricoschumann.net/files/NMOFdist.pdf
