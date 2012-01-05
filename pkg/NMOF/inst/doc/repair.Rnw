@@ -1,5 +1,5 @@
 % \VignetteIndexEntry{Repairing solutions}
-% \VignetteKeyword{optimize}
+% \VignetteKeyword{optimize,heuristics}
 \documentclass[a4paper,11pt]{article}
 \usepackage[left = 2.5cm, top = 2cm, bottom = 3cm, right = 3.5cm]{geometry}
 \usepackage[noae]{Sweave}
@@ -10,12 +10,11 @@
 
 \SweaveOpts{pdf=FALSE}
 \begin{document}
-\title{Repairing solutions}
-\author{Enrico Schumann}
-\maketitle
-\begin{abstract}
-\noindent A few ideas on how to repair solutions that violate constraints.
-\end{abstract}
+{\raggedright{\LARGE Repairing solutions}}\medskip
+
+\noindent Enrico Schumann\\
+\noindent \texttt{enricoschumann@yahoo.de}\\
+\bigskip
 
 \section{Introduction}
 

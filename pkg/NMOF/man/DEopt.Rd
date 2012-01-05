@@ -121,7 +121,7 @@ Portfolios. \emph{Intelligent Systems in Accounting, Finance and Management},
 \bold{15}(1), pp. 57--71.
 
   Schumann, E. (2011) Examples and Extensions for the \pkg{NMOF}
-  Package. \url{http://enricoschumann.net/files/NMOFex.pdf}
+  Package. \url{http://enricoschumann.net/NMOF.htm}
 
 Storn, R., and Price, K. (1997) Differential Evolution -- a Simple and
 Efficient Heuristic for Global Optimization over Continuous Spaces.

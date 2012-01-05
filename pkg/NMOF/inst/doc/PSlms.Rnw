@@ -1,20 +1,20 @@
 % \VignetteIndexEntry{Robust Regression with Particle Swarm Optimisation and Differential Evolution}
 % \VignetteKeyword{optimize}
 \documentclass[a4paper]{article}
-\title{Robust Regression with
-  Particle Swarm Optimisation and Differential Evolution}
-\author{Enrico Schumann}
 \usepackage[noae]{Sweave}
 \usepackage{mathptmx}
 \usepackage{natbib}
 \usepackage{amsmath,amstext}
 \usepackage[left = 2.5cm, top = 2cm, bottom = 3cm, right = 3.5cm]{geometry}
 \begin{document}
-\maketitle
-\begin{abstract}
-  \noindent A brief tutorial on using Differential Evolution and
-  Particle Swarm Optimisation to estimate a regression model.
-\end{abstract}
+{\raggedright{\LARGE Robust Regression with %
+Particle Swarm Optimisation \\[0.2ex]%
+and Differential Evolution}}\medskip
+
+\noindent Enrico Schumann\\
+\noindent \texttt{enricoschumann@yahoo.de}\\
+\bigskip
+
 
 \section{Introduction}
 \noindent We provide a code example for a robust regression

@@ -1,18 +1,17 @@
 % \VignetteIndexEntry{Portfolio Optimisation with Threshold Accepting}
-% \VignetteKeyword{optimize}
+% \VignetteKeyword{optimize,heuristics}
 \documentclass[a4paper]{article}
-\title{Portfolio Optimisation with Threshold Accepting}
-\author{Enrico Schumann}
 \usepackage[left = 2.5cm, top = 2cm, bottom = 3cm, right = 3.5cm]{geometry}
 \usepackage[noae]{Sweave}
 \usepackage{mathptmx}
 \usepackage{natbib}
 \usepackage{amsmath,amstext}
 \begin{document}
-\maketitle
-\begin{abstract}
-\noindent A brief tutorial on using TA for portfolio optimisation.
-\end{abstract}
+{\raggedright{\LARGE Portfolio Optimisation with Threshold Accepting}}\medskip
+
+\noindent Enrico Schumann\\
+\noindent \texttt{enricoschumann@yahoo.de}\\
+\bigskip
 
 \noindent This vignette provides the code for some of the examples
 from \citet{Gilli2011b}. For more details, please see Chapter~13 of
@@ -213,7 +212,7 @@ We duplicate the last column of \texttt{fundData}.
 <<>>=
 fundData <- cbind(fundData, fundData[, 200L])
 @
-Thus, while the dimension inceases, the column rank stays unchanged.
+Thus, while the dimension increases, the column rank stays unchanged.
 <<>>=
 dim(fundData)
 qr(fundData)$rank

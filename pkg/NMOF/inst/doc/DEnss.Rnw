@@ -1,5 +1,5 @@
 % \VignetteIndexEntry{Fitting the Nelson--Siegel--Svensson model with Differential Evolution}
-% \VignetteKeyword{optimize}
+% \VignetteKeyword{optimize,heuristics}
 % \SweaveOpts{keep.source = FALSE}
 \documentclass[a4paper,11pt]{article}
 \usepackage[left=2.5cm,top=2cm,bottom=3cm,right=3.5cm]{geometry}
@@ -9,13 +9,13 @@
 \usepackage{hyperref}
 \usepackage{natbib}
 \begin{document}
-\title{Fitting the Nelson--Siegel--Svensson model with Differential Evolution}
-\author{Enrico Schumann}
-\maketitle
-\begin{abstract}
-  \noindent A brief tutorial on how to use Differential Evolution (DE)
-  to fit the Nelson--Siegel model.
-\end{abstract}
+{\raggedright{\LARGE Fitting the Nelson--Siegel--Svensson model\\[0.2ex]%
+with Differential Evolution}}\medskip
+
+\noindent Enrico Schumann\\
+\noindent \texttt{enricoschumann@yahoo.de}\\
+\bigskip
+
 
 \section{Introduction}
 \noindent In this tutorial we look into fitting the
@@ -24,13 +24,16 @@ vignette is to provide the code in a convenient way; for more details,
 please see the book \citep{Gilli2011b}. Further information can be
 found in \citet{Gilli2010h} and \citet{Gilli2010i}.
 
-We start by attaching the package; the variable \texttt{nRuns} sets
-the number of restarts for the examples to come. It is set to only two
-here to keep the build-time of the package acceptable; feel free to
-increase it. We set a seed to make the computations reproducible.
+We start by attaching the package. Since we will use a stochastic
+technique for optimisation, we should be running several restarts (see
+\citealp[Chapter~12]{Gilli2011b}, for a discussion). The variable
+\texttt{nRuns} sets the number of restarts for the examples to
+come. We set it to only one here to keep the build-time of the package
+acceptable; increase it to check the stochastics of the
+solutions. We set a seed to make the computations reproducible.
 <<>>=
 require("NMOF")
-nRuns <- 2L
+nRuns <- 1L
 set.seed(112233)
 @
 
@@ -114,11 +117,11 @@ penalty <- function(mP, data) {
     minV <- data$min
     maxV <- data$max
     ww <- data$ww
-    # if larger than maxV, element in A is positiv
+    ## if larger than maxV, element in A is positiv
     A <- mP - as.vector(maxV); A <- A + abs(A)
-    # if smaller than minV, element in B is positiv
+    ## if smaller than minV, element in B is positiv
     B <- as.vector(minV) - mP; B <- B + abs(B)
-    # beta 1 + beta2 > 0
+    ## beta 1 + beta2 > 0
     C <- ww*((mP[1, ] + mP[2, ]) - abs(mP[1, ] + mP[2, ]))
     A <- ww * colSums(A + B) - C
     A
@@ -216,7 +219,8 @@ of DE because it deliberately uses randomness; in the case of
 more meaningful results we should run both algorithms several times.
 
 <<fig = TRUE, height = 3>>=
-par(ps = 11, bty = "n", las = 1, tck = 0.01, mgp = c(3, 0.2, 0), mar = c(4, 4, 1, 1))
+par(ps = 11, bty = "n", las = 1, tck = 0.01,
+    mgp = c(3, 0.2, 0), mar = c(4, 4, 1, 1))
 plot(tm, yM, xlab = "maturities in years",
              ylab = "yields in %")
 algo$printDetail <- FALSE
@@ -277,8 +281,8 @@ OFa <- function(param,data) {
     y <- data$model(param,data$tm)
     aux <- y - data$yM
     res <- max(abs(aux))
-    # compute the penalty
-    aux <- y - abs(y) # aux == zero for nonnegative y
+    ## compute the penalty
+    aux <- y - abs(y) ## aux == zero for nonnegative y
     aux <- -sum(aux) * data$ww
     res <- res + aux
     if (is.na(res)) res <- 1e10
@@ -353,10 +357,12 @@ sol2 <- nlminb(s0,OF,data = data,
 max(abs(data$model(sol2$par,tm) - data$model(betaTRUE,tm)))
 sol2$objective
 @
-Finally, we compare the yield curves resulting from three runs. (Again, the low number of restarts is chosen only to keep the time to build the
-vignette reasonable. A better number would 100.)
+Finally, we compare the yield curves resulting from several
+runs. (Recall that the number of runs is controlled by \texttt{nRuns},
+which we have set initially.)
 <<fig = TRUE, height = 3>>=
-par(ps = 11, bty = "n", las = 1, tck = 0.01, mgp = c(3, 0.2, 0), mar = c(4, 4, 1, 1))
+par(ps = 11, bty = "n", las = 1, tck = 0.01,
+    mgp = c(3, 0.2, 0), mar = c(4, 4, 1, 1))
 plot(tm, yM, xlab = "maturities in years", ylab = "yields in %")
 for (i in seq_len(nRuns)) {
     sol <- DEopt(OF = OF, algo = algo, data = data)
@@ -379,7 +385,8 @@ legend(x = "topright", legend = c("true yields", "DE", "nlminb"),
 
 
 \section{Fitting the NSS model to given bond prices}
-A bond is a list of payment dates (given a valuation date, we can translate them into times-to-payment) and associated payments.
+A bond is a list of payment dates (given a valuation date, we can
+translate them into times-to-payment) and associated payments.
 Suppose we are given the following set of bonds.
 <<>>=
 cf1 <- c(rep(5.75,  8), 105.75); tm1 <- 0:8 + 0.5
@@ -662,7 +669,6 @@ more iterations to have the parameters converge. But compare the
 fitted yield curve: the fitted yields are generally fine. If you need
 more precision, just increase the number of generations (and possibly
 adjust the tolerance in the \texttt{while} condition in function \texttt{compYield}).
-
 
 \bibliographystyle{plainnat}
 \bibliography{NMOF}

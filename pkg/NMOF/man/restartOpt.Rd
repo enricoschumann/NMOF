@@ -78,7 +78,7 @@ restartOpt(fun, n, OF, algo, ...,
   \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
 
   Schumann, E. (2011) Examples and Extensions for the \pkg{NMOF}
-  Package. \url{http://enricoschumann.net/files/NMOFex.pdf}
+  Package. \url{http://enricoschumann.net/NMOF.htm}
 }
 \author{
   Enrico Schumann

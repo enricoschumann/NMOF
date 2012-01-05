@@ -1,3 +1,8 @@
+v0.22-2  (2012-01-05)
+
+  o minor changes in vignettes/documentation
+  o code examples in subdirectory 'NMOFex' updated
+
 v0.22-1  (2011-12-15)
 
   o tests for distributed computing have been organised into a

@@ -1,5 +1,5 @@
 % \VignetteIndexEntry{An example for the qTable function}
-% \VignetteKeyword{optimize}
+% \VignetteKeyword{optimize,heuristics}
 \documentclass[a4paper,11pt]{article}
 \usepackage[left = 2.5cm, top = 2cm, bottom = 3cm, right = 3.5cm]{geometry}
 \usepackage[noae]{Sweave}
@@ -11,9 +11,12 @@
 \SweaveOpts{keep.source = TRUE, eps = TRUE, pdf = FALSE}
 
 \begin{document}
-\title{An example for the \texttt{qTable} function}
-\author{Enrico Schumann}
-\maketitle
+{\raggedright{\LARGE An example for the \texttt{qTable} function}}\medskip
+
+\noindent Enrico Schumann\\
+\noindent \texttt{enricoschumann@yahoo.de}\\
+\bigskip
+
 
 \noindent We attach the package and create some random data.
 <<>>=

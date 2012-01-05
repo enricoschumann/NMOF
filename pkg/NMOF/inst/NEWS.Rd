@@ -1,5 +1,11 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.22-2 (2012-01-05)}{
+  \itemize{
+    \item minor changes in vignettes/documentation
+    \item code examples in subdirectory 'NMOFex' updated
+  }
+}
 \section{Changes in NMOF version 0.22-1 (2011-12-15)}{
   \itemize{
     \item tests for distributed computing have been organised into a

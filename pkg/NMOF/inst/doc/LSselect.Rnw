@@ -1,8 +1,6 @@
 % \VignetteIndexEntry{Asset selection with Local Search}
 % \VignetteKeyword{optimize}
 \documentclass[a4paper]{article}
-\title{Asset selection with Local Search}
-\author{Enrico Schumann}
 \usepackage[left=2.5cm,top=2cm, bottom=3cm, right=3.5cm]{geometry}
 \usepackage[noae]{Sweave}
 \usepackage{mathptmx}
@@ -11,10 +9,12 @@
 \usepackage{natbib}
 \usepackage{units}
 \begin{document}
-\maketitle
-\begin{abstract}
-\noindent A brief tutorial on using Local Search for the selection of assets.
-\end{abstract}
+{\raggedright{\LARGE Asset selection with Local Search}}\medskip
+
+\noindent Enrico Schumann\\
+\noindent \texttt{enricoschumann@yahoo.de}\\
+\bigskip
+
 
 
 \section{Introduction}

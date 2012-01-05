@@ -11,12 +11,12 @@
 \SweaveOpts{keep.source = TRUE, eps = TRUE, pdf = FALSE}
 
 \begin{document}
-\title{Vectorised objective functions}
-\author{Enrico Schumann}
-\maketitle
-\begin{abstract}
-\noindent A brief tutorial on how to use vectorised functions for population-based optimisation methods.
-\end{abstract}
+{\raggedright{\LARGE Vectorised objective functions}}\medskip
+
+\noindent Enrico Schumann\\
+\noindent \texttt{enricoschumann@yahoo.de}\\
+\bigskip
+
 
 \section{Introduction}
 \noindent Heuristics often manipulate and evolve solutions through
@@ -26,7 +26,7 @@ whether new solutions are accepted is a function of (typically) the
 quality of the new solutions; and so on. This gives us much
 flexibility in how solutions are represented; in essence, any data
 structure (eg, a graph) could be directly handled, provided we define
-appropriate functions to handle it.
+appropriate functions to work with it.
 
 Yet a number of (quite successful) heuristics, such as Differential
 Evolution (DE) or Particle Swarm (PS), prescribe precisely how
