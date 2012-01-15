@@ -255,11 +255,15 @@ GAopt <- function (OF, algo = list(), ...) {
     }
     if (printBar)
         close(whatGen)
-    if (printDetail)
-        cat("\nStandard deviation of OF in final population is ",
-            prettyNum(sd(vF)), ".\n\n", sep = "")
     sGbest <- min(vF)
     sgbest <- which.min(vF)[1L]
+
+    if (printDetail)
+        cat("Best solution has objective function value ",
+            prettyNum(sGbest), " ;",
+            "\nstandard deviation of OF in final population is ",
+            prettyNum(sd(vF)), " .\n\n", sep = "")
+
     list(xbest = mP[, sgbest], OFvalue = sGbest, popF = vF,
          Fmat = Fmat, xlist = xlist)
 }

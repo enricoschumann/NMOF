@@ -1,5 +1,15 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.22-3 (2012-01-15)}{
+  \itemize{
+    \item with 'algo$printDetail = TRUE', functions DEopt, GAopt and 
+      PSopt give more information
+    \item vignette 'DEnss.Rnw' was shortened to reduce build-time of 
+      the package (removed parts are now in 'Examples and 
+      Extensions for the NMOF package')
+    \item code examples in subdirectory 'NMOFex' updated
+  }
+}
 \section{Changes in NMOF version 0.22-2 (2012-01-05)}{
   \itemize{
     \item minor changes in vignettes/documentation
@@ -42,7 +52,7 @@
   \itemize{
     \item 'GAopt' now has an argument 'algo$methodOF' that supports  
       'loop' (default) but also 'snow' or 'multicore'. See 
-      'Examples and Extensions for the NMOF package'(with code 
+      'Examples and Extensions for the NMOF package' (with code 
       in subdirectory 'NMOFex') for an example.
     \item vignette 'TAportfolio' updated (now with example for 
       rank-deficient matrix)

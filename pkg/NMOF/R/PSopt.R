@@ -164,11 +164,14 @@ PSopt <- function(OF, algo = list(), ...) {
 
     } ## end generations
 
-    if (printDetail)
-        cat("\nStandard deviation of OF in final population is ",
-            prettyNum(sd(vF)), ".\n\n", sep = "")
     if (printBar)
         close(whatGen)
+
+    if (printDetail)
+        cat("Best solution has objective function value ",
+            prettyNum(sGbest), " ;",
+            "\nstandard deviation of OF in final population is ",
+            prettyNum(sd(vF)), " .\n\n", sep = "")
 
     ## return best solution
     list(xbest = mPbest[,sgbest], OFvalue = sGbest,

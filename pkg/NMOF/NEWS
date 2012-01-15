@@ -1,3 +1,12 @@
+v0.22-3  (2012-01-15)
+
+  o with 'algo$printDetail = TRUE', functions DEopt, GAopt and 
+    PSopt give more information
+  o vignette 'DEnss.Rnw' was shortened to reduce build-time of 
+    the package (removed parts are now in 'Examples and 
+    Extensions for the NMOF package')
+  o code examples in subdirectory 'NMOFex' updated
+
 v0.22-2  (2012-01-05)
 
   o minor changes in vignettes/documentation
@@ -36,7 +45,7 @@ v0.21-4  (2011-11-29)
 
   o 'GAopt' now has an argument 'algo$methodOF' that supports  
     'loop' (default) but also 'snow' or 'multicore'. See 
-    'Examples and Extensions for the NMOF package'(with code 
+    'Examples and Extensions for the NMOF package' (with code 
     in subdirectory 'NMOFex') for an example.
   o vignette 'TAportfolio' updated (now with example for 
     rank-deficient matrix)

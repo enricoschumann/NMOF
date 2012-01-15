@@ -1,8 +1,8 @@
 Package: NMOF
 Type: Package
 Title: Numerical Methods and Optimization in Finance
-Version: 0.22-2
-Date: 2012-01-05
+Version: 0.22-3
+Date: 2012-01-15
 Author: Enrico Schumann
 Authors@R: person("Enrico", "Schumann", 
                   role = c("aut", "cre"),
@@ -16,7 +16,7 @@ Description: Functions, examples and data from the book 'Numerical
     Differential Evolution, Genetic Algorithms and Threshold
     Accepting).
 License: GPL-3
-URL: http://nmof.net
+URL: http://nmof.net http://enricoschumann.net/NMOF.htm
 LazyLoad: yes
 LazyData: yes
 Classification/JEL: C61, C63

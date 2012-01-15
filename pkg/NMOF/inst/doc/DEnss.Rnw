@@ -9,6 +9,7 @@
 %\usepackage{hyperref}
 \usepackage{natbib}
 \usepackage{framed}
+\usepackage{url}
 
 \begin{document}
 {\raggedright{\LARGE Fitting the Nelson--Siegel--Svensson model\\[0.2ex]%
@@ -416,312 +417,33 @@ legend(x = "topright", legend = c("true yields", "DE", "nlminb"),
 
 \section{Fitting the NSS model to given bond prices}
 \begin{framed}
-\noindent The section of the vignette can be found in the report
-\ldots (the section was removed to reduce the build-time of the package).
+  \noindent The section was removed to reduce the build-time of the
+  package. The examples were moved to the report `Examples and
+  Extensions for the NMOF package' (see
+  \url{http://enricoschumann.net/NMOF.htm}). The code is in the
+  subdirectory \texttt{NMOFex}; to show the code in \textsf{R}, you can use
+  the function \texttt{system.file}.
+<<eval = FALSE>>=
+whereToLook <- system.file("NMOFex/NMOFex.R", package = "NMOF")
+file.show(whereToLook, title = "NMOF examples")
+@
 \end{framed}
-A bond is a list of payment dates (given a valuation date, we can
-translate them into times-to-payment) and associated payments.
-Suppose we are given the following set of bonds.
-<<>>=
-cf1 <- c(rep(5.75,  8), 105.75); tm1 <- 0:8 + 0.5
-cf2 <- c(rep(4.25, 17), 104.25); tm2 <- 1:18
-cf3 <- c(3.5, 103.5); tm3 <- 0:1 + 0.5
-cf4 <- c(rep(3.00, 15), 103.00); tm4 <- 1:16
-cf5 <- c(rep(3.25, 11), 103.25); tm5 <- 0:11 + 0.5
-cf6 <- c(rep(5.75, 17), 105.75); tm6 <- 0:17 + 0.5
-cf7 <- c(rep(3.50, 14), 103.50); tm7 <- 1:15
-cf8 <- c(rep(5.00,  8), 105.00); tm8 <- 0:8 + 0.5
-cf9 <- 105; tm9 <- 1
-cf10 <- c(rep(3.00, 12), 103.00); tm10 <- 0:12 + 0.5
-cf11 <- c(rep(2.50,  7), 102.50); tm11 <- 1:8
-cf12 <- c(rep(4.00, 10), 104.00); tm12 <- 1:11
-cf13 <- c(rep(3.75, 18), 103.75); tm13 <- 0:18 + 0.5
-cf14 <- c(rep(4.00, 17), 104.00); tm14 <- 1:18
-cf15 <- c(rep(2.25,  8), 102.25); tm15 <- 0:8 + 0.5
-cf16 <- c(rep(4.00,  6), 104.00); tm16 <- 1:7
-cf17 <- c(rep(2.25, 12), 102.25); tm17 <- 1:13
-cf18 <- c(rep(4.50, 19), 104.50); tm18 <- 0:19 + 0.5
-cf19 <- c(rep(2.25,  7), 102.25); tm19 <- 1:8
-cf20 <- c(rep(3.00, 14), 103.00); tm20 <- 1:15
-@
-
-We put all cash flows into a matrix \texttt{cfMatrix}, such that one
-bond is one column, and one row corresponds to one payment date.
-
-<<>>=
-cfList <- list(cf1,cf2,cf3,cf4,cf5,cf6,cf7,cf8,cf9,cf10,
-               cf11,cf12,cf13,cf14,cf15,cf16,cf17,cf18,cf19,cf20)
-tmList <- list(tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,tm10,
-               tm11,tm12,tm13,tm14,tm15,tm16,tm17,tm18,tm19,tm20)
-tm <- unlist(tmList, use.names = FALSE)
-tm <- sort(unique(tm))
-nR <- length(tm)
-nC <- length(cfList)
-
-cfMatrix <- array(0, dim = c(nR, nC))
-for(j in seq(nC))
-    cfMatrix[tm %in% tmList[[j]], j] <- cfList[[j]]
-rownames(cfMatrix) <- tm
-
-cfMatrix[1:10, 1:10]
-@
-
-Suppose we have zero rates for all maturities (ie, one for each row of
-\texttt{cfMatrix}), then we can transform this vector of rates into
-discount factors. Premultiplying \texttt{cfMatrix} by the row vector
-of discount factors then gives us a row vector of bond prices.
-<<>>=
-betaTRUE <- c(5,-2,1,10,1,3)
-yM <- NSS(betaTRUE,tm)
-diFa <- 1 / ( (1 + yM/100)^tm )
-bM <- diFa %*% cfMatrix
-@
-
-So, with a vector of `true' bond prices \texttt{bm}, we can set up DE.
-<<>>=
-data <- list(bM = bM, tm = tm, cfMatrix = cfMatrix, model = NSS,
-             ww = 1,
-            min = c( 0,-15,-30,-30,0  ,2.5),
-            max = c(15, 30, 30, 30,2.5,5  ))
-@
-
-The objective function takes the path that we just saw: given
-parameters for the NSS model, it computes zero rates, and transforms
-these into discount factors. Given the matrix \texttt{cfMatrix}, it
-then computes theoretical bond prices, and compares these with the
-given prices \texttt{bm}. As the optimisation criterion, we use the
-maximum absolute difference.
-
-<<>>=
-OF2 <- function(param, data) {
-    tm <- data$tm
-    bM <- data$bM
-    cfMatrix <- data$cfMatrix
-    diFa  <- 1 / ((1 + data$model(param, tm)/100)^tm)
-    b <- diFa %*% cfMatrix
-    aux <- b - bM; aux <- max(abs(aux))
-    if (is.na(aux)) aux <- 1e10
-    aux
-}
-@
-
-We set up the parameters and run DE.
-<<>>=
-algo <- list(nP  = 200L,
-             nG  = 600L,
-             F   = 0.50,
-             CR  = 0.99,
-             min = c( 0,-15,-30,-30,0  ,2.5),
-             max = c(15, 30, 30, 30,2.5,5  ),
-             pen = penalty,
-             repair = NULL,
-             loopOF = TRUE,
-             loopPen = FALSE,
-             loopRepair = FALSE,
-             printBar = FALSE,
-             printDetail = FALSE)
-
-sol <- DEopt(OF = OF2, algo = algo, data = data)
-@
-
-Note that now the objective function value (the difference in bond
-prices) does not correspond to the yield difference anymore. It is
-instructive to compare them nevertheless.
-<<>>=
-max( abs(data$model(sol$xbest, tm) - data$model(betaTRUE, tm)))
-sol$OFvalue
-@
-
-\ldots and we compare with \texttt{nlminb}.
-<<fig = TRUE, height = 3>>=
-s0 <- algo$min + (algo$max - algo$min) * runif(length(algo$min))
-system.time(sol2 <- nlminb(s0,OF2,data = data,
-                                 lower = data$min,
-                                 upper = data$max,
-                               control = list(eval.max = 50000,
-                                              iter.max = 50000)))
-max(abs(data$model(sol2$par,tm) - data$model(betaTRUE,tm)))
-sol2$objective
-
-par(ps = 11, bty = "n", las = 1, tck = 0.01,
-    mgp = c(3, 0.2, 0), mar = c(4, 4, 1, 1))
-plot(tm, yM, xlab = "maturities in years", ylab = "yields in %")
-lines(tm,data$model(sol$xbest,tm), col = "blue")
-lines(tm,data$model(sol2$par,tm), col = "darkgreen", lty = 2)
-legend(x = "bottom", legend = c("true yields", "DE", "nlminb"),
-       col = c("black", "blue", "darkgreen"),
-       pch = c(1, NA, NA), lty = c(0, 1, 2))
-@
-
-We can check the price errors.
-<<>>=
-diFa <- 1 / ((1 + NSS(sol$xbest,tm)/100)^tm)
-b <- diFa %*% cfMatrix
-b - bM
-@
-
-We can also plot the rate errors against time-to-payment.
-<<fig = TRUE, height = 3>>=
-par(ps = 11, bty = "n", las = 1, tck = 0.01,
-    mgp = c(3, 0.2, 0), mar = c(4, 4, 1, 1))
-plot(tm, NSS(sol$xbest,tm) - NSS(betaTRUE,tm),
-     xlab = "maturities in years", ylab = "yield error in %")
-@
-
-These apparently systematic (albeit small) errors are less visible
-when we plot price errors against time-to-maturity (see the book for a
-discussion).
-<<fig = TRUE, height = 3>>=
-par(ps = 11, bty = "n", las = 1, tck = 0.01,
-    mgp = c(3, 0.2, 0), mar = c(4, 4, 1, 1))
-plot(as.numeric(unlist(lapply(tmList, max))), as.vector(b - bM),
-     xlab = "maturities in years", ylab = "price error in %")
-@
 
 
 
 \section{Fitting the NSS model to given yields-to-maturity}
 \begin{framed}
-\noindent The section of the vignette can be found in the report
-\ldots (the section was removed to reduce the build-time of the package).
+  \noindent The section was removed to reduce the build-time of the
+  package. The examples were moved to the report `Examples and
+  Extensions for the NMOF package' (see
+  \url{http://enricoschumann.net/NMOF.htm}). The code is in the
+  subdirectory \texttt{NMOFex}; to show the code in \textsf{R}, you can use
+  the function \texttt{system.file}.
+<<eval = FALSE>>=
+whereToLook <- system.file("NMOFex/NMOFex.R", package = "NMOF")
+file.show(whereToLook, title = "NMOF examples")
+@
 \end{framed}
-We will need the function \texttt{compYield}; it converts cash flows
-and times-to-payment into present values, and those present values
-into yields-to-maturities. The function \texttt{fy} computes the
-present value of vector of cash flows \texttt{cf} at times
-\texttt{tm}.
-<<>>=
-fy <- function(ytm,cf,tm)
-    sum( cf / ( (1 + ytm)^tm ) )
-compYield <- function(cf,tm, guess = NULL) {
-    logik <- cf != 0
-    cf <- cf[logik]
-    tm <- tm[logik]
-    if (is.null(guess)) {ytm <- 0.05} else {ytm <- guess}
-    h <- 1e-8;	dF <- 1; ci <- 0
-    while (abs(dF) > 1e-5) {
-        ci <- ci + 1; if (ci > 5) break
-        FF  <-  fy(ytm, cf, tm)
-        dFF <- (fy(ytm + h, cf, tm) - FF) / h
-        dF <- FF / dFF
-        ytm <- ytm - dF
-    }
-    if (ytm < 0)
-        ytm <- 0.99
-    ytm
-}
-@
-
-The objective function, \texttt{OF3}, looks as follows.
-<<>>=
-OF3 <- function(param, data) {
-    tm <- data$tm
-    rM <- data$rM
-    cfMatrix<- data$cfMatrix
-    nB <- dim(cfMatrix)[2L]
-    zrates <- data$model(param,tm); aux <- 1e10
-    if ( all(zrates > 0,
-             !is.na(zrates))
-        ) {
-        diFa <- 1 / ((1 + zrates/100)^tm)
-        b <- diFa %*% cfMatrix
-        r <- numeric(nB)
-        if ( all(!is.na(b),
-                 diFa < 1,
-                 diFa > 0,
-                 b > 1)
-            ) {
-            for (bb in 1:nB) {
-                r[bb] <- compYield(c(-b[bb], cfMatrix[ ,bb]), c(0,tm))
-            }
-            aux <- abs(r - rM)
-            aux <- sum(aux)
-        }
-    }
-    aux
-}
-@
-
-So the game plan is as follows: we compute prices \texttt{b} as in
-the last section, but then we convert them into yields-to-maturity
-\texttt{r} with the function \texttt{compYield}.  The objective
-function evaluates the discrepancy between the market
-yields-to-maturity \texttt{rM} and our model yields \texttt{r}. We
-start by defining the `true' \texttt{rM}.
-<<>>=
-betaTRUE <- c(5,-2,1,10,1,3)
-yM <- NSS(betaTRUE, tm)
-diFa <- 1 / ( (1 + yM/100)^tm )
-bM <- diFa %*% cfMatrix
-rM <- apply(rbind(-bM, cfMatrix), 2, compYield, c(0, tm))
-@
-
-We set up \texttt{data} and \texttt{algo}.
-<<>>=
-data <- list(rM = rM, tm = tm,
-             cfMatrix = cfMatrix,
-             model = NSS,
-             min = c( 0,-15,-30,-30,0  ,2.5),
-             max = c(15, 30, 30, 30,2.5,5  ),
-             ww = 0.1,
-             fy = fy)
-algo <- list(nP = 50L,
-             nG = 500L,
-             F  = 0.50,
-             CR = 0.99,
-             min = c( 0,-15,-30,-30,0  ,2.5),
-             max = c(15, 30, 30, 30,2.5,5  ),
-             pen = penalty,
-             repair = NULL,
-             loopOF = TRUE,
-             loopPen = FALSE,
-             loopRepair = FALSE,
-             printBar = FALSE,
-             printDetail = FALSE)
-@
-
-<<>>=
-sol <- DEopt(OF = OF3, algo = algo, data = data)
-max(abs(data$model(sol$xbest,tm) - data$model(betaTRUE,tm)))
-sol$OFvalue
-@
-
-With \texttt{nlminb}:
-<<>>=
-s0 <- algo$min + (algo$max - algo$min) * runif(length(algo$min))
-system.time(sol2 <- nlminb(s0, OF3, data = data,
-                                   lower = algo$min,
-                                   upper = algo$max,
-                                 control = list(eval.max = 50000L,
-                                                iter.max = 50000L)))
-max(abs(data$model(sol2$par,tm) - data$model(betaTRUE,tm)))
-sol2$objective
-@
-
-<<fig = TRUE, height = 4>>=
-par(ps = 11, bty = "n", las = 1, tck = 0.01,
-    mgp = c(3, 0.2, 0), mar = c(4, 4, 1, 1))
-plot(tm, yM, xlab = "maturities in years", ylab = "yields in %")
-lines(tm,data$model(sol$xbest,tm), col = "blue")
-lines(tm,data$model(sol2$par,tm), col = "darkgreen", lty = 2)
-
-legend(x = "bottom", legend = c("true yields","DE","nlminb"),
-       col = c("black", "blue", "darkgreen"),
-       pch = c(1, NA, NA), lty = c(0,1,2))
-@
-
-Compare the recovered parameters.
-<<>>=
-betaTRUE
-round(sol$xbest,3)
-@
-
-While the returned \texttt{OF} value will typically be acceptable,
-we need many more iterations to have the parameters converge. But
-compare the fitted yield curve: the fitted yields are generally
-fine. If you need more precision, just increase the number of
-generations (and possibly adjust the tolerance in the \texttt{while}
-condition in function \texttt{compYield}).
 
 \bibliographystyle{plainnat}
 \bibliography{NMOF}
