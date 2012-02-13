@@ -18,7 +18,7 @@
   numeric vector with 44 elements (the dirty prices of the bonds).
 }
 \details{
-  All prices are as of 31 May 2010.  See chapter 14 in Gilli et al. (2011).
+  All prices are as of 31 May 2010. See chapter 14 in Gilli et al. (2011).
 }
 \source{
   The data was obtained from \url{http://www.deutsche-finanzagentur.de}
@@ -35,7 +35,7 @@ bundData
 str(bundData)
 
 ## get ISINs of bonds
-names(bundData$cfList)  
+names(bundData$cfList)
 
 ## get a specific bond
 thisBond <- "DE0001135358"

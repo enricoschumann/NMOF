@@ -1,5 +1,12 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.23-0 (2012-02-14)}{
+  \itemize{
+    \item Dataset 'optionData' was added.
+    \item More tests were added for function 'callCF'; and its 
+      documentation was updated.
+  }
+}
 \section{Changes in NMOF version 0.22-3 (2012-01-15)}{
   \itemize{
     \item with 'algo$printDetail = TRUE', functions DEopt, GAopt and 

@@ -8,7 +8,7 @@ GAopt <- function (OF, algo = list(), ...) {
                   loopOF = TRUE,
                   loopPen = TRUE,
                   loopRepair = TRUE,
-                  methodOF = "loop",    ## or 'vectorised','snow','multicore'
+                  methodOF = "loop",    ## 'vectorised','snow','multicore'
                   cl = NULL,            ##
                   mc.control = list(),  ##
                   printDetail = TRUE,
@@ -66,9 +66,12 @@ GAopt <- function (OF, algo = list(), ...) {
 
     if (!is.function(OF))
         stop("'OF' must be a function")
-    OF1 <- function(x) OF(x, ...)
-    Pe1 <- function(x) algoD$pen(x, ...)
-    Re1 <- function(x) algoD$repair(x, ...)
+    OF1 <- function(x)
+        OF(x, ...)
+    Pe1 <- function(x)
+        algoD$pen(x, ...)
+    Re1 <- function(x)
+        algoD$repair(x, ...)
 
 
     if (is.null(algoD$nB))
@@ -159,7 +162,8 @@ GAopt <- function (OF, algo = list(), ...) {
                          )
         } else {
             ## run loop
-            for (s in snP) vF[s] <- OF1(mP[, s])
+            for (s in snP)
+                vF[s] <- OF1(mP[, s])
         }
     } else {
         vF <- OF1(mP)

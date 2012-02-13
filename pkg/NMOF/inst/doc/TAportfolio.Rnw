@@ -242,7 +242,7 @@ if (require(quadprog, quietly = TRUE)) {
     B <- rbind(-diag(na), diag(na))
     b <- rbind(array(-data$wsup, dim = c(na, 1L)),
                array( data$winf, dim = c(na, 1L)))
-    print(try(result <- solve.QP(Dmat = covMatrix,
+    cat(try(result <- solve.QP(Dmat = covMatrix,
                                  dvec = rep(0,na),
                                  Amat = t(rbind(A,B)),
                                  bvec = rbind(a,b),

@@ -1,12 +1,18 @@
 DEopt <- function(OF, algo = list(), ...) {
-
     ## defaults for list 'algo'
-    algoD <- list(nP = 50L, nG = 300L,
+    algoD <- list(nP = 50L,
+                  nG = 300L,
                   F = 0.5, CR = 0.9,
-                  min = NULL, max = NULL,
-                  pen = NULL, repair = NULL,
-                  loopOF = TRUE, loopPen = TRUE, loopRepair = TRUE,
-                  printDetail = TRUE, printBar = TRUE,
+                  min = NULL,
+                  max = NULL,
+                  pen = NULL,
+                  repair = NULL,
+                  loopOF = TRUE,
+                  loopPen = TRUE,
+                  loopRepair = TRUE,
+                  methodOF = "loop",
+                  printDetail = TRUE,
+                  printBar = TRUE,
                   initP = NULL,
                   storeF = TRUE, storeSolutions = FALSE)
 
