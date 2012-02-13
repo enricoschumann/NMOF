@@ -1,6 +1,5 @@
 \name{GAopt}
 \alias{GAopt}
-\alias{GAopt2}
 \title{
   Optimisation with a Genetic Algorithm
 }
@@ -9,7 +8,6 @@ A simple Genetic Algorithm for minimising a function.
 }
 \usage{
 GAopt (OF, algo = list(), ...)
-GAopt2(OF, algo = list(), ...)
 }
 \arguments{
   \item{OF}{The objective function, to be minimised. See Details.
