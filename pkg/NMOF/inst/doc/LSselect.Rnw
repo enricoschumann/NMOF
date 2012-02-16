@@ -39,7 +39,7 @@ these assets has the lowest-possible variance. The formal model is:
 \nonumber w_j  &= \nicefrac{1}{K} \ \text{\quad  for }  j \in J\, ,    \\[-0.25ex]
 \nonumber K_{\inf} &\leq K  \leq K_{\sup} \, .
 \end{align}
-Thw weights are stored in the vector $w$; the symbol $J$ stands for the set of assets in the portfolio; and $K = \#\{J\}$
+The weights are stored in the vector $w$; the symbol $J$ stands for the set of assets in the portfolio; and $K = \#\{J\}$
 is the cardinality of this set, ie, the number of assets in the portfolio.
 
 \section{Setting up the algorithm}
