@@ -1,5 +1,11 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.23-1 (2012-02-27)}{
+  \itemize{
+    \item Added 'Depends: R (>= 2.10)' to DESCRIPTION (necessary
+      because of file compression).
+  }
+}
 \section{Changes in NMOF version 0.23-0 (2012-02-14)}{
   \itemize{
     \item Dataset 'optionData' was added.

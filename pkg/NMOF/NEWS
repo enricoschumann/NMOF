@@ -1,3 +1,8 @@
+v0.23-1  (2012-02-27)
+
+  o Added 'Depends: R (>= 2.10)' to DESCRIPTION (necessary
+    because of file compression).
+
 v0.23-0  (2012-02-14)
 
   o Dataset 'optionData' was added.

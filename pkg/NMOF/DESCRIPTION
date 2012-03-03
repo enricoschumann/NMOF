@@ -1,13 +1,14 @@
 Package: NMOF
 Type: Package
 Title: Numerical Methods and Optimization in Finance
-Version: 0.23-0
-Date: 2012-02-14
+Version: 0.23-1
+Date: 2012-02-27
 Author: Enrico Schumann
 Authors@R: person("Enrico", "Schumann", 
                   role = c("aut", "cre"),
                   email = "enricoschumann@yahoo.de")
 Maintainer: Enrico Schumann <enricoschumann@yahoo.de>
+Depends: R (>= 2.10)
 Suggests: MASS, multicore, quadprog, RUnit, snow
 Description: Functions, examples and data from the book 'Numerical
     Methods and Optimization in Finance' by M. Gilli, D. Maringer and
