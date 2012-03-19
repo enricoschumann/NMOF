@@ -1,5 +1,15 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.23-2 (2012-03-19)}{
+  \itemize{
+    \item fixed: with 'algo$storeSolutions==TRUE', functions 'LSopt' 
+      and 'TAopt' only returned the current (=accepted) solution
+      in a given iteration, but not the candidate solution. 
+      (These data can be found in 'xlist'. See ?TAopt and 
+      ?LSopt, under 'Value'.) 
+    \item Unit tests added in unitTests1.R.
+  }
+}
 \section{Changes in NMOF version 0.23-1 (2012-02-27)}{
   \itemize{
     \item Added 'Depends: R (>= 2.10)' to DESCRIPTION (necessary

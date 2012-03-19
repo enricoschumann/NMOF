@@ -113,7 +113,7 @@ test.EuropeanCallBE <- function() {
 test.PSopt <- function() {
     ## test function: PS should find minimum
     OF <- tfRosenbrock
-    size <- 3L ### define dimension
+    size <- 3L ## define dimension
     algo <- list(printBar = FALSE,
                  printDetail = FALSE,
                  nP = 50L, nG = 1000L,
@@ -128,7 +128,8 @@ test.PSopt <- function() {
     ## exception: wrong size of initP
     algo$initP <- array(0, dim = c(20L,20L))
     checkException(res <- PSopt(OF = OF, algo), silent = TRUE)
-    algo$initP <- function() array(0, dim = c(5,20))
+    algo$initP <- function()
+        array(0, dim = c(5,20))
     checkException(res <- PSopt(OF = OF, algo), silent = TRUE)
     algo$initP <- NULL
 
@@ -170,20 +171,39 @@ test.PSopt <- function() {
 test.TAopt <- function() {
 
     ## TA should come close to the minimum
-    xTRUE <- runif(5)
-    data <- list(xTRUE = xTRUE, step = 0.02)
-    OF <- function(x, data) max(abs(x - data$xTRUE))
-    neighbour <- function(x, data) {
-        x <- x + runif(length(data$xTRUE))*data$step - data$step/2
-        x
-    }
-    x0 <- runif(5)
+    size <- 5L
+    x0 <- runif(size)
+    xTRUE <- runif(size)
+    data <- list(xTRUE = xTRUE,
+                 step = 0.02)
+    OF <- function(x, data)
+        max(abs(x - data$xTRUE))
+    neighbour <- function(x, data)
+        x + runif(length(data$xTRUE))*data$step - data$step/2
+
     algo <- list(q = 0.05, nS = 1000L, nT = 15L,
                  neighbour = neighbour, x0 = x0,
                  printBar = FALSE,
-                 printDetail = FALSE)
+                 printDetail = FALSE,
+                 storeSolutions = TRUE,
+                 storeF = TRUE)
     res <- TAopt(OF, algo = algo, data = data)
     checkTrue(res$OFvalue < 0.005)
+
+    ## ---------
+    ## check 'xlist'
+    checkTrue(length(res$xlist[[1L]])==length(res$xlist[[2L]]))
+    checkEquals(dim(do.call(rbind, res$xlist[[1L]])),
+                dim(do.call(rbind, res$xlist[[2L]])))
+    checkEquals(dim(res$Fmat), c(algo$nS * algo$nT, 2L))
+
+    ## check 'Fmat': xn and xc must not all be the same
+    checkTrue(!isTRUE(all.equal(res$Fmat[ ,1L],res$Fmat[ ,2L])))
+
+    tmp <- res$Fmat[ ,1L]==res$Fmat[ ,2L]
+    checkEquals(res$Fmat[tmp ,1L],
+                apply(do.call(rbind, res$xlist[[1L]])[tmp, ], 1,OF, data))
+    ## -------
 
     ## length(returned thresholds) == specified length(thresholds)
     checkTrue(length(res$vT) == algo$nT)
@@ -229,23 +249,39 @@ test.LSopt <- function() {
     xTRUE <- runif(5)
     data <- list(xTRUE = xTRUE, step = 0.02)
     OF <- function(x, data) max(abs(x - data$xTRUE))
-    neighbour <- function(x, data) {
-        x <- x + runif(length(data$xTRUE))*data$step - data$step/2
-        x
-    }
+    neighbour <- function(x, data)
+        x + runif(length(data$xTRUE))*data$step - data$step/2
+
     x0 <- runif(5)
     algo <- list(nS = 10000L,
                  neighbour = neighbour, x0 = x0,
-                 printBar = FALSE, printDetail = FALSE)
+                 printBar = FALSE, printDetail = FALSE,
+                 storeF = TRUE, storeSolutions = TRUE)
     res <- LSopt(OF, algo = algo, data = data)
     checkTrue(res$OFvalue < 0.005)
 
+    ## ---------
+    ## check 'xlist'
+    checkTrue(length(res$xlist[[1L]])==length(res$xlist[[2L]]))
+    checkEquals(dim(do.call(rbind, res$xlist[[1L]])),
+                dim(do.call(rbind, res$xlist[[2L]])))
+    checkEquals(dim(res$Fmat), c(algo$nS, 2L))
+
+    ## check 'Fmat': xn and xc must not all be the same
+    checkTrue(!isTRUE(all.equal(res$Fmat[ ,1L],res$Fmat[ ,2L])))
+
+    tmp <- res$Fmat[ ,1L]==res$Fmat[ ,2L]
+    checkEquals(res$Fmat[tmp ,1L],
+                apply(do.call(rbind, res$xlist[[1L]])[tmp, ], 1,OF, data))
+    ## -------
+
+    ## check printDetail
     algo <- list(nS = 10000L,
                  neighbour = neighbour, x0 = x0,
                  printBar = FALSE, printDetail = 1000)
-    res <- LSopt(OF, algo = algo, data = data)
+    res2 <- capture.output(res <- LSopt(OF, algo = algo, data = data))
     checkTrue(res$OFvalue < 0.005)
-
+    checkEquals(sum(grepl("Best solution", res2)), 11L)
 }
 
 
@@ -267,8 +303,6 @@ test.testFunctions <- function() {
     checkEqualsNumeric(tfTrefethen(x), -3.306868,
                        tolerance = 1e-4)
 }
-
-
 
 ## restartOpt
 test.restartOpt <- function() {

@@ -76,7 +76,7 @@ LSopt <- function(OF, algo = list(), ...) {
         }
         if (algoD$storeSolutions) {
             xlist[[c(1L, s)]] <- xn
-            xlist[[c(1L, s)]] <- xc
+            xlist[[c(2L, s)]] <- xc
         }
 
     }

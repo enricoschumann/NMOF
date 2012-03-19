@@ -1,3 +1,12 @@
+v0.23-2  (2012-03-19)
+
+  o fixed: with 'algo$storeSolutions==TRUE', functions 'LSopt' 
+    and 'TAopt' only returned the current (=accepted) solution
+    in a given iteration, but not the candidate solution. 
+    (These data can be found in 'xlist'. See ?TAopt and 
+    ?LSopt, under 'Value'.) 
+  o Unit tests added in unitTests1.R.
+ 
 v0.23-1  (2012-02-27)
 
   o Added 'Depends: R (>= 2.10)' to DESCRIPTION (necessary
