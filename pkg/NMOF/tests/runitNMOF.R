@@ -1,6 +1,6 @@
 ## path <- "C:/packages/RForge/Test/NMOF/inst/unitTests"
 if (require(RUnit, quietly = TRUE)) {
-    testParallel <- TRUE
+    testParallel <- FALSE
     path <- system.file(package = "NMOF", "unitTests")
     myTestSuite <- defineTestSuite("NMOF1",
                                    dirs = path,
