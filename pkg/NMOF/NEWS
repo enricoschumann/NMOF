@@ -1,3 +1,9 @@
+v0.23-3  (2012-03-25)
+
+  o fixed: 'restartOpt' could not take an argument named 'X' 
+    via the '...' argument.  
+  o Unit tests added in unitTests1.R.
+
 v0.23-2  (2012-03-19)
 
   o fixed: with 'algo$storeSolutions==TRUE', functions 'LSopt' 

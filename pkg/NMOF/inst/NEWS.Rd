@@ -1,5 +1,12 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.23-3 (2012-03-25)}{
+  \itemize{
+    \item fixed: 'restartOpt' could not take an argument named 'X' 
+      via the '...' argument.  
+    \item Unit tests added in unitTests1.R.
+  }
+}
 \section{Changes in NMOF version 0.23-2 (2012-03-19)}{
   \itemize{
     \item fixed: with 'algo$storeSolutions==TRUE', functions 'LSopt' 

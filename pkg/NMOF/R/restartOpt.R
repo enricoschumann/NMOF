@@ -4,7 +4,14 @@ restartOpt <- function(fun, n, OF, algo, ...,
                        cl = NULL) {
     n <- makeInteger(n, "'n'", 1L)
     method <- tolower(method[1L])
-    if (!is.null(cl)) method <- "snow"
+    force(fun)
+    force(OF)
+    force(algo)
+    tmp <- list(...)  ## force does not work
+    fun2 <- function(ignore)
+        fun(OF = OF, algo = algo, ...)
+    if (!is.null(cl))
+        method <- "snow"
     if (method == "multicore") {
         if (!suppressWarnings(require("multicore", quietly = TRUE))) {
             method <- "loop"
@@ -20,17 +27,9 @@ restartOpt <- function(fun, n, OF, algo, ...,
         }
     }
 
-    ## necessary to match the '...' for lapply and fun
-    force(fun); force(OF); force(algo)
-    ###junk <- list(...)
-    makefun <- function(fun, OF, algo, ... ) {
-        function(ignore, ...) fun(OF = OF, algo = algo, ...)
-    }
-    fun2 <- makefun(fun, OF, algo, ...)
-
     if (method == "multicore") {
         mc.settings <- mcList(mc.control)
-        allResults <- mclapply(seq_len(n), fun2, ...,
+        allResults <- mclapply(seq_len(n), fun2,
                                mc.preschedule = mc.settings$mc.preschedule,
                                mc.set.seed = mc.settings$mc.set.seed,
                                mc.silent = mc.settings$mc.silent,
@@ -41,9 +40,9 @@ restartOpt <- function(fun, n, OF, algo, ...,
             cl <- makeCluster(c(rep("localhost", cl)),  type = "SOCK")
             on.exit(stopCluster(cl))
         }
-        allResults <- clusterApply(cl, seq_len(n), fun2, ...)
+        allResults <- clusterApply(cl, seq_len(n), fun2)
     } else {
-        allResults <- lapply(seq_len(n), fun2, ...)
+        allResults <- lapply(seq_len(n), fun2)
     }
     allResults
 }
