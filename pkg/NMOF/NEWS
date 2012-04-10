@@ -1,3 +1,14 @@
+v0.24-0  (2012-04-11)
+
+  o Added function 'resampleC': allows to sample with replacement from
+    arbitrary numeric vectors (ie, samples) and making the samples (rank) 
+    correlated.
+
+  o 'DEopt' and 'PSopt' now have an argument 'algo$minmaxConstr'. If 
+    TRUE, 'algo$min' and 'algo$max' are become constraints. These 
+    constraints are implemented through an internal repair function that 
+    is called before any user-defined repair function.
+  
 v0.23-3  (2012-03-25)
 
   o fixed: 'restartOpt' could not take an argument named 'X' 

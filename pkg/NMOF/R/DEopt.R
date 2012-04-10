@@ -14,7 +14,9 @@ DEopt <- function(OF, algo = list(), ...) {
                   printDetail = TRUE,
                   printBar = TRUE,
                   initP = NULL,
-                  storeF = TRUE, storeSolutions = FALSE)
+                  storeF = TRUE,
+                  storeSolutions = FALSE,
+                  minmaxConstr = FALSE)
 
     checkList(algo, algoD)
     algoD[names(algo)] <- algo
@@ -22,6 +24,7 @@ DEopt <- function(OF, algo = list(), ...) {
     ## check min/max
     vmax <- as.vector(algoD$max)
     vmin <- as.vector(algoD$min)
+    mm <- algoD$minmaxConstr
     if (is.null(vmin))
         stop("specify 'min' vector")
     if (is.null(vmax))
@@ -85,16 +88,20 @@ DEopt <- function(OF, algo = list(), ...) {
     }
     ## evaluate initial population
     ## 1) repair
+    if (mm)
+        mP <- repair1c(mP, vmax, vmin)
     if ( !is.null(algoD$repair) ){
         if (algoD$loopRepair){
-            for (s in snP) mP[ ,s] <- Re1(mP[ ,s])
+            for (s in snP)
+                mP[ ,s] <- Re1(mP[ ,s])
         } else {
             mP <- Re1(mP)
         }
     }
     ## 2) evaluate
     if (algoD$loopOF){
-        for (s in snP) vF[s] <- OF1(mP[ ,s])
+        for (s in snP)
+            vF[s] <- OF1(mP[ ,s])
     } else {
         vF <- OF1(mP)
     }
@@ -128,7 +135,9 @@ DEopt <- function(OF, algo = list(), ...) {
         vI <- runif(d * nP) > algoD$CR
         mPv[vI] <- mP[vI]
 
-        ## evaluate updated population
+        ## repair/evaluate/penalise updated population
+        if (mm)
+            mP <- repair1c(mP, vmax, vmin)
         if (!is.null(algoD$repair)) {
             if (algoD$loopRepair) {
                 for (s in snP) mPv[ ,s] <- Re1(mPv[ ,s])

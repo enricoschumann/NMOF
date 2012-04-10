@@ -10,13 +10,17 @@ PSopt <- function(OF, algo = list(), ...) {
                   loopRepair  = TRUE, loopChangeV = TRUE,
                   printDetail = TRUE, printBar = TRUE,
                   initP = NULL,
-                  storeF = TRUE, storeSolutions = FALSE)
+                  storeF = TRUE,
+                  storeSolutions = FALSE,
+                  minmaxConstr = FALSE
+                  )
 
     checkList(algo, algoD)
     algoD[names(algo)] <- algo
 
     vmax <- as.vector(algoD$max)
     vmin <- as.vector(algoD$min)
+    mm <- algoD$minmaxConstr
     nP <- as.integer(algoD$nP)
     nG <- as.integer(algoD$nG)
     if(is.null(vmin))
@@ -67,10 +71,13 @@ PSopt <- function(OF, algo = list(), ...) {
     mV <- algoD$initV * mRN(d,nP)
 
     ## evaluate initial population
+    if (mm)
+        mP <- repair1c(mP, vmax, vmin)
     if (!is.null(algoD$repair)) {
-        if(algoD$loopRepair) {
-            for(s in seq_len(nP)) mP[,s] <- Re1(mP[,s])
-        }else{
+        if (algoD$loopRepair) {
+            for(s in seq_len(nP))
+                mP[ ,s] <- Re1(mP[ ,s])
+        } else {
             mP <- Re1(mP)
         }
     }
@@ -102,24 +109,28 @@ PSopt <- function(OF, algo = list(), ...) {
     for (g in seq_len(nG)) {
         if(printBar)
             setTxtProgressBar(whatGen, value = g)
-                                        # update population
-        mDV <-  algoD$c1 * runif(d*nP) * (mPbest - mP) +
-            algoD$c2 * runif(d*nP) * (mPbest[ ,sgbest] - mP)
-        mV  <- algoD$iner * mV + mDV
+        ## update population
+        mDV <- algoD$c1 * runif(d*nP) * (mPbest - mP) +
+               algoD$c2 * runif(d*nP) * (mPbest[ ,sgbest] - mP)
+        mV <- algoD$iner * mV + mDV
         mV <- pmin2(mV,  algoD$maxV)
         mV <- pmax2(mV, -algoD$maxV)
         if (!is.null(algoD$changeV)) {
             if (algoD$loopChangeV){
-                for (s in seq_len(nP)) mV[ ,s] <- cV1(mV[ ,s])
+                for (s in seq_len(nP))
+                    mV[ ,s] <- cV1(mV[ ,s])
             } else
             mV <- cV1(mV)
         }
         mP <- mP + mV
 
         ## evaluate updated population
+        if (mm)
+            mP <- repair1c(mP, vmax, vmin)
         if (!is.null(algoD$repair)) {
             if (algoD$loopRepair){
-                for (s in seq_len(nP)) mP[ ,s] <- Re1(mP[ ,s])
+                for (s in seq_len(nP))
+                    mP[ ,s] <- Re1(mP[ ,s])
             } else
             mP <- Re1(mP)
         }
@@ -156,9 +167,9 @@ PSopt <- function(OF, algo = list(), ...) {
         ## print info
         if (printDetail > 1) {
             if (g %% printDetail == 0L) {
-            cat("Best solution (iteration ", g, "/", nG, "): ",
-                prettyNum(sGbest[1L]), "\n", sep = "")
-            flush.console()
+                cat("Best solution (iteration ", g, "/", nG, "): ",
+                    prettyNum(sGbest[1L]), "\n", sep = "")
+                flush.console()
             }
         }
 

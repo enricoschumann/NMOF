@@ -1,21 +1,21 @@
 \name{DEopt}
 \alias{DEopt}
 \title{
-Optimisation with Differential Evolution
+  Optimisation with Differential Evolution
 }
 \description{
-The function implements the standard Differential Evolution algorithm.
+  The function implements the standard Differential Evolution algorithm.
 }
 \usage{
 DEopt(OF, algo = list(), ...)
 }
 \arguments{
   \item{OF}{The objective function, to be minimised. See Details.
-}
+  }
   \item{algo}{A list with the settings for algorithm. See Details and Examples.
-}
+  }
   \item{\dots}{Other pieces of data required to evaluate the objective function. See Details and Examples.
-}
+  }
 }
 \details{
 
@@ -57,81 +57,112 @@ DEopt(OF, algo = list(), ...)
   All objects that are passed through \code{\dots} will be passed to the
   objective function, to the repair function and to the penalty function.
 
-The list \code{algo} collects the following settings for the algorithm:
-\describe{
-  \item{\code{nP}}{population size. Defaults to 50. Using default settings may not be a good idea.}
-  \item{\code{nG}}{number of generations. Defaults to 300. Using default settings may not be a good idea.}
-  \item{\code{F}}{The step size. Typically a numeric vector of length
-    one; default is 0.5. Using default settings may not be a good
-    idea. (\code{F} can also be a vector with different values for each decision variable.)}
-  \item{\code{CR}}{probability for crossover. Defaults to 0.9. Using
+  The list \code{algo} collects the the settings for the
+  algorithm. Strictly necessary are only \code{min} and \code{max} (to
+  initialise the population). Here are all possible arguments:
+
+  \describe{
+
+    \item{\code{CR}}{probability for crossover. Defaults to 0.9. Using
+      default settings may not be a good idea.}
+
+    \item{\code{F}}{The step size. Typically a numeric vector of length
+      one; default is 0.5. Using default settings may not be a good
+      idea. (\code{F} can also be a vector with different values for
+      each decision variable.)}
+
+    \item{\code{nP}}{population size. Defaults to 50. Using default
+    settings may not be a good idea.}
+
+    \item{\code{nG}}{number of generations. Defaults to 300. Using
     default settings may not be a good idea.}
-  \item{\code{min}, \code{max}}{vectors of minimum and maximum parameter
-    values. The vectors \code{min} and \code{max} are used to determine the
-  dimension of the problem and to randomly initialise the
-  population. They are no constraints: a solution may well be outside
-  these limits.}
-  \item{\code{pen}}{a penalty function. Default is \code{NULL} (no penalty).}
-  \item{\code{initP}}{optional: the initial population. A matrix of size
-    \code{length(algo$min)} times \code{algo$nP}, or a function that
-    creates such a matrix. If a function, it should take no arguments.}
-  \item{\code{repair}}{a repair function. Default is \code{NULL} (no repairing).}
-  \item{\code{loopOF}}{logical. Should the \code{OF} be evaluated
-    through a loop? Defaults to \code{TRUE}.}
-  \item{\code{loopPen}}{logical. Should the penalty function (if
-    specified) be evaluated through a loop? Defaults to \code{TRUE}.}
-  \item{\code{loopRepair}}{logical. Should the repair function (if
-    specified) be evaluated through a loop? Defaults to \code{TRUE}.}
-  \item{\code{printDetail}}{If \code{TRUE} (the default), information is
-    printed. If an integer \code{i} greater then one, information is
-  printed at very \code{i}th generation.}
-  \item{\code{printBar}}{If \code{TRUE} (the default), a \code{\link{txtProgressBar}} is printed.}
-  \item{\code{storeF}}{if \code{TRUE} (the default), the objective
-    function values for every solution in every generation are stored
-    and returned as matrix \code{Fmat}.}
-  \item{\code{storeSolutions}}{default is \code{FALSE}. If \code{TRUE},
-    the solutions (ie, decision variables) in every generation are
-    stored and returned as a list \code{P} in list \code{xlist} (see
-    Value section below). To check, for instance, the solutions at the end of the
-    \code{i}th generation, retrieve \code{xlist[[c(1L, i)]]}. This will be
-    a matrix of size \code{length(algo$min)} times \code{algo$nP}.
-    (To be consistent with other functions, \code{xlist} is
-    itself a list. In the case of \code{DEopt}, it contains just one element.)}
-} % end describe  
+
+    \item{\code{min}, \code{max}}{vectors of minimum and maximum
+      parameter values. The vectors \code{min} and \code{max} are used
+      to determine the dimension of the problem and to randomly
+      initialise the population. Per default, they are no constraints: a
+      solution may well be outside these limits. Only if
+      \code{algo$minmaxConstr} is \code{TRUE} will the algorithm repair
+      solutions outside the \code{min} and \code{max} range.}
+
+    \item{\code{minmaxConstr}}{if \code{TRUE}, \code{algo$min} and
+      \code{algo$max} are considered constraints. Default is
+      \code{FALSE}.}
+
+    \item{\code{pen}}{a penalty function. Default is \code{NULL} (no penalty).}
+
+    \item{\code{initP}}{optional: the initial population. A matrix of size
+      \code{length(algo$min)} times \code{algo$nP}, or a function that
+      creates such a matrix. If a function, it should take no arguments.}
+
+    \item{\code{repair}}{a repair function. Default is \code{NULL} (no
+    repairing).}
+
+    \item{\code{loopOF}}{logical. Should the \code{OF} be evaluated
+      through a loop? Defaults to \code{TRUE}.}
+
+    \item{\code{loopPen}}{logical. Should the penalty function (if
+      specified) be evaluated through a loop? Defaults to \code{TRUE}.}
+
+    \item{\code{loopRepair}}{logical. Should the repair function (if
+      specified) be evaluated through a loop? Defaults to \code{TRUE}.}
+
+    \item{\code{printDetail}}{If \code{TRUE} (the default), information
+      is printed. If an integer \code{i} greater then one, information
+      is printed at very \code{i}th generation.}
+
+    \item{\code{printBar}}{If \code{TRUE} (the default), a
+    \code{\link{txtProgressBar}} is printed.}
+
+    \item{\code{storeF}}{if \code{TRUE} (the default), the objective
+      function values for every solution in every generation are stored
+      and returned as matrix \code{Fmat}.}
+
+    \item{\code{storeSolutions}}{default is \code{FALSE}. If
+      \code{TRUE}, the solutions (ie, decision variables) in every
+      generation are stored and returned as a list \code{P} in list
+      \code{xlist} (see Value section below). To check, for instance,
+      the solutions at the end of the \code{i}th generation, retrieve
+      \code{xlist[[c(1L, i)]]}. This will be a matrix of size
+      \code{length(algo$min)} times \code{algo$nP}.  (To be consistent
+      with other functions, \code{xlist} is itself a list. In the case
+      of \code{DEopt}, it contains just one element.)}
+
+  } % end describe  
 } % end Details
 \value{
-A list:
-\item{\code{xbest}}{the solution (the best member of the population), which is
-  a numeric vector}
-\item{\code{OFvalue}}{objective function value of best solution}
-\item{\code{popF}}{a vector. The objective function values in the final population.}
-\item{\code{Fmat}}{if \code{algo$storeF} is \code{TRUE}, a matrix of size
-  \code{algo$nG} times \code{algo$nP} containing the objective function
-  values of all solutions over the generations; else \code{NA}.}
-\item{\code{xlist}}{if \code{algo$storeSolutions} is \code{TRUE}, a list that
-  contains a list \code{P} of matrices; else \code{NA}.}
+  A list:
+  \item{\code{xbest}}{the solution (the best member of the population), which is
+    a numeric vector}
+  \item{\code{OFvalue}}{objective function value of best solution}
+  \item{\code{popF}}{a vector. The objective function values in the final population.}
+  \item{\code{Fmat}}{if \code{algo$storeF} is \code{TRUE}, a matrix of size
+    \code{algo$nG} times \code{algo$nP} containing the objective function
+    values of all solutions over the generations; else \code{NA}.}
+  \item{\code{xlist}}{if \code{algo$storeSolutions} is \code{TRUE}, a list that
+    contains a list \code{P} of matrices; else \code{NA}.}
 } % end value
 \references{
-Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods
-  and Optimization in Finance}. Elsevier.
-\url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
+  Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods
+    and Optimization in Finance}. Elsevier.
+  \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
 
-Maringer, D. and Oyewumi, O. (2007). Index Tracking with Constrained
-Portfolios. \emph{Intelligent Systems in Accounting, Finance and Management},
-\bold{15}(1), pp. 57--71.
+  Maringer, D. and Oyewumi, O. (2007). Index Tracking with Constrained
+  Portfolios. \emph{Intelligent Systems in Accounting, Finance and Management},
+  \bold{15}(1), pp. 57--71.
 
   Schumann, E. (2011) Examples and Extensions for the \pkg{NMOF}
   Package. \url{http://enricoschumann.net/NMOF.htm}
 
-Storn, R., and Price, K. (1997) Differential Evolution -- a Simple and
-Efficient Heuristic for Global Optimization over Continuous Spaces.
-\emph{Journal of Global Optimization}, \bold{11}(4), pp. 341--359.
+  Storn, R., and Price, K. (1997) Differential Evolution -- a Simple and
+  Efficient Heuristic for Global Optimization over Continuous Spaces.
+  \emph{Journal of Global Optimization}, \bold{11}(4), pp. 341--359.
 } % end references
 \author{
-Enrico Schumann
+  Enrico Schumann
 }
 \seealso{
-    \code{\link{GAopt}}, \code{\link{PSopt}}
+  \code{\link{GAopt}}, \code{\link{PSopt}}
 }
 \examples{
 ## Example 1: Trefethen's 100-digit challenge (problem 4)

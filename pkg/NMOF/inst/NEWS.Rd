@@ -1,5 +1,16 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.24-0 (2012-04-11)}{
+  \itemize{
+    \item Added function 'resampleC': allows to sample with replacement from
+      arbitrary numeric vectors (ie, samples) and making the samples (rank) 
+      correlated.
+    \item 'DEopt' and 'PSopt' now have an argument 'algo$minmaxConstr'. If 
+      TRUE, 'algo$min' and 'algo$max' are become constraints. These 
+      constraints are implemented through an internal repair function that 
+      is called before any user-defined repair function.
+  }
+}
 \section{Changes in NMOF version 0.23-3 (2012-03-25)}{
   \itemize{
     \item fixed: 'restartOpt' could not take an argument named 'X' 

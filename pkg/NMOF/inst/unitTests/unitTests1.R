@@ -1,7 +1,7 @@
 ## -*- truncate-lines: t; -*-
 
 require("NMOF")
-
+testParallel <- FALSE
 ## optimisation functions, MA, testFunctions, option pricing
 
 ## MA
@@ -106,64 +106,6 @@ test.EuropeanCallBE <- function() {
     res2 <- EuropeanCallBE(S0 = S0, X = X,
                            r = r, tau = tau, sigma = sigma, M = M)
     checkEquals(res,res2)
-}
-
-
-## PSopt
-test.PSopt <- function() {
-    ## test function: PS should find minimum
-    OF <- tfRosenbrock
-    size <- 3L ## define dimension
-    algo <- list(printBar = FALSE,
-                 printDetail = FALSE,
-                 nP = 50L, nG = 1000L,
-                 c1 = 0.0, c2 = 1.5,
-                 iner = 0.8, initV = 0.50, maxV = 50,
-                 min = rep(-50, size),
-                 max = rep( 50, size))
-
-    sol <- PSopt(OF = OF, algo = algo)
-    checkEquals(sol$OFvalue, 0)
-
-    ## exception: wrong size of initP
-    algo$initP <- array(0, dim = c(20L,20L))
-    checkException(res <- PSopt(OF = OF, algo), silent = TRUE)
-    algo$initP <- function()
-        array(0, dim = c(5,20))
-    checkException(res <- PSopt(OF = OF, algo), silent = TRUE)
-    algo$initP <- NULL
-
-
-    ## check if Fmat/xlist are returned
-    ## ...if FALSE
-    algo <- list(printBar = FALSE,
-                 printDetail = FALSE,
-                 nP = 50L, nG = 100L,
-                 c1 = 0.0, c2 = 1.5,
-                 iner = 0.8, initV = 0.50, maxV = 50,
-                 min = rep(-50, size),
-                 max = rep( 50, size),
-                 storeF = FALSE,
-                 storeSolutions = FALSE)
-    sol <- PSopt(OF = OF, algo = algo)
-    checkTrue(is.na(sol$Fmat))
-    checkTrue(is.na(sol$xlist))
-    checkEquals(length(sol$Fmat), 1L)
-    checkEquals(length(sol$xlist), 1L)
-
-    ## ...if TRUE
-    algo$storeF <- TRUE
-    algo$storeSolutions <- TRUE
-    sol <- PSopt(OF = OF, algo = algo)
-    checkEquals(names(sol$xlist), c("P","Pbest"))
-    checkEquals(dim(sol$xlist[[c(1L, algo$nG)]]),
-                c(length(algo$min),algo$nP))
-    checkEquals(dim(sol$xlist[[c(2L, algo$nG)]]),
-                c(length(algo$min),algo$nP))
-    ## xlist has only two elements
-    checkException(sol$xlist[[c(3L, algo$nG)]], silent = TRUE)
-    ## xlist[[i]] stores only algo$nG elements
-    checkException(sol$xlist[[c(2L, algo$nG + 1L)]], silent = TRUE)
 }
 
 
@@ -308,10 +250,8 @@ test.testFunctions <- function() {
 test.restartOpt <- function() {
     xTRUE <- runif(5L)
     data <- list(xTRUE = xTRUE, step = 0.02)
-    OF <- function(x, data) {
-        Sys.sleep(0.0005)
+    OF <- function(x, data)
         max(abs(x - data$xTRUE))
-    }
     neighbour <- function(x, data)
         x + runif(length(data$xTRUE))*data$step - data$step/2
 
@@ -320,10 +260,8 @@ test.restartOpt <- function() {
                  neighbour = neighbour, x0 = x0,
                  printBar = FALSE, printDetail = FALSE)
 
-    system.time({
         sols <- restartOpt(fun = TAopt, n = 10L,
                            OF = OF, algo = algo, data = data)
-    })
     checkEquals(length(sols), 10L)
 
     ## tests for snow/multicore: slow!
@@ -337,7 +275,7 @@ test.restartOpt <- function() {
             checkEquals(length(sols), 10L)
 
             ## up top version 0.23-1, an argument passed with '...'
-            ## could not be called 'X'
+            ## could not be called 'X': led to an error
             X <- list(xTRUE = runif(5L), step = 0.02)
             OF <- function(x, X)
                 max(abs(x - X$xTRUE))
@@ -354,7 +292,7 @@ test.restartOpt <- function() {
         }
         if (suppressWarnings(require("multicore", quietly = TRUE))) {
             ## up top version 0.23-1, an argument passed with '...'
-            ## could not be called 'X'
+            ## could not be called 'X': led to an error
             X <- list(xTRUE = runif(5L), step = 0.02)
             OF <- function(x, X)
                 max(abs(x - X$xTRUE))

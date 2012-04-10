@@ -91,4 +91,22 @@ test.DEopt <- function() {
     checkEquals(length(sol$xlist[[1L]]), algo$nG)
     checkEquals(dim(sol$xlist[[c(1L,algo$nG)]]),
                 c(length(algo$min), algo$nP) )
+
+
+    ## a trivial problem: 'recover' a vector X
+    X <- 1:10 - 5
+    OF <- function(x, X)
+        sum(abs(x - X))
+    algo <- list(nP = 20, nG = 500,
+                 min = rep(-3, length(X)),
+                 max = rep( 3,  length(X)),
+                 minmaxConstr = FALSE,
+                 printBar = FALSE, printDetail = FALSE,
+                 storeF = FALSE, storeSolutions = FALSE)
+    sol <- DEopt(OF, algo, X)
+    checkEquals(round(sol$xbest,3), X)
+    algo$minmaxConstr <- TRUE
+    sol <- DEopt(OF, algo, X)
+    round(sol$xbest,3)
+    checkEquals(round(sol$xbest,3), c(-3, -3, -2, -1, 0, 1, 2, 3, 3, 3))
 }

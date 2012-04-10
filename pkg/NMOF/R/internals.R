@@ -33,8 +33,10 @@ checkList <- function(passedList, defaultList, label = "'algo'") {
 
 ##
 
-mRU <- function(m, n) array(runif(m*n), dim = c(m,n))
-mRN <- function(m, n) array(rnorm(m*n), dim = c(m,n))
+mRU <- function(m, n)
+    array(runif(m*n), dim = c(m,n))
+mRN <- function(m, n)
+    array(rnorm(m*n), dim = c(m,n))
 
 ##
 
@@ -45,4 +47,14 @@ mcList <- function(mc.control) {
     checkList(mc.control, mc.settings, "'mc.control'")
     mc.settings[names(mc.control)] <- mc.control
     mc.settings
+}
+
+##
+
+repair1c <- function(x, up, lo) {
+    xadjU <- x - up
+    xadjU <- xadjU + abs(xadjU)
+    xadjL <- lo - x
+    xadjL <- xadjL + abs(xadjL)
+    x - (xadjU - xadjL)/2
 }
