@@ -1,6 +1,8 @@
-require("NMOF")
-
+## -*- truncate-lines: t; -*-
 ## gridSearch
+## bracketing
+## xwGauss
+
 test.gridSearch <- function() {
     testFun  <- function(x) x[1L] + x[2L]^2
     testFun1 <- function(x,k) x[1L] + x[2L]^2 + k

@@ -1,4 +1,5 @@
-## CF PRICING
+## -*- truncate-lines: t; -*-
+## pricing with the cf
 test.callCF <- function() {
 
     ## taken from the PM package

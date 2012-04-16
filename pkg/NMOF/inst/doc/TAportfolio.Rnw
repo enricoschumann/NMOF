@@ -61,13 +61,13 @@ na <- dim(fundData)[2L]
 ns <- dim(fundData)[1L]
 winf <- 0.0; wsup <- 0.05
 data <- list(R = t(fundData),
-            RR = crossprod(fundData),
-            na = na,
-            ns = ns,
-           eps = 0.5/100,
-          winf = winf,
-          wsup = wsup,
-      resample = resample)
+             RR = crossprod(fundData),
+             na = na,
+             ns = ns,
+             eps = 0.5/100,
+             winf = winf,
+             wsup = wsup,
+             resample = resample)
 @
 
 The neighbourhood function automatically enforces the bugdet constraint.
@@ -106,13 +106,13 @@ settings in a list \texttt{algo}.
 w0 <- runif(na); w0 <- w0/sum(w0)
 
 algo <- list(x0 = w0,
-     neighbour = neighbour,
-            nS = 2000L,
-            nT = 10L,
-            nD = 5000L,
+             neighbour = neighbour,
+             nS = 2000L,
+             nT = 10L,
+             nD = 5000L,
              q = 0.20,
-      printBar = FALSE,
-   printDetail = FALSE)
+             printBar = FALSE,
+             printDetail = FALSE)
 @
 We can now run \texttt{TAopt}, first with \texttt{OF1} \ldots
 <<>>=
@@ -195,13 +195,13 @@ iterations as before.
 w0 <- runif(data$na); w0 <- w0/sum(w0)
 x0 <- list(w = w0, Rw = fundData %*% w0)
 algo <- list(x0 = x0,
-      neighbour = neighbourU,
+             neighbour = neighbourU,
              nS = 2000L,
              nT = 10L,
              nD = 5000L,
-              q = 0.20,
-       printBar = FALSE,
-    printDetail = FALSE)
+             q = 0.20,
+             printBar = FALSE,
+             printDetail = FALSE)
 system.time(res2 <- TAopt(OF, algo, data))
 100*sqrt(crossprod(fundData %*% res2$xbest$w)/ns)
 @
@@ -255,13 +255,13 @@ But TA can handle this case.
 w0 <- runif(data$na); w0 <- w0/sum(w0)
 x0 <- list(w = w0, Rw = fundData %*% w0)
 algo <- list(x0 = x0,
-      neighbour = neighbourU,
+             neighbour = neighbourU,
              nS = 2000L,
              nT = 10L,
              nD = 5000L,
-              q = 0.20,
-       printBar = FALSE,
-    printDetail = FALSE)
+             q = 0.20,
+             printBar = FALSE,
+             printDetail = FALSE)
 system.time(res3 <- TAopt(OF, algo, data))
 100*sqrt(crossprod(fundData %*% res3$xbest$w)/ns)
 @

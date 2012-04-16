@@ -1,5 +1,11 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.24-1 (2012-04-16)}{
+  \itemize{
+    \item Small changes in vignettes.
+    \item Re-organised existing/added new unit tests.
+  }
+}
 \section{Changes in NMOF version 0.24-0 (2012-04-11)}{
   \itemize{
     \item Added function 'resampleC': allows to sample with replacement from

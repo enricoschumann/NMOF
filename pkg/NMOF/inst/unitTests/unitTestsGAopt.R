@@ -1,8 +1,4 @@
 ## -*- truncate-lines: t; -*-
-
-require("NMOF")
-
-## GAopt
 test.GAopt <- function() {
 
     size <- 20L; y <- runif(size) > 0.5; x <- runif(size) > 0.5

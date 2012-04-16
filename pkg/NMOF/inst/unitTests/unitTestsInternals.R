@@ -1,5 +1,4 @@
-require("NMOF")
-
+## -*- truncate-lines: t; -*-
 ## internals
 
 test.checkList <- function() {

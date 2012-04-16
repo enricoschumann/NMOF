@@ -1,7 +1,4 @@
 ## -*- truncate-lines: t; -*-
-
-require("NMOF")
-
 test.DEopt <- function() {
     trefethen <- function(xx) {
         x <- xx[1L]; y <- xx[2L]

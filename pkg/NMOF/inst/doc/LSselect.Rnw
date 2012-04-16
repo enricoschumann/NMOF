@@ -131,18 +131,18 @@ plot(sqrt(sol1$Fmat[,2L]),
 
 We can also run the search repeatedly with the same starting value.
 <<fig = TRUE, height = 4>>=
-trials <- 3L
-allRes <- restartOpt(LSopt, n = trials, OF, algo = algo, data = data)
-allResOF <- numeric(trials)
-for (i in seq_len(trials))
+nRuns <- 1L
+allRes <- restartOpt(LSopt, n = nRuns, OF, algo = algo, data = data)
+allResOF <- numeric(nRuns)
+for (i in seq_len(nRuns))
     allResOF[i] <- sqrt(allRes[[i]]$OFvalue)
 par(bty = "n")
 plot(ecdf(allResOF), main = "Portfolio volatility")
 @
 
-(We run \texttt{LSopt} only three times, to keep the build time for
-the vignette acceptable. To get more meaningful results, we should run
-more trials.)
+(We run \texttt{LSopt} only one time, to keep the build time for
+the vignette acceptable. To get more meaningful results, you should
+increase \texttt{nRuns}.)
 
 
 \bibliographystyle{plainnat}
