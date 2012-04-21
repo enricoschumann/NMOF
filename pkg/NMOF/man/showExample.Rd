@@ -9,8 +9,8 @@
     Optimization and Finance}.
 }
 \usage{
-showExample(file = "", chapter = NULL, showfile = TRUE, includepaths =
-FALSE, ...)
+showExample(file = "", chapter = NULL, showfile = TRUE,
+            includepaths = FALSE, ...)
 showChapterNames()
 }
 \arguments{
@@ -35,14 +35,15 @@ showChapterNames()
   }
 }
 \details{
-  The function will try to match the specified file argument against the
+
+  \code{showExample} matches the specified file argument against the
   available file names via \code{grepl(file, filenames, ...)}. If
   \code{chapter} is specified, a second match is performed,
   \code{grepl(chapter, chapternames, ...)}. The \code{chapternames} are
   those in the book (eg, \sQuote{Modeling dependencies}). The selected
-  files are then those for which file name and chapter name could be matched.
+  files are then those for which file name and chapter name could be
+  matched.
 
-  \code{showChapterNames} returns
 }
 \value{
 
@@ -54,7 +55,7 @@ showChapterNames()
   of displaying that file.
 
   \code{showChapterNames} returns a character vector of length 15: the
-  names of book's chapters.
+  names of the book's chapters.
 
 }
 \references{
