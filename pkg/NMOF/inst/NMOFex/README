@@ -1,5 +1,9 @@
+The file NMOFman.R contains the code from the 
+NMOF manual. 
+
 The file NMOFex.R contains the code from the report  
-'Examples and Extensions for the NMOF package'. 
+'Examples and Extensions for the NMOF package' (but 
+this report was superseded by the NMOF manual).
 
 The file NMOFdist.R contains the code from the report  
 'Distributed computations with the NMOF package'. 

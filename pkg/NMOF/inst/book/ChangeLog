@@ -1,0 +1,20 @@
+2011-03-18
+        * ModelingDependencies (Gaussian2.R, line 29): "cor(Y)" replaced
+	by "cor(Xc)"
+
+        * EconometricModels (example1.R, example3data.R): added
+        "if(is.na())" in OF (as a safeguard if "lambda" gets negative
+        during the search)
+
+        
+About this file
+        This ChangeLog reports how the R-files in the package have been
+	changed compared with the versions printed in the book. The file
+	is only updated when substantive changes have been made (adding
+	space or comments is not a substantive change). Note that in the
+	R-files all expressions of the type "all.equal(x, y)" have been
+	replaced with "stopifnot(all.equal(x, y))". Running such files via
+	"source" will then stop with an error if a FALSE occurs.
+
+	If you find errors in the files, please report them to
+	<enricoschumann@yahoo.de> .

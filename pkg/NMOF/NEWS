@@ -1,3 +1,20 @@
+v0.25-0  (2012-04-20)
+
+  o All the R-code examples from the book are now available 
+    in the package through function 'showExample'; eg, 
+    'showExample("equations.R")'
+    (The scripts are stored in subdirectory 'book'.) 
+
+  o A first draft of the 'NMOF Manual' is available from
+    http://enricoschumann.net/NMOF.htm . The manual's code 
+    examples are collected in file 'NMOFman.R' (in subdirectory 
+    'NMOFex'). The manual supersedes 'Examples and Extensions for 
+    the NMOF package'.
+
+  o The tests on specific TA applications (minimum variance, 
+    tangency portfolio) have been removed; the code was added to 
+    the manual.
+
 v0.24-1  (2012-04-16)
 
   o Small changes in vignettes.

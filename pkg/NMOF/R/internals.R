@@ -58,3 +58,21 @@ repair1c <- function(x, up, lo) {
     xadjL <- xadjL + abs(xadjL)
     x - (xadjU - xadjL)/2
 }
+
+##
+
+Chapters <- c("Introduction",
+              "Numerical analysis in a nutshell",
+              "Linear equations and Least Squares problems",
+              "Finite difference methods",
+              "Binomial trees",
+              "Generating random numbers",
+              "Modeling dependencies",
+              "A gentle introduction to financial simulation",
+              "Financial simulation at work: some case studies",
+              "Optimization problems in finance",
+              "Basic methods",
+              "Heuristic methods in a nutshell",
+              "Portfolio optimization",
+              "Econometric models",
+              "Calibrating option pricing models")

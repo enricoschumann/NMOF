@@ -66,52 +66,52 @@ LSopt(OF, algo = list(), ...)
       \code{xlist} (see Value section below). To check, for instance,
       the current solution at the end of the \code{i}th generation, retrieve
       \code{xlist[[c(2L, i)]]}.} 
-    }%describe
-    \acronym{LS} works on solutions through the functions \code{neighbour}
-    and \code{OF}, which are specified by the user. Thus, a solution need
-    not be a numeric vector, but can be any other data structure as well
-    (eg, a list or a matrix).
+  }%describe
+  \acronym{LS} works on solutions through the functions \code{neighbour}
+  and \code{OF}, which are specified by the user. Thus, a solution need
+  not be a numeric vector, but can be any other data structure as well
+  (eg, a list or a matrix).
 
-    To run silently (except for warnings and errors),
-    \code{algo$printDetail} and \code{algo$printBar} must be \code{FALSE}.
+  To run silently (except for warnings and errors),
+  \code{algo$printDetail} and \code{algo$printBar} must be \code{FALSE}.
 
-  }
+}
 
-  \value{
-    Returns a list.
-    
-    \item{\code{xbest}}{best solution found.}
+\value{
+  Returns a list.
+  
+  \item{\code{xbest}}{best solution found.}
 
-    \item{\code{OFvalue}}{objective function value associated with best
-      solution.}
+  \item{\code{OFvalue}}{objective function value associated with best
+    solution.}
 
-    \item{\code{Fmat}}{a matrix with two columns. \code{Fmat[ ,1L]}
-      contains the proposed solution over all iterations; \code{Fmat[
-        ,2L]} contains the accepted solutions.}
+  \item{\code{Fmat}}{a matrix with two columns. \code{Fmat[ ,1L]}
+    contains the proposed solution over all iterations; \code{Fmat[
+      ,2L]} contains the accepted solutions.}
 
-    \item{\code{xlist}}{if \code{algo$storeSolutions} is \code{TRUE}, a
-      list; else \code{NA}. Contains the neighbour solutions at a given
-      iteration (\code{xn}) and the current solutions
-      (\code{xc}). Example: \code{Fmat[i, 2L]} is the objective function
-      value associated with \code{xlist[[c(2L, i)]]}.}
+  \item{\code{xlist}}{if \code{algo$storeSolutions} is \code{TRUE}, a
+    list; else \code{NA}. Contains the neighbour solutions at a given
+    iteration (\code{xn}) and the current solutions
+    (\code{xc}). Example: \code{Fmat[i, 2L]} is the objective function
+    value associated with \code{xlist[[c(2L, i)]]}.}
 
-  }
-  \references{
-    Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical
-      Methods and Optimization in Finance}. Elsevier.
-    \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
+}
+\references{
+  Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical
+    Methods and Optimization in Finance}. Elsevier.
+  \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
 
-    Schumann, E. (2011) Examples and Extensions for the \pkg{NMOF}
-    Package. \url{http://enricoschumann.net/NMOF.htm}
+  Schumann, E. (2011) Examples and Extensions for the \pkg{NMOF}
+  Package. \url{http://enricoschumann.net/NMOF.htm}
 
-  }
-  \author{
-    Enrico Schumann
-  }
-  \seealso{
-    \code{\link{TAopt}}
-  }
-  \examples{
+}
+\author{
+  Enrico Schumann
+}
+\seealso{
+  \code{\link{TAopt}}
+}
+\examples{
 ## Aim: find the columns of X that, when summed, give y
 
 ## random data set
@@ -139,7 +139,8 @@ neighbour <- function(xc, data) {
     xn <- xc
     p <- sample.int(data$nc, data$n)
     xn[p] <- abs(xn[p] - 1L)
-    if (sum(xn) < 1L) xn <- xc 
+    if (sum(xn) < 1L)
+        xn <- xc 
     xn
 }
 ## a greedy neighbourhood function
@@ -153,8 +154,8 @@ neighbourG <- function(xc, data) {
         xn[p] <- abs(xn[p] - 1L)
         if (sum(xn) > 1L) {
             Fxn <- of(xn) 
-            if (Fxn <= Fxbest) {
-                xbest <- xn; FXbest <- Fxn
+            if (Fxn < Fxbest) {
+                xbest <- xn; Fxbest <- Fxn
             }
         }
     }

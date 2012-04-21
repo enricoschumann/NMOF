@@ -1,5 +1,21 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.25-0 (2012-04-20)}{
+  \itemize{
+    \item All the R-code examples from the book are now available 
+      in the package through function 'showExample'; eg, 
+      'showExample("equations.R")'
+      (The scripts are stored in subdirectory 'book'.) 
+    \item A first draft of the 'NMOF Manual' is available from
+      http://enricoschumann.net/NMOF.htm . The manual's code 
+      examples are collected in file 'NMOFman.R' (in subdirectory 
+      'NMOFex'). The manual supersedes 'Examples and Extensions for 
+      the NMOF package'.
+    \item The tests on specific TA applications (minimum variance, 
+      tangency portfolio) have been removed; the code was added to 
+      the manual.
+  }
+}
 \section{Changes in NMOF version 0.24-1 (2012-04-16)}{
   \itemize{
     \item Small changes in vignettes.

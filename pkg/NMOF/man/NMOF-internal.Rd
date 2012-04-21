@@ -15,6 +15,7 @@ mRU(m,n)
 mRN(m,n)
 mcList(mc.control)
 repair1c(x, up, lo)
+Chapters
 }
 \details{
   \code{makeInteger} coerces the scalar \code{x} to integer. If the
@@ -37,6 +38,9 @@ repair1c(x, up, lo)
 
   \code{repair1c} is described in the vignette on \sQuote{Repairing
     Solutions}.
+
+  \code{Chapters} is a vector of length 15, giving the chapter names as
+  printed in the book. (Can be accessed with \code{\link{showChapterNames}}.)
 }
 
 \author{
