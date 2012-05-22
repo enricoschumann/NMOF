@@ -2,10 +2,10 @@
 \alias{xwGauss}
 \alias{changeInterval}
 \title{
-Integration of Gauss-type
+  Integration of Gauss-type
 }
 \description{
-Compute nodes and weights for Gauss integration.
+  Compute nodes and weights for Gauss integration.
 }
 \usage{
 xwGauss(n, method = "legendre")
@@ -13,59 +13,59 @@ changeInterval(nodes, weights, oldmin, oldmax, newmin, newmax)
 }
 \arguments{
   \item{n}{
-number of nodes
-}
+    number of nodes
+  }
   \item{method}{
-character. default is \code{"legendre"}; also possible are
-\code{"laguerre"} and \code{"hermite"}
-}
-% changeInterval
+    character. default is \code{"legendre"}; also possible are
+    \code{"laguerre"} and \code{"hermite"}
+  }
+  % changeInterval
   \item{nodes}{
-the nodes (a numeric vector)
-}
+    the nodes (a numeric vector)
+  }
   \item{weights}{
-the weights (a numeric vector)
-}
+    the weights (a numeric vector)
+  }
   \item{oldmin}{
-the minimum of the interval (typically as tabulated)
-}
+    the minimum of the interval (typically as tabulated)
+  }
   \item{oldmax}{
-the maximum of the interval (typically as tabulated)
-}
+    the maximum of the interval (typically as tabulated)
+  }
   \item{newmin}{
-the desired minimum of the interval
-}
+    the desired minimum of the interval
+  }
   \item{newmax}{
-the desired maximum of the interval
-}
+    the desired maximum of the interval
+  }
 
 }
 \details{
-  \code{xwGauss} computes nodes and weights for integration for the interval -1
-  to 1. It uses the method of Golub and Welsch (1969).
+  \code{xwGauss} computes nodes and weights for integration for the
+  interval -1 to 1. It uses the method of Golub and Welsch (1969).
 
   \code{changeInterval} is a utility that transforms nodes and weights
   to an arbitrary interval.
 
 }
 \value{
-a list with two elements
-\item{weights}{a numeric vector}
-\item{nodes}{a numeric vector}
+  a list with two elements
+  \item{weights}{a numeric vector}
+  \item{nodes}{a numeric vector}
 }
 \references{
-Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Optimization in Finance}. Elsevier.
-\url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
+  Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Optimization in Finance}. Elsevier.
+  \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
 
-Golub, G.H. and Welsch, J.H. (1969). Calculation of Gauss Quadrature Rules. \emph{Mathematics of Computation},
-\bold{23}(106), pp. 221--230+s1--s10.
+  Golub, G.H. and Welsch, J.H. (1969). Calculation of Gauss Quadrature Rules. \emph{Mathematics of Computation},
+  \bold{23}(106), pp. 221--230+s1--s10.
 }
 \author{
-Enrico Schumann
+  Enrico Schumann
 }
 
 \seealso{
-\code{\link{callHestoncf}}
+  \code{\link{callHestoncf}}
 }
 \examples{
 ## examples from Gilli/Maringer/Schumann (2011), ch. 15

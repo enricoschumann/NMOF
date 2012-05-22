@@ -1,5 +1,12 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.25-1 (2012-05-22)}{
+  \itemize{
+    \item Edited some of the examples in the documentation; minor 
+      modifications in docs.
+    \item Code examples in subdirectory 'NMOFex' updated.
+  }
+}
 \section{Changes in NMOF version 0.25-0 (2012-04-20)}{
   \itemize{
     \item All the R-code examples from the book are now available 

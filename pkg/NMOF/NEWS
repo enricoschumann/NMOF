@@ -1,3 +1,10 @@
+v0.25-1  (2012-05-22)
+
+  o Edited some of the examples in the documentation; minor 
+    modifications in docs.
+
+  o Code examples in subdirectory 'NMOFex' updated.
+
 v0.25-0  (2012-04-20)
 
   o All the R-code examples from the book are now available 

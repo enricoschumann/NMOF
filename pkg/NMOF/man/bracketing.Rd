@@ -1,10 +1,10 @@
 \name{bracketing}
 \alias{bracketing}
 \title{
-Zero-Bracketing
+  Zero-Bracketing
 }
 \description{
-Bracket the zeros (roots) of a univariate function
+  Bracket the zeros (roots) of a univariate function
 }
 \usage{
 bracketing(fun, interval, ...,
@@ -40,11 +40,11 @@ bracketing(fun, interval, ...,
   \item{mc.control}{
     a list containing settings that will be passed to \code{mclapply} if
     \code{method} is \code{multicore}. Must be a list of named
-  elements. See the documentation of \code{mclapply} in package \pkg{multicore}.
-}
+    elements. See the documentation of \code{mclapply} in package \pkg{multicore}.
+  }
   \item{cl}{default is \code{NULL}. If \code{method} is \code{snow}, this must be a
-cluster object or an integer (the number of cores to be used). See the
-documentation of package \pkg{snow}.}
+    cluster object or an integer (the number of cores to be used). See the
+    documentation of package \pkg{snow}.}
 }
 \details{
   \code{bracketing} evaluates \code{fun} at equal-spaced values of \code{x}
@@ -63,7 +63,7 @@ documentation of package \pkg{snow}.}
   \code{mc.control}. If \code{multicore} is chosen but the package is
   not available (eg, currently on Windows), then \code{method} will be
   set to \code{loop} and a warning is issued. If \code{method ==
-  "snow"}, function \code{clusterApply} from package \pkg{snow} is
+    "snow"}, function \code{clusterApply} from package \pkg{snow} is
   used. In this case, the argument \code{cl} must either be a cluster
   object (see the documentation of \code{clusterApply}) or an
   integer. If an integer, a cluster will be set up via
@@ -96,7 +96,8 @@ documentation of package \pkg{snow}.}
 }
 \examples{
 ## Gilli/Maringer/Schumann (2011), p. 290
-testFun <- function(x) cos(1/x^2)
+testFun <- function(x)
+    cos(1/x^2)
 
 bracketing(testFun, interval = c(0.3, 0.9), n = 26L)
 bracketing(testFun, interval = c(0.3, 0.9), n = 26L, method = "vectorised")

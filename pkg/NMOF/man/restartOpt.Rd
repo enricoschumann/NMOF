@@ -58,7 +58,7 @@ restartOpt(fun, n, OF, algo, ...,
   \code{mc.control}. If \code{multicore} is chosen but the package is
   not available, then \code{method} will be
   set to \code{loop} and a warning is issued. If \code{method ==
-  "snow"}, function \code{clusterApply} from package \pkg{snow} is
+    "snow"}, function \code{clusterApply} from package \pkg{snow} is
   used. In this case, the argument \code{cl} must either be a cluster
   object (see the documentation of \code{clusterApply}) or an
   integer. If an integer, a cluster will be set up via
@@ -103,17 +103,17 @@ algo <- list(nP = 50L,
 
 ## choose a larger 'n' when you can afford it
 algo$nG <- 100L
-res100 <- restartOpt(DEopt, n = 10L, OF = tfTrefethen, algo = algo)
+res100 <- restartOpt(DEopt, n = 5L, OF = tfTrefethen, algo = algo)
 res100F <- sapply(res100, `[[`, "OFvalue")
 
 algo$nG <- 300L
-res300 <- restartOpt(DEopt, n = 10, OF = tfTrefethen, algo = algo)
+res300 <- restartOpt(DEopt, n = 5L, OF = tfTrefethen, algo = algo)
 res300F <- sapply(res300, `[[`, "OFvalue")
 
 xx <- pretty(c(res100F, res300F, -3.31))
 plot(ecdf(res100F), main = "optimum is -3.306", 
      xlim = c(xx[1], tail(xx,1)))
-abline(v = -3.3069, col = "red")  ### optimum
+abline(v = -3.3069, col = "red")  ## optimum
 lines(ecdf(res300F), col = "blue")
 legend(x = "right", box.lty = 0, , lty = 1,
       legend = c("optimum", "100 generations", "300 generations"),
@@ -126,5 +126,7 @@ system.time(res100 <- restartOpt(DEopt, n = 10L, OF = tfTrefethen, algo = algo))
 
 require(compiler)
 enableJIT(3)
-system.time(res100 <- restartOpt(DEopt, n = 10L, OF = tfTrefethen, algo = algo))}
+system.time(res100 <- restartOpt(DEopt, n = 10L, OF = tfTrefethen, algo
+= algo))
+}
 }

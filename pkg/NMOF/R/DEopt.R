@@ -170,9 +170,9 @@ DEopt <- function(OF, algo = list(), ...) {
         ## print info
         if (printDetail > 1) {
             if (g %% printDetail == 0L) {
-            cat("Best solution (iteration ", g, "/", nG, "): ",
-                prettyNum(min(vF)[1L]),"\n", sep = "")
-            flush.console()
+                cat("Best solution (iteration ", g, "/", nG, "): ",
+                    prettyNum(min(vF)[1L]),"\n", sep = "")
+                flush.console()
             }
         }
 
@@ -193,4 +193,19 @@ DEopt <- function(OF, algo = list(), ...) {
 
     list(xbest = mP[ ,sgbest], OFvalue = sGbest,
          popF = vF, Fmat = Fmat, xlist = xlist)
+}
+
+if (0L) {
+    DEoptim <- function(OF, ..., lower = -Inf, upper = Inf,
+                        control = list()) {
+        stop("not operational yet")
+    }
+    PSoptim <- function(OF, ..., lower = -Inf, upper = Inf,
+                        control = list()) {
+        stop("not operational yet")
+    }
+    TAoptim <- function(OF, neighbour, ..., lower = -Inf, upper = Inf,
+                        control = list()) {
+        stop("not operational yet")
+    }
 }
