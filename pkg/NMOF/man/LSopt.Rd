@@ -188,7 +188,8 @@ solLS$OFvalue  ## the true solution has OF-value 0
 ## (3) *Threshold Accepting*
 algo$nT <- 10L
 algo$nS <- ceiling(algo$nS/algo$nT)
-solTA <- TAopt(OF, algo = algo, Data = Data, q = 0.99)
+algo$q <- 0.99
+solTA <- TAopt(OF, algo = algo, Data = Data)
 iterTA <- min(which(solTA$Fmat[ ,2L] == solTA$OFvalue))
 solTA$OFvalue  ## the true solution has OF-value 0
 
