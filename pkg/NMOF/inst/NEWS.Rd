@@ -1,5 +1,13 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.25-2 (2012-06-17)}{
+  \itemize{
+    \item Small changes in the vignettes (mostly layout).
+    \item In 'TAopt', 'LSopt': if 'x0' is not a function, it is initialised
+      with 'eval(x0)'; thus, it can be an expression.
+    \item Several minor internal changes.
+  }
+}
 \section{Changes in NMOF version 0.25-1 (2012-05-22)}{
   \itemize{
     \item Edited some of the examples in the documentation; minor 
