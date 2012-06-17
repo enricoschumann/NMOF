@@ -24,7 +24,7 @@ TAopt <- function(OF, algo = list(), ...) {
     if (is.null(algoD$x0))
         stop("specify start solution 'algo$x0'")
     if (is.function(algoD$x0)) ## evaluate x0 if function
-        x0 <- algoD$x0() else x0 <- algoD$x0
+        x0 <- algoD$x0() else x0 <- eval(algoD$x0)
 
     OF1 <- function(x) OF(x, ...)
     N1 <- function(x) algoD$neighbour(x, ...)

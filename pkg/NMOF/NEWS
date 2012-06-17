@@ -1,3 +1,12 @@
+v0.25-2  (2012-06-17)
+
+  o Small changes in the vignettes (mostly layout).
+
+  o In 'TAopt', 'LSopt': if 'x0' is not a function, it is initialised
+    with 'eval(x0)'; thus, it can be an expression.
+
+  o Several minor internal changes.
+
 v0.25-1  (2012-05-22)
 
   o Edited some of the examples in the documentation; minor 
