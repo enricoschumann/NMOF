@@ -9,6 +9,19 @@
 \usepackage{natbib}
 
 \SweaveOpts{keep.source = TRUE, eps = TRUE, pdf = FALSE}
+\usepackage{color}
+\definecolor{grau2}{rgb}{.2,.2,.2}
+\definecolor{grau7}{rgb}{.7,.7,.7}
+% define *Sweave* layout
+\DefineVerbatimEnvironment{Sinput}{Verbatim}{}
+\DefineVerbatimEnvironment{Soutput}{Verbatim}{frame=single,xleftmargin=0em,%
+  formatcom=\color{grau2},rulecolor=\color{grau7}}
+\DefineVerbatimEnvironment{Scode}{Verbatim}{xleftmargin=2em}
+\fvset{listparameters={\setlength{\topsep}{0pt}}}
+\renewenvironment{Schunk}{\vspace{\topsep}}{\vspace{\topsep}}
+<<echo=false>>=
+options(continue = " ", digits = 5)
+@
 
 \begin{document}
 {\raggedright{\LARGE Vectorised objective functions}}\medskip

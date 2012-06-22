@@ -1,5 +1,11 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.25-3 (2012-06-22)}{
+  \itemize{
+    \item Small changes in the vignettes (mostly layout).
+    \item Code examples in subdirectory 'NMOFex' updated.
+  }
+}
 \section{Changes in NMOF version 0.25-2 (2012-06-17)}{
   \itemize{
     \item Small changes in the vignettes (mostly layout).
