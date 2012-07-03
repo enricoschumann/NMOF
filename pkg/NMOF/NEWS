@@ -1,3 +1,13 @@
+v0.25-4  (2012-07-03)
+
+  o Added checks on the parameters for 'callCF'; added  
+    a new arguments 'uniroot.control', which allows to pass 
+    the settings for 'uniroot' (to compute implied vol), 
+    and 'uniroot.info'. 
+    (Computation of implied vol would fail when spot equalled
+    strike and r equalled q; thanks you Douglas McLean for
+    reporting this case.)
+
 v0.25-3  (2012-06-22)
 
   o Small changes in the vignettes (mostly layout).

@@ -1,5 +1,16 @@
 \name{NEWS}
 \title{News for Package 'NMOF'}
+\section{Changes in NMOF version 0.25-4 (2012-07-03)}{
+  \itemize{
+    \item Added checks on the parameters for 'callCF'; added  
+      a new arguments 'uniroot.control', which allows to pass 
+      the settings for 'uniroot' (to compute implied vol), 
+      and 'uniroot.info'. 
+      (Computation of implied vol would fail when spot equalled
+      strike and r equalled q; thanks you Douglas McLean for
+      reporting this case.)
+  }
+}
 \section{Changes in NMOF version 0.25-3 (2012-06-22)}{
   \itemize{
     \item Small changes in the vignettes (mostly layout).
