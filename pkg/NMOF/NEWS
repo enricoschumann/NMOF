@@ -5,7 +5,7 @@ v0.25-4  (2012-07-03)
     the settings for 'uniroot' (to compute implied vol), 
     and 'uniroot.info'. 
     (Computation of implied vol would fail when spot equalled
-    strike and r equalled q; thanks you Douglas McLean for
+    strike and r equalled q; thanks to Douglas McLean for
     reporting this case.)
 
 v0.25-3  (2012-06-22)
