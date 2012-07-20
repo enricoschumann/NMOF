@@ -94,7 +94,7 @@ test.DEopt <- function() {
     X <- 1:10 - 5
     OF <- function(x, X)
         sum(abs(x - X))
-    algo <- list(nP = 20, nG = 500,
+    algo <- list(nP = 30, nG = 700,
                  min = rep(-3, length(X)),
                  max = rep( 3,  length(X)),
                  minmaxConstr = FALSE,
@@ -106,4 +106,22 @@ test.DEopt <- function() {
     sol <- DEopt(OF, algo, X)
     round(sol$xbest,3)
     checkEquals(round(sol$xbest,3), c(-3, -3, -2, -1, 0, 1, 2, 3, 3, 3))
+
+    ## vectorised comp: error if
+    X <- 1:10 - 5
+    OF <- function(x, X)  ## correct
+        colSums(abs(x - X))
+    OF <- function(x, X) {  ## WRONG
+        res <- colSums(abs(x - X))
+        res <- res[-1]
+    }
+    algo <- list(nP = 20, nG = 2,
+                 min = rep(-3, length(X)),
+                 max = rep( 3,  length(X)),
+                 loopOF = FALSE,
+                 printBar = FALSE, printDetail = FALSE,
+                 storeF = FALSE, storeSolutions = FALSE)
+    checkException(sol <- DEopt(OF, algo, X), silent = TRUE)
+
+
 }

@@ -90,12 +90,14 @@ DEopt <- function(OF, algo = list(), ...) {
     ## 1) repair
     if (mm)
         mP <- repair1c(mP, vmax, vmin)
-    if ( !is.null(algoD$repair) ){
+    if (!is.null(algoD$repair)) {
         if (algoD$loopRepair){
             for (s in snP)
                 mP[ ,s] <- Re1(mP[ ,s])
         } else {
             mP <- Re1(mP)
+            if (!all(dim(mP) == c(d, nP)))
+                stop("repair function returned population matrix of wrong size")
         }
     }
     ## 2) evaluate
@@ -104,6 +106,8 @@ DEopt <- function(OF, algo = list(), ...) {
             vF[s] <- OF1(mP[ ,s])
     } else {
         vF <- OF1(mP)
+        if (length(vF) != nP)
+            stop("objective function returned vector of wrong length")
     }
     ## 3) penalise
     if (!is.null(algoD$pen)) {
@@ -111,6 +115,8 @@ DEopt <- function(OF, algo = list(), ...) {
             for (s in snP) vPv[s] <- Pe1(mP[ ,s])
         } else {
             vPv <- Pe1(mP)
+            if (length(vPv) != nP)
+                stop("penalty function returned vector of wrong length")
         }
         vF <- vF + vPv
     }

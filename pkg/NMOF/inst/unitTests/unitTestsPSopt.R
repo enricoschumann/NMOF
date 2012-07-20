@@ -59,7 +59,7 @@ test.PSopt <- function() {
     X <- 1:10 - 5
     OF <- function(x, X)
         sum(abs(x - X))
-    algo <- list(nP = 50, nG = 1000, c2 =1, c1=1,
+    algo <- list(nP = 50, nG = 1200, c2 =1, c1=0.5,
                  min = rep(-3, length(X)),
                  max = rep( 3,  length(X)),
                  minmaxConstr = FALSE,

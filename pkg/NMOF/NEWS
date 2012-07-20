@@ -1,7 +1,15 @@
+v0.25-5  (2012-07-20)
+
+  o Added checks in DEopt that vectorised functions 
+    return objects of correct size (will be added to PSopt 
+    and GAopt as well).
+
+  o Removed NEWS.Rd (NEWS now back to plain text).
+
 v0.25-4  (2012-07-03)
 
   o Added checks on the parameters for 'callCF'; added  
-    a new arguments 'uniroot.control', which allows to pass 
+    new arguments 'uniroot.control', which allows to pass 
     the settings for 'uniroot' (to compute implied vol), 
     and 'uniroot.info'. 
     (Computation of implied vol would fail when spot equalled
@@ -18,8 +26,8 @@ v0.25-2  (2012-06-17)
 
   o Small changes in the vignettes (mostly layout).
 
-  o In 'TAopt', 'LSopt': if 'x0' is not a function, it is initialised
-    with 'eval(x0)'; thus, it can be an expression.
+  o In 'TAopt', 'LSopt': if 'x0' is not a function, it is 
+    initialised with 'eval(x0)'; thus, it can be an expression.
 
   o Several minor internal changes.
 

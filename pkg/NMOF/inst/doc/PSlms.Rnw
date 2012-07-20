@@ -67,10 +67,10 @@ residuals to be minimised. Note that we put \texttt{as.vector(y)} into
 \texttt{data} so that the vector gets `recycled' in the objective
 function.
 <<>>=
-n <- 100L   ### number of observations
-p <- 10L    ### number of regressors
+n <- 100L   ## number of observations
+p <- 10L    ## number of regressors
 constant <- TRUE; sigma <- 3; oFrac  <- 0.1
-h <- 75L    ### ... or use something like floor((n+1)/2)
+h <- 75L    ## ... or use something like floor((n+1)/2)
 
 aux <- createData(n, p, constant, sigma, oFrac)
 X <- aux$X; y <- aux$y
@@ -91,14 +91,14 @@ OF <- function(param,data) {
     aux <- y - X %*% param
     aux <- aux * aux
     aux <- apply(aux, 2L, sort, partial = data$h)
-    colSums(aux[1:data$h, ])  ### LTS
+    colSums(aux[1:data$h, ])  ## LTS
 }
 OF <- function(param, data) {
     X <- data$X; y <- data$y
     aux <- y - X %*% param
     aux <- aux * aux
     aux <- apply(aux, 2L, sort, partial = data$h)
-    aux[data$h, ]  ### LQS
+    aux[data$h, ]  ## LQS
 }
 @
 Both functions are vectorised. They work with a single solution
