@@ -1,7 +1,7 @@
 restartOpt <- function(fun, n, OF, algo, ...,
                        method = c("loop", "multicore", "snow"),
                        mc.control = list(),
-                       cl = NULL) {
+                       cl = NULL, best.only = FALSE) {
     n <- makeInteger(n, "'n'", 1L)
     method <- tolower(method[1L])
     force(fun)
@@ -13,7 +13,9 @@ restartOpt <- function(fun, n, OF, algo, ...,
     if (!is.null(cl))
         method <- "snow"
     if (method == "multicore") {
-        if (!suppressWarnings(require("multicore", quietly = TRUE))) {
+        if (!suppressWarnings(require("parallel", quietly = TRUE))) {
+            message("package 'parallel' is used")
+        } else if (!suppressWarnings(require("multicore", quietly = TRUE))) {
             method <- "loop"
             warning("package 'multicore' not available: use method 'loop'")
         }
@@ -26,7 +28,6 @@ restartOpt <- function(fun, n, OF, algo, ...,
             warning("no cluster 'cl' passed for method 'snow': use method 'loop'")
         }
     }
-
     if (method == "multicore") {
         mc.settings <- mcList(mc.control)
         allResults <- mclapply(seq_len(n), fun2,
@@ -43,6 +44,14 @@ restartOpt <- function(fun, n, OF, algo, ...,
         allResults <- clusterApply(cl, seq_len(n), fun2)
     } else {
         allResults <- lapply(seq_len(n), fun2)
+    }
+
+    if (best.only) {
+        tmp <- sapply(allResults, `[[`, "OFvalue")
+        i <- which.min(tmp)
+        if (length(i) > 1L)
+            warning("several 'best' runs")
+        allResults <- allResults[[i]]
     }
     allResults
 }

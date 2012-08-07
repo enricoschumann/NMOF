@@ -1,3 +1,13 @@
+v0.25-6  (2012-08-07)
+
+  o Package 'parallel' is now suggested. In functions gridSearch,
+    restartOpt, bracket: with method "multicore" the functions 
+    first check if package 'parallel' is available; if not, they 
+    look for package 'multicore'
+
+  o 'restartOpt' has a new argument 'best.only': if TRUE,
+    only the best run is reported. Default is FALSE.
+
 v0.25-5  (2012-07-20)
 
   o Added checks in DEopt that vectorised functions 

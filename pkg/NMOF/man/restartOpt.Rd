@@ -9,7 +9,8 @@
 \usage{
 restartOpt(fun, n, OF, algo, ...,
            method = c("loop", "multicore", "snow"),
-           mc.control = list(), cl = NULL)
+           mc.control = list(), cl = NULL,
+           best.only = FALSE)
 }
 \arguments{
   \item{fun}{
@@ -37,19 +38,27 @@ restartOpt(fun, n, OF, algo, ...,
     \code{method} is \code{multicore}. Must be a list of named
     elements. See the documentation of \code{mclapply}.
   }
-  \item{cl}{default is \code{NULL}. If method \code{snow} is used, this must be a
-    cluster object or an integer (the number of cores).}
+  \item{cl}{
+    default is \code{NULL}. If method \code{snow} is used, this must be
+    a cluster object or an integer (the number of cores).}
+  \item{best.only}{if \code{TRUE}, only the best run is
+    reported. Default is \code{FALSE}.}
 }
 \details{
-  The function returns a list of lists. If a specific starting solution is passed, all runs will start from this solution. 
-  If this is not desired, initial solutions can be created randomly. This is done per default in 
-  \code{\link{DEopt}}, \code{\link{GAopt}} and \code{\link{PSopt}}, but \code{\link{LSopt}} and \code{\link{TAopt}}
+  
+  The function returns a list of lists. If a specific starting solution
+  is passed, all runs will start from this solution. If this is not
+  desired, initial solutions can be created randomly. This is done per
+  default in \code{\link{DEopt}}, \code{\link{GAopt}} and
+  \code{\link{PSopt}}, but \code{\link{LSopt}} and \code{\link{TAopt}}
   require to specify a starting solution.
 
-  In case of \code{\link{LSopt}} and \code{\link{TAopt}}, the passed initial solution \code{algo$x0} is checked with 
-  \code{is.function}: if \code{TRUE}, the function is evaluated in each single run. For   
-  \code{\link{DEopt}}, \code{\link{GAopt}} and \code{\link{PSopt}}, the initial solution (which also can be a function)
-  is specified with \code{algo$initP}. 
+  In case of \code{\link{LSopt}} and \code{\link{TAopt}}, the passed
+  initial solution \code{algo$x0} is checked with \code{is.function}: if
+  \code{TRUE}, the function is evaluated in each single run. For
+  \code{\link{DEopt}}, \code{\link{GAopt}} and \code{\link{PSopt}}, the
+  initial solution (which also can be a function) is specified with
+  \code{algo$initP}.
 
   The argument \code{method} determines how \code{fun} is
   evaluated. Default is \code{loop}. If \code{method == "multicore"},
@@ -71,7 +80,15 @@ restartOpt(fun, n, OF, algo, ...,
 
 }
 \value{
-  Returns a list of \code{n} lists. Each of the \code{n} lists stores the output of one of the runs.
+  
+  If \code{best.only} is \code{FALSE} (the default), the function
+  returns a list of \code{n} lists. Each of the \code{n} lists stores
+  the output of one of the runs.
+
+  If \code{best.only} is \code{TRUE}, only the best restart is
+  reported. The returned list has the structure specific to the used
+  method.
+
 }
 \references{
   Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Optimization in Finance}. Elsevier. 
@@ -112,7 +129,7 @@ res300F <- sapply(res300, `[[`, "OFvalue")
 
 xx <- pretty(c(res100F, res300F, -3.31))
 plot(ecdf(res100F), main = "optimum is -3.306", 
-     xlim = c(xx[1], tail(xx,1)))
+     xlim = c(xx[1L], tail(xx, 1L)))
 abline(v = -3.3069, col = "red")  ## optimum
 lines(ecdf(res300F), col = "blue")
 legend(x = "right", box.lty = 0, , lty = 1,
@@ -126,7 +143,6 @@ system.time(res100 <- restartOpt(DEopt, n = 10L, OF = tfTrefethen, algo = algo))
 
 require(compiler)
 enableJIT(3)
-system.time(res100 <- restartOpt(DEopt, n = 10L, OF = tfTrefethen, algo
-= algo))
+system.time(res100 <- restartOpt(DEopt, n = 10L, OF = tfTrefethen, algo = algo))
 }
 }

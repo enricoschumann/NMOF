@@ -17,7 +17,9 @@ gridSearch <- function(fun, levels, ..., lower, upper,
         method <- "loop"
     }
     if (method == "multicore") {
-        if (!suppressWarnings(require("multicore", quietly = TRUE))) {
+        if (!suppressWarnings(require("parallel", quietly = TRUE))) {
+            message("package 'parallel' is used")
+        } else if (!suppressWarnings(require("multicore", quietly = TRUE))) {
             method <- "loop"
             warning("package 'multicore' not available: use method 'loop'")
         }
@@ -64,7 +66,7 @@ gridSearch <- function(fun, levels, ..., lower, upper,
         if (np < 5L)
             msg <- paste(nl, collapse = ", ")
         else {
-            msg <- paste(c(nl[seq_len(4L)],"..."), collapse = ", ")
+            msg <- paste(c(nl[seq_len(4L)], "..."), collapse = ", ")
         }
         msg <- paste(np, " variables with ", msg, " levels: ",
                      nlp, " function evaluations required.", sep = "")

@@ -15,7 +15,9 @@ bracketing <- function(fun, interval, ...,
         method <- "vectorised"
     if (!is.null(cl)) method <- "snow"
     if (method == "multicore") {
-        if (!suppressWarnings(require("multicore", quietly = TRUE))) {
+        if (!suppressWarnings(require("parallel", quietly = TRUE))) {
+            message("package 'parallel' is used")
+        } else if (!suppressWarnings(require("multicore", quietly = TRUE))) {
             method <- "loop"
             warning("package 'multicore' not available: use method 'loop'")
         }
