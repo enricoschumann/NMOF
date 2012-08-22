@@ -1,4 +1,3 @@
-% version 2011-05-01
 \name{NS}
 \alias{NS}
 \alias{NSS}
@@ -79,6 +78,6 @@ persp(x = mat[,1], y = mats, mat[ ,-1L],
       phi = 30, theta = 30, ticktype = "detailed",
       xlab = "time",
       ylab = "time to maturity in years",
-      zlab = "zero rates in %")
+      zlab = "zero rates in \%")
 }
 }

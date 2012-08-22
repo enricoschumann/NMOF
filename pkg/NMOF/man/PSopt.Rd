@@ -196,15 +196,15 @@ PSopt(OF, algo = list(), ...)
 \examples{
 ## Least Median of Squares (LMS) estimation
 genData <- function(nP, nO, ol, dy) {
-    ### create dataset as in Salibian-Barrera & Yohai 2006
-    ### nP = regressors, nO  = number of obs
-    ### ol = number of outliers, dy  = outlier size 
+    ## create dataset as in Salibian-Barrera & Yohai 2006
+    ## nP = regressors, nO  = number of obs
+    ## ol = number of outliers, dy  = outlier size 
     mRN <- function(m, n) array(rnorm(m * n), dim = c(m, n))
     y <- mRN(nO, 1)
     X <- cbind(as.matrix(numeric(nO) + 1), mRN(nO, nP - 1L))
     zz <- sample(nO)
     z  <- cbind(1, 100, array(0, dim = c(1L, nP - 2L)))
-    for (i in 1L:ol) {
+    for (i in seq_len(ol)) {
         X[zz[i], ] <- z
         y[zz[i]] <- dy 
     }
@@ -215,7 +215,7 @@ OF <- function(param, data) {
     X <- data$X
     y <- data$y
     aux <- as.vector(y) - X \%*\% param
-    ### as.vector(y) for recycling; param is a matrix
+    ## as.vector(y) for recycling (param is a matrix)
     aux <- aux * aux
     aux <- apply(aux, 2, sort, partial = data$h)
     aux[h, ]
@@ -234,8 +234,8 @@ algo <- list(min = rep(-10, nP), max = rep( 10, nP),
 
 system.time(sol <- PSopt(OF = OF, algo = algo, data = data))
 if (require("MASS", quietly = TRUE)) {
-    ### for nsamp = "best", in this case, complete enumeration 
-    ### will be tried. See ?lqs
+    ## for nsamp = "best", in this case, complete enumeration 
+    ## will be tried. See ?lqs
     system.time(test1 <- lqs(data$y ~ data$X[ ,-1L], 
             adjust = TRUE, 
             nsamp = "best", 
