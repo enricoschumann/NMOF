@@ -141,6 +141,10 @@ DEopt(OF, algo = list(), ...)
     values of all solutions over the generations; else \code{NA}.}
   \item{\code{xlist}}{if \code{algo$storeSolutions} is \code{TRUE}, a list that
     contains a list \code{P} of matrices; else \code{NA}.}
+  \item{\code{initial.state}}{the value of \code{\link{.Random.seed}}
+    when the function was called.}
+
+  
 } % end value
 \references{
   Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods

@@ -20,6 +20,9 @@ DEopt <- function(OF, algo = list(), ...) {
 
     checkList(algo, algoD)
     algoD[names(algo)] <- algo
+    if (!exists(".Random.seed", envir = .GlobalEnv,
+                inherits = FALSE))
+        state <- NA else state <- .Random.seed
 
     ## check min/max
     vmax <- as.vector(algoD$max)
@@ -198,7 +201,8 @@ DEopt <- function(OF, algo = list(), ...) {
 
 
     list(xbest = mP[ ,sgbest], OFvalue = sGbest,
-         popF = vF, Fmat = Fmat, xlist = xlist)
+         popF = vF, Fmat = Fmat, xlist = xlist,
+         initial.state = state)
 }
 
 if (0L) {

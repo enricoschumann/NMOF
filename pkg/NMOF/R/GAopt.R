@@ -19,11 +19,13 @@ GAopt <- function (OF, algo = list(), ...) {
                   crossover = c("onePoint", "uniform")
                   )
 
-    ## called for its side effect: gives warning/error
     checkList(algo, algoD)
-
-    ## add default settings
     algoD[names(algo)] <- algo
+
+    if (!exists(".Random.seed", envir = .GlobalEnv,
+                inherits = FALSE))
+        state <- NA else state <- .Random.seed
+
 
     ## --------------------------------------------------
     ## NEW: snow/multicore
@@ -269,5 +271,5 @@ GAopt <- function (OF, algo = list(), ...) {
             prettyNum(sd(vF)), " .\n\n", sep = "")
 
     list(xbest = mP[, sgbest], OFvalue = sGbest, popF = vF,
-         Fmat = Fmat, xlist = xlist)
+         Fmat = Fmat, xlist = xlist, initial.state = state)
 }

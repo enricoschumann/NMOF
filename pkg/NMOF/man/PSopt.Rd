@@ -174,6 +174,8 @@ PSopt(OF, algo = list(), ...)
   \item{xlist}{if \code{algo$storeSolutions} is \code{TRUE}, a list that contains two
     lists \code{P} and \code{Pbest} of matrices; else \code{NA}.
   }
+  \item{\code{initial.state}}{the value of \code{\link{.Random.seed}}
+    when the function was called.}
 
 }
 \references{

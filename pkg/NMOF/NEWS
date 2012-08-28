@@ -1,3 +1,11 @@
+v0.25-8  (2012-08-28)
+
+  o all opt-functions now return 'initial.state' (which is
+    the value of '.Random.seed' when the function is 
+    called). All the warnings of '?Random' apply (in 
+    particular, see section 'Note'); the preferred way
+    is still to set a seed explicitly with 'set.seed'. 
+
 v0.25-7  (2012-08-17)
 
   o minor internal changes (the only visible update are small

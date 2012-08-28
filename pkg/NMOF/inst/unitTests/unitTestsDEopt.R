@@ -123,5 +123,22 @@ test.DEopt <- function() {
                  storeF = FALSE, storeSolutions = FALSE)
     checkException(sol <- DEopt(OF, algo, X), silent = TRUE)
 
+    ## CHECK STATE
+    trefethen <- function(xx) {
+        x <- xx[1L]; y <- xx[2L]
+        exp(sin(50*x)) + sin(60*exp(y)) + sin(70*sin(x)) +
+            sin(sin(80*y)) - sin(10*(x+y))  + (x^2+y^2)/4
+    }
+    algo <- list(nP = 100, nG = 2, F = 0.5, CR = 0.9,
+                 min = c(-3, -3), max = c( 3, 3),
+                 printBar = FALSE, printDetail = TRUE)
+
+    ## DE should solve the problem
+    sol <- DEopt(OF = trefethen, algo)
+    if (!is.na(sol$initial.state[1L])) {
+        assign(".Random.seed", sol$initial.state, envir = .GlobalEnv)
+        sol2 <- DEopt(OF = trefethen, algo)
+        checkEquals(sol, sol2)
+    }
 
 }

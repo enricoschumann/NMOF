@@ -117,6 +117,9 @@ GAopt (OF, algo = list(), ...)
     else \code{NA}}
   \item{xlist}{if \code{algo$storeSolutions} is \code{TRUE}, a list that
     contains a list \code{P} of matrices; else \code{NA}.}
+    \item{\code{initial.state}}{the value of \code{\link{.Random.seed}}
+    when the function was called.}
+
 }
 \references{
   Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Optimization in Finance}. Elsevier.

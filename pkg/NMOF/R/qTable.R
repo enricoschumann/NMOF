@@ -26,7 +26,7 @@ qTable  <- function(X, xmin = NULL, xmax = NULL, labels = NULL,
         xmin <- min(B)
     if (is.null(xmax))
         xmax <- max(B)
-    joli <- pretty(c(xmin,xmax), n = 3L)
+    joli <- pretty(c(xmin, xmax), n = 3L)
     a <- min(joli)
     b <- max(joli)
     if (is.null(labels))
@@ -41,11 +41,13 @@ qTable  <- function(X, xmin = NULL, xmax = NULL, labels = NULL,
     ## functions
     fff <- function(x) formatC(x, digits = dec, format = "f")
     ff <- function(x)  formatC(x, digits = 5L,  format = "f")
-    `%p1%` <- function(a, b) paste(a, b, sep = "")
-    `%p2%` <- function(a, b) paste(a, " & ", b, sep = "")
+    `%p1%` <- function(a, b)
+        paste(a, b, sep = "")
+    `%p2%` <- function(a, b)
+        paste(a, " & ", b, sep = "")
 
     ## create table
-    ##STR <- NULL
+    ## STR <- NULL
     STR <- c("\n&median&min&max&\\\\")
     for (cc in 1L:dim(X)[2L]){
         str0 <- cnames[cc] %p2%
@@ -122,7 +124,8 @@ if (testing) {
     y <- rnorm(100, mean = 1, sd = 2)
     z <- rnorm(100, mean = 1, sd = 0.5)
     X <- cbind(x, y, z)
-    res <- qTable(X, labels=c(0,1), at=c(0,1))
+    res <- qTable(X, labels = c(0,1), at=c(0,1),
+                  cnames = c("A a", "B b", "C c"))
     res <- qTable(X, labels=c(0,1), at=c(0,1), unitlength="5cm",
                   filename="C:/packages/res.tex")
 

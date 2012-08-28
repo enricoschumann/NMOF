@@ -92,6 +92,10 @@ LSopt(OF, algo = list(), ...)
     iteration (\code{xn}) and the current solutions
     (\code{xc}). Example: \code{Fmat[i, 2L]} is the objective function
     value associated with \code{xlist[[c(2L, i)]]}.}
+
+  \item{\code{initial.state}}{the value of \code{\link{.Random.seed}}
+    when the function was called.}
+
 }
 \references{
   Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical

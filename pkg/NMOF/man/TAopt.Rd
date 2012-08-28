@@ -137,6 +137,9 @@ TAopt(OF, algo = list(), \dots)
       (\code{xc}). Example: \code{Fmat[i, 2L]} is the objective function
       value associated with \code{xlist[[c(2L, i)]]}.}
 
+    \item{\code{initial.state}}{the value of \code{\link{.Random.seed}}
+      when the function was called.}
+
   }
   \note{If the \code{\dots} argument is used, then all the objects passed
     with \code{\dots} need to go into the objective function and the

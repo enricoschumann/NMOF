@@ -35,7 +35,7 @@ Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods
   and Optimization in Finance}. Elsevier.
 \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
 
-M. Gilli and Schumann, E. (2010) Implementing Binomial
+M. Gilli and Schumann, E. (2009) Implementing Binomial
 Trees. \acronym{COMISEF} Working Paper Series No. 008.
 \url{http://comisef.eu/?q=working_papers}
 

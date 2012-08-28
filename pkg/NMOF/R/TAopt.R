@@ -15,6 +15,10 @@ TAopt <- function(OF, algo = list(), ...) {
 
     checkList(algo, algoD)
     algoD[names(algo)] <- algo
+    if (!exists(".Random.seed", envir = .GlobalEnv,
+                inherits = FALSE))
+        state <- NA else state <- .Random.seed
+
 
     ## user *must* specify the following
     if (is.null(algoD$neighbour))
@@ -172,5 +176,6 @@ TAopt <- function(OF, algo = list(), ...) {
 
     ## return best solution
     list(xbest = xbest, OFvalue = xbestF,
-         Fmat = Fmat, xlist = xlist, vT = vT)
+         Fmat = Fmat, xlist = xlist, vT = vT,
+         initial.state = state)
 }

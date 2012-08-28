@@ -6,6 +6,10 @@ LSopt <- function(OF, algo = list(), ...) {
     checkList(algo, algoD)
     algoD[names(algo)] <- algo
 
+    if (!exists(".Random.seed", envir = .GlobalEnv,
+                inherits = FALSE))
+        state <- NA else state <- .Random.seed
+
     if (is.null(algoD$neighbour))
         stop("specify a neighbourhood function")
     if (!is.function(algoD$neighbour))
@@ -87,5 +91,6 @@ LSopt <- function(OF, algo = list(), ...) {
             sep = "")
 
     ## return best solution
-    list(xbest = xc, OFvalue = xcF, Fmat = Fmat, xlist = xlist)
+    list(xbest = xc, OFvalue = xcF, Fmat = Fmat, xlist = xlist,
+         initial.state = state)
 }

@@ -17,6 +17,10 @@ PSopt <- function(OF, algo = list(), ...) {
 
     checkList(algo, algoD)
     algoD[names(algo)] <- algo
+    if (!exists(".Random.seed", envir = .GlobalEnv,
+                inherits = FALSE))
+        state <- NA else state <- .Random.seed
+
 
     vmax <- as.vector(algoD$max)
     vmin <- as.vector(algoD$min)
@@ -186,5 +190,6 @@ PSopt <- function(OF, algo = list(), ...) {
 
     ## return best solution
     list(xbest = mPbest[,sgbest], OFvalue = sGbest,
-         popF = vFbest, Fmat = Fmat, xlist = xlist)
+         popF = vFbest, Fmat = Fmat, xlist = xlist,
+         initial.state = state)
 }
