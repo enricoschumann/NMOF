@@ -197,3 +197,191 @@ test.restartOpt <- function() {
     }
 
 }
+
+
+# EUROPEAN BSM
+test.vanillaOptionEuropean <- function() {
+    # PRICES
+    S <- 100; X <- 100; tau <- 1; r <- 0.02; q <- 0.00; vol <- 0.3
+    x <- vanillaOptionEuropean(S, X, tau, r, q, vol^2, type = "call")$price
+    checkEquals(round(x,3), 12.822)
+
+    S <- 100; X <- 100; tau <- 1; r <- 0.00; q <- 0.00; vol <- 0.3
+    x <- vanillaOptionEuropean(S, X, tau, r, q, vol^2, type = "call")$price
+    y <- vanillaOptionEuropean(S, X, tau, r, q, vol^2, type = "put")$price
+    checkEquals(x, y)
+
+    S <- 100; X <- 95; tau <- 0.5; r <- 0.03; q <- 0.06; vol <- 0.1
+    x <- vanillaOptionEuropean(S, X, tau, r, q, vol^2, type = "put")$price
+    checkEquals(round(x,3), 1.305)
+
+    S <- 30; X <- 32; tau <- 0.5; r <- 0.03; q <- 0.00; vol <- 0.2;
+    tauD <- c(0.1,0.2,0.3); D <- c(1,2,3)
+    x <- vanillaOptionEuropean(S, X, tau, r, q, vol^2,
+        tauD = tauD, D = D, type = "put")$price
+    checkEquals(round(x,3), 7.523)
+
+    S <- 30; X <- 32; tau <- 0.5; r <- 0.03; q <- 0.00; vol <- 0.2;
+    tauD <- c(0.1,0.2,0.3,1); D <- c(1,2,3,5)
+    x <- vanillaOptionEuropean(S, X, tau, r, q, vol^2,
+        tauD = tauD, D = D, type = "put")$price
+    checkEquals(round(x,3), 7.523)
+
+    # ERRORS IN INPUTS
+    # ... q and D specified
+    S <- 30; X <- 30; tau <- 0.5; r <- 0.03; q <- 0.06; vol <- 0.1;
+    tauD <- c(0.1,0.2,0.3); D <- c(1,2,3)
+    checkException(vanillaOptionEuropean(S, X, tau, r, q, vol^2,
+            tauD = tauD, D = D, type = "put")$price)
+
+    # GREEXS
+    # TODO...
+}
+test.vanillaOptionEuropean()
+
+
+# AMERICAN BSM
+test.vanillaOptionAmerican <- function() {
+    # PRICES
+    S <- 100; X <- 100; tau <- 1; r <- 0.02; q <- 0.00; vol <- 0.3
+    x <- vanillaOptionAmerican(S, X, tau, r, q, vol^2,
+        type = "call", M = 101)$price
+    checkEquals(round(x,3), 12.850)
+
+    S <- 100; X <- 100; tau <- 1; r <- 0.00; q <- 0.00; vol <- 0.3
+    x <- vanillaOptionAmerican(S, X, tau, r, q, vol^2,
+        type = "call", M = 101)$price
+    y <- vanillaOptionAmerican(S, X, tau, r, q, vol^2,
+        type = "put", M = 101)$price
+    checkEquals(x, y)
+
+    S <- 100; X <- 95; tau <- 0.5; r <- 0.03; q <- 0.06; vol <- 0.1
+    x <- vanillaOptionAmerican(S, X, tau, r, q, vol^2,
+        type = "put", M = 101)$price
+    checkEquals(round(x,3), 1.303)
+
+    S <- 30; X <- 32; tau <- 0.5; r <- 0.03; q <- 0.00; vol <- 0.2;
+    tauD <- c(0.1,0.2,0.3); D <- c(1,2,3)
+    x <- vanillaOptionAmerican(S, X, tau, r, q, vol^2,
+        tauD = tauD, D = D, type = "call")$price
+    checkEquals(round(x,3), 0.153)
+
+    S <- 30; X <- 32; tau <- 0.5; r <- 0.03; q <- 0.00; vol <- 0.2;
+    tauD <- c(0.1,0.2,0.3,1); D <- c(1,2,3,5)
+    x <- vanillaOptionAmerican(S, X, tau, r, q, vol^2,
+        tauD = tauD, D = D, type = "call")$price
+    checkEquals(round(x,3), 0.153)
+
+    # ERRORS IN INPUTS
+# ... q and D specified
+    S <- 30; X <- 30; tau <- 0.5; r <- 0.03; q <- 0.06; vol <- 0.1;
+    tauD <- c(0.1,0.2,0.3); D <- c(1,2,3)
+    checkException(vanillaOptionAmerican(S, X, tau, r, q, vol^2,
+            tauD = tauD, D = D, type = "put")$price)
+
+    # GREEKS
+    # TODO...
+}
+
+
+test.vanillaOptionImpliedVol <- function() {
+    # EUROPEAN
+    S <- 100; X <- 100; tau <- 1; r <- 0.02; q <- 0.00; vol <- 0.3
+    p <- vanillaOptionEuropean(S, X, tau, r, q, vol^2, type = "call")$price
+    ivol <- vanillaOptionImpliedVol(exercise = "european", price = p,
+        S = S, X = X, tau = tau, r = r, q = q, tauD = 0, D = 0,
+        type = "call")
+    checkEquals(round(ivol,4), vol)
+
+    S <- 100; X <- 100; tau <- 1; r <- 0.00; q <- 0.00; vol <- 0.3
+    p <- vanillaOptionEuropean(S, X, tau, r, q, vol^2, type = "call")$price
+    ivol <- vanillaOptionImpliedVol(exercise = "european", price = p,
+        S = S, X = X, tau = tau, r = r, q = q, tauD = 0, D = 0,
+        type = "call")
+    checkEquals(round(ivol,4), vol)
+
+    S <- 100; X <- 100; tau <- 1; r <- 0.00; q <- 0.00; vol <- 0.3
+    p <- vanillaOptionEuropean(S, X, tau, r, q, vol^2, type = "put")$price
+    ivol <- vanillaOptionImpliedVol(exercise = "european", price = p,
+        S = S, X = X, tau = tau, r = r, q = q, tauD = 0, D = 0,
+        type = "put")
+    checkEquals(round(ivol,4), vol)
+
+    S <- 100; X <- 95; tau <- 0.5; r <- 0.03; q <- 0.06; vol <- 0.1
+    p <- vanillaOptionEuropean(S, X, tau, r, q, vol^2, type = "put")$price
+    ivol <- vanillaOptionImpliedVol(exercise = "european", price = p,
+        S = S, X = X, tau = tau, r = r, q = q, tauD = 0, D = 0,
+        type = "put")
+    checkEquals(round(ivol,4), vol)
+
+    S <- 30; X <- 32; tau <- 0.5; r <- 0.03; q <- 0.00; vol <- 0.2;
+    tauD <- c(0.1,0.2,0.3); D <- c(1,2,3)
+    p <- vanillaOptionEuropean(S, X, tau, r, q, vol^2,
+        tauD = tauD, D = D, type = "put")$price
+    ivol <- vanillaOptionImpliedVol(exercise = "european", price = p,
+        S = S, X = X, tau = tau, r = r, q = q, tauD = tauD, D = D,
+        type = "put")
+    checkEquals(round(ivol,4), vol)
+
+    S <- 30; X <- 32; tau <- 0.5; r <- 0.03; q <- 0.00; vol <- 0.2;
+    tauD <- c(0.1,0.2,0.3,1); D <- c(1,2,3,5)
+    p <- vanillaOptionEuropean(S, X, tau, r, q, vol^2,
+        tauD = tauD, D = D, type = "put")$price
+    ivol <- vanillaOptionImpliedVol(exercise = "european", price = p,
+        S = S, X = X, tau = tau, r = r, q = q, tauD = tauD, D = D,
+        type = "put")
+    checkEquals(round(ivol,4), vol)
+
+    # AMERICAN
+    S <- 100; X <- 100; tau <- 1; r <- 0.02; q <- 0.00; vol <- 0.3
+    p <- vanillaOptionAmerican(S, X, tau, r, q, vol^2,
+        type = "call", M = 101)$price
+    ivol <- vanillaOptionImpliedVol(exercise = "american", price = p,
+        S = S, X = X, tau = tau, r = r, q = q, tauD = 0, D = 0,
+        type = "call")
+    checkEquals(round(ivol,4), vol)
+
+    S <- 100; X <- 100; tau <- 1; r <- 0.00; q <- 0.00; vol <- 0.3
+    p <- vanillaOptionAmerican(S, X, tau, r, q, vol^2,
+        type = "call", M = 101)$price
+    ivol <- vanillaOptionImpliedVol(exercise = "american", price = p,
+        S = S, X = X, tau = tau, r = r, q = q, tauD = 0, D = 0,
+        type = "call")
+    checkEquals(round(ivol,4), vol)
+
+    S <- 100; X <- 100; tau <- 1; r <- 0.00; q <- 0.00; vol <- 0.3
+    p <- vanillaOptionAmerican(S, X, tau, r, q, vol^2,
+        type = "put", M = 101)$price
+    ivol <- vanillaOptionImpliedVol(exercise = "american", price = p,
+        S = S, X = X, tau = tau, r = r, q = q, tauD = 0, D = 0,
+        type = "put")
+    checkEquals(round(ivol,4), vol)
+
+    S <- 100; X <- 95; tau <- 0.5; r <- 0.03; q <- 0.06; vol <- 0.1
+    p <- vanillaOptionAmerican(S, X, tau, r, q, vol^2,
+        type = "put", M = 101)$price
+    ivol <- vanillaOptionImpliedVol(exercise = "american", price = p,
+        S = S, X = X, tau = tau, r = r, q = q, tauD = 0, D = 0,
+        type = "put")
+    checkEquals(round(ivol,4), vol)
+
+    S <- 30; X <- 32; tau <- 0.5; r <- 0.03; q <- 0.00; vol <- 0.2;
+    tauD <- c(0.1,0.2,0.3); D <- c(1,2,3)
+    p <- vanillaOptionAmerican(S, X, tau, r, q, vol^2,
+        tauD = tauD, D = D, type = "call")$price
+    ivol <- vanillaOptionImpliedVol(exercise = "american", price = p,
+        S = S, X = X, tau = tau, r = r, q = q, tauD = tauD, D = D,
+        type = "call")
+    checkEquals(round(ivol,4), vol)
+
+    S <- 30; X <- 32; tau <- 0.5; r <- 0.03; q <- 0.00; vol <- 0.2;
+    tauD <- c(0.1,0.2,0.3,1); D <- c(1,2,3,5)
+    p <- vanillaOptionAmerican(S, X, tau, r, q, vol^2,
+        tauD = tauD, D = D, type = "call")$price
+    ivol <- vanillaOptionImpliedVol(exercise = "american", price = p,
+        S = S, X = X, tau = tau, r = r, q = q, tauD = tauD, D = D,
+        type = "call")
+    checkEquals(round(ivol,4), vol)
+
+}
+

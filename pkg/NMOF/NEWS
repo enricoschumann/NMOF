@@ -1,3 +1,14 @@
+v0.25-9  (2012-09-19)
+
+  o Added functions 'vanillaOptionEuropean',
+    'VanillaOptionAmerican' and 'vanillaOptionImpliedVol'.
+ 
+  o Test files have been reorganised (there are now about 
+    700 unit tests; they all can be run from 
+    /unitTests/runTests.R).
+
+  o New maintainer e-mail address.
+
 v0.25-8  (2012-08-28)
 
   o all opt-functions now return 'initial.state' (which is

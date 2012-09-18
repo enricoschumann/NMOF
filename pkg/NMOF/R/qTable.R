@@ -48,12 +48,12 @@ qTable  <- function(X, xmin = NULL, xmax = NULL, labels = NULL,
 
     ## create table
     ## STR <- NULL
-    STR <- c("\n&median&min&max&\\\\")
-    for (cc in 1L:dim(X)[2L]){
+    STR <- c("\n & median & min & max &\\\\")
+    for (cc in 1L:dim(X)[2L]) {
         str0 <- cnames[cc] %p2%
         fff(median(X[ ,cc])) %p2%
-        fff(min(X[,cc])) %p2%
-        fff(max(X[,cc]))
+        fff(min(X[ ,cc])) %p2%
+        fff(max(X[ ,cc]))
 
         str1 <- "& \\begin{picture}(1,0)(" %p1%
         xoffset %p1% "," %p1%
@@ -82,10 +82,9 @@ qTable  <- function(X, xmin = NULL, xmax = NULL, labels = NULL,
                 xoffset %p1% "," %p1% yoffset %p1%
                 ")\\put(0,0){\\line(1,0){1}}"
 
-    for (i in seq(along.with=labels)) {
+    for (i in seq(along.with = labels)) {
         strScale <- strScale %p1%
-        "\\put(" %p1%
-        ff(at[i]) %p1%
+        "\\put(" %p1% ff(at[i]) %p1%
         ",0) {\\line(0,-1){0.01}}\n"
 
         strScale <- strScale %p1% "\\put(" %p1%
