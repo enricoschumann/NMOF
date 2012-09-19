@@ -26,7 +26,7 @@ options(continue = " ", digits = 5)
 {\raggedright{\LARGE An example for the \texttt{qTable} function}}\medskip
 
 \noindent Enrico Schumann\\
-\noindent \texttt{enricoschumann@yahoo.de}\\
+\noindent \texttt{es@enricoschumann.net}\\
 \bigskip
 
 

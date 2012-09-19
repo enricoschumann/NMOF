@@ -37,7 +37,7 @@
 }
 \author{Enrico Schumann
 
-  Maintainer: Enrico Schumann <enricoschumann@yahoo.de>
+  Maintainer: Enrico Schumann <es@enricoschumann.net>
 }
 \references{
   Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Optimization in Finance}. Elsevier. 

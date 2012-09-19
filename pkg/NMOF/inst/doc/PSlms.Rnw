@@ -25,7 +25,7 @@ Particle Swarm Optimisation \\[0.2ex]%
 and Differential Evolution}}\medskip
 
 \noindent Enrico Schumann\\
-\noindent \texttt{enricoschumann@yahoo.de}\\
+\noindent \texttt{es@enricoschumann.net}\\
 \bigskip
 
 

@@ -23,7 +23,7 @@ options(continue = " ", digits = 5)
 {\raggedright{\LARGE Portfolio Optimisation with Threshold Accepting}}\medskip
 
 \noindent Enrico Schumann\\
-\noindent \texttt{enricoschumann@yahoo.de}\\
+\noindent \texttt{es@enricoschumann.net}\\
 \bigskip
 
 \noindent This vignette provides the code for some of the examples

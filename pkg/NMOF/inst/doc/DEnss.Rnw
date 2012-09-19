@@ -30,7 +30,7 @@ options(continue = " ", digits = 5)
 with Differential Evolution}}\medskip
 
 \noindent Enrico Schumann\\
-\noindent \texttt{enricoschumann@yahoo.de}\\
+\noindent \texttt{es@enricoschumann.net}\\
 \bigskip
 
 

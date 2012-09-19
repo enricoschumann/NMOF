@@ -26,7 +26,7 @@ options(continue = " ", digits = 5)
 {\raggedright{\LARGE Asset selection with Local Search}}\medskip
 
 \noindent Enrico Schumann\\
-\noindent \texttt{enricoschumann@yahoo.de}\\
+\noindent \texttt{es@enricoschumann.net}\\
 \bigskip
 
 

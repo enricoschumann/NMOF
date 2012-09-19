@@ -1,12 +1,14 @@
-RUNIT TEST PROTOCOL -- Tue Sep 18 17:03:15 2012 
+RUNIT TEST PROTOCOL -- Wed Sep 19 22:10:37 2012 
 *********************************************** 
 Number of test functions: 19 
 Number of errors: 0 
-Number of failures: 0 
+Number of failures: 1 
 
  
 1 Test Suite : 
-NMOF - 19 test functions, 0 errors, 0 failures
+NMOF - 19 test functions, 0 errors, 1 failure
+FAILURE in test.DEopt: Error in checkEquals(round(sol$xbest, 3), c(-3, -3, -2, -1, 0, 1, 2, 3,  : 
+  Mean relative difference: 0.01504197
 
 
 
@@ -16,41 +18,43 @@ Test Suite: NMOF
 Test function regexp: ^test.+ 
 Test file regexp: unitTests.+ 
 Involved directory: 
-c:/packages/NMOF/NMOF/pkg/NMOF/inst/unitTests 
+~/Packages/NMOF/NMOF/pkg/NMOF/inst/unitTests 
 --------------------------- 
-Test file: c:/packages/NMOF/NMOF/pkg/NMOF/inst/unitTests/unitTests1.R 
-test.callHestoncf: (3 checks) ... OK (0 seconds)
+Test file: C:\Users\Enrico Schumann/Packages/NMOF/NMOF/pkg/NMOF/inst/unitTests/unitTests1.R 
+test.callHestoncf: (3 checks) ... OK (0.02 seconds)
 test.EuropeanCall: (6 checks) ... OK (0.01 seconds)
-test.EuropeanCallBE: (6 checks) ... OK (0 seconds)
+test.EuropeanCallBE: (6 checks) ... OK (0.01 seconds)
 test.MA: (3 checks) ... OK (0 seconds)
-test.restartOpt: (1 checks) ... OK (0.15 seconds)
+test.restartOpt: (1 checks) ... OK (0.19 seconds)
 test.testFunctions: (6 checks) ... OK (0 seconds)
-test.vanillaOptionAmerican: (6 checks) ... OK (0.03 seconds)
-test.vanillaOptionEuropean: (6 checks) ... OK (0 seconds)
-test.vanillaOptionImpliedVol: (12 checks) ... OK (0.2 seconds)
+test.vanillaOptionAmerican: (6 checks) ... OK (0.05 seconds)
+test.vanillaOptionEuropean: (6 checks) ... OK (0.01 seconds)
+test.vanillaOptionImpliedVol: (12 checks) ... OK (0.25 seconds)
 --------------------------- 
-Test file: c:/packages/NMOF/NMOF/pkg/NMOF/inst/unitTests/unitTests2.R 
+Test file: C:\Users\Enrico Schumann/Packages/NMOF/NMOF/pkg/NMOF/inst/unitTests/unitTests2.R 
 test.bracketing: (13 checks) ... OK (0 seconds)
-test.gridSearch: (18 checks) ... OK (0.18 seconds)
+test.gridSearch: (18 checks) ... OK (0.24 seconds)
 test.xwGauss: (4 checks) ... OK (0 seconds)
 --------------------------- 
-Test file: c:/packages/NMOF/NMOF/pkg/NMOF/inst/unitTests/unitTestscallCF.R 
+Test file: C:\Users\Enrico Schumann/Packages/NMOF/NMOF/pkg/NMOF/inst/unitTests/unitTestscallCF.R 
 test.callCF: (22 checks) ... OK (0.02 seconds)
 --------------------------- 
-Test file: c:/packages/NMOF/NMOF/pkg/NMOF/inst/unitTests/unitTestsDEopt.R 
-test.DEopt: (22 checks) ... OK (2.67 seconds)
+Test file: C:\Users\Enrico Schumann/Packages/NMOF/NMOF/pkg/NMOF/inst/unitTests/unitTestsDEopt.R 
+test.DEopt: FAILURE !! (check number 20)
+Error in checkEquals(round(sol$xbest, 3), c(-3, -3, -2, -1, 0, 1, 2, 3,  : 
+  Mean relative difference: 0.01504197
 --------------------------- 
-Test file: c:/packages/NMOF/NMOF/pkg/NMOF/inst/unitTests/unitTestsGAopt.R 
-test.GAopt: (23 checks) ... OK (0.22 seconds)
+Test file: C:\Users\Enrico Schumann/Packages/NMOF/NMOF/pkg/NMOF/inst/unitTests/unitTestsGAopt.R 
+test.GAopt: (23 checks) ... OK (0.3 seconds)
 --------------------------- 
-Test file: c:/packages/NMOF/NMOF/pkg/NMOF/inst/unitTests/unitTestsInternals.R 
-test.checkList: (10 checks) ... OK (0 seconds)
+Test file: C:\Users\Enrico Schumann/Packages/NMOF/NMOF/pkg/NMOF/inst/unitTests/unitTestsInternals.R 
+test.checkList: (10 checks) ... OK (0.02 seconds)
 --------------------------- 
-Test file: c:/packages/NMOF/NMOF/pkg/NMOF/inst/unitTests/unitTestsLSopt.R 
-test.LSopt: (7 checks) ... OK (0.27 seconds)
+Test file: C:\Users\Enrico Schumann/Packages/NMOF/NMOF/pkg/NMOF/inst/unitTests/unitTestsLSopt.R 
+test.LSopt: (7 checks) ... OK (0.36 seconds)
 --------------------------- 
-Test file: c:/packages/NMOF/NMOF/pkg/NMOF/inst/unitTests/unitTestsPSopt.R 
-test.PSopt: (14 checks) ... OK (1.81 seconds)
+Test file: C:\Users\Enrico Schumann/Packages/NMOF/NMOF/pkg/NMOF/inst/unitTests/unitTestsPSopt.R 
+test.PSopt: (14 checks) ... OK (2.28 seconds)
 --------------------------- 
-Test file: c:/packages/NMOF/NMOF/pkg/NMOF/inst/unitTests/unitTestsTAopt.R 
-test.TAopt: (13 checks) ... OK (0.36 seconds)
+Test file: C:\Users\Enrico Schumann/Packages/NMOF/NMOF/pkg/NMOF/inst/unitTests/unitTestsTAopt.R 
+test.TAopt: (13 checks) ... OK (0.47 seconds)

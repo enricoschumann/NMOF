@@ -1,3 +1,12 @@
+v0.26-0  (2012-09-19)
+
+  o Vignettes (except for one) are now built offline
+    to reduce build/check time for R-Forge/CRAN.
+    (As suggested by Kasper Daniel Hansen in this post:
+    https://stat.ethz.ch/pipermail/r-devel/2012-September/064810.html )
+
+  o Small changes in documentation.
+
 v0.25-9  (2012-09-19)
 
   o Added functions 'vanillaOptionEuropean',
