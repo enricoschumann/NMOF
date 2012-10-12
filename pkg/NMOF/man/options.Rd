@@ -6,8 +6,7 @@
   Pricing Plain-Vanilla Options (European and American)
 }
 \description{
-  Calculates the theoretical prices and (some) Greeks for plain vanilla
-  options.
+  Functions to calculate the theoretical prices and (some) Greeks for plain vanilla options.
 }
 \usage{
 vanillaOptionEuropean(S, X, tau, r, q, v, tauD = 0, D = 0,
@@ -28,7 +27,7 @@ vanillaOptionImpliedVol(exercise = "european", price, S, X, tau, r,
     strike
 }
   \item{tau}{
-    time to maturity in years
+    time-to-maturity in years
 }
   \item{r}{
     risk-free rate
@@ -43,22 +42,23 @@ vanillaOptionImpliedVol(exercise = "european", price, S, X, tau, r,
     vector of times to dividends in years
 }
   \item{D}{
-    vector of dividends (in currency units)
+    vector of dividends (in currency units); default is no dividends.
 }
   \item{type}{
-    call or put; defaults to call.
+    call or put; default is call.
 }
   \item{greeks}{
-    compute Greeks? defaults to TRUE
+    compute Greeks? Defaults to \code{TRUE}. But see Details fpr
+                        American options.
   }
   \item{M}{
     number of time steps in the tree
   }
   \item{exercise}{
-    european (default) or american
+    \code{european} (default) or \code{american}
   }
   \item{price}{
-    numeric. The observed price to be recovered through choice of volatility.
+    numeric; the observed price to be recovered through choice of volatility.
   }
   \item{uniroot.control}{A list. If there are elements named
     \code{interval}, \code{tol} or \code{maxiter}, these are passed to
@@ -71,34 +71,40 @@ vanillaOptionImpliedVol(exercise = "european", price, S, X, tau, r,
 
 \details{
 
-The formula of Messrs Black, Scholes and Merton assumes that the
-underlying follows a Brownian motion. It can be used for equities (set
-\code{q} equal to the dividend yield), futures (Black, 1976; set \code{q}
-equal to \code{r}), currencies (Garman and Kohlhagen, 1983; set \code{q}
-equal to the foreign risk-free rate). For future-style options (eg, the
-German Bund future), set \code{q} and \code{r} equal to zero.
+For European options the formula of Messrs Black, Scholes and Merton is
+used. It can be used for equities (set \code{q} equal to the dividend
+yield), futures (Black, 1976; set \code{q} equal to \code{r}),
+currencies (Garman and Kohlhagen, 1983; set \code{q} equal to the
+foreign risk-free rate). For future-style options (eg, the German Bund
+future), set \code{q} and \code{r} equal to zero.
 
-The Greeks here are in their raw form; they are often adjusted: theta is
-negative and is divided by 365. Vega and rho are divided by 100 to give
-the sensitivity for one percentage point move in volatility/the interest
-rate.
+The Greeks here are in their raw (\sQuote{textbook}) form. In practice,
+they are often adjusted: theta is negative and is divided by 365. Vega
+and rho are divided by 100 to give the sensitivity for one percentage
+point move in volatility/the interest rate.
 
-Vectorisation: for the European-type options, the function understands
-vectors of inputs, except for dividends. (Not so for American-type
-options, since these are priced with CRR.)
+For European options the Greeks are computed through the respective
+analytic expressions. For American options only Delta, Gamma and Theta
+are computed.
 
-The implied volatility is computed with
-  \code{\link{uniroot}} from the \pkg{stats} package (the default search
-  interval is \code{c(0.00001, 2)}; it can be changed through
-  \code{uniroot.control}).
+For the European-type options, the function understands vectors of
+inputs, except for dividends. American options are priced via a
+Cox-Ross-Rubinstein tree; no vectorisation is possible here.
 
-Dividends: escrowed dividend model
+The implied volatility is computed with \code{\link{uniroot}} from the
+\pkg{stats} package (the default search interval is \code{c(0.00001,
+2)}; it can be changed through \code{uniroot.control}).
+
+Dividends (\code{D}) are modelled via the escrowed-dividend model.
 
 }
 
 
 \value{
-Returns the price (a numeric vector of length one) if \code{Greeks==FALSE}, else returns a list.
+  
+Returns the price (a numeric vector of length one) if
+\code{Greeks == FALSE}, else returns a list.
+
 }
 \references{
 Gilli, Maringer, Schumann, 2011.
@@ -135,10 +141,8 @@ h <- 0.01
 
 
 S <- 100; X <- 100
-tau <- 1
-r <- 0.05; q <- 0.00
-D <- c(1,2)
-tauD <- c(0.3,.6)
+tau <- 1; r <- 0.05; q <- 0.00
+D <- c(1,2); tauD <- c(0.3,.6)
 type <- "put"
 v <- 0.245^2  ## variance, not volatility
 
@@ -179,9 +183,7 @@ volDiffCreate <- function(exercise, call, put, S, X, tau, r) {
     f
 }
 f <- volDiffCreate(exercise = "european", 
-                   call = call, put = put, S=S, X = X, tau=tau, r)
+                   call = call, put = put, S = S, X = X, tau = tau, r)
 optimise(f,interval = c(0, 0.2))$minimum
-
-
 }
 

@@ -1,3 +1,11 @@
+v0.26-1  (2012-10-12)
+
+  o Small changes in documentation (option pricing 
+    functions).
+
+  o Code examples in subdirectory 'NMOFex' (manual) 
+    updated.
+
 v0.26-0  (2012-09-19)
 
   o Vignettes (except for one) are now built offline
