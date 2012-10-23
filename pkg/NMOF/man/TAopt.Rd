@@ -11,10 +11,13 @@
 TAopt(OF, algo = list(), \dots)
 }
 \arguments{
+  
   \item{OF}{The objective function, to be minimised. Its first argument
-    needs to be a solution \code{x}; it will be called as \code{OF(x, \dots)}.}
-  \item{algo}{A list of settings for the algorithm. See Details.}
-  \item{\dots}{other variables passed to \code{OF} and \code{algo$neighbour}. See Details.}
+  needs to be a solution \code{x}; it will be called as \code{OF(x,
+  \dots)}.} \item{algo}{A list of settings for the algorithm. See
+  Details.} \item{\dots}{other variables passed to \code{OF} and
+  \code{algo$neighbour}. See Details.}
+
 }
 \details{
 
@@ -112,8 +115,13 @@ TAopt(OF, algo = list(), \dots)
       \code{xlist[[c(2L, i)]]}.}
       
     } % end describe
-    The total number of iterations equals \code{algo$nT * (algo$stepUp+1) *
+
+      At the minimum, \code{algo} needs to contain an initial solution
+      \code{x0} and a \code{neighbour} function.
+
+      The total number of iterations equals \code{algo$nT * (algo$stepUp+1) *
       algo$nS} (plus possibly \code{algo$nD}).
+
   } % end details
   \value{
     \code{TAopt} returns a list with four components:
@@ -154,22 +162,33 @@ TAopt(OF, algo = list(), \dots)
     overhead.
   }
   \references{
-    Dueck, G. and Scheuer, T. (1990) Threshold Accepting. A General Purpose Optimization Algorithm Superior to Simulated Annealing.
-    \emph{Journal of Computational Physics}. \strong{90}, 1, pp. 161--175.
+    
+    Dueck, G. and Scheuer, T. (1990) Threshold Accepting. A General
+    Purpose Optimization Algorithm Superior to Simulated Annealing.
+    \emph{Journal of Computational Physics}. \strong{90}, 1, pp.
+    161--175.
 
-    Gilli, M., Kellezi, E. and Hysi, H. (2006) A Data-Driven Optimization Heuristic for Downside Risk Minimization.
-    \emph{Journal of Risk}. \strong{8}, 3, pp. 1--18.
+    Dueck, G. and Winker, P. (1992) New Concepts and Algorithms for
+    Portfolio Choice. \emph{Applied Stochastic Models and Data
+    Analysis}. \strong{8}, 3, 159--178.
 
-    Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Optimization in Finance}. Elsevier.
+    Gilli, M., Kellezi, E. and Hysi, H. (2006) A Data-Driven
+    Optimization Heuristic for Downside Risk Minimization. \emph{Journal
+    of Risk}. \strong{8}, 3, pp. 1--18.
+
+    Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical
+    Methods and Optimization in Finance}. Elsevier.
     \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
 
-    Moscato, P.  and Fontanari, J.F. (1990). Stochastic Versus Deterministic Update in Simulated Annealing.
-    Physics Letters A. \strong{146}, 4, pp. 204--208.
+    Moscato, P. and Fontanari, J.F. (1990). Stochastic Versus
+    Deterministic Update in Simulated Annealing. Physics Letters A.
+    \strong{146}, 4, pp. 204--208.
 
-    Schumann, E. (2011) Examples and Extensions for the \pkg{NMOF}
-    Package. \url{http://enricoschumann.net/files/NMOFex.pdf}
+    Schumann, E. (2011) The \pkg{NMOF} Manual.
+    \url{http://enricoschumann.net/NMOF.htm}
 
-    Winker, P. (2001). \emph{Optimization Heuristics in Econometrics: Applications of Threshold Accepting}. Wiley.
+    Winker, P. (2001). \emph{Optimization Heuristics in Econometrics:
+    Applications of Threshold Accepting}. Wiley.
 
   }
   \author{
@@ -177,7 +196,7 @@ TAopt(OF, algo = list(), \dots)
   }
 
   \seealso{
-    \code{\link{LSopt}}
+    \code{\link{LSopt}},  \code{\link{restartOpt}}
   }
   \examples{
 ## Aim: given a matrix x with n rows and 2 columns,

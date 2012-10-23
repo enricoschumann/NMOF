@@ -205,17 +205,17 @@ DEopt <- function(OF, algo = list(), ...) {
          initial.state = state)
 }
 
-if (0L) {
-    DEoptim <- function(OF, ..., lower = -Inf, upper = Inf,
-                        control = list()) {
-        stop("not operational yet")
-    }
-    PSoptim <- function(OF, ..., lower = -Inf, upper = Inf,
-                        control = list()) {
-        stop("not operational yet")
-    }
-    TAoptim <- function(OF, neighbour, ..., lower = -Inf, upper = Inf,
-                        control = list()) {
-        stop("not operational yet")
-    }
-}
+## if (0L) {
+##     DEoptim <- function(OF, ..., lower = -Inf, upper = Inf,
+##                         control = list()) {
+##         stop("not operational yet")
+##     }
+##     PSoptim <- function(OF, ..., lower = -Inf, upper = Inf,
+##                         control = list()) {
+##         stop("not operational yet")
+##     }
+##     TAoptim <- function(OF, neighbour, ..., lower = -Inf, upper = Inf,
+##                         control = list()) {
+##         stop("not operational yet")
+##     }
+## }

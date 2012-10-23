@@ -5,31 +5,33 @@
   Stochastic Local Search
 }
 \description{
-  Performs a simple stochastic local search.
+  Performs a simple stochastic Local Search.
 }
 \usage{
 LSopt(OF, algo = list(), ...)
 }
 \arguments{
-  \item{OF}{
-    the objective function, to be minimised. Its first argument needs to be a solution; \code{\dots} arguments are also passed.
+  \item{OF}{    
+    The objective function, to be minimised. Its first argument needs to
+    be a solution; \code{\dots} arguments are also passed.
   }
   \item{algo}{
-    list of settings. See Details.
+    List of settings. See Details.
   }
   \item{\dots}{
-    other variables to be passed to the objective function and to the neighbourhood function. See Details.
+    Other variables to be passed to the objective function and to the
+    neighbourhood function. See Details.
   }
 }
 \details{
 
   Local Search (\acronym{LS}) changes an initial solution for a number
   of times, accepting only such changes that lead to an improvement in
-  solution quality (as measured by the objective function
-  \code{OF}). More specifically, in each iteration, a current solution
-  \code{xc} is changed through a function \code{algo$neighbour}. This
-  function takes \code{xc} as an argument and returns a new solution
-  \code{xn}.  If \code{xn} is not worse than \code{xc}, ie, if
+  solution quality (as measured by the objective function \code{OF}).
+  More specifically, in each iteration, a current solution \code{xc} is
+  changed through a function \code{algo$neighbour}. This function takes
+  \code{xc} as an argument and returns a new solution \code{xn}. If
+  \code{xn} is not worse than \code{xc}, ie, if
   \code{OF(xn,\dots)<=OF(xc,\dots)}, then \code{xn} replaces \code{xc}.
 
   The list \code{algo} contains the following items:
@@ -65,7 +67,11 @@ LSopt(OF, algo = list(), ...)
       \code{xlist} (see Value section below). To check, for instance,
       the current solution at the end of the \code{i}th generation, retrieve
       \code{xlist[[c(2L, i)]]}.}
-  }%describe
+  }
+
+  At the minimum, \code{algo} needs to contain an initial solution
+  \code{x0} and a \code{neighbour} function.
+  
   \acronym{LS} works on solutions through the functions \code{neighbour}
   and \code{OF}, which are specified by the user. Thus, a solution need
   not be a numeric vector, but can be any other data structure as well
@@ -73,10 +79,10 @@ LSopt(OF, algo = list(), ...)
 
   To run silently (except for warnings and errors),
   \code{algo$printDetail} and \code{algo$printBar} must be \code{FALSE}.
-}
 
+}
 \value{
-  Returns a list.
+  A list:
 
   \item{\code{xbest}}{best solution found.}
 
@@ -109,7 +115,7 @@ LSopt(OF, algo = list(), ...)
   Enrico Schumann
 }
 \seealso{
-  \code{\link{TAopt}}
+  \code{\link{TAopt}}, \code{\link{restartOpt}}
 }
 \examples{
 ## Aim: find the columns of X that, when summed, give y
@@ -132,8 +138,8 @@ makeRandomSol <- function(nc) {
 x0 <- makeRandomSol(nc)
 
 ## ... but probably not a good one
-sum(y - rowSums(X[ , x0, drop = FALSE]))
-sum(y - rowSums(X[ , xTRUE, drop = FALSE]))
+sum(y - rowSums(X[ , xTRUE, drop = FALSE])) ## should be 0
+sum(y - rowSums(X[ , x0, drop = FALSE])) 
 
 ## a neighbourhood function: switch n elements in solution
 neighbour <- function(xc, Data) {
@@ -172,7 +178,7 @@ OF <- function(xn, Data)
 
 ## (1) GREEDY SEARCH
 ## note: this could be done in a simpler fashion, but the
-##       redundancies/overhead here are small; and the example is to
+##       redundancies/overhead here are small, and the example is to
 ##       show how LSopt can be used for such a search
 Data <- list(X = X, y = y, nc = nc, nr = nr, n = 1L)
 algo <- list(nS = 500L, neighbour = neighbourG, x0 = x0,

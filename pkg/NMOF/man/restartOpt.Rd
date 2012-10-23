@@ -45,7 +45,7 @@ restartOpt(fun, n, OF, algo, ...,
     reported. Default is \code{FALSE}.}
 }
 \details{
-  
+
   The function returns a list of lists. If a specific starting solution
   is passed, all runs will start from this solution. If this is not
   desired, initial solutions can be created randomly. This is done per
@@ -80,7 +80,7 @@ restartOpt(fun, n, OF, algo, ...,
 
 }
 \value{
-  
+
   If \code{best.only} is \code{FALSE} (the default), the function
   returns a list of \code{n} lists. Each of the \code{n} lists stores
   the output of one of the runs.
@@ -91,19 +91,18 @@ restartOpt(fun, n, OF, algo, ...,
 
 }
 \references{
-  Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Optimization in Finance}. Elsevier. 
+
+  Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical
+  Methods and Optimization in Finance}. Elsevier.
   \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
 
-  Schumann, E. (2011) Examples and Extensions for the \pkg{NMOF}
-  Package. \url{http://enricoschumann.net/NMOF.htm}
+  Schumann, E. (2012) The \pkg{NMOF} Manual.
+  \url{http://enricoschumann.net/NMOF.htm}
+
 }
 \author{
   Enrico Schumann
 }
-\note{
-  This is a pure convenience function. There is no error handling.
-}
-
 \seealso{
   \code{\link{DEopt}}, \code{\link{GAopt}}, \code{\link{LSopt}},
   \code{\link{PSopt}}, \code{\link{TAopt}}
@@ -111,9 +110,9 @@ restartOpt(fun, n, OF, algo, ...,
 \examples{
 ## see example(DEopt)
 algo <- list(nP = 50L,
-              F = 0.5, 
-             CR = 0.9, 
-            min = c(-10, -10), 
+              F = 0.5,
+             CR = 0.9,
+            min = c(-10, -10),
             max = c( 10,  10),
     printDetail = FALSE,
        printBar = FALSE)
@@ -123,25 +122,40 @@ algo$nG <- 100L
 res100 <- restartOpt(DEopt, n = 5L, OF = tfTrefethen, algo = algo)
 res100F <- sapply(res100, `[[`, "OFvalue")
 
-algo$nG <- 300L
-res300 <- restartOpt(DEopt, n = 5L, OF = tfTrefethen, algo = algo)
-res300F <- sapply(res300, `[[`, "OFvalue")
+algo$nG <- 200L
+res200 <- restartOpt(DEopt, n = 5L, OF = tfTrefethen, algo = algo)
+res200F <- sapply(res200, `[[`, "OFvalue")
 
-xx <- pretty(c(res100F, res300F, -3.31))
-plot(ecdf(res100F), main = "optimum is -3.306", 
+xx <- pretty(c(res100F, res200F, -3.31))
+plot(ecdf(res100F), main = "optimum is -3.306",
      xlim = c(xx[1L], tail(xx, 1L)))
 abline(v = -3.3069, col = "red")  ## optimum
-lines(ecdf(res300F), col = "blue")
+lines(ecdf(res200F), col = "blue")
 legend(x = "right", box.lty = 0, , lty = 1,
-      legend = c("optimum", "100 generations", "300 generations"),
+      legend = c("optimum", "100 generations", "200 generations"),
       pch = c(NA, 19, 19), col = c("red", "black", "blue"))
+
+## a 'best-of-N' strategy: given a sample x of objective
+## function values, compute the probability that, after N draws,
+## we have at least one realisation not worse than X
+x <- c(0.1,.3,.5,.5,.6)
+bestofN <- function(x, N) {
+    nx <- length(x)
+    function(X)
+        1 - (sum(x > X)/nx)^N
+}
+bestof2 <- bestofN(x, 2)
+bestof5 <- bestofN(x, 5)
+bestof2(0.15)
+bestof5(0.15)
+
 
 \dontrun{
 ## with R >= 2.13.0 and the compiler package
 algo$nG <- 100L
 system.time(res100 <- restartOpt(DEopt, n = 10L, OF = tfTrefethen, algo = algo))
 
-require(compiler)
+require("compiler")
 enableJIT(3)
 system.time(res100 <- restartOpt(DEopt, n = 10L, OF = tfTrefethen, algo = algo))
 }

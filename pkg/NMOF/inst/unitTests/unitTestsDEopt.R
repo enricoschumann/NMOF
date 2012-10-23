@@ -94,7 +94,7 @@ test.DEopt <- function() {
     X <- 1:10 - 5
     OF <- function(x, X)
         sum(abs(x - X))
-    algo <- list(nP = 30, nG = 700,
+    algo <- list(nP = 30, nG = 1000,
                  min = rep(-3, length(X)),
                  max = rep( 3,  length(X)),
                  minmaxConstr = FALSE,
