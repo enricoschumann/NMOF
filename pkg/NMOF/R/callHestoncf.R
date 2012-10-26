@@ -37,14 +37,14 @@ callHestoncf <- function(S, X, tau, r, q, v0, vT, rho, k, sigma,
         cf  <- exp(cf1 + cf2 + cf3)
         cf
     }
-## -- pricing --
+    ## -- pricing --
     vP1 <- 0.5 + 1/pi * integrate(P1,lower = 0,upper = 200,
         S,X,tau,r,q,v0,vT,rho,k,sigma)$value
     vP2 <- 0.5 + 1/pi * integrate(P2,lower = 0,upper = 200,
         S,X,tau,r,q,v0,vT,rho,k,sigma)$value
     result <- exp(-q * tau) * S * vP1 - exp(-r * tau) * X * vP2;
 
-## -- implied BSM vol --
+    ## -- implied BSM vol --
     if (implVol) {
         diffPrice <- function(vol,call,S,X,tau,r,q){
             d1 <- (log(S/X)+(r - q + vol^2/2)*tau)/(vol*sqrt(tau))
@@ -56,7 +56,7 @@ callHestoncf <- function(S, X, tau, r, q, v0, vT, rho, k, sigma,
         impliedVol <- uniroot(diffPrice, interval = c(0.0001, 2),
             call = result, S = S, X = X,
             tau = tau, r = r, q = q)[[1]]
-        result <- list(callPrice = result,impliedVol = impliedVol)
+        result <- list(value = result, impliedVol = impliedVol)
     }
     result
 }

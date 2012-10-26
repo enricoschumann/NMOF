@@ -1,19 +1,18 @@
 vanillaOptionEuropean <- function(S, X, tau, r, q = 0, v,
     tauD = 0, D = 0, type = "call", greeks = TRUE) {
-    ##type <- match.arg(tolower(type), c("call","put"))  ## too slow!
-    if( q != 0 & any(D != 0) )
+    if (q != 0 & any(D != 0))
         stop("dividend rate and dividend amount supplied")
-    if(any(D != 0))
+    if (any(D != 0))
         stopifnot(length(D) == length(tauD))
-    if(any(D != 0)) {
-        delD <-  tauD <= tau & tauD > 0
-        D <- D[delD]
-        tauD <- tauD[delD]
+    if (any(D != 0)) {
+        D2keep <-  tauD <= tau & tauD > 0
+        D <- D[D2keep]
+        tauD <- tauD[D2keep]
     }
     if (any(tau <= 0))
-        stop("'tau' must be greater than 0")
+        stop(sQuote("tau"), " must be greater than 0")
     if (any(v <= 0))
-        stop("'v' must be greater than 0")
+        stop(sQuote("v"), " must be greater than 0")
     S <- S - sum(exp(-r*tauD)*D)
     exq <- exp(-q * tau)
     exr <- exp(-r * tau)
@@ -24,9 +23,8 @@ vanillaOptionEuropean <- function(S, X, tau, r, q = 0, v,
     I <- switch(type, "call" = 1, "put" = -1)
     N1 <- pnorm(I * d1)
     N2 <- pnorm(I * d2)
-    # price
-    price <- I*(Sexq * N1 - Xexr * N2)
-    if (greeks == TRUE){
+    value <- I*(Sexq * N1 - Xexr * N2)
+    if (greeks) {
         ## delta
         delta <- I * exq * N1
         ## theta
@@ -42,11 +40,10 @@ vanillaOptionEuropean <- function(S, X, tau, r, q = 0, v,
         ## vega: same for call and put
         vega <- Sexq * n1 * sqrt(tau)
     }
-    if (greeks == FALSE)
-        price else list(price = price, delta = delta, gamma = gamma,
-            theta = theta, vega = vega,
-            rho = rho, rhoDiv = rhoDiv)
-
+    if (!greeks)
+        value else list(value = value, delta = delta, gamma = gamma,
+                        theta = theta, vega = vega,
+                        rho = rho, rhoDiv = rhoDiv)
 }
 vanillaOptionAmerican <- function(S, X, tau, r, q, v,
     tauD = 0, D = 0, type = "call", greeks = TRUE, M = 101) {
@@ -55,13 +52,14 @@ vanillaOptionAmerican <- function(S, X, tau, r, q, v,
     if(any(D != 0))
         stopifnot(length(D) == length(tauD))
     if(any(D != 0)) {
-        delD <-  tauD <= tau & tauD > 0
-        D <- D[delD]
-        tauD <- tauD[delD]
+        D2keep <-  tauD <= tau & tauD > 0
+        D <- D[D2keep]
+        tauD <- tauD[D2keep]
     }
     if (tau < 0)
-        stop("'tau' must be > 0")
-    pmax2 <- function(y1,y2) ((y1 + y2) + abs(y1 - y2)) / 2
+        stop(sQuote("tau"), " must be > 0")
+    pmax2 <- function(y1,y2)
+        ((y1 + y2) + abs(y1 - y2)) / 2
 
     S <- S - sum(exp(-r*tauD)*D)
     dt <- tau/M
@@ -81,40 +79,33 @@ vanillaOptionAmerican <- function(S, X, tau, r, q, v,
         Si <- S * dM[(M-i+2):(M+1)] * uM[1:i]
         W <- pmax2(m*((Si + PV) - X), v1 * W[2:(i+1)] + v2 * W[1:i])
         W <- (W + abs(W))/2
-        # greeks
+        ## greeks
         if (greeks) {
-            if (i == 2)
-                deltaE <- (W[2] - W[1]) / (Si[2] - Si[1])
-            if (i == 3) {
-                # gamma
-                gammaE <- ((W[3]-W[2]) / (Si[3]-Si[2]) -
-                           (W[2]-W[1]) / (Si[2]-Si[1])) /
-                               (0.5*(Si[3] - Si[1]))
-                ## theta (prelim)
-                thetaE <- W[2]
-            }
-            if (i == 1) thetaE <- (thetaE - W[1]) / (2 * dt)
-        } # end greeks
+            if (i == 2L) {
+                deltaE <- (W[2L] - W[1L]) / (Si[2L] - Si[1L])
+            } else if (i == 3L) {
+                gammaE <- ((W[3L] - W[2L]) / (Si[3L] - Si[2L]) -
+                           (W[2L] - W[1L]) / (Si[2L] - Si[1L])) /
+                               (0.5*(Si[3] - Si[1L]))
+                thetaE <- W[2L]
+            } else if (i == 1L)
+                thetaE <- (thetaE - W[1L]) / (2 * dt)
+        } ## end greeks
     }
     ##theta2E <- r * W[1] - r * Si[1] * deltaE - 0.5 * v * Si[1]^2 * gammaE
-    price <- W
     if (!greeks)
-        price else list(price = W, delta = deltaE, gamma = gammaE,
-                        theta = thetaE, vega = NA,
-                        rho = NA, rhoDiv = NA)
+        W else list(value = W, delta = deltaE, gamma = gammaE,
+                    theta = thetaE, vega = NA,
+                    rho = NA, rhoDiv = NA)
 }
-
-
 vanillaOptionImpliedVol <- function(exercise = "european",
     price, S, X, tau, r, q = 0, tauD = 0, D = 0, type = "call",
     M = 101, uniroot.control = list(),
     uniroot.info = FALSE) {
 
-
     ucon <- list(interval = c(1e-05, 2), tol = .Machine$double.eps^0.25,
                  maxiter = 1000)
     ucon[names(uniroot.control)] <- uniroot.control
-
 
     createF <- function() {
         if (exercise == "european") {

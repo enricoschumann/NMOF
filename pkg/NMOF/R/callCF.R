@@ -32,7 +32,7 @@ callCF <- function(cf, S, X, tau, r, q = 0, ..., implVol = FALSE,
                               tau = tau, r = r, q = q,
                               tol = ucon$tol,
                               maxiter = ucon$maxiter)
-        result <- list(callPrice = result, impliedVol = impliedVol[[1L]])
+        result <- list(value = result, impliedVol = impliedVol[[1L]])
         if (uniroot.info)
             result <- c(result, uniroot = impliedVol)
     }

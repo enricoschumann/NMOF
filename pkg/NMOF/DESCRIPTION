@@ -1,10 +1,10 @@
 Package: NMOF
 Type: Package
 Title: Numerical Methods and Optimization in Finance
-Version: 0.26-2
-Date: 2012-10-23
+Version: 0.26-3
+Date: 2012-10-25
 Author: Enrico Schumann
-Authors@R: person("Enrico", "Schumann", 
+Authors@R: person("Enrico", "Schumann",
                   role = c("aut", "cre"),
                   email = "es@enricoschumann.net")
 Maintainer: Enrico Schumann <es@enricoschumann.net>
@@ -12,8 +12,8 @@ Depends: R (>= 2.10)
 Suggests: MASS, multicore, parallel, quadprog, RUnit, snow
 Description: Functions, examples and data from the book 'Numerical
     Methods and Optimization in Finance' by M. Gilli, D. Maringer and
-    E. Schumann. The package contains, in particular, implementations 
-    of several optimisation heuristics (such as Differential Evolution, 
+    E. Schumann. The package contains, in particular, implementations
+    of several optimisation heuristics (such as Differential Evolution,
     Genetic Algorithms and Threshold Accepting).
 License: GPL-3
 URL: http://nmof.net, http://enricoschumann.net/NMOF.htm

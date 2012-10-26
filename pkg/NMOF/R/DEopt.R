@@ -78,8 +78,6 @@ DEopt <- function(OF, algo = list(), ...) {
     vPv <- vF; vFv <- vF
     if (algoD$storeF)
         Fmat <- array(NA, c(nG, nP)) else Fmat <- NA
-    if (algoD$storeSolutions)
-        xlist <- list(P = vector("list", length = nG)) else xlist <- NA
 
     if (is.null(algoD$initP)) {
         mP <- vmin + diag(vmax - vmin) %*% mRU(d, nP)
@@ -89,6 +87,8 @@ DEopt <- function(OF, algo = list(), ...) {
         if (any(dim(mP) != c(d,nP)))
             stop("supplied population has wrong dimension")
     }
+    if (algoD$storeSolutions)
+        xlist <- list(P = vector("list", length = nG), initP = mP) else xlist <- NA
     ## evaluate initial population
     ## 1) repair
     if (mm)

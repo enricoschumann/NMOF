@@ -1,13 +1,20 @@
+v0.26-3  (2012-10-25)
+
+  o DEopt, GAopt and PSopt now also return the initial populations
+    (but only if 'algo$storeSolutions' is TRUE)
+
+  o More unit tests added.
+
 v0.26-2  (2012-10-23)
 
   o Changes in documentation and unit tests.
 
 v0.26-1  (2012-10-12)
 
-  o Small changes in documentation (option pricing 
+  o Small changes in documentation (option pricing
     functions).
 
-  o Code examples in subdirectory 'NMOFex' (manual) 
+  o Code examples in subdirectory 'NMOFex' (manual)
     updated.
 
 v0.26-0  (2012-09-19)
@@ -23,9 +30,9 @@ v0.25-9  (2012-09-19)
 
   o Added functions 'vanillaOptionEuropean',
     'VanillaOptionAmerican' and 'vanillaOptionImpliedVol'.
- 
-  o Test files have been reorganised (there are now about 
-    700 unit tests; they all can be run from 
+
+  o Test files have been reorganised (there are now about
+    700 unit tests; they all can be run from
     /unitTests/runTests.R).
 
   o New maintainer e-mail address.
@@ -33,21 +40,21 @@ v0.25-9  (2012-09-19)
 v0.25-8  (2012-08-28)
 
   o all opt-functions now return 'initial.state' (which is
-    the value of '.Random.seed' when the function is 
-    called). All the warnings of '?Random' apply (in 
+    the value of '.Random.seed' when the function is
+    called). All the warnings of '?Random' apply (in
     particular, see section 'Note'); the preferred way
-    is still to set a seed explicitly with 'set.seed'. 
+    is still to set a seed explicitly with 'set.seed'.
 
 v0.25-7  (2012-08-17)
 
   o minor internal changes (the only visible update are small
-    changes in some of the examples)  
+    changes in some of the examples)
 
 v0.25-6  (2012-08-07)
 
   o Package 'parallel' is now suggested. In functions gridSearch,
-    restartOpt, bracket: with method "multicore" the functions 
-    first check if package 'parallel' is available; if not, they 
+    restartOpt, bracket: with method "multicore" the functions
+    first check if package 'parallel' is available; if not, they
     look for package 'multicore'
 
   o 'restartOpt' has a new argument 'best.only': if TRUE,
@@ -55,18 +62,18 @@ v0.25-6  (2012-08-07)
 
 v0.25-5  (2012-07-20)
 
-  o Added checks in DEopt that vectorised functions 
-    return objects of correct size (will be added to PSopt 
+  o Added checks in DEopt that vectorised functions
+    return objects of correct size (will be added to PSopt
     and GAopt as well).
 
   o Removed NEWS.Rd (NEWS now back to plain text).
 
 v0.25-4  (2012-07-03)
 
-  o Added checks on the parameters for 'callCF'; added  
-    new arguments 'uniroot.control', which allows to pass 
-    the settings for 'uniroot' (to compute implied vol), 
-    and 'uniroot.info'. 
+  o Added checks on the parameters for 'callCF'; added
+    new arguments 'uniroot.control', which allows to pass
+    the settings for 'uniroot' (to compute implied vol),
+    and 'uniroot.info'.
     (Computation of implied vol would fail when spot equalled
     strike and r equalled q; thanks to Douglas McLean for
     reporting this case.)
@@ -81,33 +88,33 @@ v0.25-2  (2012-06-17)
 
   o Small changes in the vignettes (mostly layout).
 
-  o In 'TAopt', 'LSopt': if 'x0' is not a function, it is 
+  o In 'TAopt', 'LSopt': if 'x0' is not a function, it is
     initialised with 'eval(x0)'; thus, it can be an expression.
 
   o Several minor internal changes.
 
 v0.25-1  (2012-05-22)
 
-  o Edited some of the examples in the documentation; minor 
+  o Edited some of the examples in the documentation; minor
     modifications in docs.
 
   o Code examples in subdirectory 'NMOFex' updated.
 
 v0.25-0  (2012-04-20)
 
-  o All the R-code examples from the book are now available 
-    in the package through function 'showExample'; eg, 
+  o All the R-code examples from the book are now available
+    in the package through function 'showExample'; eg,
     'showExample("equations.R")'
-    (The scripts are stored in subdirectory 'book'.) 
+    (The scripts are stored in subdirectory 'book'.)
 
   o A first draft of the 'NMOF Manual' is available from
-    http://enricoschumann.net/NMOF.htm . The manual's code 
-    examples are collected in file 'NMOFman.R' (in subdirectory 
-    'NMOFex'). The manual supersedes 'Examples and Extensions for 
+    http://enricoschumann.net/NMOF.htm . The manual's code
+    examples are collected in file 'NMOFman.R' (in subdirectory
+    'NMOFex'). The manual supersedes 'Examples and Extensions for
     the NMOF package'.
 
-  o The tests on specific TA applications (minimum variance, 
-    tangency portfolio) have been removed; the code was added to 
+  o The tests on specific TA applications (minimum variance,
+    tangency portfolio) have been removed; the code was added to
     the manual.
 
 v0.24-1  (2012-04-16)
@@ -119,29 +126,29 @@ v0.24-1  (2012-04-16)
 v0.24-0  (2012-04-11)
 
   o Added function 'resampleC': allows to sample with replacement from
-    arbitrary numeric vectors (ie, samples) and making the samples (rank) 
+    arbitrary numeric vectors (ie, samples) and making the samples (rank)
     correlated.
 
-  o 'DEopt' and 'PSopt' now have an argument 'algo$minmaxConstr'. If 
-    TRUE, 'algo$min' and 'algo$max' are become constraints. These 
-    constraints are implemented through an internal repair function that 
+  o 'DEopt' and 'PSopt' now have an argument 'algo$minmaxConstr'. If
+    TRUE, 'algo$min' and 'algo$max' are become constraints. These
+    constraints are implemented through an internal repair function that
     is called before any user-defined repair function.
-  
+
 v0.23-3  (2012-03-25)
 
-  o fixed: 'restartOpt' could not take an argument named 'X' 
-    via the '...' argument.  
+  o fixed: 'restartOpt' could not take an argument named 'X'
+    via the '...' argument.
   o Unit tests added in unitTests1.R.
 
 v0.23-2  (2012-03-19)
 
-  o fixed: with 'algo$storeSolutions==TRUE', functions 'LSopt' 
+  o fixed: with 'algo$storeSolutions==TRUE', functions 'LSopt'
     and 'TAopt' only returned the current (=accepted) solution
-    in a given iteration, but not the candidate solution. 
-    (These data can be found in 'xlist'. See ?TAopt and 
-    ?LSopt, under 'Value'.) 
+    in a given iteration, but not the candidate solution.
+    (These data can be found in 'xlist'. See ?TAopt and
+    ?LSopt, under 'Value'.)
   o Unit tests added in unitTests1.R.
- 
+
 v0.23-1  (2012-02-27)
 
   o Added 'Depends: R (>= 2.10)' to DESCRIPTION (necessary
@@ -150,15 +157,15 @@ v0.23-1  (2012-02-27)
 v0.23-0  (2012-02-14)
 
   o Dataset 'optionData' was added.
-  o More tests were added for function 'callCF'; and its 
+  o More tests were added for function 'callCF'; and its
     documentation was updated.
 
 v0.22-3  (2012-01-15)
 
-  o with 'algo$printDetail = TRUE', functions DEopt, GAopt and 
+  o with 'algo$printDetail = TRUE', functions DEopt, GAopt and
     PSopt give more information
-  o vignette 'DEnss.Rnw' was shortened to reduce build-time of 
-    the package (removed parts are now in 'Examples and 
+  o vignette 'DEnss.Rnw' was shortened to reduce build-time of
+    the package (removed parts are now in 'Examples and
     Extensions for the NMOF package')
   o code examples in subdirectory 'NMOFex' updated
 
@@ -170,50 +177,50 @@ v0.22-2  (2012-01-05)
 v0.22-1  (2011-12-15)
 
   o tests for distributed computing have been organised into a
-    report, 'Distributed computations with the NMOF package', 
-    available as a pdf-file from 
+    report, 'Distributed computations with the NMOF package',
+    available as a pdf-file from
     http://enricoschumann.net/files/NMOFdist_Windows.pdf
     and
     http://enricoschumann.net/files/NMOFdist_Linux.pdf
     (package 'multicore' is only available on Linux)
-  o the code for 'Distributed computations with the NMOF package' 
-    is available in file 'NMOFdist.R', stored in subdirectory 
-    'NMOFex' (the file 'multicore.R' has been removed from 
+  o the code for 'Distributed computations with the NMOF package'
+    is available in file 'NMOFdist.R', stored in subdirectory
+    'NMOFex' (the file 'multicore.R' has been removed from
     subdirectory 'unitTests')
   o unit tests updated
 
 v0.22-0  (2011-12-08)
 
   o documentation updated
-  o slight changes in vignette 'DEnss.Rnw' (to reduce time 
+  o slight changes in vignette 'DEnss.Rnw' (to reduce time
     to build package)
 
 v0.21-5  (2011-12-01)
 
-  o fixed: in 'GAopt', optional arguments for 'mclapply' 
-    (multicore) were not passed. An example for passing an 
+  o fixed: in 'GAopt', optional arguments for 'mclapply'
+    (multicore) were not passed. An example for passing an
     argument was added to file 'unitTests/multicore.R'.
   o documentation for 'GAopt' updated
   o code examples in subdirectory 'NMOFex' updated
 
 v0.21-4  (2011-11-29)
 
-  o 'GAopt' now has an argument 'algo$methodOF' that supports  
-    'loop' (default) but also 'snow' or 'multicore'. See 
-    'Examples and Extensions for the NMOF package' (with code 
+  o 'GAopt' now has an argument 'algo$methodOF' that supports
+    'loop' (default) but also 'snow' or 'multicore'. See
+    'Examples and Extensions for the NMOF package' (with code
     in subdirectory 'NMOFex') for an example.
-  o vignette 'TAportfolio' updated (now with example for 
+  o vignette 'TAportfolio' updated (now with example for
     rank-deficient matrix)
 
 v0.21-3  (2011-11-25)
 
   o fixed: 'gridSearch' with 'printDetail=TRUE' did not give
     a meaningful message
-  o experimental: 'GAopt' now has an argument 'algo$methodOF' 
+  o experimental: 'GAopt' now has an argument 'algo$methodOF'
     that can be 'loop' (default) but also 'snow' or 'multicore'
-    (currently, only 'snow' is operational). If 'algo$methodOF' 
-    is not 'loop', the evaluation of the objective function will 
-    be distributed. See 'Examples and Extensions for the NMOF 
+    (currently, only 'snow' is operational). If 'algo$methodOF'
+    is not 'loop', the evaluation of the objective function will
+    be distributed. See 'Examples and Extensions for the NMOF
     package'(with code in subdirectory 'NMOFex') for an example.
 
 v0.21-2  (2011-11-22)
@@ -222,8 +229,8 @@ v0.21-2  (2011-11-22)
     not print the best solution, but the current solution
     (but internal book keeping worked correctly, and the best
     solution was returned)
-  o 'bracketing', 'gridSearch', 'restartOpt': when 'cl' argument 
-    is not NULL, then argument 'method' is set to 'snow' (but as 
+  o 'bracketing', 'gridSearch', 'restartOpt': when 'cl' argument
+    is not NULL, then argument 'method' is set to 'snow' (but as
     before it is checked whether package 'snow' is available)
   o the latest pdf-version of 'Examples and Extensions
     for the NMOF package' is now available from

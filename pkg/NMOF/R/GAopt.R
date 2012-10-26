@@ -117,8 +117,6 @@ GAopt <- function (OF, algo = list(), ...) {
 
     if (algoD$storeF)
         Fmat <- array(NA, c(nG, nP)) else Fmat <- NA
-    if (algoD$storeSolutions)
-        xlist <- list(P = vector("list", length = nG)) else xlist <- NA
 
     ## create population
     if (is.null(algoD$initP)) {
@@ -135,6 +133,8 @@ GAopt <- function (OF, algo = list(), ...) {
             warning("'initP' is not of mode logical; 'storage.mode(initP)' will be tried")
         }
     }
+    if (algoD$storeSolutions)
+        xlist <- list(P = vector("list", length = nG), initP = mP) else xlist <- NA
 
     ## repair initial population
     if (!is.null(algoD$repair)) {

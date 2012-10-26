@@ -1,8 +1,11 @@
-localTesting <- TRUE
-require("NMOF")
+## to run the unit tests locally, set 'path' so that the tests
+## scripts are found
+
 if (require("RUnit", quietly = TRUE)) {
+    localTesting <- TRUE
+    require("NMOF")
     if (localTesting)
-        path <- "~/Packages/NMOF/NMOF/pkg/NMOF/inst/unitTests" else
+        path <- "~/Packages/RForge/nmof/pkg/NMOF/inst/unitTests" else
     path <- system.file("unitTests", package = "NMOF")
 
     myTestSuite <- defineTestSuite("NMOF",

@@ -35,7 +35,13 @@ Note that the function takes variances as inputs (not volatilities).
 }
 \value{
   Returns the value of the call (numeric) under the Heston model or, if
-\code{implVol == TRUE}, a list of the value and the implied volatility.
+  \code{implVol} is \code{TRUE}, a list of the value and the implied
+  volatility.
+}
+\note{
+  If \code{implVol} is \code{TRUE}, the function will return a list with
+  elements named \code{value} and \code{impliedVol}. Prior to version
+  0.26-3, the first element was named \code{callPrice}.
 }
 \references{
 Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods

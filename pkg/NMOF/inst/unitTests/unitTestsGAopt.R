@@ -20,8 +20,8 @@ test.GAopt <- function() {
     ## each matrix in xlist should have dim c(size, algo$nP)
     checkEquals(sapply(solGA$xlist[[1L]], dim),
                 array(1, dim = c(2L,algo$nG)) * c(size, algo$nP))
-    ## there is no second element in 'xlist'
-    checkException(length(solGA$xlist[[2L]]), silent = TRUE)
+    ## there is no third element in 'xlist'
+    checkException(length(solGA$xlist[[3L]]), silent = TRUE)
 
     ## error -- wrong size of initP
     algo$initP <- array(FALSE, dim = c(20,10))
@@ -93,28 +93,27 @@ test.GAopt <- function() {
     ## each matrix in xlist should have dim c(size, algo$nP)
     checkEquals(sapply(solGA$xlist[[1L]], dim),
                 array(1, dim = c(2L,algo$nG)) * c(size, algo$nP))
-    ## there is no second element in 'xlist'
-    checkException(length(solGA$xlist[[2L]]), silent = TRUE)
+    ## there is no third element in 'xlist'
+    checkException(length(solGA$xlist[[3L]]), silent = TRUE)
 
     ## check: do _not_ store solutions
     size <- 10L; OF <- function(x, y) sum(x != y)
     y <- runif(size) > 0.5 ## the true solution
     algo <- list(nB = size, nP = 20L, nG = 10L, prob = 0.002,
-                 printBar = FALSE)
+                 printBar = FALSE, printDetail = FALSE)
     xlist <- GAopt(OF, algo = algo, y = y)$xlist
     checkTrue(is.na(xlist))
     checkEquals(length(xlist), 1L)
 
     ## warning changed to error/reset on.exit
     ## checks 'snow': 'cl' not supplied
-    op <- options("warn"); on.exit(options(op))
-    options(warn = 2)
-    size <- 10L
-    OF <- function(x, y) sum(x != y)
-    y <- runif(size) > 0.5 ## the true solution
-    algo <- list(nB = size, nP = 20L, nG = 10L, prob = 0.002,
-                 printBar = FALSE, methodOF = "snow")
-    if (require("snow"))
-        checkException(sol <- GAopt(OF, algo = algo, y = y), silent = TRUE)
+    ## op <- options("warn"); on.exit(options(op))
+    ## options(warn = 2)
+    ## size <- 10L
+    ## OF <- function(x, y) sum(x != y)
+    ## y <- runif(size) > 0.5 ## the true solution
+    ## algo <- list(nB = size, nP = 20L, nG = 10L, prob = 0.002,
+    ##              printBar = FALSE, methodOF = "snow")
+    ## if (require("snow"))
+    ##     checkException(sol <- GAopt(OF, algo = algo, y = y), silent = TRUE)
 }
-

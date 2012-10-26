@@ -55,9 +55,6 @@ PSopt <- function(OF, algo = list(), ...) {
 
     if (algoD$storeF)
         Fmat <- array(NA, c(nG, nP)) else Fmat <- NA
-    if (algoD$storeSolutions)
-        xlist <- list(P     = vector("list", length = nG),
-                      Pbest = vector("list", length = nG)) else xlist <- NA
 
 
     ## set up initial population and velocity
@@ -72,6 +69,9 @@ PSopt <- function(OF, algo = list(), ...) {
             stop("supplied population has wrong dimension")
 
     }
+    if (algoD$storeSolutions)
+        xlist <- list(P     = vector("list", length = nG),
+                      Pbest = vector("list", length = nG), initP = mP) else xlist <- NA
     mV <- algoD$initV * mRN(d,nP)
 
     ## evaluate initial population

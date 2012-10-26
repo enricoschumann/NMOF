@@ -165,16 +165,15 @@ TAopt(OF, algo = list(), \dots)
     
     Dueck, G. and Scheuer, T. (1990) Threshold Accepting. A General
     Purpose Optimization Algorithm Superior to Simulated Annealing.
-    \emph{Journal of Computational Physics}. \strong{90}, 1, pp.
-    161--175.
+    \emph{Journal of Computational Physics}. \strong{90} (1), 161--175.
 
     Dueck, G. and Winker, P. (1992) New Concepts and Algorithms for
     Portfolio Choice. \emph{Applied Stochastic Models and Data
-    Analysis}. \strong{8}, 3, 159--178.
+    Analysis}. \strong{8} (3), 159--178.
 
     Gilli, M., Kellezi, E. and Hysi, H. (2006) A Data-Driven
     Optimization Heuristic for Downside Risk Minimization. \emph{Journal
-    of Risk}. \strong{8}, 3, pp. 1--18.
+    of Risk}. \strong{8} (3), 1--18.
 
     Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical
     Methods and Optimization in Finance}. Elsevier.
@@ -182,7 +181,7 @@ TAopt(OF, algo = list(), \dots)
 
     Moscato, P. and Fontanari, J.F. (1990). Stochastic Versus
     Deterministic Update in Simulated Annealing. Physics Letters A.
-    \strong{146}, 4, pp. 204--208.
+    \strong{146} (4), 204--208.
 
     Schumann, E. (2011) The \pkg{NMOF} Manual.
     \url{http://enricoschumann.net/NMOF.htm}

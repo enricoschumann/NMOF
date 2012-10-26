@@ -59,18 +59,26 @@ cfVG(om, S, tau, r, q, nu, theta, sigma)
   interval is \code{c(0.00001, 2)}; it can be changed through
   \code{uniroot.control}).
 
+  The function always use variances as inputs (not volatilities).
+
+  The function is not vectorised (but see the NMOF manual for examples
+  of how to efficiently price more than one option at once).
 }
 \value{
   Returns the value of the call (numeric) under the respective model or,
-  if \code{implVol == TRUE}, a list of the value and the implied
+  if \code{implVol} is \code{TRUE}, a list of the value and the implied
   volatility. (If, in addition, \code{uniroot.info} is \code{TRUE}, the
   information provided by \code{\link{uniroot}} is also returned.)
- 
+}
+\note{
+  If \code{implVol} is \code{TRUE}, the function will return a list with
+  elements named \code{value} and \code{impliedVol}. Prior to version
+  0.26-3, the first element was named \code{callPrice}.
 }
 \references{
   Bates, David S. (1996) Jumps and Stochastic Volatility: Exchange Rate
   Processes Implicit in Deutsche Mark Options. \emph{Review of
-    Financial Studies} \strong{9}(1), 69--107.
+    Financial Studies} \strong{9} (1), 69--107.
 
   Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical
     Methods and Optimization in Finance}. Elsevier.
@@ -78,8 +86,7 @@ cfVG(om, S, tau, r, q, nu, theta, sigma)
 
   Heston, S.L. (1993) A Closed-Form Solution for Options with Stochastic
   Volatility with Applications to Bonds and Currency options.
-  \emph{Review of Financial Studies} \strong{6}(2), 327--343.
-
+  \emph{Review of Financial Studies} \strong{6} (2), 327--343.
 }
 \author{
   Enrico Schumann

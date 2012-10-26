@@ -7,7 +7,7 @@ test.DEopt <- function() {
     }
     algo <- list(nP = 100, nG = 300, F = 0.5, CR = 0.9,
                  min = c(-3, -3), max = c( 3, 3),
-                 printBar = FALSE, printDetail = TRUE)
+                 printBar = FALSE, printDetail = FALSE)
 
     ## DE should solve the problem
     sol <- DEopt(OF = trefethen, algo)
@@ -53,6 +53,12 @@ test.DEopt <- function() {
     checkException(res <- DEopt(OF = OF, algo), silent = TRUE)
     algo$initP <- function() array(0, dim = c(5,20))
     checkException(res <- DEopt(OF = OF, algo), silent = TRUE)
+
+    ## initial population is returned
+    algo$initP <- array(rnorm(algo$nP*size), dim = c(size,algo$nP))
+    algo$nG <- 3; algo$storeSolutions <- TRUE
+    sol <- DEopt(OF = OF, algo = algo)
+    checkEquals(sol$xlist$initP, algo$initP)
     algo$initP <- NULL
 
     ## exception: CR > 1, CR < 0
@@ -94,9 +100,9 @@ test.DEopt <- function() {
     X <- 1:10 - 5
     OF <- function(x, X)
         sum(abs(x - X))
-    algo <- list(nP = 30, nG = 1000,
-                 min = rep(-3, length(X)),
-                 max = rep( 3,  length(X)),
+    algo <- list(nP = 40, nG = 1200,
+                 min = rep(-4, length(X)),
+                 max = rep( 4,  length(X)),
                  minmaxConstr = FALSE,
                  printBar = FALSE, printDetail = FALSE,
                  storeF = FALSE, storeSolutions = FALSE)
@@ -104,8 +110,7 @@ test.DEopt <- function() {
     checkEquals(round(sol$xbest,3), X)
     algo$minmaxConstr <- TRUE
     sol <- DEopt(OF, algo, X)
-    round(sol$xbest,3)
-    checkEquals(round(sol$xbest,3), c(-3, -3, -2, -1, 0, 1, 2, 3, 3, 3))
+    checkEquals(round(sol$xbest, 3), c(-4, -3, -2, -1, 0, 1, 2, 3, 4, 4))
 
     ## vectorised comp: error if
     X <- 1:10 - 5
@@ -131,7 +136,7 @@ test.DEopt <- function() {
     }
     algo <- list(nP = 100, nG = 2, F = 0.5, CR = 0.9,
                  min = c(-3, -3), max = c( 3, 3),
-                 printBar = FALSE, printDetail = TRUE)
+                 printBar = FALSE, printDetail = FALSE)
 
     ## DE should solve the problem
     sol <- DEopt(OF = trefethen, algo)
@@ -140,5 +145,4 @@ test.DEopt <- function() {
         sol2 <- DEopt(OF = trefethen, algo)
         checkEquals(sol, sol2)
     }
-
 }

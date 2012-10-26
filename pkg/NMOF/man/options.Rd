@@ -14,8 +14,8 @@ vanillaOptionEuropean(S, X, tau, r, q, v, tauD = 0, D = 0,
 vanillaOptionAmerican(S, X, tau, r, q, v, tauD = 0, D = 0,
                       type = "call", greeks = TRUE, M = 101)
 
-vanillaOptionImpliedVol(exercise = "european", price, S, X, tau, r, 
-                        q = 0, tauD = 0, D = 0, type = "call", 
+vanillaOptionImpliedVol(exercise = "european", price, S, X, tau, r,
+                        q = 0, tauD = 0, D = 0, type = "call",
                         M = 101,
                         uniroot.control = list(), uniroot.info = FALSE)
 }
@@ -98,13 +98,14 @@ The implied volatility is computed with \code{\link{uniroot}} from the
 Dividends (\code{D}) are modelled via the escrowed-dividend model.
 
 }
-
-
 \value{
-  
-Returns the price (a numeric vector of length one) if
-\code{Greeks == FALSE}, else returns a list.
-
+  Returns the price (a numeric vector of length one) if \code{greeks} is
+  \code{FALSE}, else returns a list.
+}
+\note{
+  If \code{greeks} is (are?) \code{TRUE}, the function will return a list with
+  named elements (\code{value}, \code{delta} and so on). Prior to version
+  0.26-3, the first element was named \code{price}.
 }
 \references{
 Gilli, Maringer, Schumann, 2011.
@@ -112,9 +113,8 @@ Gilli, Maringer, Schumann, 2011.
 \author{
 Enrico Schumann
 }
-
 \seealso{
-\code{\link{EuropeanCall}}
+\code{\link{EuropeanCall}}, code{\link{callCF}}
 }
 \examples{
 S <- 100; X <- 100; tau <- 1; r <- 0.02; q <- 0.06; vol <- 0.3
@@ -146,14 +146,14 @@ D <- c(1,2); tauD <- c(0.3,.6)
 type <- "put"
 v <- 0.245^2  ## variance, not volatility
 
-p <- vanillaOptionEuropean(S = S, X = X, tau, r, q, v = v, 
+p <- vanillaOptionEuropean(S = S, X = X, tau, r, q, v = v,
                            tauD = tauD, D = D, type = type, greeks = FALSE)
-vanillaOptionImpliedVol(exercise = "european", price = p, 
+vanillaOptionImpliedVol(exercise = "european", price = p,
      S = S, X = X, tau = tau, r = r, q = q, tauD = tauD, D = D, type = type)
 
-p <- vanillaOptionAmerican(S = S, X = X, tau, r, q, v = v, 
+p <- vanillaOptionAmerican(S = S, X = X, tau, r, q, v = v,
      tauD = tauD, D = D, type = type, greeks = FALSE)
-vanillaOptionImpliedVol(exercise = "american", price = p, 
+vanillaOptionImpliedVol(exercise = "american", price = p,
      S = S, X = X, tau = tau, r = r, q = q, tauD = tauD, D = D, type =
      type, uniroot.control = list(interval = c(0.01, 0.5)))
 
@@ -163,9 +163,9 @@ S <- 100; X <- 100
 tau <- 1; r <- 0.05; q <- 0.072
 v <- 0.22^2  ## variance, not volatility
 
-call <- vanillaOptionEuropean(S=S, X = X, tau=tau, r=r, q=q, v=v, 
+call <- vanillaOptionEuropean(S=S, X = X, tau=tau, r=r, q=q, v=v,
          type = "call", greeks = FALSE)
-put  <- vanillaOptionEuropean(S=S, X = X, tau=tau, r=r, q=q, v=v, 
+put  <- vanillaOptionEuropean(S=S, X = X, tau=tau, r=r, q=q, v=v,
          type = "put", greeks = FALSE)
 
 # ... the simple way
@@ -174,15 +174,15 @@ put  <- vanillaOptionEuropean(S=S, X = X, tau=tau, r=r, q=q, v=v,
 # ... the complicated way :-)
 volDiffCreate <- function(exercise, call, put, S, X, tau, r) {
     f <- function(q) {
-        cc <- vanillaOptionImpliedVol(exercise = exercise, price = call, 
+        cc <- vanillaOptionImpliedVol(exercise = exercise, price = call,
             S = S, X = X, tau = tau, r = r, q = q, type = "call")
-        pp <- vanillaOptionImpliedVol(exercise = exercise, price = put, 
+        pp <- vanillaOptionImpliedVol(exercise = exercise, price = put,
             S = S, X = X, tau = tau, r = r, q = q, type = "put")
         abs(cc - pp)
     }
     f
 }
-f <- volDiffCreate(exercise = "european", 
+f <- volDiffCreate(exercise = "european",
                    call = call, put = put, S = S, X = X, tau = tau, r)
 optimise(f,interval = c(0, 0.2))$minimum
 }
