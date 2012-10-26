@@ -1,4 +1,10 @@
 v0.26-3  (2012-10-25)
+ 
+  o Important: all option pricing functions that return lists of
+    named elements (callCF, vanillaOptionE/A, callHestoncf) 
+    now call the theoretical option value just 'value'. Before, 
+    they returned 'price' or 'callPrice', which could be confusing
+    for instance in case of implied vol calculations.
 
   o DEopt, GAopt and PSopt now also return the initial populations
     (but only if 'algo$storeSolutions' is TRUE)
