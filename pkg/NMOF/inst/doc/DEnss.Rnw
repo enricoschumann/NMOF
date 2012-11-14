@@ -432,13 +432,12 @@ legend(x = "topright", legend = c("true yields", "DE", "nlminb"),
 \section{Fitting the NSS model to given bond prices}
 \begin{framed}
   \noindent The section was removed to reduce the build-time of the
-  package. The examples were moved to the report `Examples and
-  Extensions for the NMOF package' (see
+  package. The examples were moved to the `NMOF manual' (see
   \url{http://enricoschumann.net/NMOF.htm}). The code is in the
   subdirectory \texttt{NMOFex}; to show the code in \textsf{R}, you can use
   the function \texttt{system.file}.
 <<eval = FALSE>>=
-whereToLook <- system.file("NMOFex/NMOFex.R", package = "NMOF")
+whereToLook <- system.file("NMOFex/NMOFman.R", package = "NMOF")
 file.show(whereToLook, title = "NMOF examples")
 @
 \end{framed}
@@ -448,13 +447,12 @@ file.show(whereToLook, title = "NMOF examples")
 \section{Fitting the NSS model to given yields-to-maturity}
 \begin{framed}
   \noindent The section was removed to reduce the build-time of the
-  package. The examples were moved to the report `Examples and
-  Extensions for the NMOF package' (see
+  package. The examples were moved to the  `NMOF manual' (see
   \url{http://enricoschumann.net/NMOF.htm}). The code is in the
   subdirectory \texttt{NMOFex}; to show the code in \textsf{R}, you can use
   the function \texttt{system.file}.
 <<eval = FALSE>>=
-whereToLook <- system.file("NMOFex/NMOFex.R", package = "NMOF")
+whereToLook <- system.file("NMOFex/NMOFman.R", package = "NMOF")
 file.show(whereToLook, title = "NMOF examples")
 @
 \end{framed}

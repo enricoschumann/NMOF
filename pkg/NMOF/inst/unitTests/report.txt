@@ -1,12 +1,14 @@
-RUNIT TEST PROTOCOL -- Wed Nov 14 14:20:10 2012 
+RUNIT TEST PROTOCOL -- Wed Nov 14 15:27:58 2012 
 *********************************************** 
 Number of test functions: 19 
 Number of errors: 0 
-Number of failures: 0 
+Number of failures: 1 
 
  
 1 Test Suite : 
-NMOF - 19 test functions, 0 errors, 0 failures
+NMOF - 19 test functions, 0 errors, 1 failure
+FAILURE in test.PSopt: Error in checkEquals(round(sol$xbest, 3), c(-4, -3, -2, -1, 0, 1, 2, 3,  : 
+  Mean relative difference: 0.25
 
 
 
@@ -27,7 +29,7 @@ test.restartOpt: (1 checks) ... OK (0.15 seconds)
 test.testFunctions: (6 checks) ... OK (0 seconds)
 test.vanillaOptionAmerican: (6 checks) ... OK (0.02 seconds)
 test.vanillaOptionEuropean: (6 checks) ... OK (0 seconds)
-test.vanillaOptionImpliedVol: (12 checks) ... OK (0.17 seconds)
+test.vanillaOptionImpliedVol: (12 checks) ... OK (0.18 seconds)
 --------------------------- 
 Test file: /home/es/Packages/RForge/nmof/pkg/NMOF/inst/unitTests/unitTests2.R 
 test.bracketing: (13 checks) ... OK (0 seconds)
@@ -38,7 +40,7 @@ Test file: /home/es/Packages/RForge/nmof/pkg/NMOF/inst/unitTests/unitTestscallCF
 test.callCF: (22 checks) ... OK (0.02 seconds)
 --------------------------- 
 Test file: /home/es/Packages/RForge/nmof/pkg/NMOF/inst/unitTests/unitTestsDEopt.R 
-test.DEopt: (23 checks) ... OK (3.11 seconds)
+test.DEopt: (23 checks) ... OK (3.2 seconds)
 --------------------------- 
 Test file: /home/es/Packages/RForge/nmof/pkg/NMOF/inst/unitTests/unitTestsGAopt.R 
 test.GAopt: (22 checks) ... OK (0.2 seconds)
@@ -50,7 +52,9 @@ Test file: /home/es/Packages/RForge/nmof/pkg/NMOF/inst/unitTests/unitTestsLSopt.
 test.LSopt: (7 checks) ... OK (0.27 seconds)
 --------------------------- 
 Test file: /home/es/Packages/RForge/nmof/pkg/NMOF/inst/unitTests/unitTestsPSopt.R 
-test.PSopt: (14 checks) ... OK (1.95 seconds)
+test.PSopt: FAILURE !! (check number 14)
+Error in checkEquals(round(sol$xbest, 3), c(-4, -3, -2, -1, 0, 1, 2, 3,  : 
+  Mean relative difference: 0.25
 --------------------------- 
 Test file: /home/es/Packages/RForge/nmof/pkg/NMOF/inst/unitTests/unitTestsTAopt.R 
 test.TAopt: (13 checks) ... OK (0.36 seconds)
