@@ -72,7 +72,7 @@ bracketing(fun, interval, ...,
   \code{snow} is chosen but the package is not available or \code{cl} is
   not specified, then \code{method} will be set to \code{loop} and a
   warning is issued. In case that \code{cl} is a cluster object,
-  \code{stopCluster} will not be called automatically. 
+  \code{stopCluster} will not be called automatically.
 }
 \value{
   a numeric matrix with two columns. Each row contains one interval
@@ -84,8 +84,9 @@ bracketing(fun, interval, ...,
     Methods and Optimization in Finance}. Elsevier.
   \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
 
-  Schumann, E. (2011) Examples and Extensions for the \pkg{NMOF}
-  Package. \url{http://enricoschumann.net/NMOF.htm}
+  Schumann, E. (2012) The \pkg{NMOF} Manual.
+  \url{http://enricoschumann.net/NMOF.htm}
+
 }
 \author{
   Enrico Schumann

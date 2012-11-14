@@ -1,3 +1,10 @@
+v0.26-4  (2012-11-14)
+ 
+  o Minor changes in documentation and examples.
+
+  o Code examples in subdirectory 'NMOFex' (manual)
+    updated.
+
 v0.26-3  (2012-10-25)
  
   o Important: all option pricing functions that return lists of

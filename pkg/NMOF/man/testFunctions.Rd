@@ -56,16 +56,24 @@ tfTrefethen(x)
   The objective function evaluated at \code{x} (a numeric vector of length one).
 }
 \references{
-  Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Optimization in Finance}. Elsevier.
-  \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626} (Chapter 10)
+
+  Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical
+  Methods and Optimization in Finance}. Elsevier.
+  \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
+  (Chapter 10)
+
 }
 \author{
   Enrico Schumann
 }
 \section{Warning}{
-  These test functions are \emph{artificial} problems. It is typically not too helpful to fine-tune a method on such functions. (This would
-  be like memorising all the answers for a particular multiple-choice test.) The functions' main purpose is checking the numerical
+
+  These test functions are \emph{artificial} problems. It is typically
+  not too helpful to fine-tune a method on such functions. (That would
+  be like memorising all the answers to a particular multiple-choice
+  test.) The functions' main purpose is checking the numerical
   implementation of algorithms.
+
 }
 
 

@@ -1209,10 +1209,10 @@ res[ ,300L]
 ## ## transposing xlist[[i]] gives a two-column matrix -- see ?points
 ## ## initial solutions
 ## points(t(xlist[[1L]]), pch = 21, bg=grey(0.9), col = grey(.2))
-## 
+##
 ## ## solutions at the end of generation 100
 ## points(t(xlist[[100L]]), pch = 21, bg=grey(0.9), col = grey(.2))
-## 
+##
 ## ## solutions at the end of generation 100
 ## points(t(xlist[[300L]]), pch = 21, bg=grey(0.9), col = grey(.2))
 
