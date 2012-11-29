@@ -78,18 +78,23 @@ currencies (Garman and Kohlhagen, 1983; set \code{q} equal to the
 foreign risk-free rate). For future-style options (eg, the German Bund
 future), set \code{q} and \code{r} equal to zero.
 
-The Greeks here are in their raw (\sQuote{textbook}) form. In practice,
-they are often adjusted: theta is negative and is divided by 365. Vega
-and rho are divided by 100 to give the sensitivity for one percentage
-point move in volatility/the interest rate.
+The Greeks here are in their raw (\sQuote{textbook}) form with only
+exception: Theta is made negative. In practice, the other Greeks are
+also typically adjusted. Theta is often divided by 365 (or some other
+yearly day count) Vega and Rho are divided by 100 to give the
+sensitivity for one percentage point move in volatility/the interest
+rate. Raw Gamma is not much use if not adjusted for the actual move in
+the underlier.
 
 For European options the Greeks are computed through the respective
 analytic expressions. For American options only Delta, Gamma and Theta
-are computed.
+are computed because they can be directly obtained from the binomial
+tree; other Greeks need to be computed through a finite difference (see
+Examples).
 
 For the European-type options, the function understands vectors of
 inputs, except for dividends. American options are priced via a
-Cox-Ross-Rubinstein tree; no vectorisation is possible here.
+Cox-Ross-Rubinstein tree; no vectorisation is implemented here.
 
 The implied volatility is computed with \code{\link{uniroot}} from the
 \pkg{stats} package (the default search interval is \code{c(0.00001,
@@ -103,12 +108,14 @@ Dividends (\code{D}) are modelled via the escrowed-dividend model.
   \code{FALSE}, else returns a list.
 }
 \note{
-  If \code{greeks} is (are?) \code{TRUE}, the function will return a list with
+  If \code{greeks} is \code{TRUE}, the function will return a list with
   named elements (\code{value}, \code{delta} and so on). Prior to version
-  0.26-3, the first element was named \code{price}.
+  0.26-3, the first element of this list was named \code{price}.
 }
 \references{
-Gilli, Maringer, Schumann, 2011.
+  Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical
+    Methods and Optimization in Finance}. Elsevier.
+  \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
 }
 \author{
 Enrico Schumann

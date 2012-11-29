@@ -11,7 +11,7 @@ test.MA <- function() {
     for (i in order:length(x))
         myMA[i] <- sum(x[(i - order + 1):i])/order
 
-    checkEquals(MA(x,order = order)[-(1:(order-1))],
+    checkEquals(MA(x, order = order)[-(1:(order-1))],
                 myMA[-(1:(order-1))])
 
     x <- rnorm(100L); myMA <- numeric(length(x)); order <- 1L
@@ -200,7 +200,7 @@ test.restartOpt <- function() {
 }
 
 
-# EUROPEAN BSM
+## EUROPEAN BSM
 test.vanillaOptionEuropean <- function() {
     # PRICES
     S <- 100; X <- 100; tau <- 1; r <- 0.02; q <- 0.00; vol <- 0.3
@@ -243,10 +243,10 @@ test.vanillaOptionEuropean <- function() {
 
     # TODO -- add tests for greeks
 }
-test.vanillaOptionEuropean()
+##test.vanillaOptionEuropean()
 
 
-# AMERICAN BSM
+## AMERICAN BSM
 test.vanillaOptionAmerican <- function() {
     # PRICES
     S <- 100; X <- 100; tau <- 1; r <- 0.02; q <- 0.00; vol <- 0.3
@@ -388,6 +388,4 @@ test.vanillaOptionImpliedVol <- function() {
         S = S, X = X, tau = tau, r = r, q = q, tauD = tauD, D = D,
         type = "call")
     checkEquals(round(ivol,4), vol)
-
 }
-

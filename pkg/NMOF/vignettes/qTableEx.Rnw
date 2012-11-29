@@ -1,4 +1,4 @@
-% \VignetteIndexEntry{An example for the qTable function}
+% \VignetteIndexEntry{Examples for the qTable function}
 % \VignetteKeyword{optimize,heuristics}
 \documentclass[a4paper,11pt]{article}
 \usepackage[left = 2.5cm, top = 2cm, bottom = 3cm, right = 3.5cm]{geometry}
@@ -23,7 +23,7 @@ options(continue = " ", digits = 5)
 @
 
 \begin{document}
-{\raggedright{\LARGE An example for the \texttt{qTable} function}}\medskip
+{\raggedright{\LARGE Examples for the \texttt{qTable} function}}\medskip
 
 \noindent Enrico Schumann\\
 \noindent \texttt{es@enricoschumann.net}\\
@@ -46,7 +46,7 @@ cat(qTable(X, yoffset = -0.025, unitlength = "5cm",
            circlesize = 0.0125, xmin = -10, xmax = 10, dec = 2))
 @
 
-\bigskip\bigskip
+\medskip\medskip
 
 If you use Sweave, use \verb"<<results=tex>>=" to start a code chunk.
 
@@ -59,21 +59,21 @@ If you use Sweave, use \verb"<<results=tex>>=" to start a code chunk.
 cat(qTable(X, yoffset = -0.025, unitlength = "5cm",
            circlesize = 0.0125, xmin = -10, xmax = 10, dec = 2))
 @
-\bigskip
+\medskip
 
 <<res2,results=tex>>=
 ## without specified limits
 cat(qTable(X, yoffset = -0.025, unitlength = "5cm",
            circlesize = 0.0125, dec = 2))
 @
-\bigskip
+\medskip
 
 <<res3,results=tex>>=
 ## 3 digits
 cat(qTable(X, yoffset = -0.025, unitlength = "5cm",
            circlesize = 0.0125, dec = 3))
 @
-\bigskip
+\medskip
 
 <<res4,results=tex>>=
 ## specific labels, but no limits
@@ -81,7 +81,7 @@ cat(qTable(X, yoffset = -0.025, unitlength = "5cm",
            labels = c(-8,2,8), at = c(-8,2,8),
            circlesize = 0.0125, dec = 1))
 @
-\bigskip
+\medskip
 
 <<res5,results=tex>>=
 ## specific labels and limits, linethickness
@@ -90,5 +90,31 @@ cat(qTable(X, yoffset = -0.025, unitlength = "5cm",
        circlesize = 0.02, dec = 1, linethickness = "0.2ex",
        xmin = -10, xmax = 10))
 @
+
+<<res6,results=tex>>=
+## specific labels and limits, linethickness
+cat(qTable(X, yoffset = -0.025, unitlength = "5cm",
+       labels = c("a","b","c"), at = c(-8,2,8),
+       circlesize = 0.02, dec = 1, linethickness = "0.2ex",
+       xmin = -10, xmax = 10))
+@
+
+<<res7,results=tex>>=
+## with limits and alternative functions
+cat(qTable(X, yoffset = -0.025, unitlength = "5cm",
+           circlesize = 0.0125, xmin = -10, xmax = 10, dec = 2,
+           funs = list(average = mean, 
+                       q10 = function(x) quantile(x, 0.1),
+                       q90 = function(x) quantile(x, 0.9))))
+@
+\medskip
+
+<<res8,results=tex>>=
+## with limits and without summary stats
+cat(qTable(X, yoffset = -0.025, unitlength = "5cm",
+           circlesize = 0.0125, xmin = -10, xmax = 10, dec = 2,
+           funs = list()))
+@
+\medskip
 
 \end{document}

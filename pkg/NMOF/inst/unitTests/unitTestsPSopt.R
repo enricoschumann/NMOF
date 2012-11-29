@@ -58,7 +58,8 @@ test.PSopt <- function() {
     X <- 1:10 - 5
     OF <- function(x, X)
         sum(abs(x - X))
-    algo <- list(nP = 50, nG = 1300, c2 =1, c1=0.5,
+    algo <- list(nP = 200, nG = 1000, c2=1, c1=1,
+                 iner = 0.9,
                  min = rep(-4, length(X)),
                  max = rep( 4,  length(X)),
                  minmaxConstr = FALSE,
@@ -68,7 +69,5 @@ test.PSopt <- function() {
     checkEquals(round(sol$xbest,3), X)
     algo$minmaxConstr <- TRUE
     sol <- PSopt(OF, algo, X)
-    round(sol$xbest,3)
     checkEquals(round(sol$xbest,3), c(-4, -3, -2, -1, 0, 1, 2, 3, 4, 4))
-
 }

@@ -1,18 +1,25 @@
 qTable  <- function(X, xmin = NULL, xmax = NULL, labels = NULL,
                     at = NULL, unitlength = "5cm", linethickness = NULL,
                     cnames = colnames(X), circlesize = 0.01,
-                    xoffset = 0, yoffset = 0, dec = 2L, filename = NULL) {
+                    xoffset = 0, yoffset = 0, dec = 2L, filename = NULL,
+                    funs = list(median=median, min=min, max=max),
+                    tabular.format, skip = TRUE) {
 
+    if (missing(tabular.format))
+        tabular.format <- paste("r",
+                                paste(rep("r", length(funs)), collapse = ""),
+                                "r", sep ="")
+    
     X <- as.matrix(X)
     if (nrow(X) < 10L)
-        warning("'X' has less than 10 rows")
+        warning(sQuote("X"), " has less than 10 rows")
     if (!is.null(at) && is.null(labels))
-        stop("'labels' must be provided")
+        stop(sQuote("labels"), " must be provided")
     if (!is.null(labels) && is.null(at))
-        stop("'at' must be provided")
+        stop(sQuote("at"), " must be provided")
 
     ## compute quantiles
-    A <- apply(X, 2L, quantile, c(.25, .5, .75))
+    A <- apply(X, 2L, quantile, c(0.25, 0.5, 0.75))
     iqr <- abs(A[3L, ] - A[1L, ])
 
     ## compute whiskers
@@ -35,78 +42,75 @@ qTable  <- function(X, xmin = NULL, xmax = NULL, labels = NULL,
         at <- joli
 
     ## ranges of picture (map to [0,1])
-    B <- (B - a) / (b - a)
-    at <- (at - a) / (b - a)
+    B  <-  (B - a)/(b - a)
+    at <- (at - a)/(b - a)
 
-    ## functions
-    fff <- function(x) formatC(x, digits = dec, format = "f")
-    ff <- function(x)  formatC(x, digits = 5L,  format = "f")
-    `%p1%` <- function(a, b)
-        paste(a, b, sep = "")
-    `%p2%` <- function(a, b)
-        paste(a, " & ", b, sep = "")
+    ## helper functions
+    fff <- function(x)
+        formatC(x, digits = dec, format = "f")
+    ff <- function(x)
+        formatC(x, digits = 5L,  format = "f")
 
-    ## create table
-    ## STR <- NULL
-    STR <- c("\n & median & min & max &\\\\")
-    for (cc in 1L:dim(X)[2L]) {
-        str0 <- cnames[cc] %p2%
-        fff(median(X[ ,cc])) %p2%
-        fff(min(X[ ,cc])) %p2%
-        fff(max(X[ ,cc]))
+    STR <- paste("\n & ", paste(names(funs), collapse=" & "), "\\\\")
+    for (cc in seq_len(dim(X)[2L])) {
 
-        str1 <- "& \\begin{picture}(1,0)(" %p1%
-        xoffset %p1% "," %p1%
-        yoffset %p1% ")"
+        if (length(funs)>0L) {
+            str0 <- paste(cnames[cc], " & ", 
+                          paste(fff(sapply(funs, do.call, list(X[ ,cc]))),
+                                collapse = " & "),
+                          sep = "")
+        } else {
+            str0 <- cnames[cc]
+        }
+        
+        str1 <- paste("& \\begin{picture}(1,0)(",
+                      xoffset, ",", yoffset, ")", sep = "")
 
-        str2 <- "\\put(" %p1% ff(B[1,cc]) %p1%
-        ",0){\\line(1,0){" %p1%
-        ff(B[2,cc] - B[1,cc]) %p1% "}}"
+        str2 <- paste("\\put(", ff(B[1,cc]), ",0){\\line(1,0){",
+                      ff(B[2,cc] - B[1,cc]), "}}", sep = "")
 
-        str3 <- "\\put(" %p1%  ff(B[3,cc]) %p1%
-        ",0){\\circle*{" %p1% circlesize %p1% "}}"
+        str3 <- paste("\\put(", ff(B[3,cc]),
+                      ",0){\\circle*{", circlesize, "}}", sep = "")
 
-        str4 <- "\\put(" %p1% ff(B[4,cc]) %p1%
-        ",0){\\line(1,0){" %p1%
-        ff(B[5,cc] - B[4,cc]) %p1% "}}"
+        str4 <- paste("\\put(", ff(B[4,cc]), ",0){\\line(1,0){",
+                      ff(B[5,cc] - B[4,cc]), "}}", sep = "")
 
         str5 <- "\\end{picture}\\\\"
 
         temp <- paste(str0, str1, str2, str3, str4, str5, sep = "")
-
-        STR  <- rbind(STR,"\n", temp)
+        STR  <- rbind(STR, "\n", temp)
     }
 
     ## ... axis line
-    strScale <- "&&&&\\begin{picture}(1,0)(" %p1%
-                xoffset %p1% "," %p1% yoffset %p1%
-                ")\\put(0,0){\\line(1,0){1}}"
+    amp <- paste(rep("&", length(funs)+1L), collapse = "")
+    strScale <- paste(amp,"\\begin{picture}(1,0)(",
+                      xoffset, ",", yoffset,
+                      ")\\put(0,0){\\line(1,0){1}}", sep = "")
 
     for (i in seq(along.with = labels)) {
-        strScale <- strScale %p1%
-        "\\put(" %p1% ff(at[i]) %p1%
-        ",0) {\\line(0,-1){0.01}}\n"
+        strScale <- paste(strScale, "\\put(", ff(at[i]),
+                          ",0) {\\line(0,-1){0.01}}\n", sep = "")
 
-        strScale <- strScale %p1% "\\put(" %p1%
-        ff(at[i]) %p1% ",-0.1){" %p1%
-        labels[i] %p1% "}\n"
+        strScale <- paste(strScale, "\\put(", ff(at[i]), ",-0.1){",
+                          labels[i], "}\n", sep = "")
     }
 
     ## end line
     strScale <- paste(strScale,"\\end{picture}\\\\", sep = "")
 
-    STR <- rbind("\\begin{tabular}{rrrrrr}", STR,
+    STR <- rbind(paste("\\begin{tabular}{", tabular.format, "}", sep =""),
+                 STR,
                  "\n", strScale,
-                 "\n\\end{tabular}")
-
+                 ifelse(skip,"\n\\\\\\end{tabular}","\n\\end{tabular}"))
+    
     ## add line thickness
     if (!is.null(linethickness))
-        STR <- rbind("\\linethickness{" %p1%
-                     linethickness  %p1% "}\n", STR)
+        STR <- rbind(paste("\\linethickness{",
+                           linethickness, "}\n", sep = ""), STR)
 
     ## add unit length
-    temp <- "\\setlength{\\unitlength}{" %p1%
-    unitlength %p1% "}\n"
+    temp <- paste("\\setlength{\\unitlength}{",
+                  unitlength, "}\n", sep = "")
 
     STR  <- rbind(temp, STR)
 
@@ -116,18 +120,6 @@ qTable  <- function(X, xmin = NULL, xmax = NULL, labels = NULL,
         cat(STR, "\n", sep = "", file = filename)
     }
     STR
+    
 }
-testing <- FALSE
-if (testing) {
-    x <- rnorm(100, mean = 0, sd = 2)
-    y <- rnorm(100, mean = 1, sd = 2)
-    z <- rnorm(100, mean = 1, sd = 0.5)
-    X <- cbind(x, y, z)
-    res <- qTable(X, labels = c(0,1), at=c(0,1),
-                  cnames = c("A a", "B b", "C c"))
-    res <- qTable(X, labels=c(0,1), at=c(0,1), unitlength="5cm",
-                  filename="C:/packages/res.tex")
 
-    print(res)
-    cat(res)
-}
