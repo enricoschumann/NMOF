@@ -1,3 +1,8 @@
+v0.27-1  (2013-01-02)
+ 
+  o Added functions 'ytm' and 'vanillaBond': compute 
+    yield-to-maturity and price of plain-vanilla bond.
+
 v0.27-0  (2012-11-29)
  
   o Function 'qTable' has new arguments 'funs', 'tabular.format'

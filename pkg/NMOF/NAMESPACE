@@ -9,5 +9,6 @@ repairMatrix, resampleC, restartOpt,
 showChapterNames, showExample,
 TAopt,
 tfAckley, tfGriewank, tfRastrigin, tfRosenbrock, tfSchwefel, tfTrefethen,
+vanillaBond,
 vanillaOptionAmerican, vanillaOptionEuropean, vanillaOptionImpliedVol,
-xwGauss)
+xwGauss,ytm)
