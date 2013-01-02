@@ -1,6 +1,7 @@
 vanillaOptionEuropean <- function(S, X, tau, r, q = 0, v,
-    tauD = 0, D = 0, type = "call", greeks = TRUE) {
-    if (q != 0 & any(D != 0))
+                                  tauD = 0, D = 0, type = "call",
+                                  greeks = TRUE, model = NULL, ...) {
+    if (any(q != 0) && any(D != 0))
         stop("dividend rate and dividend amount supplied")
     if (any(D != 0))
         stopifnot(length(D) == length(tauD))
@@ -13,41 +14,39 @@ vanillaOptionEuropean <- function(S, X, tau, r, q = 0, v,
         stop(sQuote("tau"), " must be greater than 0")
     if (any(v <= 0))
         stop(sQuote("v"), " must be greater than 0")
-    S <- S - sum(exp(-r*tauD)*D)
-    exq <- exp(-q * tau)
-    exr <- exp(-r * tau)
-    Sexq <- S * exq
-    Xexr <- X * exr
-    d1 <- (log(S/X) + (r - q + v / 2) * tau)/(sqrt(v * tau))
-    d2 <- d1 - sqrt(v * tau)
-    I <- switch(type, "call" = 1, "put" = -1)
-    N1 <- pnorm(I * d1)
-    N2 <- pnorm(I * d2)
-    value <- I*(Sexq * N1 - Xexr * N2)
-    if (greeks) {
-        ## delta
-        delta <- I * exq * N1
-        ## theta
+
+    if (is.null(model) || model == "bsm") {
+        S <- S - sum(exp(-r*tauD)*D)
+        exq <- exp(-q * tau)
+        exr <- exp(-r * tau)
+        Sexq <- S * exq
+        Xexr <- X * exr
+        d1 <- (log(S/X) + (r - q + v / 2) * tau)/(sqrt(v * tau))
+        d2 <- d1 - sqrt(v * tau)
+        I <- switch(type, "call" = 1, "put" = -1)
+        N1 <- pnorm(I * d1)
+        N2 <- pnorm(I * d2)
+        value <- I*(Sexq * N1 - Xexr * N2)        
+        if (greeks) {
+            delta <- I * exq * N1
             theta <-  - Sexq*dnorm(d1)*sqrt(v)/ (2*sqrt(tau)) -
                 I*(-q*Sexq*N1 + r*Xexr*N2)
-        ## rho
-        rho <- I * tau * Xexr * N2
-        ## rhoDiv
-        rhoDiv <- - I * tau * Sexq * N1
-        ## gamma: same for call and put
-        n1 <- dnorm(I*d1)
-        gamma <- exq * n1 / (S * sqrt(v*tau))
-        ## vega: same for call and put
-        vega <- Sexq * n1 * sqrt(tau)
+            rho <- I * tau * Xexr * N2
+            rhoDiv <- - I * tau * Sexq * N1
+            n1 <- dnorm(I*d1)
+            gamma <- exq * n1 / (S * sqrt(v*tau))
+            vega <- Sexq * n1 * sqrt(tau)
+        }
+        if (!greeks)
+            value else list(value = value, delta = delta, gamma = gamma,
+                            theta = theta, vega = vega,
+                            rho = rho, rhoDiv = rhoDiv)
     }
-    if (!greeks)
-        value else list(value = value, delta = delta, gamma = gamma,
-                        theta = theta, vega = vega,
-                        rho = rho, rhoDiv = rhoDiv)
 }
 vanillaOptionAmerican <- function(S, X, tau, r, q, v,
-    tauD = 0, D = 0, type = "call", greeks = TRUE, M = 101) {
-    if( q != 0 & any(D != 0) )
+                                  tauD = 0, D = 0, type = "call",
+                                  greeks = TRUE, M = 101) {
+    if (any(q != 0) && any(D != 0))
         stop("dividend rate and dividend amount supplied")
     if(any(D != 0))
         stopifnot(length(D) == length(tauD))
@@ -99,26 +98,29 @@ vanillaOptionAmerican <- function(S, X, tau, r, q, v,
                     rho = NA, rhoDiv = NA)
 }
 vanillaOptionImpliedVol <- function(exercise = "european",
-    price, S, X, tau, r, q = 0, tauD = 0, D = 0, type = "call",
-    M = 101, uniroot.control = list(),
-    uniroot.info = FALSE) {
+                                    price, S, X, tau, r, q = 0,
+                                    tauD = 0, D = 0, type = "call",
+                                    M = 101, uniroot.control = list(),
+                                    uniroot.info = FALSE) {
 
     ucon <- list(interval = c(1e-05, 2), tol = .Machine$double.eps^0.25,
                  maxiter = 1000)
     ucon[names(uniroot.control)] <- uniroot.control
-
+    
     createF <- function() {
         if (exercise == "european") {
             f <- function(vv) {
                 price - vanillaOptionEuropean(S = S, X = X,
-                    tau = tau, r = r, q = q, v = vv^2,
-                    tauD = tauD, D = D, type = type, greeks = FALSE)
+                                              tau = tau, r = r, q = q, v = vv^2,
+                                              tauD = tauD, D = D,
+                                              type = type, greeks = FALSE)
             }
         } else {
             f <- function(vv) {
                 price - vanillaOptionAmerican(S = S, X = X,
-                    tau = tau, r = r, q = q, v = vv^2,
-                    tauD = tauD, D = D, type = type, greeks = FALSE, M = M)
+                                              tau = tau, r = r, q = q, v = vv^2,
+                                              tauD = tauD, D = D,
+                                              type = type, greeks = FALSE, M = M)
             }
         }
         f
@@ -130,3 +132,13 @@ vanillaOptionImpliedVol <- function(exercise = "european",
         res <- res$root
     res
 }
+## putCallParity <- function(call, put, S, X, tau, r, q = 0, tauD = 0, D = 0,
+##                           value = NULL) {
+##     if (missing(call) && !missing(put) && !missing(S) && && !missing(X)) {
+        
+
+##     }
+    
+
+
+## }
