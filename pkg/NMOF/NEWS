@@ -1,3 +1,8 @@
+v0.27-2  (2013-01-03)
+ 
+  o Small corrections in docs for 'ytm' and 
+    'vanillaOptionEuropean'.
+
 v0.27-1  (2013-01-02)
  
   o Added functions 'ytm' and 'vanillaBond': compute 

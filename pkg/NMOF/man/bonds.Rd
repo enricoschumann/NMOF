@@ -11,7 +11,7 @@
 }
 \usage{
 vanillaBond(cf, times, df, yields)
-ytm(cf, times, y0 = 0.05, tol = 1e-05, maxit = 100L)        
+ytm(cf, times, y0 = 0.05, tol = 1e-05, maxit = 1000L)        
 }
 \arguments{
   \item{cf}{

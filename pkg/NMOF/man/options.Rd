@@ -10,7 +10,8 @@
 }
 \usage{
 vanillaOptionEuropean(S, X, tau, r, q, v, tauD = 0, D = 0,
-                      type = "call", greeks = TRUE)
+                      type = "call", greeks = TRUE,
+                      model = NULL, ...)
 vanillaOptionAmerican(S, X, tau, r, q, v, tauD = 0, D = 0,
                       type = "call", greeks = TRUE, M = 101)
 
@@ -48,9 +49,16 @@ vanillaOptionImpliedVol(exercise = "european", price, S, X, tau, r,
     call or put; default is call.
 }
   \item{greeks}{
-    compute Greeks? Defaults to \code{TRUE}. But see Details fpr
-                        American options.
+    compute Greeks? Defaults to \code{TRUE}. But see Details for
+    American options.
   }
+  \item{model}{
+    what model to use to value the option. Default is \code{NULL} which
+    is equivalent to \code{bsm}. 
+  }
+  \item{...}{
+    parameters passed to pricing model
+  }  
   \item{M}{
     number of time steps in the tree
   }
