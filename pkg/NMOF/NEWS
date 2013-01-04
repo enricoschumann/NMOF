@@ -1,3 +1,13 @@
+v0.27-3  (2013-01-04)
+ 
+  o Experimental: 'vanillaOptionEuropean' has arguments 'model' 
+    (default is NULL which corresponds to Black-Scholes-Merton) 
+    and '...'. This allows to pass other models; for 
+    example, 'heston'. With 'greeks' set to TRUE, the function
+    also returns (some) derivatives. More will be added over 
+    time, so the results should be extracted by name, not by 
+    position (eg, x[["delta"]], but not x[[2L]]). 
+
 v0.27-2  (2013-01-03)
  
   o Small corrections in docs for 'ytm' and 

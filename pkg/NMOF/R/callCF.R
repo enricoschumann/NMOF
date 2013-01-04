@@ -17,7 +17,6 @@ callCF <- function(cf, S, X, tau, r, q = 0, ..., implVol = FALSE,
                                   S, X, tau, r, q, ...)$value
     result <- exp(-q * tau) * S * vP1 - exp(-r * tau) * X * vP2;
 
-    ## implied BSM vol
     if (implVol) {
         diffPrice <- function(vol, call, S, X, tau, r, q) {
             d1 <- (log(S/X) + (r - q + vol^2/2)*tau)/(vol*sqrt(tau))

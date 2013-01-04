@@ -12,18 +12,19 @@ vanillaOptionEuropean <- function(S, X, tau, r, q = 0, v,
     }
     if (any(tau <= 0))
         stop(sQuote("tau"), " must be greater than 0")
-    if (any(v <= 0))
-        stop(sQuote("v"), " must be greater than 0")
 
-    if (is.null(model) || model == "bsm") {
-        S <- S - sum(exp(-r*tauD)*D)
-        exq <- exp(-q * tau)
-        exr <- exp(-r * tau)
-        Sexq <- S * exq
-        Xexr <- X * exr
+    I <- switch(type, "call" = 1, "put" = -1)
+    S <- S - sum(exp(-r*tauD)*D)
+    exq <- exp(-q * tau)
+    exr <- exp(-r * tau)
+    Sexq <- S * exq
+    Xexr <- X * exr
+
+    if (is.null(model) || tolower(model) == "bsm") {
+        if (any(v <= 0))
+            stop(sQuote("v"), " must be greater than 0")
         d1 <- (log(S/X) + (r - q + v / 2) * tau)/(sqrt(v * tau))
         d2 <- d1 - sqrt(v * tau)
-        I <- switch(type, "call" = 1, "put" = -1)
         N1 <- pnorm(I * d1)
         N2 <- pnorm(I * d2)
         value <- I*(Sexq * N1 - Xexr * N2)        
@@ -41,7 +42,28 @@ vanillaOptionEuropean <- function(S, X, tau, r, q = 0, v,
             value else list(value = value, delta = delta, gamma = gamma,
                             theta = theta, vega = vega,
                             rho = rho, rhoDiv = rhoDiv)
-    }
+    } else if (tolower(model) == "heston") {
+        cf <- cfHeston
+        P1 <- function(om, S, X, tau, r, q, ...)
+            Re(exp(-(0+1i) * log(X) * om) *
+               cf(om - (0+1i), S, tau, r, q, ...)/
+               ((0+1i) * om * S * exp((r - q) * tau)))
+        P2 <- function(om, S, X, tau, r, q, ...)
+            Re(exp(-(0+1i) * log(X) * om) *
+               cf(om, S, tau, r, q, ...)/((0+1i) * om))
+        vP1 <- 0.5 + 1/pi * integrate(P1, lower = 1e-08, upper = 200, 
+                                      S, X, tau, r, q, ...)$value
+        vP2 <- 0.5 + 1/pi * integrate(P2, lower = 1e-08, upper = 200, 
+                                      S, X, tau, r, q, ...)$value
+        value <- Sexq * vP1 - Xexr * vP2
+        if (I < 0)
+            value <- putCallParity(what = "put", call = value,
+                                   put = NULL, S, X, tau, r, q, tauD, D)        
+        if (!greeks)
+            value else {
+                list(value = value, delta = exq * vP1 - exq *(I < 0))
+            }
+    }    
 }
 vanillaOptionAmerican <- function(S, X, tau, r, q, v,
                                   tauD = 0, D = 0, type = "call",
@@ -58,7 +80,7 @@ vanillaOptionAmerican <- function(S, X, tau, r, q, v,
     if (tau < 0)
         stop(sQuote("tau"), " must be > 0")
     pmax2 <- function(y1,y2)
-        ((y1 + y2) + abs(y1 - y2)) / 2
+        (y1 + y2 + abs(y1 - y2)) / 2
 
     S <- S - sum(exp(-r*tauD)*D)
     dt <- tau/M
@@ -71,7 +93,7 @@ vanillaOptionAmerican <- function(S, X, tau, r, q, v,
     v2 <- (1-p)*exp(-r*dt)
     if (type == "call")
         m <- 1 else m <- -1
-    W <- pmax2(m*(S * dM * uM - X),0)
+    W <- pmax2(m*(S * dM * uM - X), 0)
     for (i in M:1) {
         t <- (i-1)*dt
         PV <- sum(D * (t < tauD) * exp(-r * (tauD - t)))
@@ -85,7 +107,7 @@ vanillaOptionAmerican <- function(S, X, tau, r, q, v,
             } else if (i == 3L) {
                 gammaE <- ((W[3L] - W[2L]) / (Si[3L] - Si[2L]) -
                            (W[2L] - W[1L]) / (Si[2L] - Si[1L])) /
-                               (0.5*(Si[3] - Si[1L]))
+                               (0.5*(Si[3L] - Si[1L]))
                 thetaE <- W[2L]
             } else if (i == 1L)
                 thetaE <- (thetaE - W[1L]) / (2 * dt)
@@ -100,11 +122,11 @@ vanillaOptionAmerican <- function(S, X, tau, r, q, v,
 vanillaOptionImpliedVol <- function(exercise = "european",
                                     price, S, X, tau, r, q = 0,
                                     tauD = 0, D = 0, type = "call",
-                                    M = 101, uniroot.control = list(),
+                                    M = 101L, uniroot.control = list(),
                                     uniroot.info = FALSE) {
 
     ucon <- list(interval = c(1e-05, 2), tol = .Machine$double.eps^0.25,
-                 maxiter = 1000)
+                 maxiter = 1000L)
     ucon[names(uniroot.control)] <- uniroot.control
     
     createF <- function() {
@@ -132,13 +154,25 @@ vanillaOptionImpliedVol <- function(exercise = "european",
         res <- res$root
     res
 }
-## putCallParity <- function(call, put, S, X, tau, r, q = 0, tauD = 0, D = 0,
-##                           value = NULL) {
-##     if (missing(call) && !missing(put) && !missing(S) && && !missing(X)) {
-        
+putCallParity <- function(what, call, put, S, X, tau, r, q = 0, tauD = 0, D = 0) {
+    if (any(q != 0) && any(D != 0))
+        stop("dividend rate and dividend amount supplied")
+    if (any(D != 0))
+        stopifnot(length(D) == length(tauD))
+    if (any(D != 0)) {
+        D2keep <-  tauD <= tau & tauD > 0
+        D <- D[D2keep]
+        tauD <- tauD[D2keep]
+        D <- sum(exp(-r*tauD)*D)
+    }
+    if (any(tau <= 0))
+        stop(sQuote("tau"), " must be greater than 0")
 
-##     }
+    if (what != "put")
+        stop("only ", sQuote("tau"), " is currently supported")
     
-
-
-## }
+    if (what == "put") {
+        call + X * exp(-r*tau) - S * exp(-q * tau) + D
+    } else
+        NULL    
+}

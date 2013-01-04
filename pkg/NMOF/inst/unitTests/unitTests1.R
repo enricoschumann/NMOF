@@ -1,26 +1,9 @@
 ## -*- truncate-lines: t; -*-
 
-## - MA
 ## - option pricing
 ## - testFunctions
 ## - restartOpt
 
-## MA
-test.MA <- function() {
-    x <- rnorm(100L); myMA <- numeric(length(x)); order <- 5L
-    for (i in order:length(x))
-        myMA[i] <- sum(x[(i - order + 1):i])/order
-
-    checkEquals(MA(x, order = order)[-(1:(order-1))],
-                myMA[-(1:(order-1))])
-
-    x <- rnorm(100L); myMA <- numeric(length(x)); order <- 1L
-    checkEquals(x, MA(x, order = order))
-    checkEquals(x, MA(x, order = order, pad = NA))
-}
-
-
-## HESTON
 test.callHestoncf <- function() {
     S <- 100; X <- 100; tau <- 1; r <- 0.02; q <- 0.01;
     v0 <- 0.2^2; vT <- 0.2^2
@@ -130,79 +113,10 @@ test.testFunctions <- function() {
                        tolerance = 1e-4)
 }
 
-## restartOpt
-test.restartOpt <- function() {
-    testParallel <- FALSE
-
-    xTRUE <- runif(5L)
-    data <- list(xTRUE = xTRUE, step = 0.02)
-    OF <- function(x, data)
-        max(abs(x - data$xTRUE))
-    neighbour <- function(x, data)
-        x + runif(length(data$xTRUE))*data$step - data$step/2
-
-    x0 <- runif(5L)
-    algo <- list(q = 0.05, nS = 5L, nT = 5L,
-                 neighbour = neighbour, x0 = x0,
-                 printBar = FALSE, printDetail = FALSE)
-
-        sols <- restartOpt(fun = TAopt, n = 5L,
-                           OF = OF, algo = algo, data = data)
-    checkEquals(length(sols), 5L)
-
-    ## tests for snow/multicore: slow!
-    if (testParallel) {
-        OF <- function(x, data) {
-            Sys.sleep(1e-3)
-            max(abs(x - data$xTRUE))
-        }
-        if (require("snow", quietly = TRUE)){
-            system.time({
-                sols <- restartOpt(fun = TAopt, n = 10L,
-                                   OF = OF, algo = algo, data = data,
-                                   method = "snow", cl = 2)
-            })
-            checkEquals(length(sols), 10L)
-
-            ## up top version 0.23-1, an argument passed with '...'
-            ## could not be called 'X': led to an error
-            X <- list(xTRUE = runif(5L), step = 0.02)
-            OF <- function(x, X)
-                max(abs(x - X$xTRUE))
-            neighbour <- function(x, X)
-                x + runif(length(X$xTRUE))*X$step - X$step/2
-            algo <- list(q = 0.05, nS = 10L, nT = 5L,
-                         neighbour = neighbour, x0 = runif(5),
-                         printBar = FALSE, printDetail = FALSE)
-            sols <- restartOpt(fun = TAopt, n = 4L,
-                               OF = OF, algo = algo, X = X)
-            sols <- restartOpt(fun = TAopt, n = 4L,
-                               OF = OF, algo = algo, X = X,
-                               method = "snow", cl = 2L)
-        }
-        if (suppressWarnings(require("multicore", quietly = TRUE))) {
-            ## up top version 0.23-1, an argument passed with '...'
-            ## could not be called 'X': led to an error
-            X <- list(xTRUE = runif(5L), step = 0.02)
-            OF <- function(x, X)
-                max(abs(x - X$xTRUE))
-            neighbour <- function(x, X)
-                x + runif(length(X$xTRUE))*X$step - X$step/2
-            algo <- list(q = 0.05, nS = 10L, nT = 5L,
-                         neighbour = neighbour, x0 = runif(5),
-                         printBar = FALSE, printDetail = FALSE)
-            sols <- restartOpt(fun = TAopt, n = 4L,
-                               OF = OF, algo = algo, X = X,
-                               method = "multicore")
-        }
-    }
-
-}
-
 
 ## EUROPEAN BSM
 test.vanillaOptionEuropean <- function() {
-    # PRICES
+    ## PRICES
     S <- 100; X <- 100; tau <- 1; r <- 0.02; q <- 0.00; vol <- 0.3
     x <- vanillaOptionEuropean(S, X, tau, r, q, vol^2, type = "call")$value
     checkEquals(round(x,3), 12.822)
@@ -228,20 +142,72 @@ test.vanillaOptionEuropean <- function() {
         tauD = tauD, D = D, type = "put")$value
     checkEquals(round(x,3), 7.523)
 
-    # ERRORS IN INPUTS
-    # ... q and D specified
+    ## ERRORS IN INPUTS
+    ## ... q and D specified
     S <- 30; X <- 30; tau <- 0.5; r <- 0.03; q <- 0.06; vol <- 0.1;
     tauD <- c(0.1,0.2,0.3); D <- c(1,2,3)
     checkException(vanillaOptionEuropean(S, X, tau, r, q, vol^2,
             tauD = tauD, D = D, type = "put")$value, silent = TRUE)
 
-    # GREEXS
-    ## delta
+    ## GREEXS
     S <- 30; X <- 30; tau <- 0.5; r <- 0.03; q <- 0.06; vol <- 0.1;
     x <- vanillaOptionEuropean(S, X, tau, r, q, vol^2, type = "put")
-    all.equal(round(x$delta,6), round(-0.55330738389122,6))
+    checkEqualsNumeric(round(x$delta,6),  round(-0.55330738389122,6))
+    checkEqualsNumeric(round(x$gamma,6),  round(0.1796756,6))
+    checkEqualsNumeric(round(x$vega,6),   round(8.085402,6))
+    checkEqualsNumeric(round(x$theta,6),  round(-1.274542,6))
+    checkEqualsNumeric(round(x$rho,6),    round(-8.83253,6))
+    checkEqualsNumeric(round(x$rhoDiv,6), round(8.299611,6))
 
-    # TODO -- add tests for greeks
+    ## --- non-BSM ---
+    S <- 100; X <- 100; tau <- 1; r <- 0.02; q <- 0.08;
+    v0 <- 0.2^2; vT <- 0.2^2            ## variance, not volatility
+    rho <- -0.3; k <- 0.2; sigma <- 0.3 ## stoch. vol: Heston/Bates
+    temp1 <- callCF(cf = cfHeston, S = S, X = X, tau = tau,
+                    r = r, q = q, v0 = v0, vT = vT, rho = rho,
+                    k = k, sigma = sigma, implVol = FALSE)
+    temp2 <- vanillaOptionEuropean(S = 100, X = 100, tau, r, q = q,
+                                   tauD = 0, D = 0, type = "call",
+                                   greeks = FALSE, model = "heston",
+                                   v0 = v0, vT = vT, rho = rho, k = k,
+                                   sigma = sigma)
+    checkEqualsNumeric(temp1, temp2)
+
+    ## forward difference
+    fd <- function(cf, S, X, tau, r, q, ..., implVol = FALSE,
+                   uniroot.control = list(), 
+                   uniroot.info = FALSE, what = "S") {
+        h <- 1e-6
+        r1 <- r
+        S1 <- S
+        if (what == "r")
+            r1 <- r + h
+        if (what == "S")
+            S1 <- S + h
+        
+        (callCF(cf = cf, S=S1, X=X, tau=tau, r=r1, q = q, v0 =
+                v0, vT = vT, rho = rho, k = k, sigma = sigma,
+                implVol = FALSE) -
+         callCF(cf = cf, S=S, X=X, tau=tau,
+                r=r, q = q, v0 = v0, vT = vT, rho = rho, k = k,
+                sigma = sigma, implVol = FALSE))/h
+    }
+
+    for (X in seq(60, 140, by = 5))
+        for (S in seq(60, 140, by = 5))
+            for (tau in seq(0.1, 3, by = 0.25)) {
+                D1 <- vanillaOptionEuropean(S = S, X = X, tau = tau,
+                                            r = r, q = q,
+                                            tauD = 0, D = 0, type = "call",
+                                            greeks = TRUE, model = "heston",
+                                            v0 = v0, vT = vT, rho = rho, k = k,
+                                            sigma = sigma)$delta
+                D2 <- fd(cf = cfHeston, S = S, X = X, tau = tau,
+                         r = r, q = q,
+                         v0 = v0, vT = vT, rho = rho, k = k,
+                         sigma = sigma, implVol = FALSE, what = "S")
+                checkEqualsNumeric(D1, D2, tolerance = 1e-3)
+            }    
 }
 ##test.vanillaOptionEuropean()
 
