@@ -7,6 +7,8 @@ v0.27-3  (2013-01-04)
     also returns (some) derivatives. More will be added over 
     time, so the results should be extracted by name, not by 
     position (eg, x[["delta"]], but not x[[2L]]). 
+    (Adding derivatives for non-BSM models was suggested by
+    Nitesh Kumar.)
 
 v0.27-2  (2013-01-03)
  
