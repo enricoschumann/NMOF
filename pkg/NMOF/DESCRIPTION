@@ -1,8 +1,8 @@
 Package: NMOF
 Type: Package
 Title: Numerical Methods and Optimization in Finance
-Version: 0.27-3
-Date: 2013-01-04
+Version: 0.27-5
+Date: 2013-04-26
 Author: Enrico Schumann
 Authors@R: person("Enrico", "Schumann",
                   role = c("aut", "cre"),
@@ -20,3 +20,4 @@ URL: http://nmof.net, http://enricoschumann.net/NMOF.htm
 LazyLoad: yes
 LazyData: yes
 Classification/JEL: C61, C63
+X-es-keywords: finance, derivatives, optimisation, heuristics

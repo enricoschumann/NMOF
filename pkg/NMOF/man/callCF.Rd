@@ -50,7 +50,8 @@ cfVG(om, S, tau, r, q, nu, theta, sigma)
 
   The function computes the value of a plain vanilla European call under
   different models, using the representation of Bakshi/Madan. Put values
-  can be computed through put--call-parity.
+  can be computed through put--call parity (see
+  \code{\link{putCallParity}}).
 
   If \code{implVol} is \code{TRUE}, the function will compute the implied
   volatility necessary to obtain the same price under

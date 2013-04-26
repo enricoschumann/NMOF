@@ -1,5 +1,6 @@
 \name{TAopt}
 \alias{TAopt}
+\concept{heuristics}
 \concept{Threshold Accepting}
 \title{
   Optimisation with Threshold Accepting

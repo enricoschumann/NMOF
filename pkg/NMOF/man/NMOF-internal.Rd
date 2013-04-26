@@ -3,6 +3,8 @@
 \alias{makeInteger}
 \alias{anyNA}
 \alias{checkList}
+\alias{Chapters}
+\alias{due}
 \title{Internal NMOF functions}
 \description{
   Several internal functions, not exported from the \pkg{NMOF} name space.
@@ -16,6 +18,7 @@ mRN(m,n)
 mcList(mc.control)
 repair1c(x, up, lo)
 Chapters
+due(D, tauD, tau, q)
 }
 \details{
   \code{makeInteger} coerces the scalar \code{x} to integer. If the
@@ -41,6 +44,11 @@ Chapters
 
   \code{Chapters} is a vector of length 15, giving the chapter names as
   printed in the book. (Can be accessed with \code{\link{showChapterNames}}.)
+
+  \code{due} (dividends until expiry) returns a list with named
+  components \code{tauD} and \code{D}: all dividends for which
+  time-to-payment is greater than zero, but less than or equal to
+  time-to-expiry.
 }
 
 \author{

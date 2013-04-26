@@ -2,9 +2,8 @@ vanillaBond <- function(cf, times, df, yields) {
     if (missing(times))
         times <- seq_len(length(cf))
     if (missing(df))
-        df <- y2df(yields, times)
-    
-    cf %*% df
+        df <- 1/(1+yields)^times      
+    drop(cf %*% df)
 }
 y2df <- function(yields, times) {
     if (length(yields)==1L)

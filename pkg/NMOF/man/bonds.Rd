@@ -6,7 +6,8 @@
 }
 \description{
   
-  Calculate the theoretical price and yield-to-maturity of a list of cashflows.
+  Calculate the theoretical price and yield-to-maturity of a list of
+  cashflows.
 
 }
 \usage{
@@ -15,7 +16,8 @@ ytm(cf, times, y0 = 0.05, tol = 1e-05, maxit = 1000L)
 }
 \arguments{
   \item{cf}{
-    cashflows; a numeric vector.
+    Cashflows; a numeric vector or a matrix. If a matrix, cashflows
+    should be arranged in rows; times-to-payment correspond to columns.
   }
   \item{times}{
     times-to-payment; a numeric vector.
@@ -37,7 +39,6 @@ ytm(cf, times, y0 = 0.05, tol = 1e-05, maxit = 1000L)
     maximum number of iterations
   }
 }
-
 \details{
   \code{vanillaBond} computes the present value of a vector of
   cashflows; it may thus be used to evaluate not just bonds but any
@@ -75,4 +76,30 @@ times <- 1:6                  ## maturities
 df <- 1/(1+y)^times           ## discount factors
 all.equal(vanillaBond(cf, times, df),
           vanillaBond(cf, times, yields = y))
+
+## using Nelson--Siegel
+vanillaBond(cf, times, yields = NS(c(0.03,0,0,1), times))
+
+
+## several bonds
+##   cashflows are numeric vectors in a list 'cf',
+##   times-to-payment are are numeric vectors in a
+##   list 'times'
+
+times <- list(1:3,
+              1:4,
+              0.5 + 0:5)
+cf <- list(c(6, 6,          106),
+           c(4, 4, 4,       104),
+           c(2, 2, 2, 2, 2, 102))
+
+alltimes <- sort(unique(unlist(times)))
+M <- array(0, dim = c(length(cf), length(alltimes)))
+for (i in seq_along(times))
+    M[i, match(times[[i]], alltimes)] <- cf[[i]]
+rownames(M) <- paste("bond.", 1:3, sep = "")
+colnames(M) <- format(alltimes, nsmall = 1)
+M
+
+vanillaBond(cf = M, times = alltimes, yields = 0.02)
 }

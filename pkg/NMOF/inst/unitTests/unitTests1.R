@@ -142,6 +142,20 @@ test.vanillaOptionEuropean <- function() {
         tauD = tauD, D = D, type = "put")$value
     checkEquals(round(x,3), 7.523)
 
+    ## dividends
+    S <- 30; X <- 30; tau <- 0.5; r <- 0.03; vol <- 0.1;
+    tauD <- c(0.1,0.2,0.3); D <- c(1,2,3)
+    x1 <- vanillaOptionEuropean(S, X, tau, r, q=0, vol^2,
+                               tauD = tauD, D = D, type = "put")$value
+    x2 <- vanillaOptionEuropean(S - sum(exp(-r*tauD)*D),
+                               X, tau, r, q=0, vol^2,type = "put")$value
+    tauD <- c(0.1,0.2,0.3,1); D <- c(1,2,3,20) ## div beyond expiry
+    x3 <- vanillaOptionEuropean(S, X, tau, r, q=0, vol^2,
+                               tauD = tauD, D = D, type = "put")$value
+    checkEquals(x1,x2)
+    checkEquals(x2,x3)
+    checkEquals(x1,x3)
+    
     ## ERRORS IN INPUTS
     ## ... q and D specified
     S <- 30; X <- 30; tau <- 0.5; r <- 0.03; q <- 0.06; vol <- 0.1;
@@ -149,6 +163,24 @@ test.vanillaOptionEuropean <- function() {
     checkException(vanillaOptionEuropean(S, X, tau, r, q, vol^2,
             tauD = tauD, D = D, type = "put")$value, silent = TRUE)
 
+
+    
+    ## passing VOL instead of VARIANCE
+    S <- 100; X <- 100; tau <- 1; r <- 0.05; q <- 0.072
+    v <- 0.22^2  ## variance, not volatility
+    vol <- 0.22
+    p1 <- vanillaOptionEuropean(S=S, X = X, tau=tau, r=r, q=q, v=v,     ## with variance
+                          type = "call", greeks = FALSE) 
+    p2 <- vanillaOptionEuropean(S=S, X = X, tau=tau, r=r, q=q, vol=vol, ## with vol
+                          type = "call", greeks = FALSE)
+    p3 <- vanillaOptionEuropean(S=S, X = X, tau=tau, r=r, q=q, vol=vol, ## vol ignored
+                                type = "call", greeks = FALSE, v = 0.2^2)
+    p4 <- vanillaOptionEuropean(S=S, X = X, tau=tau, r=r, q=q,
+                                type = "call", greeks = FALSE, v = 0.2^2)
+    checkEquals(p1,p2)
+    checkEquals(p3,p4)
+
+    
     ## GREEXS
     S <- 30; X <- 30; tau <- 0.5; r <- 0.03; q <- 0.06; vol <- 0.1;
     x <- vanillaOptionEuropean(S, X, tau, r, q, vol^2, type = "put")

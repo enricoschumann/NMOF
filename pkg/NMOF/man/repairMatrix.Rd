@@ -15,8 +15,8 @@ repairMatrix(C)
 \details{
 
   The function \sQuote{repairs} a correlation matrix: it replaces
-  negative eigenvalues with zero and rescales the matrix such that all
-  elements on the main diagonal become unity again.
+  negative eigenvalues with \code{eps} and rescales the matrix such that
+  all elements on the main diagonal become unity again.
 
 }
 \value{

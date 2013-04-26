@@ -40,7 +40,8 @@ vanillaOptionImpliedVol(exercise = "european", price, S, X, tau, r,
     variance (volatility squared)
 }
   \item{tauD}{
-    vector of times to dividends in years
+    vector of times-to-dividends in years. Only dividends with
+    \code{tauD} greater than zero and not greater than \code{tau} are kept.
 }
   \item{D}{
     vector of dividends (in currency units); default is no dividends.
@@ -200,5 +201,19 @@ volDiffCreate <- function(exercise, call, put, S, X, tau, r) {
 f <- volDiffCreate(exercise = "european",
                    call = call, put = put, S = S, X = X, tau = tau, r)
 optimise(f,interval = c(0, 0.2))$minimum
+
+##
+S <- 100; X <- 100
+tau <- 1; r <- 0.05; q <- 0.072
+v <- 0.22^2  ## variance, not volatility
+vol <- 0.22
+
+vanillaOptionEuropean(S=S, X = X, tau=tau, r=r, q=q, v=v,     ## with variance
+                      type = "call", greeks = FALSE) 
+vanillaOptionEuropean(S=S, X = X, tau=tau, r=r, q=q, vol=vol, ## with vol
+                      type = "call", greeks = FALSE)
+vanillaOptionEuropean(S=S, X = X, tau=tau, r=r, q=q, vol=vol, ## with vol
+                      type = "call", greeks = FALSE, v = 0.2^2)
+
 }
 

@@ -1,3 +1,23 @@
+v0.27-5  (2013-04-26)
+
+  o since vignettes are built offline, the number of restarts was
+    increased again; cf. NEWS entry for v0.26-0  (2012-09-19)
+
+  o fixed a small error in help page for 'vanillaBond'
+
+  o internal changes in option pricing functions; more tests added for
+    dividend handling
+
+v0.27-4  (2013-04-22)
+ 
+  o function 'putCallParity' added
+
+  o for 'vanillaOptionEuropean', a parameter 'vol' can be passed via
+    '...' (which is translated into 'v' by squaring and ignored if 'v'
+    is already specified)
+
+  o a few internal changes and doc changes
+
 v0.27-3  (2013-01-04)
  
   o Experimental: 'vanillaOptionEuropean' has arguments 'model' 

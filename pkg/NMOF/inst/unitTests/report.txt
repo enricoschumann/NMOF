@@ -1,12 +1,12 @@
-RUNIT TEST PROTOCOL -- Fri Jan  4 13:23:14 2013 
+RUNIT TEST PROTOCOL -- Fri Apr 26 13:56:28 2013 
 *********************************************** 
-Number of test functions: 36 
+Number of test functions: 20 
 Number of errors: 0 
 Number of failures: 0 
 
  
 1 Test Suite : 
-NMOF - 36 test functions, 0 errors, 0 failures
+NMOF - 20 test functions, 0 errors, 0 failures
 
 
 
@@ -24,19 +24,19 @@ test.EuropeanCall: (6 checks) ... OK (0.01 seconds)
 test.EuropeanCallBE: (6 checks) ... OK (0.01 seconds)
 test.testFunctions: (6 checks) ... OK (0 seconds)
 test.vanillaOptionAmerican: (6 checks) ... OK (0.02 seconds)
-test.vanillaOptionEuropean: (3481 checks) ... OK (12.63 seconds)
-test.vanillaOptionImpliedVol: (12 checks) ... OK (0.18 seconds)
+test.vanillaOptionEuropean: (3486 checks) ... OK (12.22 seconds)
+test.vanillaOptionImpliedVol: (12 checks) ... OK (0.17 seconds)
 --------------------------- 
 Test file: /home/es/Packages/RForge/nmof/pkg/NMOF/inst/unitTests/unitTests2.R 
 test.bracketing: (13 checks) ... OK (0 seconds)
-test.gridSearch: (18 checks) ... OK (0.19 seconds)
+test.gridSearch: (18 checks) ... OK (0.18 seconds)
 test.xwGauss: (4 checks) ... OK (0 seconds)
 --------------------------- 
 Test file: /home/es/Packages/RForge/nmof/pkg/NMOF/inst/unitTests/unitTestscallCF.R 
 test.callCF: (22 checks) ... OK (0.02 seconds)
 --------------------------- 
 Test file: /home/es/Packages/RForge/nmof/pkg/NMOF/inst/unitTests/unitTestsDEopt.R 
-test.DEopt: (23 checks) ... OK (3.2 seconds)
+test.DEopt: (23 checks) ... OK (3.05 seconds)
 --------------------------- 
 Test file: /home/es/Packages/RForge/nmof/pkg/NMOF/inst/unitTests/unitTestsGAopt.R 
 test.GAopt: (22 checks) ... OK (0.2 seconds)
@@ -45,37 +45,19 @@ Test file: /home/es/Packages/RForge/nmof/pkg/NMOF/inst/unitTests/unitTestsIntern
 test.checkList: (10 checks) ... OK (0.01 seconds)
 --------------------------- 
 Test file: /home/es/Packages/RForge/nmof/pkg/NMOF/inst/unitTests/unitTestsLSopt.R 
-test.LSopt: (7 checks) ... OK (0.28 seconds)
+test.LSopt: (7 checks) ... OK (0.26 seconds)
 --------------------------- 
 Test file: /home/es/Packages/RForge/nmof/pkg/NMOF/inst/unitTests/unitTestsMA.R 
 test.MA: (3 checks) ... OK (0 seconds)
 --------------------------- 
-Test file: /home/es/Packages/RForge/nmof/pkg/NMOF/inst/unitTests/unitTestsMA.R~ 
-test.callHestoncf: (3 checks) ... OK (0 seconds)
-test.EuropeanCall: (6 checks) ... OK (0.01 seconds)
-test.EuropeanCallBE: (6 checks) ... OK (0.01 seconds)
-test.MA: (3 checks) ... OK (0 seconds)
-test.restartOpt: (1 checks) ... OK (0.15 seconds)
-test.testFunctions: (6 checks) ... OK (0 seconds)
-test.vanillaOptionAmerican: (6 checks) ... OK (0.02 seconds)
-test.vanillaOptionEuropean: (6 checks) ... OK (0 seconds)
-test.vanillaOptionImpliedVol: (12 checks) ... OK (0.19 seconds)
+Test file: /home/es/Packages/RForge/nmof/pkg/NMOF/inst/unitTests/unitTestsPCparity.R 
+test.putCallParity: (10 checks) ... OK (0 seconds)
 --------------------------- 
 Test file: /home/es/Packages/RForge/nmof/pkg/NMOF/inst/unitTests/unitTestsPSopt.R 
-test.PSopt: (14 checks) ... OK (4.11 seconds)
+test.PSopt: (14 checks) ... OK (3.86 seconds)
 --------------------------- 
 Test file: /home/es/Packages/RForge/nmof/pkg/NMOF/inst/unitTests/unitTestsRestartOpt.R 
-test.restartOpt: (1 checks) ... OK (0.16 seconds)
---------------------------- 
-Test file: /home/es/Packages/RForge/nmof/pkg/NMOF/inst/unitTests/unitTestsRestartOpt.R~ 
-test.callHestoncf: (3 checks) ... OK (0 seconds)
-test.EuropeanCall: (6 checks) ... OK (0.01 seconds)
-test.EuropeanCallBE: (6 checks) ... OK (0.01 seconds)
-test.restartOpt: (1 checks) ... OK (0.16 seconds)
-test.testFunctions: (6 checks) ... OK (0 seconds)
-test.vanillaOptionAmerican: (6 checks) ... OK (0.02 seconds)
-test.vanillaOptionEuropean: (6 checks) ... OK (0 seconds)
-test.vanillaOptionImpliedVol: (12 checks) ... OK (0.18 seconds)
+test.restartOpt: (1 checks) ... OK (0.14 seconds)
 --------------------------- 
 Test file: /home/es/Packages/RForge/nmof/pkg/NMOF/inst/unitTests/unitTestsTAopt.R 
-test.TAopt: (13 checks) ... OK (0.38 seconds)
+test.TAopt: (13 checks) ... OK (0.35 seconds)

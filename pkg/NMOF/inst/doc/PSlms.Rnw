@@ -134,7 +134,7 @@ de <- list(min = rep(-10,p),
 system.time(solPS <- PSopt(OF = OF, algo = ps, data = data))
 system.time(solDE <- DEopt(OF = OF, algo = de, data = data))
 
-if (require(MASS, quietly = TRUE)) {
+if (require("MASS", quietly = TRUE)) {
     system.time(test1 <- lqs(y ~ X[ ,-1L],
                              adjust = TRUE,
                              nsamp = 100000L,
