@@ -1,0 +1,291 @@
+2013-05-23  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/MC.R (gBrownianMotion): added implementation of geometric
+	Brownian motion
+
+2013-05-05  Enrico Schumann  <es@enricoschumann.net>
+
+	* .Rbuildignore: added file (mainly to exclude 'dev' directory)
+
+2013-04-26  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Version): 0.27-5
+
+	* man/putCallParity.Rd: added examples
+
+	* R/internals.R (due): added helper function 'due' (_d_ividends
+	_u_ntil _e_xpiry)
+
+	* inst/unitTests/unitTests1.R (test.vanillaOptionEuropean): added
+	checks for dividends
+
+2013-04-25  Enrico Schumann  <es@enricoschumann.net>
+
+	* inst/doc/*.Rnw: increased number of runs ('nRuns') since
+	vignettes are built offline
+
+2013-04-24  Enrico Schumann  <es@enricoschumann.net>
+
+	* man/bonds.Rd: added more examples
+
+2013-04-22  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Version): 0.27-4
+
+	* R/options.R (vanillaOptionEuropean): fixed -- for BSM, a
+	parameter 'vol' can be passed via '...' (which is ignored if v is
+	specified)
+
+	* R/bonds.R (vanillaBond): does not use 'y2df' any more
+
+2013-02-06  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/repairMatrix.R (repairMatrix): added parameter eps
+
+2013-01-05  Enrico Schumann  <es@enricoschumann.net>
+
+	* inst/unitTests/unitTestsPCparity.R (test.putCallParity): added file
+
+	* NAMESPACE: added 'putCallParity'
+
+        * R/options.R (vanillaOptionEuropean): for BSM, a parameter 'vol'
+        can be passed via '...' (which is translated into 'v' by squaring)
+
+2013-01-04  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 0.27-3
+
+        * inst/unitTests/unitTestsRestartOpt.R: added (taken from
+        unitTests1.R)
+
+        * inst/unitTests/unitTestsMA.R: added (taken from unitTests1.R)
+
+        * R/callCF.R (callCF): removing useless comments and 'skeletons'
+        for greek computation
+
+2013-01-03  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 0.27-2
+
+        * man/options.Rd: updated docs
+
+        * man/bonds.Rd: fixed -- max number of iterations in 'ytm'
+        is 1000
+
+2013-01-02  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 0.27-1
+
+        * R/bonds.R (ytm): uses numerically-evaluated derivative (not
+        finite difference)
+
+2012-12-27  Enrico Schumann  <es@enricoschumann.net>
+
+        * man/bonds.Rd: added
+
+        * NAMESPACE: added 'ytm' and 'vanillaBond'
+
+2012-12-26  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/options.R (vanillaOptionEuropean): experimental -- new
+        arguments 'model' (default is NULL) and '...'
+
+        * R/options.R (vanillaOptionEuropean): small correction in check
+        for 'q' and 'D'
+
+2012-12-10  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/options.R (putCallParity): added function
+
+        * R/MC.R (MCpricing): added several skeletons for functions
+        (BrownianMotion, BrownianBridge, MCpricing)
+
+        * R/bonds.R: added several functions for bond pricing:
+        vanillaBond, y2df (yields to discountfactors) and ytm
+        (yield-to-maturity)
+
+2012-11-29  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 0.27-0 (CRAN release candidate)
+
+        * R/qTable.R: added arguments funs, tabular.format and skip. (To
+        keep old behaviour, set skip to FALSE.)
+
+2012-11-19  Enrico Schumann  <es@enricoschumann.net>
+
+        * inst/unitTests/unitTestsPSopt.R (OF): several changes in unit
+        tests
+
+2012-10-26  Enrico Schumann  <es@enricoschumann.net>
+
+        * inst/unitTests/unitTests1.R (test.vanillaOptionImpliedVol):
+        added initial interval for American options
+
+        * R/: in all option pricing functions, a returned value is now
+        named 'value' (and not 'price' or 'callPrice' as before)
+
+        * R/options.R (vanillaOptionE/A): cleaned up dividend checks
+
+2012-09-20  Enrico Schumann  <es@enricoschumann.net>
+
+        * man/options.Rd: updated docs
+
+2012-09-17  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/options.R (vanillaOptionImpliedVolatility): added function
+
+2012-09-03  Enrico Schumann  <es@enricoschumann.net>
+
+        * man/options.Rd: added functions 'vanillaOptionEuropean' and
+        '-American'
+
+2012-08-27  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/..opt.R: functions returns 'initial.state'
+        (.Random.seed)
+
+2012-08-17  Enrico Schumann  <es@enricoschumann.net>
+
+        * man/NS.Rd: small correction in example
+
+        * man/PSopt.Rd: small changes in example
+
+2012-08-07  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/restartOpt.R (restartOpt): new argument 'best.only'; if TRUE,
+        only the best run will be reported. Default is FALSE:
+
+2012-08-04  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Suggests): added package parallel
+
+        * R/restartOpt.R: with method "multicore" the function
+        first checks if package parallel is available; if not, it looks
+        for package multicore
+
+2012-08-01  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/gridSearch.R (gridSearch): with method "multicore" the function
+        first checks if package parallel is available; if not, it looks
+        for package multicore
+
+        * R/bracket.R (bracketing): with method "multicore" the function
+        first checks if package parallel is available; if not, it looks
+        for package multicore
+
+2012-07-20  Enrico Schumann  <es@enricoschumann.net>
+
+        * inst/doc/PSlms.Rnw: corrected comments
+
+        * inst/unitTests/unitTestsDEopt.R (OF): addded unit tests for
+        tests of vectorised evaluation of OF
+
+2012-07-19  Enrico Schumann  <es@enricoschumann.net>
+
+        * NEWS.Rd: removed
+
+2012-07-18  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/DEopt.R: added tests that vectorised functions return objects
+        of correct size
+
+2012-06-19  Enrico Schumann  <enricoschumann@yahoo.de>
+
+        * inst/doc: changed style in all vignettes
+
+2012-06-16  Enrico Schumann  <enricoschumann@yahoo.de>
+
+        * R/NS.R (NS, NSS): removed (useless) assignment of result
+
+2012-06-05  Enrico Schumann  <enricoschumann@yahoo.de>
+
+        * R/TAopt.R (TAopt, LSopt): if 'x0' is not a function, it is
+        initialised with eval(x0); thus, it can be an expression
+
+2012-05-22  Enrico Schumann  <enricoschumann@yahoo.de>
+
+        * man/LSopt.Rd: fixed small typo in greedy neighbour definition;
+        examples of LSopt reworked
+
+2012-04-21  Enrico Schumann  <enricoschumann@yahoo.de>
+
+        * R/internals.R (repair1c): added vector 'Chapters'
+
+        * inst/unitTests/unitTests1.R: decreased num of restarts
+
+        * inst/unitTests/unitTests5.R: renamed into '...callCF.R'
+
+        * inst/unitTests/unitTests3.R: deleted. (TA applications moved to
+        manual).
+
+2012-04-18  Enrico Schumann  <enricoschumann@yahoo.de>
+
+        * man/LSopt.Rd: corrected error in greedy search example
+
+2012-04-17  Enrico Schumann  <enricoschumann@yahoo.de>
+
+        * R/showExample.R (showExample): added (also .Rd file)
+
+        * added /inst/book: all example files from book
+
+2012-04-13  Enrico Schumann  <enricoschumann@yahoo.de>
+
+        * inst/doc/: small changes in several vignettes
+
+        * inst/unitTests/unitTestsLSopt.R: moved tests for
+        'LSopt' from unitTests1.R to new file
+
+        * inst/unitTests/unitTestsTAopt.R.T: moved tests for
+        'TAopt' from unitTests1.R to new file
+
+2012-04-10  Enrico Schumann  <enricoschumann@yahoo.de>
+
+        * RELEASE (R-Forge) 0.24-0
+
+        * man/LSopt.Rd, TAopt.Rd: updated documentation on 'TAopt' and
+        'LSopt' (for 'algo$storeSolutions' and 'algo$storeF')
+
+        * R/PSopt.R: added 'algo$minmaxConstr'. If TRUE, 'algo$min' and
+        'algo$max' are considered constraints. Default is FALSE. (Like in
+        'DEopt'.)
+
+        * R/internals.R (repair1c): added function. Not exported.
+
+        * inst/unitTests/unitTestsPSopt.R: moved tests for 'PSopt' from
+        unitTests1.R to new file
+
+        * R/DEopt.R: added 'algo$minmaxConstr'. If TRUE, 'algo$min' and
+        'algo$max' are considered constraints. Default is FALSE.
+
+        * R/resampleC.R (resampleC): added function 'resampleC' and
+        documentation
+
+2012-03-23  Enrico Schumann  <enricoschumann@yahoo.de>
+
+        * RELEASE (R-Forge) 0.23-3
+
+        * R/restartOpt.R: Fixed: 'fun' (to be passed to *apply) is now
+        prepared initially as 'fun2(ignore)', not via a helper
+        function. (Before, an argument 'X' could not be passed with '...'
+        becaused it clashed with the 'X' argument in *apply functions.)
+
+2012-03-19  Enrico Schumann  <enricoschumann@yahoo.de>
+
+        * RELEASE (R-Forge) 0.23-2
+
+        * inst/unitTests/unitTests1.R (test.LSopt/test.TAopt): added tests
+        for 'xlist' for 'TAopt' and 'LSopt'
+
+2012-03-18  Enrico Schumann  <enricoschumann@yahoo.de>
+
+        * R/LSopt.R (N1): FIXED -- 'xlist' did not return 'new solution',
+        only 'current solution'
+
+        * R/TAopt.R (N1): FIXED -- 'xlist' did not return 'new solution',
+        only 'current solution'
+
+2012-03-16  Enrico Schumann  <enricoschumann@yahoo.de>
+
+        * R/TAopt.R (TAopt): added 'flush.console' during computation of
+        thresholds
+
