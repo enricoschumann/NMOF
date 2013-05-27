@@ -1,3 +1,10 @@
+2013-05-27  Enrico Schumann  <es@enricoschumann.net>
+
+	* man/mc.R: added file
+
+	* R/MC.R (gBrownianBridge): added implementation of geometric
+	Brownian bridge
+
 2013-05-23  Enrico Schumann  <es@enricoschumann.net>
 
 	* R/MC.R (gBrownianMotion): added implementation of geometric
