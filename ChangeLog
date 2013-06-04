@@ -1,3 +1,9 @@
+2013-06-04  Enrico Schumann  <es@enricoschumann.net>
+
+	* inst/unitTests/runTests.R: corrected paths
+
+	* inst/NMOFex/README: added link to NMOF manual
+
 2013-05-27  Enrico Schumann  <es@enricoschumann.net>
 
 	* man/mc.R: added file

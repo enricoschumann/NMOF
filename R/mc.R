@@ -21,20 +21,20 @@ gBrownianBridge <- function(npaths, timesteps, S0, ST, sd, tau) {
     ans <- gbm - as.matrix((gbm[,timesteps]-S0)) %*% w
     rbind(S0, t(ans + as.matrix(rep(ST - S0, npaths)) %*% w), deparse.level=0)
 }
-MCpricing <- function(paths, payoff, ...) {
+mc <- function(paths, payoff, ...) {
     ## ... goes into payoff
 
 }
-npaths <- 10000000
-timesteps <- 1
-sd <- 0.5
-S0 <- 100
-ST <- 100
-tau <- 1
-mean <- 0.01
-sd <- 0.25
+## npaths <- 10000000
+## timesteps <- 1
+## sd <- 0.5
+## S0 <- 100
+## ST <- 100
+## tau <- 1
+## mean <- 0.01
+## sd <- 0.25
 
-system.time(x <- gBrownianMotion(npaths, timesteps, mean, sd, tau, S0=100))
+## system.time(x <- gBrownianMotion(npaths, timesteps, mean, sd, tau, S0=100))
 
 
 

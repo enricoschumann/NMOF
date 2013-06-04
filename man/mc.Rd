@@ -84,7 +84,6 @@ mean <- 0.01
 sd <- 0.25
 
 gBrownianMotion(npaths, timesteps, mean, sd, tau, S0=100)
-
     
 }
 
