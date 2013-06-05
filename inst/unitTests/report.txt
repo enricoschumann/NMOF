@@ -1,32 +1,12 @@
-RUNIT TEST PROTOCOL -- Tue Jun  4 17:01:43 2013 
+RUNIT TEST PROTOCOL -- Wed Jun  5 13:06:19 2013 
 *********************************************** 
 Number of test functions: 20 
-Number of errors: 19 
+Number of errors: 0 
 Number of failures: 0 
 
  
 1 Test Suite : 
-NMOF - 20 test functions, 19 errors, 0 failures
-ERROR in test.callHestoncf: Error in func() : lazy-load database 'P' is corrupt
-ERROR in test.EuropeanCall: Error in func() : lazy-load database 'P' is corrupt
-ERROR in test.EuropeanCallBE: Error in func() : lazy-load database 'P' is corrupt
-ERROR in test.testFunctions: Error in as.vector(target) : lazy-load database 'P' is corrupt
-ERROR in test.vanillaOptionAmerican: Error in func() : lazy-load database 'P' is corrupt
-ERROR in test.vanillaOptionEuropean: Error in func() : lazy-load database 'P' is corrupt
-ERROR in test.vanillaOptionImpliedVol: Error in func() : lazy-load database 'P' is corrupt
-ERROR in test.bracketing: Error in mode(current) : lazy-load database 'P' is corrupt
-ERROR in test.gridSearch: Error in func() : lazy-load database 'P' is corrupt
-ERROR in test.xwGauss: Error in func() : lazy-load database 'P' is corrupt
-ERROR in test.callCF: Error in func() : lazy-load database 'P' is corrupt
-ERROR in test.DEopt: Error in func() : lazy-load database 'P' is corrupt
-ERROR in test.GAopt: Error in func() : lazy-load database 'P' is corrupt
-ERROR in test.LSopt: Error in func() : lazy-load database 'P' is corrupt
-ERROR in test.MA: Error in all.equal(target, current, tolerance = tolerance, ...) : 
-  lazy-load database 'P' is corrupt
-ERROR in test.putCallParity: Error in func() : lazy-load database 'P' is corrupt
-ERROR in test.PSopt: Error in func() : lazy-load database 'P' is corrupt
-ERROR in test.restartOpt: Error in func() : lazy-load database 'P' is corrupt
-ERROR in test.TAopt: Error in func() : lazy-load database 'P' is corrupt
+NMOF - 20 test functions, 0 errors, 0 failures
 
 
 
@@ -39,65 +19,45 @@ Involved directory:
 ~/Packages/NMOF/inst/unitTests 
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTests1.R 
-test.callHestoncf: ERROR !! 
-Error in func() : lazy-load database 'P' is corrupt
-test.EuropeanCall: ERROR !! 
-Error in func() : lazy-load database 'P' is corrupt
-test.EuropeanCallBE: ERROR !! 
-Error in func() : lazy-load database 'P' is corrupt
-test.testFunctions: ERROR !! 
-Error in as.vector(target) : lazy-load database 'P' is corrupt
-test.vanillaOptionAmerican: ERROR !! 
-Error in func() : lazy-load database 'P' is corrupt
-test.vanillaOptionEuropean: ERROR !! 
-Error in func() : lazy-load database 'P' is corrupt
-test.vanillaOptionImpliedVol: ERROR !! 
-Error in func() : lazy-load database 'P' is corrupt
+test.callHestoncf: (3 checks) ... OK (0 seconds)
+test.EuropeanCall: (6 checks) ... OK (0.01 seconds)
+test.EuropeanCallBE: (6 checks) ... OK (0.01 seconds)
+test.testFunctions: (6 checks) ... OK (0 seconds)
+test.vanillaOptionAmerican: (6 checks) ... OK (0.02 seconds)
+test.vanillaOptionEuropean: (3486 checks) ... OK (12.43 seconds)
+test.vanillaOptionImpliedVol: (12 checks) ... OK (0.18 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTests2.R 
-test.bracketing: ERROR !! 
-Error in mode(current) : lazy-load database 'P' is corrupt
-test.gridSearch: ERROR !! 
-Error in func() : lazy-load database 'P' is corrupt
-test.xwGauss: ERROR !! 
-Error in func() : lazy-load database 'P' is corrupt
+test.bracketing: (13 checks) ... OK (0 seconds)
+test.gridSearch: (18 checks) ... OK (0.17 seconds)
+test.xwGauss: (4 checks) ... OK (0 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestscallCF.R 
-test.callCF: ERROR !! 
-Error in func() : lazy-load database 'P' is corrupt
+test.callCF: (22 checks) ... OK (0.02 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsDEopt.R 
-test.DEopt: ERROR !! 
-Error in func() : lazy-load database 'P' is corrupt
+test.DEopt: (23 checks) ... OK (3.05 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsGAopt.R 
-test.GAopt: ERROR !! 
-Error in func() : lazy-load database 'P' is corrupt
+test.GAopt: (22 checks) ... OK (0.21 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsInternals.R 
-test.checkList: (10 checks) ... OK (0.08 seconds)
+test.checkList: (10 checks) ... OK (0.01 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsLSopt.R 
-test.LSopt: ERROR !! 
-Error in func() : lazy-load database 'P' is corrupt
+test.LSopt: (7 checks) ... OK (0.29 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsMA.R 
-test.MA: ERROR !! 
-Error in all.equal(target, current, tolerance = tolerance, ...) : 
-  lazy-load database 'P' is corrupt
+test.MA: (3 checks) ... OK (0 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsPCparity.R 
-test.putCallParity: ERROR !! 
-Error in func() : lazy-load database 'P' is corrupt
+test.putCallParity: (10 checks) ... OK (0 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsPSopt.R 
-test.PSopt: ERROR !! 
-Error in func() : lazy-load database 'P' is corrupt
+test.PSopt: (14 checks) ... OK (3.92 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsRestartOpt.R 
-test.restartOpt: ERROR !! 
-Error in func() : lazy-load database 'P' is corrupt
+test.restartOpt: (1 checks) ... OK (0.15 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsTAopt.R 
-test.TAopt: ERROR !! 
-Error in func() : lazy-load database 'P' is corrupt
+test.TAopt: (13 checks) ... OK (0.36 seconds)
