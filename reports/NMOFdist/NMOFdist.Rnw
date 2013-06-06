@@ -114,20 +114,12 @@ require("rbenchmark")
 require("snow")
 @
 
-Package \texttt{multicore} is not available on Windows; in such a
-case, we use lapply.
-<<>>=
-if (!require("multicore")) {
-    print("package 'multicore' not available")
-    mclapply <- lapply  ## use lapply
-}
-@
 
 We also attach two packages that help to generate random numbers for
 parallel computations.
 <<>>=
 require("rlecuyer")
-require("rsprng")
+##require("rsprng")
 @
 
 This document is written with Sweave \citep{Leisch2002}. The code is
@@ -172,11 +164,11 @@ stopCluster(cl)
 \subsection{Copying arguments}
 
 <<>>=
-cl <- makeCluster(c(rep("localhost", 4)), type = "SOCK")
+cl <- makeCluster(rep("localhost", nC), type = "SOCK")
 
 OF <- function(b, X, y) {
-  temp <- X %*% b - y
-  sum(temp^2)
+    temp <- X %*% b - y
+    sum(temp^2)
 }
 
 n <- 50            ## how many calls per lapply
@@ -193,8 +185,8 @@ for (i in 1:n)
 OF(b,X,y)
 
 system.time({
-for (i in 1:100)
-    ignore1 <- clusterApply(cl, lP, OF, X, y)
+    for (i in 1:100)
+        ignore1 <- clusterApply(cl, lP, OF, X, y)
 })
 
 system.time({
