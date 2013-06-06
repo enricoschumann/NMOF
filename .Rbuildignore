@@ -1,4 +1,9 @@
+dev
 dev/
 .git
 .gitignore
 THANKS
+.es_keywords
+ChangeLog
+reports
+reports/

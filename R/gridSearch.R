@@ -18,10 +18,8 @@ gridSearch <- function(fun, levels, ..., lower, upper,
     }
     if (method == "multicore") {
         if (!suppressWarnings(require("parallel", quietly = TRUE))) {
-            message("package 'parallel' is used")
-        } else if (!suppressWarnings(require("multicore", quietly = TRUE))) {
             method <- "loop"
-            warning("package 'multicore' not available: use method 'loop'")
+            warning("package 'parallel' not available: use method 'loop'")
         }
     } else if (method == "snow") {
         if (!suppressWarnings(require("snow", quietly = TRUE))) {

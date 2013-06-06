@@ -27,8 +27,6 @@ GAopt <- function (OF, algo = list(), ...) {
         state <- NA else state <- .Random.seed
 
 
-    ## --------------------------------------------------
-    ## NEW: snow/multicore
     if (algoD$methodOF == "vectorised" && identical(algoD$loopOF, TRUE))
         algoD$loopOF <- FALSE
 
@@ -51,15 +49,13 @@ GAopt <- function (OF, algo = list(), ...) {
             }
         }
     } else if (algoD$methodOF == "multicore") {
-        if (!suppressWarnings(require("multicore", quietly = TRUE))) {
-            warning("package 'multicore' not available: use method 'loop'")
+        if (!suppressWarnings(require("parallel", quietly = TRUE))) {
+            warning("package 'parallel' not available: use method 'loop'")
         } else {
             domc <- TRUE
             mc.settings <- mcList(algoD$mc.control)
         }
     }
-    ## /NEW: snow/multicore
-    ## --------------------------------------------------
 
     printDetail <- algoD$printDetail
     printBar <- algoD$printBar

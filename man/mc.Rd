@@ -1,7 +1,6 @@
-\name{MonteCarlo}
-\alias{gBrownianMotion}
-\alias{gBrownianBridge}
-\alias{mc}
+\name{mc}
+\alias{gbm}
+\alias{gbb}
 \title{
     Pricing Options via Simulation
 }
@@ -12,9 +11,8 @@
 
 }
 \usage{
-gBrownianMotion(npaths, timesteps, mean, sd, tau, S0)
-gBrownianBridge(npaths, timesteps, S0, ST, sd, tau)
-mc(paths, payoff, \dots)
+gbm(npaths, timesteps, mean, sd, tau, S0)
+gbb(npaths, timesteps, S0, ST, sd, tau)
 }
 \arguments{
   \item{npaths}{
@@ -24,42 +22,37 @@ mc(paths, payoff, \dots)
       timesteps per path
 }
   \item{mean}{
-x
+the mean per unit of time
 }
   \item{sd}{
-x
+the standard deviation
 }
   \item{tau}{
-  x
+time
 }
   \item{S0}{
-
+    initial value
 }
   \item{ST}{
-
+    final value of Brownian bridge
   }
-  \item{paths}{
-       a numeric matrix; each column contains the price path of an asset
 }
-  \item{payoff}{
-       a function
-}
-
-}
-
 \details{
+  
+\code{gbm} generates sample paths of geometric Brownian motion.
 
-generate a brownian motion W from 0 to T
+\code{gbb} generates sample paths of a Brownian bridge by first creating
+paths of Brownian motion \code{W} from time \code{0} to time \code{T},
+with \code{W_0} equal to zero.  Then, at each \code{t}, it subtracts t/T
+* W_T and adds S0*(1-t/T)+ST*(t/T).
 
-1) at each t, subtract t/T * W_T
-2) at each t, add a(1-t/T)+b(t/T)  
-
-    
-    
+       
 }
 \value{
 
-    a matrix
+    A matrix of sample paths; each column contains the price path of an
+    asset. Even with only a single time-step, the matrix will have two
+    rows (the first row is \code{S0}).
     
 }
 \references{
@@ -74,16 +67,47 @@ Enrico Schumann
     \code{\link{vanillaOptionEuropean}}
 }
 \examples{
-npaths <- 20
-timesteps <- 3
-sd <- 0.5
-S0 <- 100
-ST <- 100
-tau <- 1
+## price a European option
+## ... parameters
+npaths <- 5000   ## increase number to get more precise results
+timesteps <- 1
+sd   <- 0.5
+S0   <- 100
+ST   <- 100
+tau  <- 1
 mean <- 0.01
-sd <- 0.25
+sd   <- 0.25
 
-gBrownianMotion(npaths, timesteps, mean, sd, tau, S0=100)
-    
+## ... create paths
+paths <- gbm(npaths, timesteps, mean, sd, tau, S0 = S0)
+
+## ... a helper function
+mc <- function(paths, payoff, ...)
+    payoff(paths, ...)
+
+## ... a payoff function (European call)
+payoff <- function(paths, X, r, tau)
+    exp(-r * tau) * mean(pmax(paths[NROW(paths), ] - X, 0))
+
+## ... compute and check
+mc(paths, payoff, X = 100, r = mean, tau = tau)
+vanillaOptionEuropean(S0, X = 100, tau =tau, r = mean, v = sd^2)$value
+
+
+## compute delta via forward difference
+## (see Gilli/Maringer/Schumann, ch. 9) 
+h <- 1e-6                 ## a small number
+rnorm(1)                  ## make sure RNG is initialised
+rnd.seed <- .Random.seed  ## store current seed
+paths1 <- gbm(npaths, timesteps, mean, sd, tau, S0 = S0)
+.Random.seed <- rnd.seed
+paths2 <- gbm(npaths, timesteps, mean, sd, tau, S0 = S0 + h)
+
+delta.mc <- (mc(paths2, payoff, X = 100, r = mean, tau = tau)- 
+             mc(paths1, payoff, X = 100, r = mean, tau = tau))/h
+delta <- vanillaOptionEuropean(S0, X = 100, tau = tau,
+                               r = mean, v = sd^2)$delta
+delta.mc - delta 
 }
+
 
