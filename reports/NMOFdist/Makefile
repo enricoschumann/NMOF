@@ -6,4 +6,4 @@ www: NMOFdist.tex
 	cp NMOFdist.pdf /home/es/ESdotnet/files/NMOFdist.pdf
 	cp NMOFdist.R /home/es/Packages/NMOF/inst/NMOFex/NMOFdist.R
 clean: 
-	latexmk -c NMOFdist.tex
+	latexmk -C NMOFdist.tex
