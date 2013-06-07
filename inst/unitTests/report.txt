@@ -1,4 +1,4 @@
-RUNIT TEST PROTOCOL -- Fri Jun  7 14:11:21 2013 
+RUNIT TEST PROTOCOL -- Fri Jun  7 20:54:28 2013 
 *********************************************** 
 Number of test functions: 20 
 Number of errors: 0 
@@ -24,19 +24,19 @@ test.EuropeanCall: (6 checks) ... OK (0.01 seconds)
 test.EuropeanCallBE: (6 checks) ... OK (0.01 seconds)
 test.testFunctions: (6 checks) ... OK (0 seconds)
 test.vanillaOptionAmerican: (6 checks) ... OK (0.02 seconds)
-test.vanillaOptionEuropean: (3486 checks) ... OK (12.63 seconds)
+test.vanillaOptionEuropean: (3486 checks) ... OK (12.52 seconds)
 test.vanillaOptionImpliedVol: (12 checks) ... OK (0.17 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTests2.R 
 test.bracketing: (13 checks) ... OK (0 seconds)
-test.gridSearch: (18 checks) ... OK (0.16 seconds)
-test.xwGauss: (4 checks) ... OK (0.09 seconds)
+test.gridSearch: (18 checks) ... OK (0.17 seconds)
+test.xwGauss: (4 checks) ... OK (0.02 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestscallCF.R 
-test.callCF: (22 checks) ... OK (0.01 seconds)
+test.callCF: (22 checks) ... OK (0.02 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsDEopt.R 
-test.DEopt: (23 checks) ... OK (3 seconds)
+test.DEopt: (23 checks) ... OK (3.17 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsGAopt.R 
 test.GAopt: (22 checks) ... OK (0.21 seconds)
@@ -45,7 +45,7 @@ Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsInternals.R
 test.checkList: (10 checks) ... OK (0.01 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsLSopt.R 
-test.LSopt: (7 checks) ... OK (0.27 seconds)
+test.LSopt: (7 checks) ... OK (0.3 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsMA.R 
 test.MA: (3 checks) ... OK (0 seconds)
@@ -54,10 +54,10 @@ Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsPCparity.R
 test.putCallParity: (10 checks) ... OK (0 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsPSopt.R 
-test.PSopt: (14 checks) ... OK (3.84 seconds)
+test.PSopt: (14 checks) ... OK (3.91 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsRestartOpt.R 
-test.restartOpt: (1 checks) ... OK (0.18 seconds)
+test.restartOpt: (1 checks) ... OK (0.16 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsTAopt.R 
-test.TAopt: (13 checks) ... OK (0.37 seconds)
+test.TAopt: (13 checks) ... OK (0.38 seconds)
