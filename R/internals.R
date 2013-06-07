@@ -41,9 +41,12 @@ mRN <- function(m, n)
 ##
 
 mcList <- function(mc.control) {
-    mc.settings <- list(mc.preschedule = TRUE, mc.set.seed = TRUE,
-                        mc.silent = FALSE, mc.cores = getOption("cores"),
-                        mc.cleanup = TRUE)
+    mc.settings <- list(mc.preschedule = TRUE,
+                        mc.set.seed = TRUE,
+                        mc.silent = FALSE,
+                        mc.cores = getOption("mc.cores", 2L),
+                        mc.cleanup = TRUE,
+                        mc.allow.recursive = TRUE)
     checkList(mc.control, mc.settings, "'mc.control'")
     mc.settings[names(mc.control)] <- mc.control
     mc.settings

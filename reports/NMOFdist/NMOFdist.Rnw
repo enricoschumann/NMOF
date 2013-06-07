@@ -79,6 +79,13 @@ options(continue = " ", digits = 3, width = 65)
 \maketitle
 \tableofcontents
 
+\begin{framed}
+  \noindent I am currently in the process of checking and updating
+  these examples for package \texttt{parallel}, as it supersedes
+  package \texttt{multicore}.  I would be happy about comments and
+  corrections.
+\end{framed}
+
 \section{Overview}
 
 \noindent This manuscript contains several examples of distributed
@@ -86,12 +93,13 @@ computations (more specifically, using several cores on one machine)
 in the \nmof{} package \citep*{Gilli2011b}. Such computations are
 supported in the functions \texttt{bracketing}, \texttt{GAopt},
 \texttt{gridSearch}, \texttt{restartOpt} through either
-\texttt{multicore} \citep{Urbanek2011} or \texttt{snow}
-\citep{Tierney2011}. This report mainly serves as a convenient check
-for these functions. I am grateful for comments and corrections.
+\texttt{parallel} (before, it was \texttt{multicore};
+\citealp{Urbanek2011}) or \texttt{snow} \citep{Tierney2011}. This
+report mainly serves as a convenient check for these functions. I am
+grateful for comments and corrections.
 
 The latest version of the package is available from
-\url{http://r-forge.r-project.org/} \citep{Theussl2009}; the package
+\url{http://enricoschumann.net/R/packages/NMOF/index.htm}; the package
 is also available from \caps{cran}. To install the package from within
 \R{}, type
 <<eval = FALSE>>=
@@ -103,23 +111,25 @@ to download and install it. For all examples, the package needs to be
 attached.
 <<>>=
 require("NMOF")
-set.seed(1112233344)
+set.seed(1122344)
 nC <- 2L ## the number of cores to be used
 @
 
-We also attach a number of other packages
+We also attach a number of other packages. Note that we still use
+package \texttt{snow} explicitly. 
+
 <<>>=
-require("RUnit")
 require("rbenchmark")
+require("parallel")
 require("snow")
 @
 
 
-We also attach two packages that help to generate random numbers for
+We also attach a package that helps to generate random numbers for
 parallel computations.
+
 <<>>=
 require("rlecuyer")
-##require("rsprng")
 @
 
 This document is written with Sweave \citep{Leisch2002}. The code is
@@ -140,78 +150,112 @@ The latest pdf version of this report can be obtained from
 \subsection{Making things slow}
 
 We first run a simple test to see if a specific function is expensive
-enough for distributed computation. But note that we set up the
-cluster for \texttt{snow} before we measure the computing time.
+enough for distributed computation.
 <<>>=
 testFun <- function(ignore, delay) {
     Sys.sleep(delay)
     1
 }
+ 
 delay <- 0.01     ## running time of function
 n <- 8            ## how many calls per lapply
 repl <- 10        ## how many restarts
 sq <- seq_len(n)
+@
 
+Note that we set up the cluster for \texttt{snow} before we measure
+the computing time.
+
+<<>>=
 cl <- makeCluster(c(rep("localhost", nC)), type = "SOCK")
-benchmark(lapply(sq, testFun, delay),
-           mclapply(sq, testFun, delay),
-           clusterApply(cl, sq, testFun, delay),
-           columns = c("test", "elapsed", "relative"),
-           order = "relative", replications = repl)
+benchmark(lapply(sq, testFun, delay),                ## serial
+          mclapply(sq, testFun, delay),              ## package 'parallel'
+          clusterApply(cl, sq, testFun, delay),      ## package 'snow'
+          columns = c("test", "elapsed", "relative"),
+          order = "relative", replications = repl)
 stopCluster(cl)
 @
 
 \subsection{Copying arguments}
 
-<<>>=
-cl <- makeCluster(rep("localhost", nC), type = "SOCK")
+With \texttt{snow}, it can help to copy constant function arguments to
+the nodes.
 
+Suppose we have a Least-Squares objective function.
+<<>>=
 OF <- function(b, X, y) {
     temp <- X %*% b - y
     sum(temp^2)
 }
+@ 
 
-n <- 50            ## how many calls per lapply
-sq <- seq_len(n)
-ncol <- 10
-nrow <- 150
-X <- rnorm(nrow*ncol)
-dim(X) <- c(nrow,ncol)
+For this function, \texttt{b} are the parameters to be optimised, but
+\texttt{X} and \texttt{y} stay fixed. We create some random
+\texttt{X}, \texttt{y} and \texttt{b}.
+<<>>=
+ncol <- 10; nrow <- 200
+X <- array(rnorm(nrow*ncol), dim= c(nrow,ncol))
 y <- rnorm(nrow)
 b <- rnorm(ncol)
+@ 
+
+Just a test.
+<<>>=
+OF(b, X, y)
+@ 
+
+Suppose we used such a function in a multiple-solution heuristic like
+DE.  We assume the population \texttt{lP} has size \texttt{n}.
+<<>>=
+n <- 50            ## how many calls per lapply
+sq <- seq_len(n)
 lP <- vector("list", length = n)
-for (i in 1:n)
+for (i in sq)
     lP[[i]] <- b
-OF(b,X,y)
+@
 
-system.time({
-    for (i in 1:100)
-        ignore1 <- clusterApply(cl, lP, OF, X, y)
+Next we define various expressions (note that the \texttt{\{\}} are
+only necessary for the last one).
+<<>>=
+snow_with_copying <- expression({
+    ignore1 <- clusterApply(cl, lP, OF, X, y)  
 })
 
-system.time({
-for (i in 1:100)
-    ignore3 <- lapply(lP, OF, X, y)
+lapply <- expression({
+    ignore2 <- lapply(lP, OF, X, y)  
 })
-system.time({
-    clusterExport(cl, list("X", "y"))
-    OF <- function(b) {
+
+snow_without_copying <- expression({
+    OF1 <- function(b) {
         temp <- X %*% b - y
         sum(temp^2)
     }
-    rm(X,y)
-    for (i in 1:100)
-        ignore2 <- clusterApply(cl, lP, OF)
-})
+    ignore3 <- clusterApply(cl, lP, OF1)
+    })
+
+cl <- makeCluster(rep("localhost", nC), type = "SOCK")
+clusterExport(cl, list("X", "y"))
+benchmark(lapply,            
+          snow_with_copying, 
+          snow_without_copying,
+          columns = c("test", "elapsed", "relative"),
+          order = "relative", replications = 50)
 stopCluster(cl)
+@ 
 
+We compare the results.
 
+<<>>=
+all.equal(ignore1, ignore2)
+all.equal(ignore2, ignore3)
 @
 
 
 \section{\texttt{bracketing}}
+
 We repeat the example from \citet[p.~290]{Gilli2011b}; again we
 add a small delay to the function.
+
 <<>>=
 testFun <- function(x) {
     Sys.sleep(0.1)
@@ -226,36 +270,43 @@ with_multicore <- expression(
     sol2 <- bracketing(testFun,
                        interval = c(0.3, 0.9),
                        n = 100L,
-                       method = "multicore")
+                       method = "multicore", 
+                       mc.control = list(mc.cores = nC))
     )
 with_snow  <- expression(
     sol3 <- bracketing(testFun,
                        interval = c(0.3, 0.9),
                        n = 100L, method = "snow", cl = nC)
     )
-benchmark(with_loop, with_multicore, with_snow,
+benchmark(with_loop, 
+          with_multicore, 
+          with_snow,
           columns = c("test", "elapsed", "relative"),
           order = "relative", replications = 1)
-checkEquals(sol1, sol2)
-checkEquals(sol1, sol3)
 @
+
+We check.
+<<>>=
+all.equal(sol1, sol2)
+all.equal(sol1, sol3)
+@ 
 
 
 \section{Multiple-solution (a.k.a.\/ population-based) optimisation methods}
 
 \subsection{Evaluting several solutions -- a prototype}
+
 We create a population \texttt{P} of solution vectors, shaped as a
 matrix in which every column is one solution.
 <<>>=
-nCol <- 20
-nRow <- 100
-P <- rnorm(nRow * nCol)
-dim(P) <- c(nRow, nCol)
+ncol <- 20
+nrow <- 100
+P <- array(rnorm(nrow * ncol), dim = c(nrow, ncol))
 @
 
 As an example, we define a simple objective function (which could be
-used, for instance, in a Value-at-Risk calculation, for some kind of
-robust statistic).
+used, for instance, in a Value-at-Risk calculation, or some kind of
+robust statistic).  The function partially sorts a vector \texttt{x}.
 <<>>=
 fun <- function (x, h)
     sort(x, partial = h)[h]
@@ -289,20 +340,26 @@ loopresult <- loopfun(P, fun, h)
 @
 
 Now, how to exploit the fact that we can evaluate the columns of
-\texttt{P} in any order? That is, how to distribute the computations?
+\texttt{P} in any order?  That is, how to distribute the computations?
 The simplest way is to call a member of the apply family, of the sort
-that comes with packages \texttt{multicore} and \texttt{snow}; we will
+that comes with packages \texttt{parallel} and \texttt{snow}; we will
 use \texttt{snow} here.
 
-First, We create a list from the columns of \texttt{P}.
+First, we create a list from the columns of \texttt{P}.
 <<>>=
-listP <- vector(mode = "list", length = nCol)
-for (s in seq_len(ncol(P)))
-    listP[[s]] <- P[ ,s]
+mat2list <- function(x) {
+    listP <- vector(mode = "list", length = ncol(x))
+    for (s in seq_len(ncol(P)))
+        listP[[s]] <- P[ ,s]
+    listP
+}
+listP <- mat2list(P)
 @
 
-This could more have been more compactly written as
-\texttt{split(P, col(P))}; but the simple loop version is faster.
+This could more have been written more compactly as \texttt{split(P,
+  col(P))}; but the simple loop version is faster.  So, we can compare
+the results of \texttt{loopfun} with a distributed computation.
+
 <<>>=
 cl <- makeCluster(c(rep("localhost", nC)), type = "SOCK")
 snowresult <- unlist(clusterApply(cl, listP, fun, h))
@@ -310,8 +367,8 @@ stopCluster(cl)
 all.equal(loopresult, snowresult)
 @
 
-So we can check the running time. (We set up the cluster
-outside the test; we also leave out the call to \texttt{unlist}.)
+We can check the running time. We set up the cluster outside the test;
+we also leave out the call to \texttt{unlist}.
 <<>>=
 cl <- makeCluster(c(rep("localhost", nC)), type = "SOCK")
 benchmark(clusterApply(cl, listP, fun, h),
@@ -322,28 +379,30 @@ stopCluster(cl)
 @
 
 So apparently, \texttt{fun} is far too cheap to benefit from
-distribution. But how about \texttt{loopfun}?We make our matrix
-slightly larger, and \texttt{fun} slightly more expensive (but still
-cheap).
+distribution. But how about \texttt{loopfun}? We make our matrix
+slightly larger.
 <<>>=
-nCol <- 100
-nRow <- 200
-P <- rnorm(nRow * nCol)
-dim(P) <- c(nRow, nCol)
-
-fun <- function (x, h)
-    sort(x)[h]
+ncol <- 200
+nrow <- 200
+P <- array(rnorm(nrow * ncol), dim = c(nrow, ncol))
 
 system.time(for (i in seq_len(10000L)) fun(P[ ,1L], 10L))
 @
 
+The number of cores.
 <<>>=
-d <- round(nCol/nC) ## nC is the number of cores
+d <- round(ncol/nC) ## nC is the number of cores
+@ 
+
+We split our matrix into \texttt{d} parts.
+<<>>=
 listP <- vector(mode = "list", length = nC)
-
 for (s in seq_len(nC))
-    listP[[s]] <- P[ ,(d*s-d+1):min(nCol, d*s)]
+    listP[[s]] <- P[ ,(d*s-d+1):min(ncol, d*s)]
+@ 
 
+
+<<>>=
 cl <- makeCluster(c(rep("localhost", nC)), type = "SOCK")
 benchmark(snowresult <- clusterApply(cl, listP, loopfun, fun, h),
           loopresult <- loopfun(P, fun, h),
@@ -355,11 +414,13 @@ all.equal(loopresult, unlist(snowresult))
 
 
 \subsection{\texttt{GAopt}}
+
 \texttt{GAopt} currently supports distributed evaluation of the
 objective function (in future versions, the \texttt{repair} and
 \texttt{penalty} functions may also be distributed).
 
 We use the matching example from \texttt{?GAopt},
+
 <<>>=
 OF <- function(x, y) {
     Sys.sleep(0.001)
@@ -388,7 +449,7 @@ benchmark(GAopt(OF, algo = with_loop, y = y),
 To pass optional arguments to \texttt{multicore}'s \texttt{mclapply},
 we need to collect them in a list \texttt{mc.control}, which needs to
 be added to \texttt{algo}. As an example, we instruct
-\texttt{multicore} to use just one core (ie, we should gain no
+\texttt{parallel} to use just one core (ie, we should gain no
 speedup).
 <<>>=
 with_multicore$mc.control <- list(mc.cores = 1L)
@@ -405,20 +466,19 @@ size <- 10L; y <- runif(size) > 0.5
 algo <- list(nB = size, nP = 20L, nG = 100L, prob = 0.002,
              printBar = FALSE, methodOF = "loop")
 t1 <- system.time(sol <- GAopt(OF, algo = algo, y = y))
-checkEquals(sol$xbest, y)
-checkEquals(sol$OFvalue, 0)
+all.equal(sol$xbest, y)
+all.equal(sol$OFvalue, 0)
 
 algo <- list(nB = size, nP = 20L, nG = 100L, prob = 0.002,
              printBar = FALSE, methodOF = "snow", cl = nC)
 t2 <- system.time(sol <- GAopt(OF, algo = algo, y = y))
-checkEquals(sol$xbest, y)
-checkEquals(sol$OFvalue, 0)
+all.equal(sol$xbest, y)
+all.equal(sol$OFvalue, 0)
 @
 
 This allows us to check the speedup (but from only one replication).
 <<>>=
-t1[[3L]]/t2[[3L]]
-checkTrue(t1[[3L]] > t2[[3L]])
+round(t1[[3L]]/t2[[3L]])
 @
 
 We can also pass further parameters to the objective function.
@@ -432,16 +492,15 @@ algo <- list(nB = size, nP = 20L, nG = 100L, prob = 0.002,
              printBar = FALSE, printDetail = FALSE,
              methodOF = "loop")
 t1 <- system.time(sol <- GAopt(OF, algo = algo, y = y, k = k))
-checkEquals(sol$xbest, y)
-checkEquals(sol$OFvalue, k)
+all.equal(sol$xbest, y)
+all.equal(sol$OFvalue, k)
 
 algo <- list(nB = size, nP = 20L, nG = 100L, prob = 0.002,
              printBar = FALSE, printDetail = FALSE,
              methodOF = "snow", cl = nC)
 t2 <- system.time(sol <- GAopt(OF, algo = algo, y = y, k = k))
-checkEquals(sol$xbest,y)
-checkTrue(t1[[3L]]>t2[[3L]])
-checkEquals(sol$OFvalue, k)
+all.equal(sol$xbest,y)
+all.equal(sol$OFvalue, k)
 @
 
 \section{\texttt{gridSearch}}
@@ -474,9 +533,9 @@ with_snow <- expression(
 benchmark(with_loop, with_multicore, with_snow,
           columns = c("test", "elapsed", "relative"),
           order = "relative", replications = 1)
-checkEquals(sol1, sol2)
-checkEquals(sol1, sol3)
-checkEquals(sol3$minlevels, 1:2)
+all.equal(sol1, sol2)
+all.equal(sol1, sol3)
+all.equal(sol3$minlevels, 1:2)
 @
 
 This test function may also need additional arguments. Here we pass a
@@ -498,12 +557,12 @@ sol3 <- gridSearch(fun = testFun,k = k,
                    lower = lower, upper = upper,
                    n = n, printDetail = FALSE,
                    method = "snow", cl = nC)
-checkEquals(sol1, sol2)
-checkEquals(sol1, sol3)
-checkEquals(sol3$minlevels, 1:2)
+all.equal(sol1, sol2)
+all.equal(sol1, sol3)
+all.equal(sol3$minlevels, 1:2)
 @
 
-To pass optional arguments to \texttt{multicore}'s \texttt{mclapply},
+To pass optional arguments to \texttt{parellel}'s \texttt{mclapply},
 we need to collect them in a list \texttt{mc.control}, which needs to
 be added to \texttt{algo}. Here we set a seed.
 <<>>=
@@ -525,12 +584,14 @@ sol2 <- gridSearch(fun = testFun,
                    n = n, printDetail = FALSE,
                    method = "multicore",
                    mc.control = list(mc.set.seed = FALSE))
-checkEquals(sol2$values, temp)
+all.equal(sol2$values, temp)
 @
 
 Setting a seed is also possible with \texttt{snow}. First we use
 package \texttt{rsprng}.
-<<>>=
+
+\noindent \texttt{TODO: this package is not installed on this machine}
+<<eval=false>>=
 cl <- makeCluster(c(rep("localhost", nC)), type = "SOCK")
 clusterSetupSPRNG(cl, seed = rep.int(12345, nC))
 sol3 <- gridSearch(fun = testFun,
@@ -548,8 +609,9 @@ sol3 <- gridSearch(fun = testFun,
                    n = n, printDetail = FALSE,
                    method = "snow", cl = cl)
 stopCluster(cl)
-checkEquals(sol3$values, temp)
+all.equal(sol3$values, temp)
 @
+
 With the \texttt{rlecuyer} package.
 <<>>=
 cl <- makeCluster(c(rep("localhost", nC)), type = "SOCK")
@@ -567,10 +629,11 @@ sol3 <- gridSearch(fun = testFun, lower = lower, upper = upper,
                    n = n, printDetail = FALSE,
                    method = "snow", cl = cl)
 stopCluster(cl)
-checkEquals(sol3$values, temp)
+all.equal(sol3$values, temp)
 @
 
 \section{\texttt{restartOpt}}
+
 We test with \texttt{TAopt} and a (meaningless) problem: find a
 numeric vector \texttt{x} that matches another numeric vector
 \texttt{xTRUE} through randomly changing \texttt{x}.
@@ -607,25 +670,26 @@ with_snow <- expression(
 benchmark(with_loop, with_multicore, with_snow,
           columns = c("test", "elapsed", "relative"),
           order = "relative", replications = 1)
-checkEquals(length(sols1), 100L)
-checkEquals(length(sols2), 100L)
-checkEquals(length(sols3), 100L)
+all.equal(length(sols1), 100L)
+all.equal(length(sols2), 100L)
+all.equal(length(sols3), 100L)
 @
 
 \newpage
 \appendix
 \section{Resources}
-You can download all the book's code examples from the book's
-home page,\medskip
+
+You can download all the book's code examples from the book's home
+page,\medskip
 
 \url{http://nmof.net} \bigskip
 
-\noindent The latest version of the \nmof{} package is hosted on
-R-Forge; please visit\medskip
+\noindent The latest version of the \nmof{} package is available from
 
-\url{http://nmof.r-forge.r-project.org/}\bigskip
+\url{http://enricoschumann.net/R/packages/NMOF/index.htm}\bigskip
 
-\noindent for more information. \bigskip
+\noindent but note that this is the development version. More stable
+versions are available from CRAN. \bigskip
 
 \noindent New versions of the package and other news are announced
 through the \texttt{NMOF-news} mailing list; to browse the archives or

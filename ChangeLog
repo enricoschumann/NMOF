@@ -1,5 +1,9 @@
 2013-06-06  Enrico Schumann  <es@enricoschumann.net>
 
+	* R/internals.R (mcList): updated mcList -- added
+	"mc.allow.recursive = TRUE" and changed "mc.cores" to
+	getOption("cores", 2L)"
+
 	* R/gridSearch.R (gridSearch): removed require("multicore")
 
 	* R/GAopt.R (GAopt): removed require("multicore")
