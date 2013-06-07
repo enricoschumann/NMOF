@@ -11,6 +11,7 @@
 \usepackage[left = 2.5cm,top = 3cm, bottom = 3cm, right = 4.5cm]{geometry}
 \renewcommand{\figurename}{Figure}
 \usepackage{algorithmic,algorithm}
+\usepackage{framed}
 
 % *FONTS*
 %\usepackage{mathptmx}
@@ -19,6 +20,7 @@
 \usepackage{sfourier}
 \renewcommand{\rmdefault}{fmnj}
 \newcommand{\hy}{{\fontencoding{OT1}\fontfamily{pcr}\selectfont - }}
+
 
 
 % soul definition
@@ -83,7 +85,8 @@ options(continue = " ", digits = 3, width = 65)
   \noindent I am currently in the process of checking and updating
   these examples for package \texttt{parallel}, as it supersedes
   package \texttt{multicore}.  I would be happy about comments and
-  corrections.
+  corrections. (Note that I still refer to it as \texttt{multicore},
+  but the code uses package \texttt{parallel}.)
 \end{framed}
 
 \section{Overview}
@@ -684,7 +687,8 @@ page,\medskip
 
 \url{http://nmof.net} \bigskip
 
-\noindent The latest version of the \nmof{} package is available from
+\noindent The latest version of the \nmof{} package is available
+from\medskip
 
 \url{http://enricoschumann.net/R/packages/NMOF/index.htm}\bigskip
 
