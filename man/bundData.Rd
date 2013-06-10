@@ -26,9 +26,14 @@
   \url{http://www.bundesbank.de} .
 }
 \references{
+
   Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical
-    Methods and Optimization in Finance}. Elsevier.
+  Methods and Optimization in Finance}. Elsevier.
   \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
+
+  Schumann, E. (2013) The \pkg{NMOF} Manual.
+  \url{http://enricoschumann.net/NMOF.htm}
+
 }
 \examples{
 bundData

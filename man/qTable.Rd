@@ -60,7 +60,9 @@ defaults to 0. See Details.
     if provided, output is \code{cat} into a file
 }
 \item{funs}{
-  A list of functions; the functions should be named. Default is
+  A \code{\link{list}} of functions; the functions should be
+  named. Default is
+
   \code{list(median = median, min = min, max = max)}
 }
 \item{tabular.format}{optional: character string like \code{"rrrrr"}
@@ -68,7 +70,7 @@ defaults to 0. See Details.
 }
 \item{skip}{Adds a newline at the end of the tabular. Default is
   \code{TRUE}. (The behaviour prior to  package version 0.27-0
-  corresponded to \code{FALSE}.
+  corresponded to \code{FALSE}.)
 }
 }
 \details{

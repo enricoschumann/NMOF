@@ -49,7 +49,7 @@ gridSearch(fun, levels, ..., lower, upper, npar = 1L, n = 5L,
   \item{mc.control}{
     a list containing settings that will be passed to \code{mclapply} if
     \code{method} is \code{multicore}. Must be a list of named
-    elements; see the documentation of \code{mclapply} in pkg{multicore}.
+    elements; see the documentation of \code{mclapply} in \pkg{parallel}.
   }
   \item{cl}{default is \code{NULL}. If method \code{snow} is used, this must be a
     cluster object or an integer (the number of cores).}
@@ -63,13 +63,14 @@ gridSearch(fun, levels, ..., lower, upper, npar = 1L, n = 5L,
 
 }
 \details{
+
   A grid search can be used to find \sQuote{good} parameter values for a
-  function. In principle, a grid search has an obvious deficiency: as the
-  length of \code{x} (the first argument to \code{fun}) increases, the
-  number of necessary function evaluations grows exponentially. Note that
-  \code{gridSearch} will not warn about an unreasonable number of function
-  evaluations, but if \code{printDetail} is \code{TRUE} it will print the
-  required number of function evaluations.
+  function. In principle, a grid search has an obvious deficiency: as
+  the length of \code{x} (the first argument to \code{fun}) increases,
+  the number of necessary function evaluations grows exponentially. Note
+  that \code{gridSearch} will not warn about an unreasonable number of
+  function evaluations, but if \code{printDetail} is \code{TRUE} it will
+  print the required number of function evaluations.
 
   In practice, grid search is often better than its reputation. If a
   function takes only a few parameters, it is often a reasonable approach
@@ -80,19 +81,20 @@ gridSearch(fun, levels, ..., lower, upper, npar = 1L, n = 5L,
   calls \code{\link{lapply}} to evaluate \code{fun} if
   \code{method == "loop"} (the default).
 
-  If \code{method == "multicore"}, the function \code{mclapply} from
-  package \pkg{multicore} is used. Further settings for \code{mclapply}
-  can be passed through the list \code{mc.control}. If \code{multicore}
-  is chosen but not available, then \code{method} will be set to
-  \code{loop} and a warning is issued. If \code{method == "snow"}, the
-  function \code{clusterApply} from package \pkg{snow} is used. In this
-  case, the argument \code{cl} must either be a cluster object (see the
-  documentation of \code{clusterApply}) or an integer. If an integer, a
-  cluster will be set up via \code{makeCluster(c(rep("localhost", cl)),
-    type = "SOCK")} (and \code{stopCluster} is called when the function is
-  exited). If \code{snow} is chosen but not available or \code{cl} is
-  not specified, then \code{method} will be set to \code{loop} and a
-  warning is issued.
+  If \code{method} is \code{multicore}, then function \code{mclapply}
+  from package \pkg{parallel} is used. Further settings for
+  \code{mclapply} can be passed through the list \code{mc.control}. If
+  \code{multicore} is chosen but the functionality is not available,
+  then \code{method} will be set to \code{loop} and a warning is
+  issued. If \code{method == "snow"}, the function \code{clusterApply}
+  from package \pkg{snow} is used. In this case, the argument \code{cl}
+  must either be a cluster object (see the documentation of
+  \code{clusterApply}) or an integer. If an integer, a cluster will be
+  set up via \code{makeCluster(c(rep("localhost", cl)), type = "SOCK")}
+  (and \code{stopCluster} is called when the function is exited). If
+  \code{snow} is chosen but not available or \code{cl} is not specified,
+  then \code{method} will be set to \code{loop} and a warning is issued.
+
 }
 \value{
   A list.
@@ -103,11 +105,14 @@ gridSearch(fun, levels, ..., lower, upper, npar = 1L, n = 5L,
 }
 
 \references{
-  Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Optimization in Finance}. Elsevier.
+  
+  Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical
+  Methods and Optimization in Finance}. Elsevier.
   \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
 
-  Schumann, E. (2011) Examples and Extensions for the \pkg{NMOF}
-  Package. \url{http://enricoschumann.net/NMOF.htm}
+  Schumann, E. (2013) The \pkg{NMOF} Manual.
+  \url{http://enricoschumann.net/NMOF.htm}
+
 }
 
 \author{
@@ -115,7 +120,9 @@ gridSearch(fun, levels, ..., lower, upper, npar = 1L, n = 5L,
 }
 
 \examples{
-testFun <- function(x) x[1L] + x[2L]^2
+testFun <- function(x)
+    x[1L] + x[2L]^2
+
 sol <- gridSearch(fun = testFun, levels = list(1:2, c(2, 3, 5)))
 sol$minfun
 sol$minlevels

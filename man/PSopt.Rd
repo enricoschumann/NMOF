@@ -60,8 +60,8 @@ PSopt(OF, algo = list(), ...)
   book. The respective \code{algo$loopFun} must then be set to
   \code{FALSE}.
 
-  The objective function \code{OF}, the repair function and and the
-  penalty function will be called as \code{fun(solution, \dots)}.
+  The objective function, the repair function and and the penalty
+  function will be called as \code{fun(solution, \dots)}.
 
   The list \code{algo} contains the following items:
   \describe{
@@ -179,14 +179,17 @@ PSopt(OF, algo = list(), ...)
 
 }
 \references{
-  Eberhart, R.C. and Kennedy, J. (1995) A New Optimizer using Particle Swarm theory. 
-  \emph{Proceedings of the Sixth International Symposium on Micromachine and Human Science}, pp. 39--43.
 
-  Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Optimization in Finance}. Elsevier. 
+  Eberhart, R.C. and Kennedy, J. (1995) A New Optimizer using Particle
+  Swarm theory.  \emph{Proceedings of the Sixth International Symposium
+  on Micromachine and Human Science}, pp. 39--43.
+
+  Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical
+  Methods and Optimization in Finance}. Elsevier.
   \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
 
-  Schumann, E. (2011) Examples and Extensions for the \pkg{NMOF}
-  Package. \url{http://enricoschumann.net/NMOF.htm}
+    Schumann, E. (2013) The \pkg{NMOF} Manual.
+  \url{http://enricoschumann.net/NMOF.htm}
 
 }
 \author{

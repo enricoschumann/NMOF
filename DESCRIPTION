@@ -9,12 +9,12 @@ Authors@R: person("Enrico", "Schumann",
                   email = "es@enricoschumann.net")
 Maintainer: Enrico Schumann <es@enricoschumann.net>
 Depends: R (>= 2.14)
-Suggests: MASS, parallel, quadprog, RUnit, snow
-Description: Functions, examples and data from the book 'Numerical
-    Methods and Optimization in Finance' by M. Gilli, D. Maringer and
-    E. Schumann. The package contains, in particular, implementations
-    of several optimisation heuristics (such as Differential Evolution,
-    Genetic Algorithms and Threshold Accepting).
+Suggests: MASS, RUnit, parallel, quadprog, snow
+Description: Functions, examples and data from the book 'Numerical Methods 
+    and Optimization in Finance' by M. Gilli, D. Maringer and E. Schumann. 
+    The package contains, in particular, implementations of several 
+    optimisation heuristics (such as Differential Evolution, Genetic Algorithms 
+    and Threshold Accepting).
 License: GPL-3
 URL: http://nmof.net, http://enricoschumann.net/NMOF.htm
 LazyLoad: yes

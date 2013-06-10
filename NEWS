@@ -1,8 +1,8 @@
 v0.28-0  (2013-06-08)
 
-  o 'multicore' was removed from the 'Suggested' packages. Package
-    'parallel' has already been used (if possible) since version
-    0.25-6; see the NEWS entry.
+  o 'multicore' was removed from the 'Suggested' packages. (Package
+    'parallel' had already been used -- if possible -- since version
+    0.25-6; see the NEWS entry.)
 
   o the package now 'Depends' on R version >= 2.14 (because of
     'parallel')

@@ -95,14 +95,14 @@ TAopt(OF, algo = list(), \dots)
     \item{\code{scale}}{The thresholds are multiplied by
     \code{scale}. Default is 1.}
 
-    \item{\code{stepUp}}{Defaults to \code{0}. If \code{stepUp > 0}, then
-      the thresholds are recycled, ie, \code{vT <- rep(vT,
-        algo$stepUp + 1)} (and the number of thresholds will be increased by
-      \code{algo$nT * algo$stepUp}). This option works for supplied as well as
-      computed thresholds. Practically, this will have the same effect as
-      restarting from a returned
-      solution. (In Simulated Annealing, this strategy
-      goes by the name of \sQuote{reheating}.)}
+    \item{\code{stepUp}}{Defaults to \code{0}. If an integer greater
+      than zero, then the thresholds are recycled, ie, \code{vT} is
+      replaced by \code{rep(vT, algo$stepUp + 1)} (and the number of
+      thresholds will be increased by \code{algo$nT} times
+      \code{algo$stepUp}). This option works for supplied as well as
+      computed thresholds. Practically, this will have the same effect
+      as restarting from a returned solution. (In Simulated Annealing,
+      this strategy goes by the name of \sQuote{reheating}.)}
 
     \item{\code{storeF}}{if \code{TRUE} (the default), the objective
       function values for every solution in every generation are stored
@@ -120,8 +120,9 @@ TAopt(OF, algo = list(), \dots)
       At the minimum, \code{algo} needs to contain an initial solution
       \code{x0} and a \code{neighbour} function.
 
-      The total number of iterations equals \code{algo$nT * (algo$stepUp+1) *
-      algo$nS} (plus possibly \code{algo$nD}).
+      The total number of iterations equals \code{algo$nT} times
+      \code{(algo$stepUp + 1)} times \code{algo$nS} (plus possibly
+      \code{algo$nD}).
 
   } % end details
   \value{

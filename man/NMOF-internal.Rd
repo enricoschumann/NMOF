@@ -37,7 +37,7 @@ due(D, tauD, tau, q)
   \code{n}) of uniform/Gaussian variates.
 
   \code{mcList} takes a list of named elements and \sQuote{merges} them with
-  the default settings of \code{mclapply} from package \pkg{multicore}.
+  the default settings of \code{mclapply} from package \pkg{parallel}.
 
   \code{repair1c} is described in the vignette on \sQuote{Repairing
     Solutions}.
@@ -50,9 +50,7 @@ due(D, tauD, tau, q)
   time-to-payment is greater than zero, but less than or equal to
   time-to-expiry.
 }
-
 \author{
   Enrico Schumann
 }
-
 \keyword{internal}

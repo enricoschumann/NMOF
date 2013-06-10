@@ -70,40 +70,76 @@ GAopt (OF, algo = list(), ...)
 
   The list \code{algo} contains the following items:
   \describe{
+
+
     \item{\code{nB}}{number of bits per solution. Must be specified.}
-    \item{\code{nP}}{population size. Defaults to 50. Using default settings may not be a good idea.}
-    \item{\code{crossover}}{The crossover method. Default is \dQuote{onePoint}; also possible is \dQuote{uniform}.}
-    \item{\code{prob}}{The probability for switching a single bit. Defaults to 0.01; typically a small number.}
-    \item{\code{pen}}{a penalty function. Default is \code{NULL} (no penalty).}
-    \item{\code{repair}}{a repair function. Default is \code{NULL} (no repairing).}
-    \item{\code{initP}}{optional: the initial population. A logical matrix of size \code{length(algo$nB)} times \code{algo$nP},
-      or a function that creates such a matrix. If a function, it must take no arguments. If \code{mode(mP)} is not \code{logical},
-      then \code{storage.mode(mP)} will be tried (and a warning will be issued).}
-    \item{\code{loopOF}}{logical. Should the \code{OF} be evaluated through a loop? Defaults to \code{TRUE}.}
-    \item{\code{loopPen}}{logical. Should the penalty function (if specified) be evaluated through a loop? Defaults to \code{TRUE}.}
-    \item{\code{loopRepair}}{logical. Should the repair function (if specified) be evaluated through a loop? Defaults to \code{TRUE}.}
+
+    \item{\code{nP}}{population size. Defaults to 50. Using default
+    settings may not be a good idea.}
+
+    \item{\code{crossover}}{The crossover method. Default is
+    \code{"onePoint"}; also possible is \dQuote{uniform}.}
+
+    \item{\code{prob}}{The probability for switching a single
+    bit. Defaults to 0.01; typically a small number.}
+
+    \item{\code{pen}}{a penalty function. Default is \code{NULL} (no
+    penalty).}
+
+    \item{\code{repair}}{a repair function. Default is \code{NULL} (no
+    repairing).}
+
+    \item{\code{initP}}{optional: the initial population. A logical
+      matrix of size \code{length(algo$nB)} times \code{algo$nP}, or a
+      function that creates such a matrix. If a function, it must take
+      no arguments. If \code{mode(mP)} is not \code{logical}, then
+      \code{storage.mode(mP)} will be tried (and a warning will be
+      issued).}
+
+    \item{\code{loopOF}}{logical. Should the \code{OF} be evaluated
+    through a loop? Defaults to \code{TRUE}.}
+
+    \item{\code{loopPen}}{logical. Should the penalty function (if
+    specified) be evaluated through a loop? Defaults to \code{TRUE}.}
+
+    \item{\code{loopRepair}}{logical. Should the repair function (if
+    specified) be evaluated through a loop? Defaults to \code{TRUE}.}
+
 
     \item{\code{methodOF}}{\code{loop} (the default), \code{vectorised},
       \code{snow} or \code{multicore}. Setting \code{vectorised} is
       equivalent to having \code{algo$loopOF} set to \code{FALSE} (and
-      \code{methodOF} overrides \code{loopOF}). \code{snow} and \code{multicore} use functions
-      \code{clusterApply} and \code{mclapply}, respectively. For \code{snow}, an object
+      \code{methodOF} overrides \code{loopOF}). \code{snow} and
+      \code{multicore} use functions \code{clusterApply} and
+      \code{mclapply}, respectively. For \code{snow}, an object
       \code{algo$cl} needs to be specified (see below). For
-      \code{multicore}, optional arguments can be passed
-      through \code{algo$mc.control} (see below).}
+      \code{multicore}, optional arguments can be passed through
+      \code{algo$mc.control} (see below).}
+
     \item{\code{cl}}{a cluster object or the number of cores. See
       documentation of package \code{snow}.}
-    \item{\code{mc.control}}{a list of named elements; optional settings for
-      \code{mclapply} (for instance, \code{list(mc.set.seed = FALSE)})}
-    \item{\code{printDetail}}{If \code{TRUE} (the default), information is printed.}
-    \item{\code{printBar}}{If \code{TRUE} (the default), a \code{txtProgressBar} is printed.}
-    \item{\code{storeF}}{If \code{TRUE} (the default), the
-      objective function values for every solution in every generation are stored and returned as matrix \code{Fmat}.}
-    \item{\code{storeSolutions}}{If \code{TRUE}, the solutions (ie, binary strings) in every generation are
-      stored and returned as a list \code{P} in list \code{xlist} (see
-      Value section below). To check, for instance, the solutions at the end of the
-      \code{i}th generation, retrieve \code{xlist[[c(1L, i)]]}. This will be
-      a matrix of size \code{algo$nB} times \code{algo$nP}.}
+
+    \item{\code{mc.control}}{a list of named elements; optional settings
+      for \code{mclapply} (for instance,
+
+      \code{list(mc.set.seed = FALSE)})}
+
+    \item{\code{printDetail}}{If \code{TRUE} (the default), information
+    is printed.}
+
+    \item{\code{printBar}}{If \code{TRUE} (the default), a
+    \code{txtProgressBar} is printed.}
+
+    \item{\code{storeF}}{If \code{TRUE} (the default), the objective
+      function values for every solution in every generation are stored
+      and returned as matrix \code{Fmat}.}
+
+    \item{\code{storeSolutions}}{If \code{TRUE}, the solutions (ie,
+      binary strings) in every generation are stored and returned as a
+      list \code{P} in list \code{xlist} (see Value section below). To
+      check, for instance, the solutions at the end of the \code{i}th
+      generation, retrieve \code{xlist[[c(1L, i)]]}. This will be a
+      matrix of size \code{algo$nB} times \code{algo$nP}.}
   }
 }
 \value{
@@ -117,16 +153,19 @@ GAopt (OF, algo = list(), ...)
     else \code{NA}}
   \item{xlist}{if \code{algo$storeSolutions} is \code{TRUE}, a list that
     contains a list \code{P} of matrices; else \code{NA}.}
-    \item{\code{initial.state}}{the value of \code{\link{.Random.seed}}
+  \item{\code{initial.state}}{the value of \code{\link{.Random.seed}}
     when the function was called.}
 
 }
 \references{
-  Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Optimization in Finance}. Elsevier.
+
+  Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical
+    Methods and Optimization in Finance}. Elsevier.
   \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
 
-  Schumann, E. (2011) Examples and Extensions for the \pkg{NMOF}
-  Package. \url{http://enricoschumann.net/NMOF.htm}
+  Schumann, E. (2013) The \pkg{NMOF} Manual.
+  \url{http://enricoschumann.net/NMOF.htm}
+
 }
 \author{
   Enrico Schumann

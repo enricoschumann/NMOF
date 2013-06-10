@@ -61,22 +61,21 @@ restartOpt(fun, n, OF, algo, ...,
   \code{algo$initP}.
 
   The argument \code{method} determines how \code{fun} is
-  evaluated. Default is \code{loop}. If \code{method == "multicore"},
-  function \code{mclapply} from package \pkg{multicore} is used. Further
+  evaluated. Default is \code{loop}. If \code{method} is "multicore",
+  function \code{mclapply} from package \pkg{parallel} is used. Further
   settings for \code{mclapply} can be passed through the list
-  \code{mc.control}. If \code{multicore} is chosen but the package is
-  not available, then \code{method} will be
-  set to \code{loop} and a warning is issued. If \code{method ==
-    "snow"}, function \code{clusterApply} from package \pkg{snow} is
-  used. In this case, the argument \code{cl} must either be a cluster
-  object (see the documentation of \code{clusterApply}) or an
-  integer. If an integer, a cluster will be set up via
-  \code{makeCluster(c(rep("localhost", cl)), type = "SOCK")}, and
-  \code{stopCluster} is called when the function is exited. If
-  \code{snow} is chosen but the package is not available or \code{cl} is
-  not specified, then \code{method} will be set to \code{loop} and a
-  warning is issued. In case that \code{cl} is an cluster object,
-  \code{stopCluster} will not be called automatically.
+  \code{mc.control}. If \code{multicore} is chosen but the functionality
+  is not available, then \code{method} will be set to \code{loop} and a
+  warning is issued. If \code{method == "snow"}, function
+  \code{clusterApply} from package \pkg{snow} is used. In this case, the
+  argument \code{cl} must either be a cluster object (see the
+  documentation of \code{clusterApply}) or an integer. If an integer, a
+  cluster will be set up via \code{makeCluster(c(rep("localhost", cl)),
+  type = "SOCK")}, and \code{stopCluster} is called when the function is
+  exited. If \code{snow} is chosen but the package is not available or
+  \code{cl} is not specified, then \code{method} will be set to
+  \code{loop} and a warning is issued. In case that \code{cl} is an
+  cluster object, \code{stopCluster} will not be called automatically.
 
 }
 \value{

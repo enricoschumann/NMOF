@@ -53,16 +53,16 @@ cfVG(om, S, tau, r, q, nu, theta, sigma)
   can be computed through put--call parity (see
   \code{\link{putCallParity}}).
 
-  If \code{implVol} is \code{TRUE}, the function will compute the implied
-  volatility necessary to obtain the same price under
+  If \code{implVol} is \code{TRUE}, the function will compute the
+  implied volatility necessary to obtain the same value under
   Black--Scholes--Merton. The implied volatility is computed with
-  \code{\link{uniroot}} from the \pkg{stats} package (the default search
+  \code{\link{uniroot}} from the \pkg{stats} package. The default search
   interval is \code{c(0.00001, 2)}; it can be changed through
-  \code{uniroot.control}).
+  \code{uniroot.control}.
 
-  The function always use variances as inputs (not volatilities).
+  The function uses variances as inputs (not volatilities).
 
-  The function is not vectorised (but see the NMOF manual for examples
+  The function is not vectorised (but see the NMOF Manual for examples
   of how to efficiently price more than one option at once).
 }
 \value{
@@ -77,6 +77,7 @@ cfVG(om, S, tau, r, q, nu, theta, sigma)
   0.26-3, the first element was named \code{callPrice}.
 }
 \references{
+
   Bates, David S. (1996) Jumps and Stochastic Volatility: Exchange Rate
   Processes Implicit in Deutsche Mark Options. \emph{Review of
     Financial Studies} \strong{9} (1), 69--107.
@@ -88,6 +89,10 @@ cfVG(om, S, tau, r, q, nu, theta, sigma)
   Heston, S.L. (1993) A Closed-Form Solution for Options with Stochastic
   Volatility with Applications to Bonds and Currency options.
   \emph{Review of Financial Studies} \strong{6} (2), 327--343.
+
+  Schumann, E. (2013) The \pkg{NMOF} Manual.
+  \url{http://enricoschumann.net/NMOF.htm}
+
 }
 \author{
   Enrico Schumann

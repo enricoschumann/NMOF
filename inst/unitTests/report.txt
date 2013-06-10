@@ -1,4 +1,4 @@
-RUNIT TEST PROTOCOL -- Fri Jun  7 20:54:28 2013 
+RUNIT TEST PROTOCOL -- Mon Jun 10 10:45:40 2013 
 *********************************************** 
 Number of test functions: 20 
 Number of errors: 0 
@@ -24,19 +24,19 @@ test.EuropeanCall: (6 checks) ... OK (0.01 seconds)
 test.EuropeanCallBE: (6 checks) ... OK (0.01 seconds)
 test.testFunctions: (6 checks) ... OK (0 seconds)
 test.vanillaOptionAmerican: (6 checks) ... OK (0.02 seconds)
-test.vanillaOptionEuropean: (3486 checks) ... OK (12.52 seconds)
+test.vanillaOptionEuropean: (3486 checks) ... OK (12.31 seconds)
 test.vanillaOptionImpliedVol: (12 checks) ... OK (0.17 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTests2.R 
 test.bracketing: (13 checks) ... OK (0 seconds)
 test.gridSearch: (18 checks) ... OK (0.17 seconds)
-test.xwGauss: (4 checks) ... OK (0.02 seconds)
+test.xwGauss: (4 checks) ... OK (0.03 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestscallCF.R 
-test.callCF: (22 checks) ... OK (0.02 seconds)
+test.callCF: (22 checks) ... OK (0.01 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsDEopt.R 
-test.DEopt: (23 checks) ... OK (3.17 seconds)
+test.DEopt: (23 checks) ... OK (3.08 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsGAopt.R 
 test.GAopt: (22 checks) ... OK (0.21 seconds)
@@ -54,10 +54,10 @@ Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsPCparity.R
 test.putCallParity: (10 checks) ... OK (0 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsPSopt.R 
-test.PSopt: (14 checks) ... OK (3.91 seconds)
+test.PSopt: (14 checks) ... OK (3.73 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsRestartOpt.R 
 test.restartOpt: (1 checks) ... OK (0.16 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsTAopt.R 
-test.TAopt: (13 checks) ... OK (0.38 seconds)
+test.TAopt: (13 checks) ... OK (0.36 seconds)

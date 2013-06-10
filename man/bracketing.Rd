@@ -40,7 +40,7 @@ bracketing(fun, interval, ...,
   \item{mc.control}{
     a list containing settings that will be passed to \code{mclapply} if
     \code{method} is \code{multicore}. Must be a list of named
-    elements. See the documentation of \code{mclapply} in package \pkg{multicore}.
+    elements. See the documentation of \code{mclapply} in package \pkg{parallel}.
   }
   \item{cl}{default is \code{NULL}. If \code{method} is \code{snow}, this must be a
     cluster object or an integer (the number of cores to be used). See the
@@ -57,13 +57,13 @@ bracketing(fun, interval, ...,
   The argument \code{method} determines how \code{fun} is
   evaluated. Default is \code{loop}. If \code{method == "vectorised"},
   \code{fun} must be written such that it can be evaluated for a vector
-  \code{x} (see Examples). If \code{method == "multicore"}, function
-  \code{mclapply} from package \pkg{multicore} is used. Further settings
-  for \code{mclapply} can be passed through the list
-  \code{mc.control}. If \code{multicore} is chosen but the package is
-  not available (eg, currently on Windows), then \code{method} will be
-  set to \code{loop} and a warning is issued. If \code{method ==
-    "snow"}, function \code{clusterApply} from package \pkg{snow} is
+  \code{x} (see Examples). If \code{method} is \code{multicore},
+  function \code{mclapply} from package \pkg{parallel} is used. Further
+  settings for \code{mclapply} can be passed through the list
+  \code{mc.control}. If \code{multicore} is chosen but the functionality
+  is not available (eg, currently on Windows), then \code{method} will
+  be set to \code{loop} and a warning is issued. If \code{method} is
+  \code{snow}, function \code{clusterApply} from package \pkg{snow} is
   used. In this case, the argument \code{cl} must either be a cluster
   object (see the documentation of \code{clusterApply}) or an
   integer. If an integer, a cluster will be set up via
@@ -73,6 +73,7 @@ bracketing(fun, interval, ...,
   not specified, then \code{method} will be set to \code{loop} and a
   warning is issued. In case that \code{cl} is a cluster object,
   \code{stopCluster} will not be called automatically.
+
 }
 \value{
   a numeric matrix with two columns. Each row contains one interval
@@ -84,7 +85,7 @@ bracketing(fun, interval, ...,
     Methods and Optimization in Finance}. Elsevier.
   \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
 
-  Schumann, E. (2012) The \pkg{NMOF} Manual.
+  Schumann, E. (2013) The \pkg{NMOF} Manual.
   \url{http://enricoschumann.net/NMOF.htm}
 
 }
