@@ -1,3 +1,7 @@
+2013-06-10  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Suggests): removed snow
+
 2013-06-06  Enrico Schumann  <es@enricoschumann.net>
 
 	* R/internals.R (mcList): updated mcList -- added
