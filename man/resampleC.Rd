@@ -1,7 +1,7 @@
 \name{resampleC}
 \alias{resampleC}
 \title{
-  Resample with rank correlation
+  Resample with Specified Rank Correlation
 }
 \description{
   Resample with replacement from a number of vectors; the sample will
@@ -39,8 +39,11 @@ resampleC(..., size, cormat)
   through \code{\dots}.
 }
 \references{
-  Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Optimization in Finance}. Elsevier.
+
+  Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical
+  Methods and Optimization in Finance}. Elsevier.
   \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
+
 }
 \author{
   Enrico Schumann
