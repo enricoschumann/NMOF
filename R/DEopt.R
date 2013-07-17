@@ -24,7 +24,6 @@ DEopt <- function(OF, algo = list(), ...) {
                 inherits = FALSE))
         state <- NA else state <- .Random.seed
 
-    ## check min/max
     vmax <- as.vector(algoD$max)
     vmin <- as.vector(algoD$min)
     mm <- algoD$minmaxConstr
@@ -41,10 +40,8 @@ DEopt <- function(OF, algo = list(), ...) {
     if (any(vmin > vmax))
         stop("(at least) some 'max' < 'min'")
 
-    ## get number of decision variables
-    d <- length(vmax)
+    d <- length(vmax)  ##  number of decision variables
 
-    ## check other elements
     if ( algoD$CR > 1 || algoD$CR < 0 )
         stop("'CR' must be between 0 and 1")
     if ( any(algoD$F > 1) || any(algoD$F < 0) )
@@ -61,13 +58,15 @@ DEopt <- function(OF, algo = list(), ...) {
     if (printBar && printDetail > 1)
         printBar <- FALSE
 
-    ## check integers
     nG <- makeInteger(algoD$nG, "'algoD$nG'", 1L)
     nP <- makeInteger(algoD$nP, "'algoD$nP'", 1L)
 
-    OF1 <- function(x) OF(x, ...)
-    Pe1 <- function(x) algoD$pen(x, ...)
-    Re1 <- function(x) algoD$repair(x, ...)
+    OF1 <- function(x)
+        OF(x, ...)
+    Pe1 <- function(x)
+        algoD$pen(x, ...)
+    Re1 <- function(x)
+        algoD$repair(x, ...)
 
     snP <- seq_len(nP)
     snP1 <- c(nP, snP[-nP])
@@ -88,7 +87,10 @@ DEopt <- function(OF, algo = list(), ...) {
             stop("supplied population has wrong dimension")
     }
     if (algoD$storeSolutions)
-        xlist <- list(P = vector("list", length = nG), initP = mP) else xlist <- NA
+        xlist <- list(P = vector("list", length = nG), initP = mP)
+    else
+        xlist <- NA
+
     ## evaluate initial population
     ## 1) repair
     if (mm)
@@ -149,19 +151,22 @@ DEopt <- function(OF, algo = list(), ...) {
             mP <- repair1c(mP, vmax, vmin)
         if (!is.null(algoD$repair)) {
             if (algoD$loopRepair) {
-                for (s in snP) mPv[ ,s] <- Re1(mPv[ ,s])
+                for (s in snP)
+                    mPv[ ,s] <- Re1(mPv[ ,s])
             } else {
                 mPv <- Re1(mPv)
             }
         }
         if (algoD$loopOF) {
-            for (s in snP) vFv[s] <- OF1(mPv[ ,s])
+            for (s in snP)
+                vFv[s] <- OF1(mPv[ ,s])
         } else {
             vFv <- OF1(mPv)
         }
         if (!is.null(algoD$pen)) {
             if (algoD$loopPen){
-                for (s in snP) vPv[s] <- Pe1(mPv[ ,s])
+                for (s in snP)
+                    vPv[s] <- Pe1(mPv[ ,s])
             } else {
                 vPv <- Pe1(mPv)
             }
