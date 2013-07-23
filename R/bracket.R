@@ -20,7 +20,7 @@ bracketing <- function(fun, interval, ...,
             warning("package 'parallel' not available: use method 'loop'")
         }
     } else if (method == "snow") {
-        if (!suppressWarnings(require("snow", quietly = TRUE))) {
+        if (!suppressWarnings(require("parallel", quietly = TRUE))) {
             method <- "loop"
             warning("package 'snow' not available: use method 'loop'")
         } else if (is.null(cl)) {

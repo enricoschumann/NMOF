@@ -35,7 +35,7 @@ GAopt <- function (OF, algo = list(), ...) {
     cl <- algoD$cl
 
     if (algoD$methodOF == "snow") {
-        if (!suppressWarnings(require("snow", quietly = TRUE))) {
+        if (!suppressWarnings(require("parallel", quietly = TRUE))) {
             method <- "loop"
             warning("package 'snow' not available")
         } else if (is.null(cl)) {

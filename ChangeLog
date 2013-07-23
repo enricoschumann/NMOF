@@ -1,3 +1,13 @@
+2013-07-22  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/callCF.R (callCF): changed upper integration limits to 'Inf'
+
+	* R/callHestoncf.R (cfHeston): changed upper integration limits to
+	'Inf'
+
+	* inst/unitTests/unitTestscallCF.R (test.callCF): removed
+	'vanillaOptionEuropean' definition 
+
 2013-06-10  Enrico Schumann  <es@enricoschumann.net>
 
 	* DESCRIPTION (Suggests): removed snow

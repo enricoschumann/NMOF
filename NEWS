@@ -1,3 +1,16 @@
+v0.28-1  (2013-07-22)
+
+  o 'snow' was removed from 'Suggested'.  Whenever distribution of
+    computations is done via method 'snow', package 'parallel' is now
+    used.  Note that this is currently experimental and little-tested;
+    feedback is thus much appreciated.
+
+  o in 'callHestoncf' and 'callCF', the upper integration limit is now
+    'Inf' (suggested by Wolfgang H\"ormann).  This may make it easier
+    to compare different numerical implementations (but accuracy with
+    the old cutoff value was sufficient: numeric differences in prices
+    are of the order of a few hundredths of one cent).
+
 v0.28-0  (2013-06-08)
 
   o 'multicore' was removed from the 'Suggested' packages. (Package

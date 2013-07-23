@@ -151,7 +151,7 @@ The problem can actually be solved quadratic programming; we use the
 quadprog package \citep{quadprog2007}.
 
 <<>>=
-if (require(quadprog, quietly = TRUE)) {
+if (require("quadprog", quietly = TRUE)) {
     covMatrix <- crossprod(fundData)
     A <- rep(1, na); a <- 1
     B <- rbind(-diag(na), diag(na))
@@ -236,7 +236,7 @@ qr(cov(fundData))$rank
 Checking the weight of the last asset (which was zero), we know that
 the solution to our model must be unchanged, too.
 <<>>=
-if (require(quadprog, quietly = TRUE))
+if (require("quadprog", quietly = TRUE))
     wqp[200L]
 @
 We redo our example.
@@ -251,7 +251,7 @@ data <- list(R = fundData, na = na, ns = ns,
 @
 But a number of QP solvers have problems with such cases.
 <<>>=
-if (require(quadprog, quietly = TRUE)) {
+if (require("quadprog", quietly = TRUE)) {
     covMatrix <- crossprod(fundData)
     A <- rep(1, na); a <- 1
     B <- rbind(-diag(na), diag(na))

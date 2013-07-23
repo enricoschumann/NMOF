@@ -11,9 +11,9 @@ callCF <- function(cf, S, X, tau, r, q = 0, ..., implVol = FALSE,
     P2 <- function(om,S,X,tau,r,q, ...)
         Re(exp(-1i * log(X) * om) * cf(om, S, tau, r, q, ...) /
                 (1i * om))
-    vP1 <- 0.5 + 1/pi * integrate(P1, lower = 1e-8, upper = 200,
+    vP1 <- 0.5 + 1/pi * integrate(P1, lower = 1e-8, upper = Inf,
                                   S, X, tau, r, q, ...)$value
-    vP2 <- 0.5 + 1/pi * integrate(P2, lower = 1e-8, upper = 200,
+    vP2 <- 0.5 + 1/pi * integrate(P2, lower = 1e-8, upper = Inf,
                                   S, X, tau, r, q, ...)$value
     result <- exp(-q * tau) * S * vP1 - exp(-r * tau) * X * vP2;
 

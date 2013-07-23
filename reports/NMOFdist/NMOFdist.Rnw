@@ -2,7 +2,7 @@
 
 \title{Distributed computations with the NMOF package}
 \author{Enrico Schumann\\\footnotesize\href{mailto:es@enricoschumann.net}{\texttt{es@enricoschumann.net}}}
-\date{2013-06-06}
+\date{2013-07-22}
 
 % *LANGUAGE/ENCODING*
 \usepackage[british]{babel}
@@ -124,7 +124,7 @@ package \texttt{snow} explicitly.
 <<>>=
 require("rbenchmark")
 require("parallel")
-require("snow")
+##require("snow")
 @
 
 
@@ -595,6 +595,7 @@ package \texttt{rsprng}.
 
 \noindent \texttt{TODO: this package is not installed on this machine}
 <<eval=false>>=
+require("snow")
 cl <- makeCluster(c(rep("localhost", nC)), type = "SOCK")
 clusterSetupSPRNG(cl, seed = rep.int(12345, nC))
 sol3 <- gridSearch(fun = testFun,

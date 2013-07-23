@@ -18,9 +18,9 @@ restartOpt <- function(fun, n, OF, algo, ...,
             warning("package 'parallel' not available: use method 'loop'")
         }
     } else if (method == "snow") {
-        if (!suppressWarnings(require("snow", quietly = TRUE))) {
+        if (!suppressWarnings(require("parallel", quietly = TRUE))) {
             method <- "loop"
-            warning("package 'snow' not available: use method 'loop'")
+            warning("package 'parallel' not available: use method 'loop'")
         } else if (is.null(cl)) {
             method <- "loop"
             warning("no cluster 'cl' passed for method 'snow': use method 'loop'")

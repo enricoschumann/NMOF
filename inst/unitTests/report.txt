@@ -1,12 +1,14 @@
-RUNIT TEST PROTOCOL -- Mon Jun 10 11:20:40 2013 
+RUNIT TEST PROTOCOL -- Mon Jul 22 17:28:08 2013 
 *********************************************** 
 Number of test functions: 20 
 Number of errors: 0 
-Number of failures: 0 
+Number of failures: 1 
 
  
 1 Test Suite : 
-NMOF - 20 test functions, 0 errors, 0 failures
+NMOF - 20 test functions, 0 errors, 1 failure
+FAILURE in test.vanillaOptionEuropean: Error in checkEqualsNumeric(D1, D2, tolerance = 0.001) : 
+  Mean relative difference: 0.1991392
 
 
 
@@ -24,7 +26,9 @@ test.EuropeanCall: (6 checks) ... OK (0.01 seconds)
 test.EuropeanCallBE: (6 checks) ... OK (0.01 seconds)
 test.testFunctions: (6 checks) ... OK (0 seconds)
 test.vanillaOptionAmerican: (6 checks) ... OK (0.02 seconds)
-test.vanillaOptionEuropean: (3486 checks) ... OK (12.35 seconds)
+test.vanillaOptionEuropean: FAILURE !! (check number 382)
+Error in checkEqualsNumeric(D1, D2, tolerance = 0.001) : 
+  Mean relative difference: 0.1991392
 test.vanillaOptionImpliedVol: (12 checks) ... OK (0.17 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTests2.R 
@@ -33,19 +37,19 @@ test.gridSearch: (18 checks) ... OK (0.16 seconds)
 test.xwGauss: (4 checks) ... OK (0 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestscallCF.R 
-test.callCF: (22 checks) ... OK (0.01 seconds)
+test.callCF: (22 checks) ... OK (0.02 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsDEopt.R 
-test.DEopt: (23 checks) ... OK (3.02 seconds)
+test.DEopt: (23 checks) ... OK (3 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsGAopt.R 
-test.GAopt: (22 checks) ... OK (0.19 seconds)
+test.GAopt: (22 checks) ... OK (0.2 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsInternals.R 
 test.checkList: (10 checks) ... OK (0.01 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsLSopt.R 
-test.LSopt: (7 checks) ... OK (0.29 seconds)
+test.LSopt: (7 checks) ... OK (0.27 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsMA.R 
 test.MA: (3 checks) ... OK (0 seconds)
@@ -60,4 +64,4 @@ Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsRestartOpt.R
 test.restartOpt: (1 checks) ... OK (0.15 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsTAopt.R 
-test.TAopt: (13 checks) ... OK (0.35 seconds)
+test.TAopt: (13 checks) ... OK (0.36 seconds)
