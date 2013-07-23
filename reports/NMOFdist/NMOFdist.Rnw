@@ -124,7 +124,6 @@ package \texttt{snow} explicitly.
 <<>>=
 require("rbenchmark")
 require("parallel")
-##require("snow")
 @
 
 
