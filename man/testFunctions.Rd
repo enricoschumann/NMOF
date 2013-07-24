@@ -7,13 +7,13 @@
 \alias{tfRosenbrock}
 \alias{tfSchwefel}
 \alias{tfTrefethen}
-
 \concept{Test functions for global optimisation}
 \title{
   Classical Test Functions for Unconstrained Optimisation
 }
 \description{
-  A number of functions that have been suggested in the literature as benchmarks for unconstrained optimisation.
+  A number of functions that have been suggested in the literature as
+  benchmarks for unconstrained optimisation.
 }
 \usage{
 tfAckley(x)
@@ -30,7 +30,9 @@ tfTrefethen(x)
   }
 }
 \details{
-  All functions take as argument only one variable, a numeric vector \code{x} whose length determines the dimensionality of the problem.
+
+  All functions take as argument only one variable, a numeric vector
+  \code{x} whose length determines the dimensionality of the problem.
 
   The \emph{Ackley} function is implemented as
   \deqn{\exp(1) + 20 -20 \exp{\left(-0.2 \sqrt{\frac{1}{n}\sum_{i=1}^n x_i^2}\right)} - \exp{\left(\frac{1}{n}\sum_{i=1}^n  \cos(2 \pi x_i)\right)}\,.}{exp(1) + 20 - 20 * exp(-0.2 * sqrt(sum(x^2)/n)) - exp(sum(cos(2 * pi * x))/n)}
@@ -53,7 +55,8 @@ tfTrefethen(x)
   The minimum function value is -3.3069; reached at \code{c(-0.0244, 0.2106)}.
 }
 \value{
-  The objective function evaluated at \code{x} (a numeric vector of length one).
+  The objective function evaluated at \code{x} (a numeric vector of
+  length one).
 }
 \references{
 
@@ -68,14 +71,13 @@ tfTrefethen(x)
 }
 \section{Warning}{
 
-  These test functions are \emph{artificial} problems. It is typically
-  not too helpful to fine-tune a method on such functions. (That would
-  be like memorising all the answers to a particular multiple-choice
-  test.) The functions' main purpose is checking the numerical
-  implementation of algorithms.
+  These test functions represent \emph{artificial} problems.  It is
+  practically not too helpful to fine-tune a method on such
+  functions. (That would be like memorising all the answers to a
+  particular multiple-choice test.)  The functions' main purpose is
+  checking the numerical implementation of algorithms.
 
 }
-
 
 \seealso{
   \code{\link{DEopt}}, \code{\link{PSopt}}
