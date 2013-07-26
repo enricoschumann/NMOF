@@ -104,28 +104,34 @@ the \pkg{base} package. If limits are specified, then both \code{xmin}
 and \code{xmax} must be set; if labels are used, then both \code{labels}
 and \code{at} must be specified.
 
-The vignette \code{qTableEx} shows some examples.
+To use the function in a vignette, use \code{\link{cat}(tTable(X))} (and
+\code{results=tex} in the code chunk options).  The vignette
+\code{qTableEx} shows some examples.
+
 }
 \value{
-A matrix of mode character. If \code{filename} is specified then
-\code{qTable} will have the side effect of writing a textfile with a
-LaTeX tabular.
+
+  A matrix of mode character. If \code{filename} is specified then
+  \code{qTable} will have the side effect of writing a textfile with a
+  LaTeX tabular.
+
 }
 \references{
 
   Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical
-Methods and Optimization in Finance}. Elsevier.
-\url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
+  Methods and Optimization in Finance}. Elsevier.
+  \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
 
-Tufte, E. (2001) \emph{The Visual Display of Quantitative
-Information}. 2nd edition, Graphics Press.
+  Tufte, E. (2001) \emph{The Visual Display of Quantitative
+  Information}. 2nd edition, Graphics Press.
 
 }
 \author{
   Enrico Schumann
 }
 \note{
-\code{qTable} returns a raw draft of a table for LaTeX. Please, spend some time on making it pretty.
+  \code{qTable} returns a raw draft of a table for LaTeX. Please, spend
+  some time on making it pretty.
 }
 
 \examples{
