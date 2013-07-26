@@ -1,4 +1,4 @@
-RUNIT TEST PROTOCOL -- Mon Jul 22 17:28:08 2013 
+RUNIT TEST PROTOCOL -- Fri Jul 26 15:00:25 2013 
 *********************************************** 
 Number of test functions: 20 
 Number of errors: 0 
@@ -40,13 +40,13 @@ Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestscallCF.R
 test.callCF: (22 checks) ... OK (0.02 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsDEopt.R 
-test.DEopt: (23 checks) ... OK (3 seconds)
+test.DEopt: (23 checks) ... OK (3.04 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsGAopt.R 
 test.GAopt: (22 checks) ... OK (0.2 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsInternals.R 
-test.checkList: (10 checks) ... OK (0.01 seconds)
+test.checkList: (10 checks) ... OK (0 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsLSopt.R 
 test.LSopt: (7 checks) ... OK (0.27 seconds)
@@ -58,7 +58,7 @@ Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsPCparity.R
 test.putCallParity: (10 checks) ... OK (0 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsPSopt.R 
-test.PSopt: (14 checks) ... OK (3.77 seconds)
+test.PSopt: (14 checks) ... OK (3.84 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsRestartOpt.R 
 test.restartOpt: (1 checks) ... OK (0.15 seconds)
