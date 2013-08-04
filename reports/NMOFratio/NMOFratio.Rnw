@@ -145,7 +145,7 @@ resample <- function(x, ...)
 Data <- list(R = rets,
              na = dim(rets)[2L],
              ns = dim(rets)[1L],
-             eps = 2/100,
+             eps = 5/100,
              wsup = 0.1,
              winf = 0,
              alpha = 0.05,
@@ -166,40 +166,69 @@ data.frame(solnp = OF(sol.solnp, Data),
            snopt = OF(sol.snopt, Data))
 @
 
-Run \texttt{TAopt} with an random initial solution.
+Run \texttt{TAopt} with an random initial solution and only
+1000~iterations.
 <<>>=
-ia <- sample.int(Data$na, sample(10:Data$na, 1))
-w0 <- numeric(Data$na)
-w0[ia] <- 1/length(ia)
-sol0 <- list(w = w0, Rw = Data$R %*% w0)
+fun.maker <- function(Data)
+    function() {
+        ia <- sample.int(Data$na, sample(10:Data$na, 1))
+        w0 <- numeric(Data$na)
+        w0[ia] <- 1/length(ia)
+        list(w = w0, Rw = Data$R %*% w0)        
+    }
 
-algo <- list(x0 = sol0, neighbour = neighbourU,
-             nS = 10000L, nT = 10L, nD = 2000L,
+f0 <- fun.maker(Data)
+algo <- list(x0 = f0, neighbour = neighbourU,
+             nS = 1L, nT = 1000L, nD = 2000L,
              q = 0.99,
-             printBar = FALSE, printDetail = 10000L)
+             printBar = FALSE, printDetail = 2000L)
 res <- TAopt(OF,algo,Data)
 res$OFvalue
 @
 
-\textsc{ta} needs quite some time, but it reaches a lower minimum than
-the benchmark.
 
 
-A path of TA.
+A path of \textsc{ta}: the current solution in grey, the best-so-far
+solution in black.
 <<fig=true>>=
-plot(cummin(res$Fmat[ ,2L]), type = 'l')
+plot(cummin(res$Fmat[ ,2L]), type = "l", 
+     ylab = "OF value", xlab = "iteration")
 lines(res$Fmat[ ,1L], type = 'l', col = grey(.7))
+abline(h=c(OF(sol.solnp, Data), OF(sol.snopt, Data)), col = "blue")
 @ 
 
-<<>>=
-algo$printDetail <- algo$printBar <- FALSE
-restarts <- restartOpt(TAopt, n = 50, OF=OF, algo=algo, Data = Data, 
-                       method = "snow", cl = 4)
-@ 
-
-Results of restarts
+Let us run a number of restarts.
 <<fig=true>>=
-plot(ecdf(sapply(restarts, `[[`, "OFvalue")), main = "")
+algo$printDetail <- algo$printBar <- FALSE
+algo$nT <- 1000L
+restarts <- restartOpt(TAopt, n = 20, OF=OF, algo=algo, Data = Data, 
+                       method = "snow", cl = 4)
+plot(ecdf(sapply(restarts, `[[`, "OFvalue")), main = "",
+     xlim = c(-1.01,-1))
+
+abline(v=c(OF(sol.solnp, Data), OF(sol.snopt, Data)))
+@ 
+
+More iterations.
+<<fig=true>>=
+algo$printDetail <- algo$printBar <- FALSE
+algo$nT <- 10000L
+restarts <- restartOpt(TAopt, n = 20, OF=OF, algo=algo, Data = Data, 
+                       method = "snow", cl = 4)
+plot(ecdf(sapply(restarts, `[[`, "OFvalue")), main = "",
+     xlim = c(-1.01,-1))
+abline(v=c(OF(sol.solnp, Data), OF(sol.snopt, Data)))
+@ 
+
+More iterations.
+<<fig=true>>=
+algo$printDetail <- algo$printBar <- FALSE
+algo$nT <- 50000L
+restarts <- restartOpt(TAopt, n = 20, OF=OF, algo=algo, Data = Data, 
+                       method = "snow", cl = 4)
+plot(ecdf(sapply(restarts, `[[`, "OFvalue")), main = "",
+     xlim = c(-1.01,-1))
+abline(v=c(OF(sol.solnp, Data), OF(sol.snopt, Data)))
 @ 
 
 \newpage
