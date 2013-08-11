@@ -166,8 +166,8 @@ data.frame(solnp = OF(sol.solnp, Data),
            snopt = OF(sol.snopt, Data))
 @
 
-Run \texttt{TAopt} with an random initial solution and only
-1000~iterations.
+Run \texttt{TAopt} with an random initial solution and 2000~iterations
+(which are not many).
 <<>>=
 fun.maker <- function(Data)
     function() {
@@ -179,56 +179,78 @@ fun.maker <- function(Data)
 
 f0 <- fun.maker(Data)
 algo <- list(x0 = f0, neighbour = neighbourU,
-             nS = 1L, nT = 1000L, nD = 2000L,
+             nS = 1L, nT = 2000L, nD = 1000L,
              q = 0.99,
-             printBar = FALSE, printDetail = 2000L)
+             printBar = FALSE, printDetail = 1000L)
 res <- TAopt(OF,algo,Data)
 res$OFvalue
 @
 
 
 
-A path of \textsc{ta}: the current solution in grey, the best-so-far
-solution in black.
-<<fig=true>>=
+\noindent A path of \textsc{ta}: the current solution in grey, the best-so-far
+solution in black.  The blue horizontal lines represent the benchmark
+solutions \texttt{solnp} and \texttt{snopt}.
+
+<<fig = TRUE, width = 5, height = 3>>=
+par(bty = "n", mar = c(4, 4, 1, 1),
+    tck = 0.01, las = 1, ps = 9, mgp = c(1.8, 0.5, 0),
+    lab = c(3,3,7))
 plot(cummin(res$Fmat[ ,2L]), type = "l", 
      ylab = "OF value", xlab = "iteration")
 lines(res$Fmat[ ,1L], type = 'l', col = grey(.7))
 abline(h=c(OF(sol.solnp, Data), OF(sol.snopt, Data)), col = "blue")
 @ 
 
-Let us run a number of restarts.
-<<fig=true>>=
+\noindent We do 20~restarts.  Since these runs do not depend on each other, we
+can easily distribute them.  The following plot shows the empirical
+distribution function of the resulting objective function values.  We
+add, again in blue, the benchmark solutions.
+<<fig = TRUE, width = 5, height = 3>>=
 algo$printDetail <- algo$printBar <- FALSE
-algo$nT <- 1000L
-restarts <- restartOpt(TAopt, n = 20, OF=OF, algo=algo, Data = Data, 
+algo$nT <- 2000L
+restarts <- restartOpt(TAopt, n = 20, OF = OF, algo = algo, Data = Data, 
                        method = "snow", cl = 4)
+
+par(bty = "n", mar = c(4, 4, 1, 1),
+    tck = 0.01, las = 1, ps = 9, mgp = c(1.8, 0.5, 0),
+    lab = c(3,3,7))
 plot(ecdf(sapply(restarts, `[[`, "OFvalue")), main = "",
      xlim = c(-1.01,-1))
-
-abline(v=c(OF(sol.solnp, Data), OF(sol.snopt, Data)))
+abline(v=c(OF(sol.solnp, Data), OF(sol.snopt, Data)), col = "blue")
 @ 
 
-More iterations.
-<<fig=true>>=
+\noindent And another 20~restarts, this time with 10000~iterations.
+<<fig = TRUE, width = 5, height = 3>>=
 algo$printDetail <- algo$printBar <- FALSE
 algo$nT <- 10000L
 restarts <- restartOpt(TAopt, n = 20, OF=OF, algo=algo, Data = Data, 
                        method = "snow", cl = 4)
+
+par(bty = "n", mar = c(4, 4, 1, 1),
+    tck = 0.01, las = 1, ps = 9, mgp = c(1.8, 0.5, 0),
+    lab = c(3,3,7))
 plot(ecdf(sapply(restarts, `[[`, "OFvalue")), main = "",
      xlim = c(-1.01,-1))
-abline(v=c(OF(sol.solnp, Data), OF(sol.snopt, Data)))
+abline(v=c(OF(sol.solnp, Data), OF(sol.snopt, Data)), col = "blue")
 @ 
 
-More iterations.
-<<fig=true>>=
+\noindent Finally, we use 50000~iterations.  We might increase the
+number of iterations further, but a multiple-restarts strategy would
+seem more efficient (in particular because the restarts can be
+distributed; see \citealp{Gilli2009h}, for a discussion).
+<<fig = TRUE, width = 5, height = 3>>=
 algo$printDetail <- algo$printBar <- FALSE
 algo$nT <- 50000L
 restarts <- restartOpt(TAopt, n = 20, OF=OF, algo=algo, Data = Data, 
                        method = "snow", cl = 4)
+
+par(bty = "n", mar = c(4, 4, 1, 1),
+    tck = 0.01, las = 1, ps = 9, mgp = c(1.8, 0.5, 0),
+    lab = c(3,3,7))
 plot(ecdf(sapply(restarts, `[[`, "OFvalue")), main = "",
      xlim = c(-1.01,-1))
-abline(v=c(OF(sol.solnp, Data), OF(sol.snopt, Data)))
+abline(v=c(OF(sol.solnp, Data), OF(sol.snopt, Data)), col = "blue")
 @ 
 
 \newpage
@@ -258,6 +280,8 @@ to subscribe, go to\medskip
 <<results=tex>>=
 toLatex(sessionInfo())
 @
+
+\nocite{Gilli2011b}
 
 \bibliographystyle{plainnat}
 \bibliography{Library}
