@@ -1,14 +1,16 @@
-RUNIT TEST PROTOCOL -- Fri Aug  2 11:52:37 2013 
+RUNIT TEST PROTOCOL -- Tue Sep  3 08:01:53 2013 
 *********************************************** 
 Number of test functions: 20 
 Number of errors: 0 
-Number of failures: 1 
+Number of failures: 2 
 
  
 1 Test Suite : 
-NMOF - 20 test functions, 0 errors, 1 failure
+NMOF - 20 test functions, 0 errors, 2 failures
 FAILURE in test.vanillaOptionEuropean: Error in checkEqualsNumeric(D1, D2, tolerance = 0.001) : 
   Mean relative difference: 0.1991392
+FAILURE in test.DEopt: Error in checkEquals(round(DEopt(OF = trefethen2, algo, 2)$OFvalue, 2),  : 
+  Mean relative difference: 0.08264463
 
 
 
@@ -33,14 +35,16 @@ test.vanillaOptionImpliedVol: (12 checks) ... OK (0.18 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTests2.R 
 test.bracketing: (13 checks) ... OK (0 seconds)
-test.gridSearch: (18 checks) ... OK (0.17 seconds)
-test.xwGauss: (4 checks) ... OK (0.07 seconds)
+test.gridSearch: (18 checks) ... OK (0.16 seconds)
+test.xwGauss: (4 checks) ... OK (0 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestscallCF.R 
 test.callCF: (22 checks) ... OK (0.02 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsDEopt.R 
-test.DEopt: (23 checks) ... OK (3.08 seconds)
+test.DEopt: FAILURE !! (check number 6)
+Error in checkEquals(round(DEopt(OF = trefethen2, algo, 2)$OFvalue, 2),  : 
+  Mean relative difference: 0.08264463
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsGAopt.R 
 test.GAopt: (22 checks) ... OK (0.21 seconds)
@@ -49,7 +53,7 @@ Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsInternals.R
 test.checkList: (10 checks) ... OK (0.01 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsLSopt.R 
-test.LSopt: (7 checks) ... OK (0.27 seconds)
+test.LSopt: (7 checks) ... OK (0.3 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsMA.R 
 test.MA: (3 checks) ... OK (0 seconds)
@@ -58,10 +62,10 @@ Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsPCparity.R
 test.putCallParity: (10 checks) ... OK (0 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsPSopt.R 
-test.PSopt: (14 checks) ... OK (3.86 seconds)
+test.PSopt: (14 checks) ... OK (3.88 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsRestartOpt.R 
-test.restartOpt: (1 checks) ... OK (0.16 seconds)
+test.restartOpt: (1 checks) ... OK (0.18 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsTAopt.R 
-test.TAopt: (13 checks) ... OK (0.36 seconds)
+test.TAopt: (13 checks) ... OK (0.37 seconds)
