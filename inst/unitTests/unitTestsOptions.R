@@ -241,7 +241,6 @@ test.vanillaOptionEuropean <- function() {
                 checkEqualsNumeric(D1, D2, tolerance = 1e-3)
             }    
 }
-##test.vanillaOptionEuropean()
 
 
 ## AMERICAN BSM

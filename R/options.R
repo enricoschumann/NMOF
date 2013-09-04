@@ -50,9 +50,9 @@ vanillaOptionEuropean <- function(S, X, tau, r, q = 0, v,
         P2 <- function(om, S, X, tau, r, q, ...)
             Re(exp(-(0+1i) * log(X) * om) *
                cf(om, S, tau, r, q, ...)/((0+1i) * om))
-        vP1 <- 0.5 + 1/pi * integrate(P1, lower = 1e-08, upper = 200, 
+        vP1 <- 0.5 + 1/pi * integrate(P1, lower = 1e-08, upper = Inf, 
                                       S, X, tau, r, q, ...)$value
-        vP2 <- 0.5 + 1/pi * integrate(P2, lower = 1e-08, upper = 200, 
+        vP2 <- 0.5 + 1/pi * integrate(P2, lower = 1e-08, upper = Inf, 
                                       S, X, tau, r, q, ...)$value
         value <- Sexq * vP1 - Xexr * vP2
         if (I < 0)
@@ -68,15 +68,6 @@ vanillaOptionAmerican <- function(S, X, tau, r, q, v,
                                   tauD = 0, D = 0, type = "call",
                                   greeks = TRUE, M = 101) {
 
-    ## if (any(q != 0) && any(D != 0))
-    ##     stop("dividend rate and dividend amount supplied")
-    ## if(any(D != 0))
-    ##     stopifnot(length(D) == length(tauD))
-    ## if(any(D != 0)) {
-    ##     D2keep <-  tauD <= tau & tauD > 0
-    ##     D <- D[D2keep]
-    ##     tauD <- tauD[D2keep]
-    ## }
     tmp <- due(D, tauD, tau, q)
     tauD <- tmp$tauD
     D <- tmp$D
