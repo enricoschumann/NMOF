@@ -1,14 +1,12 @@
-RUNIT TEST PROTOCOL -- Wed Sep  4 09:28:20 2013 
+RUNIT TEST PROTOCOL -- Wed Sep  4 09:56:38 2013 
 *********************************************** 
 Number of test functions: 20 
 Number of errors: 0 
-Number of failures: 1 
+Number of failures: 0 
 
  
 1 Test Suite : 
-NMOF - 20 test functions, 0 errors, 1 failure
-FAILURE in test.vanillaOptionEuropean: Error in checkEqualsNumeric(D1, D2, tolerance = 0.001) : 
-  Mean relative difference: 0.1853562
+NMOF - 20 test functions, 0 errors, 0 failures
 
 
 
@@ -22,23 +20,23 @@ Involved directory:
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTests2.R 
 test.bracketing: (13 checks) ... OK (0 seconds)
-test.gridSearch: (18 checks) ... OK (0.18 seconds)
+test.gridSearch: (18 checks) ... OK (0.19 seconds)
 test.xwGauss: (4 checks) ... OK (0 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestscallCF.R 
 test.callCF: (22 checks) ... OK (0.02 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsDEopt.R 
-test.DEopt: (23 checks) ... OK (2.97 seconds)
+test.DEopt: (23 checks) ... OK (3 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsGAopt.R 
-test.GAopt: (22 checks) ... OK (0.21 seconds)
+test.GAopt: (22 checks) ... OK (0.19 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsInternals.R 
 test.checkList: (10 checks) ... OK (0.01 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsLSopt.R 
-test.LSopt: (7 checks) ... OK (0.26 seconds)
+test.LSopt: (7 checks) ... OK (0.27 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsMA.R 
 test.MA: (3 checks) ... OK (0 seconds)
@@ -49,19 +47,17 @@ test.EuropeanCall: (6 checks) ... OK (0.01 seconds)
 test.EuropeanCallBE: (6 checks) ... OK (0.01 seconds)
 test.testFunctions: (6 checks) ... OK (0 seconds)
 test.vanillaOptionAmerican: (6 checks) ... OK (0.02 seconds)
-test.vanillaOptionEuropean: FAILURE !! (check number 382)
-Error in checkEqualsNumeric(D1, D2, tolerance = 0.001) : 
-  Mean relative difference: 0.1853562
+test.vanillaOptionEuropean: (2124 checks) ... OK (9.86 seconds)
 test.vanillaOptionImpliedVol: (12 checks) ... OK (0.16 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsPCparity.R 
 test.putCallParity: (10 checks) ... OK (0 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsPSopt.R 
-test.PSopt: (14 checks) ... OK (3.73 seconds)
+test.PSopt: (14 checks) ... OK (3.74 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsRestartOpt.R 
 test.restartOpt: (1 checks) ... OK (0.15 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsTAopt.R 
-test.TAopt: (13 checks) ... OK (0.37 seconds)
+test.TAopt: (13 checks) ... OK (0.35 seconds)

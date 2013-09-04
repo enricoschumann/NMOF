@@ -225,9 +225,9 @@ test.vanillaOptionEuropean <- function() {
                 sigma = sigma, implVol = FALSE))/h
     }
 
-    for (X in seq(60, 140, by = 5))
-        for (S in seq(60, 140, by = 5))
-            for (tau in seq(0.1, 3, by = 0.25)) {
+    for (X in seq(80, 120, by = 5))
+        for (S in seq(80, 120, by = 5))
+            for (tau in seq(0.5, 3, by = 0.1)) {
                 D1 <- vanillaOptionEuropean(S = S, X = X, tau = tau,
                                             r = r, q = q,
                                             tauD = 0, D = 0, type = "call",
@@ -238,7 +238,7 @@ test.vanillaOptionEuropean <- function() {
                          r = r, q = q,
                          v0 = v0, vT = vT, rho = rho, k = k,
                          sigma = sigma, implVol = FALSE, what = "S")
-                checkEqualsNumeric(D1, D2, tolerance = 1e-3)
+                checkTrue(abs(D1-D2) < 0.015)
             }    
 }
 

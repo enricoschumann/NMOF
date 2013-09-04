@@ -98,7 +98,7 @@ repair1a(x, up, lo)
 repair1b(x, up, lo)
 repair1c(x, up, lo)
 
-trials <- 10000L
+trials <- 5000L
 strials <- seq_len(trials)
 system.time(for(i in strials) y1 <- repair1a(x, up, lo))
 system.time(for(i in strials) y2 <- repair1b(x, up, lo))
@@ -176,6 +176,11 @@ system.time(for (i in strials) y4 <- repair2(x,up,lo))
 %% repair2b <- function(x, up, lo) {
 %%     x[x > up]  <-  x[x > up] - ((x[x > up] - up) %/% r)*r - (2 *  (x[x > up] - up) %% r)
 %%     x[x < lo]  <-  x[x < lo] + ((lo - x[x < lo]) %/% r)*r + 2 * (lo - x[x < lo]) %% r
+
+%%     r <- up - lo
+%%     ii <- x > up    
+%%     x[ii] - ((x[ii] - up[ii]) %/% r[ii])*r[ii] - (2 *  (x[ii] - up[ii]) %% r[ii])
+    
 %% }
 %% x
 %% repair2b(x, up, lo)
