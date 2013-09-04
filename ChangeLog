@@ -18,6 +18,8 @@
 
 2013-07-22  Enrico Schumann  <es@enricoschumann.net>
 
+	* DESCRIPTION (Version): Version: 0.28-1
+
 	* R/callCF.R (callCF): changed upper integration limits to 'Inf'
 
 	* R/callHestoncf.R (cfHeston): changed upper integration limits to

@@ -35,6 +35,7 @@ with Differential Evolution}}\medskip
 
 
 \section{Introduction}
+
 \noindent In this tutorial we look into fitting the
 Nelson--Siegel--Svensson (NSS) model to data; for more details, please
 see \citep{Gilli2011b}.  Further information can be found in
@@ -42,14 +43,14 @@ see \citep{Gilli2011b}.  Further information can be found in
 
 We start by attaching the package.  Since we will use a stochastic
 technique for optimisation, we should be running several restarts (see
-\citealp[Chapter~12]{Gilli2011b}, for a discussion). The variable
+\citealp[Chapter~12]{Gilli2011b}, for a discussion).  The variable
 \texttt{nRuns} sets the number of restarts for the examples to come.
-We set it to only five here to keep the build-time of the package
+We set it to only three here to keep the build-time of the package
 acceptable; increase it to check the stochastics of the solutions.  We
 set a seed to make the computations reproducible.
 <<>>=
 require("NMOF")
-nRuns <- 5L
+nRuns <- 3L
 set.seed(112233)
 @
 
