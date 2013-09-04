@@ -1,0 +1,363 @@
+\documentclass[11pt]{article}
+
+\title{Various benchmarks, comparisons and checks for the NMOF package}
+\author{Enrico
+  Schumann\\\footnotesize\href{mailto:es@enricoschumann.net}{\texttt{es@enricoschumann.net}}}
+\date{2013-08-11}
+
+% *LANGUAGE/ENCODING*
+\usepackage[british]{babel}
+
+% *LAYOUT*
+\usepackage[left = 2.5cm,top = 3cm, bottom = 3cm, right = 4.5cm]{geometry}
+\renewcommand{\figurename}{Figure}
+\usepackage{algorithmic,algorithm}
+\usepackage{framed}
+
+% *FONTS*
+%\usepackage{mathptmx}
+%\usepackage[scaled=0.90]{helvet}
+%\usepackage{courier}%
+\usepackage{sfourier}
+\renewcommand{\rmdefault}{fmnj}
+\newcommand{\hy}{{\fontencoding{OT1}\fontfamily{pcr}\selectfont - }}
+
+
+
+% soul definition
+\usepackage{soul}
+\capsdef{T1/ppl/m/n/5-15}{\scshape}{.16em}{.55em}{.2em}
+
+%\newcommand{\Name}[Anzahl]{Definition}
+\newcommand{\TA}{\caps{ta}}
+\newcommand{\DE}{\caps{de}}
+\newcommand{\GA}{\caps{ga}}
+\newcommand{\PS}{\caps{ps}}
+\newcommand{\R}{\textsf{R}}
+\newcommand{\Sfour}{\caps{s}4}
+\newcommand{\nmof}{\caps{nmof}}
+\newcommand{\gms}{\caps{gms}}
+
+% *MATHS*
+\usepackage{amsmath}
+
+% *COLOR/GRAPHICS*
+\usepackage{color}
+\usepackage{graphics,pst-node,pst-plot,pstricks,pst-fun}
+\definecolor{grau2}{rgb}{.2,.2,.2}
+\definecolor{grau7}{rgb}{.7,.7,.7}
+
+% *BIB*
+\usepackage[round]{natbib}
+\usepackage[noae,nogin]{Sweave}
+\SweaveOpts{keep.source=TRUE,eps=TRUE,prefix.string=figures/fig}
+% *INDEX*
+\usepackage{makeidx}\makeindex %\index{xxxx}, \index{xxx!yyy}
+
+
+% *HYPERREF* settings
+\usepackage{hyperref}
+\hypersetup{%
+colorlinks = false,%
+breaklinks = true,%
+pdfborder={0 0 0},%
+pdftitle={ Minimising the ratio of two conditional moments},%
+pdfauthor={Enrico Schumann},%
+pdfsubject={finance, heuristic optimisation in finance,%
+numerical methods in finance, distributed computing},%
+pdfkeywords={finance, heuristic optimisation}}
+
+
+% define *Sweave* layout
+\DefineVerbatimEnvironment{Sinput}{Verbatim}{}
+\DefineVerbatimEnvironment{Soutput}{Verbatim}{frame=single,xleftmargin=0em,%
+formatcom=\color{grau2},rulecolor=\color{grau7}}
+\DefineVerbatimEnvironment{Scode}{Verbatim}{xleftmargin=2em}
+\fvset{listparameters={\setlength{\topsep}{0pt}}}
+\renewenvironment{Schunk}{\vspace{\topsep}}{\vspace{\topsep}}
+<<echo=false>>=
+options(continue = " ", digits = 7, width = 65)
+@
+\begin{document}
+\maketitle
+\tableofcontents
+
+
+
+
+
+\section{A binary knapsack problem}
+
+The first example is taken from the \textsf{adagio} package
+\citep{Borchers2012}.
+
+<<>>=
+require("NMOF")
+require("adagio")
+@
+
+With the package attached, we can run the example (see
+\texttt{?adagio:::knapsack}).
+<<>>=
+## Example 1
+p <- c(15, 100, 90, 60, 40, 15, 10,  1)
+w <- c( 2,  20, 20, 30, 40, 30, 60, 10)
+cap <- 102
+(is <- knapsack(w, p, cap))
+@
+
+The aim will be to obtain the same results with Threshold Accepting.
+We collect all objects in a list \texttt{Data}.
+<<>>=
+Data <- list(p = p, w = w, n = length(p), cap = cap)
+@
+
+The objective function is straightforward; the neighbourhood function
+takes care of the constraints.
+<<>>=
+OF <- function(x, Data)
+    -sum(x * Data$p)
+
+neighbour <- function(x, Data) {
+    xn <- x
+    p <- sample.int(Data$n, size = 1L)
+    xn[p] <- !xn[p]
+    if (sum(Data$w*xn) > Data$cap)
+        x
+    else
+        xn
+}
+@
+
+We run \texttt{TAopt}.
+<<>>=
+algo <- list(x0 = logical(Data$n),  ## a random start
+             printDetail = TRUE, printBar = FALSE,
+             q = 0.99, neighbour = neighbour,
+             nS = 100)
+system.time(sol <- TAopt(OF, algo = algo, Data))
+OF(sol$xbest,Data)
+@
+
+We compare this with the example's solution.
+<<>>=
+## Example 1
+## [1] 1 2 3 4 6 , capacity 102 and total profit 280
+xHWB <- logical(Data$n)
+xHWB[c(1:4,6)] <- TRUE
+OF(xHWB, Data)
+@
+
+And the second example.
+<<>>=
+## Example 2
+## [1] 1 4 , capacity 50 and total profit 107
+p <- c(70, 20, 39, 37, 7, 5, 10)
+w <- c(31, 10, 20, 19, 4, 3,  6)
+cap <- 50
+(is <- knapsack(w, p, cap))
+@
+
+With luck, we should get the same solution.
+<<>>=
+Data <- list(p = p, w = w, n = length(p), cap = cap)
+algo <- list(x0 = logical(Data$n),  ## a random start
+             printDetail = TRUE, printBar = FALSE,
+             q = 0.99, neighbour = neighbour, nS = 100)
+system.time(sol <- TAopt(OF, algo = algo, Data))
+OF(sol$xbest, Data)
+@
+
+
+\section{A subset sum problem}\index{Subset sum problem}
+
+This example is taken from \smallskip
+
+\url{https://stat.ethz.ch/pipermail/r-help/2010-January/226267.html} \smallskip
+
+\noindent and was provided by Hans Werner Borchers.  We call the
+solution he provided \texttt{xHWB}.
+<<>>=
+set.seed(8232)
+X <- runif(100L)
+
+## Find subset that sums up close to 2.0 !
+i <- sort(c(84,54,11,53,88,12,26,45,25,62,96,23,78,77,66,1))
+sum(X[i])
+## --> should be 2.000451
+
+xHWB <- logical(100L)
+xHWB[i] <- TRUE
+sum(X[xHWB]) ## check
+@
+
+
+We can try to solve this problem with the \texttt{optim} function. The
+function will not allow us to pass arguments explicity, so we use
+functions \texttt{makeN} and \texttt{makeF}. But note that
+\texttt{optim} needs a numeric solution vector.
+<<cache = true>>=
+## try with optim/SANN
+makeN <- function(X, size = 1L) {
+    function(x) {
+        x <- x > 0L
+        p <- sample.int(100, size = size)
+        x[p] <- !x[p]
+        x
+    }
+}
+makeF <- function(X) {
+    function(x) {
+        x <- x > 0L
+        abs(sum(X[x]) - 2)
+    }
+}
+F <- makeF(X)
+N <- makeN(X)
+x0 <- runif(100)>0.5
+F(x0) ## initial solution
+result <- optim(par = x0, fn = F,  N, method = "SANN",
+                control = list(maxit = 20000,
+                temp = 1))
+F(as.logical(result$par)) ## final solution
+@
+
+Tackling that example various other heuristics is discussed in
+
+\url{http://enricoschumann.net/files/NMOF_Rmetrics2012.pdf} .
+
+\section{Minimum-variance and the tangency portfolio}
+
+We define a function \texttt{resample} (defined on the help page of
+\texttt{sample}\index{sample@\texttt{sample}}) and pass it with
+\texttt{data}.  We work with random data.
+
+<<cache = true>>=
+require("quadprog")
+
+na <- 50L   ## number of assets
+ns <- 100L  ## number of scenarios
+R  <- array(rnorm(ns*na, mean = 0.005, sd = 0.015),
+            dim = c(ns, na))
+mu <- colMeans(R)
+rf <- 0.0001
+mu2 <- mu - rf
+
+## TEST 1: minimum-variance portfolio (long/short)
+wsup <- 0.05
+winf <- -0.05
+Q <- 2*cov(R)
+A <- array( 1, dim = c(1,na)); a <- 1
+B <- rbind(-diag(na),diag(na))
+b <- rbind(array(-wsup, dim = c(na,1)),
+           array( winf, dim = c(na,1)))
+result <- solve.QP(Dmat = Q, dvec = rep(0, na),
+                   Amat = t(rbind(A,B)), bvec = rbind(a, b),
+                   meq = 1)
+wqp <- result$solution
+
+resample <- function(x, ...)
+    x[sample.int(length(x), ...)]
+Data <- list(RR = cov(R), na = na, ns = ns,
+             eps = 0.10/100, winf = winf, wsup = wsup,
+             resample = resample)
+neighbour <- function(w, Data){
+    toSell <- w > Data$winf
+    toBuy  <- w < Data$wsup
+    i <- resample(which(toSell), size = 1L)
+    j <- resample(which(toBuy),  size = 1L)
+    eps <- runif(1L) * Data$eps
+    eps <- min(w[i] - Data$winf, Data$wsup - w[j], eps)
+    w[i] <- w[i] - eps
+    w[j] <- w[j] + eps
+    w
+}
+OF <- function(w, Data) {
+    aux <- crossprod(Data$RR,w)
+    crossprod(w,aux)
+}
+w0 <- runif(na)
+w0 <- w0/sum(w0)
+algo <- list(x0 = w0, neighbour = neighbour,
+             nS = 5000L, nT = 10L, nD = 2000L, q = 0.02,
+             printBar = FALSE, printDetail = FALSE)
+res <- TAopt(OF,algo,Data)
+as.numeric(16 * 100 *sqrt(res$OFvalue)) -
+    as.numeric(16 * 100 *sqrt(result$value))
+
+
+## check constraints
+wSummary <- function(w)
+    cat("min weight: ", min(w), "\n",
+        "max weight: ", max(w), "\n",
+        "sum of weights: ", sum(w), "\n",
+        "no. of assets: ",  sum(w > 1e-12), "\n", sep ="")
+wSummary(res$xbest)
+wSummary(wqp)
+
+cat("Compare results: \n",
+    "QP:", 100 * sqrt( crossprod(R %*% wqp)/Data$ns ),"\n",
+    "TA:", 100 * sqrt( crossprod(R %*% res$xbest)/Data$ns ) ,"\n")
+
+## TEST 2: tangency portfolio with non-negative weights
+winf <- 0; Q <- cov(R)
+A <- array(mu2, dim = c(1L, na)); a <- 1
+B <- diag(na); b <- array( winf, dim = c(na,1L))
+result <- solve.QP(Dmat = Q, dvec = rep(0,na),
+                   Amat = t(rbind(A,B)), bvec = rbind(a,b),
+                   meq = 1)
+w <- as.matrix(result$solution/sum(result$solution))
+SR <- t(w) %*% mu2 / sqrt(t(w) %*% Q %*% w)
+OF2 <- function(w, Data) {
+    aux <- crossprod(Data$RR,w)
+    sqrt(crossprod(w,aux)) / t(w) %*% Data$mu2
+}
+w0 <- runif(na); w0 <- w0/sum(w0)
+Data <- list(RR = cov(R), na = na, ns = ns, mu2 = mu2,
+             eps = 0.10/100, winf = winf, wsup = 1)
+res <- TAopt(OF2,algo,Data)
+wSummary(res$xbest)
+wSummary(w)
+
+## check difference between Sharpe ratios
+1/res$OFvalue - as.numeric(SR)
+@
+
+
+
+
+\newpage
+\appendix
+\section{Resources}
+
+You can download all the book's code examples from the book's home
+page,\medskip
+
+\url{http://nmof.net} \bigskip
+
+\noindent The latest version of the \nmof{} package is available
+from\medskip
+
+\url{http://enricoschumann.net/R/packages/NMOF/index.htm}\bigskip
+
+\noindent but note that this is the development version. More stable
+versions are available from CRAN. \bigskip
+
+\noindent New versions of the package and other news are announced
+through the \texttt{NMOF-news} mailing list; to browse the archives or
+to subscribe, go to\medskip
+
+\url{https://lists.r-forge.r-project.org/cgi-bin/mailman/listinfo/nmof-news}
+
+\section{Package version}
+<<results=tex>>=
+toLatex(sessionInfo())
+@
+
+\nocite{Gilli2011b}
+
+\bibliographystyle{plainnat}
+\bibliography{Library}
+
+
+\end{document}

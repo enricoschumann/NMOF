@@ -30,89 +30,99 @@ and Differential Evolution}}\medskip
 
 
 \section{Introduction}
-\noindent We provide a code example for a robust regression
-problem. The purpose of this vignette is to provide the code in a
-convenient way; for more details, please see \citet{Gilli2011b}. (The
-vignette builds on the script \texttt{comparisonLMS.R}.)
+
+\noindent We provide a code example for a robust regression problem;
+for more details, please see \citet{Gilli2011b}. (The vignette builds
+on the script \texttt{comparisonLMS.R}.)
 
 \section{Data and settings}
-We start by attaching the package.
+
+We start by attaching the \texttt{NMOF} package and fixing a seed.  We
+will use the function \texttt{lqs} from the \texttt{MASS} package
+\citep{Venables2002}, so we attach that package as well.
 <<>>=
 require("NMOF")
 require("MASS")
 set.seed(11223344)
-@
-We will use the function \texttt{lqs} from the \texttt{MASS} package
-\citep{Venables2002}. We will use an artificial data set with
-\texttt{n}~observations and \texttt{p}~regressors, created with the
-function \texttt{createData}.
+@ 
+We will use an artificial data set with \texttt{n}~observations and
+\texttt{p}~regressors, created with the function \texttt{createData}.
 <<>>=
 createData <- function(n, p, constant = TRUE,
                        sigma = 2, oFrac = 0.1) {
     X <- array(rnorm(n * p), dim = c(n, p))
-    if (constant) X[ ,1L] <- 1L
+    if (constant) 
+        X[ ,1L] <- 1L
     b <- rnorm(p)
     y <- X %*% b + rnorm(n)*0.5
     nO <- ceiling(oFrac*n)
     when <- sample.int(n, nO)
     X[when, -1L] <- X[when, -1L] + rnorm(nO, sd = sigma)
-    list(X = X, y = y)
+    list(X = X, y = y, outliers = when)
 }
-@
+@ 
+The function also takes arguments \texttt{constant} (logical: should
+the data-generating model contain a constant?); \texttt{sigma}
+(standard deviation of the outliers); and \texttt{oFrac} (fraction of
+outliers).  The function evaluates to a list containing the
+regressors~\texttt{X}, the regressand~\texttt{y} and a list of the
+outliers.
 
-We start by creating some artifial data. We collect \texttt{X} and
-\texttt{y} in the list \texttt{data}.  We also add the
-scalar~\texttt{h} which gives the order statistic of the squared
-residuals to be minimised. Note that we put \texttt{as.vector(y)} into
-\texttt{data} so that the vector gets `recycled' in the objective
-function.
+We put \texttt{X} and \texttt{y} into the list \texttt{Data}.  We also
+add the scalar~\texttt{h}, which gives the order statistic of the
+squared residuals to be minimised.  Note that we put
+\texttt{as.vector(y)} into \texttt{Data} so that the vector gets
+`recycled' in the objective function.
 <<>>=
 n <- 100L   ## number of observations
 p <- 10L    ## number of regressors
-constant <- TRUE; sigma <- 3; oFrac  <- 0.1
+constant <- TRUE; sigma <- 5; oFrac  <- 0.1
 h <- 75L    ## ... or use something like floor((n+1)/2)
 
 aux <- createData(n, p, constant, sigma, oFrac)
 X <- aux$X; y <- aux$y
-data <- list(y = as.vector(y), X = X, h = h)
+Data <- list(y = as.vector(y), X = X, h = h)
 @
-The outliers are visible.
+The outliers, added in blue, are often visible.
 <<fig = TRUE, height = 3.8>>=
-par(bty = "n", las = 1)
-plot(X[ ,2L], type = "b", ylab = "X values")
-abline(h = 0)
+par(bty = "n", las = 1, tck = 0.01, mar = c(4,4,1,1))
+plot(X[ ,2L], type = "h", ylab = "X values", xlab = "observation")
+lines(aux$outliers, X[aux$outliers ,2L], type = "p", pch = 21, 
+      col = "blue", bg = "blue")
 @
 
 Two example objective functions, Least Trimmed Squares (LTS) and Least
-Quantile of Squares (LQS). Note that they are almost identical.
+Quantile of Squares (LQS).  Note that they are identical except for
+their last line.
 <<>>=
-OF <- function(param,data) {
-    X <- data$X; y <- data$y
+OF <- function(param, Data) {
+    X <- Data$X; y <- Data$y
     aux <- y - X %*% param
     aux <- aux * aux
-    aux <- apply(aux, 2L, sort, partial = data$h)
-    colSums(aux[1:data$h, ])  ## LTS
+    aux <- apply(aux, 2L, sort, partial = Data$h)
+    colSums(aux[1:Data$h, ])  ## LTS
 }
-OF <- function(param, data) {
-    X <- data$X; y <- data$y
+OF <- function(param, Data) {
+    X <- Data$X; y <- Data$y
     aux <- y - X %*% param
     aux <- aux * aux
-    aux <- apply(aux, 2L, sort, partial = data$h)
-    aux[data$h, ]  ## LQS
+    aux <- apply(aux, 2L, sort, partial = Data$h)
+    aux[Data$h, ]  ## LQS
 }
 @
-Both functions are vectorised. They work with a single solution
+Both functions are vectorised.  They work with a single solution
 (\texttt{param} would be a vector) or a whole population
 (\texttt{param} would be a matrix; each column would be one solution).
 
 \section{Using DE and PSO}
+
 We run DE and PSO. We compare the result with \texttt{lqs}.
 <<>>=
 popsize <- 100L; generations <- 500L
 ps <- list(min = rep(-10,p),
            max = rep( 10,p),
-           c1 = 0.5,
-           c2 = 1.1,
+           c1 = 0.9,
+           c2 = 0.9,
            iner = 0.9,
            initV = 1,
            nP = popsize,
@@ -131,49 +141,48 @@ de <- list(min = rep(-10,p),
            printBar = FALSE,
            printDetail = FALSE)
 
-system.time(solPS <- PSopt(OF = OF, algo = ps, data = data))
-system.time(solDE <- DEopt(OF = OF, algo = de, data = data))
+system.time(solPS <- PSopt(OF = OF, algo = ps, Data = Data))
+system.time(solDE <- DEopt(OF = OF, algo = de, Data = Data))
 
 if (require("MASS", quietly = TRUE)) {
-    system.time(test1 <- lqs(y ~ X[ ,-1L],
-                             adjust = TRUE,
-                             nsamp = 100000L,
-                             method = "lqs",
+    system.time(test1 <- lqs(y ~ X[ ,-1L], adjust = TRUE,
+                             nsamp = 100000L, method = "lqs",
                              quantile = h))
     res1 <- sort((y - X %*% as.matrix(coef(test1)))^2)[h]
-} else res1 <- NA
-(res2 <- sort((y - X %*% as.matrix(solPS$xbest))^2)[h])
-(res3 <- sort((y - X %*% as.matrix(solDE$xbest))^2)[h])
+} else 
+    res1 <- NA
+res2 <- sort((y - X %*% as.matrix(solPS$xbest))^2)[h]
+res3 <- sort((y - X %*% as.matrix(solDE$xbest))^2)[h]
 cat("lqs:   ", res1, "\n",
     "PSopt: ", res2, "\n",
     "DEopt: ", res3, "\n", sep = "")
 @
-
 To demonstrate the advantage of a vectorised objective function, we
-can compare it with looping over the solutions. We first set
+can compare it with looping over the solutions.  We first set
 \texttt{loopOF} to \texttt{TRUE}, so we actually loop over the
-solutions. (We also reduce the number of objective function
-evaluations.)
+solutions.  (We also reduce the number of objective function
+evaluations since we do not care about the actual solution, only about
+speed of computation.)
 <<>>=
-popsize <- 20L; generations <- 100L
+popsize <- 100L; generations <- 20L
 de$nP <- popsize; de$nG <- generations
 ps$nP <- popsize; ps$nG <- generations
 
 de$loopOF <- TRUE; ps$loopOF <- TRUE
-(t1ps <- system.time(solPS <- PSopt(OF = OF, algo = ps, data = data)))
-(t1de <- system.time(solDE <- DEopt(OF = OF, algo = de, data = data)))
+t1ps <- system.time(solPS <- PSopt(OF = OF, algo = ps, Data = Data))
+t1de <- system.time(solDE <- DEopt(OF = OF, algo = de, Data = Data))
 @
 To evaluate the objective function in one step, we \texttt{loopOF}
 to \texttt{FALSE}.
 <<>>=
 de$loopOF <- FALSE; ps$loopOF <- FALSE
-(t2ps <- system.time(solPS <- PSopt(OF = OF, algo = ps, data = data)))
-(t2de <- system.time(solDE <- DEopt(OF = OF, algo = de, data = data)))
+t2ps <- system.time(solPS <- PSopt(OF = OF, algo = ps, Data = Data))
+t2de <- system.time(solDE <- DEopt(OF = OF, algo = de, Data = Data))
 @
 Speedup:
 <<>>=
-t1ps[[3L]]/t2ps[[3L]]
-t1de[[3L]]/t2de[[3L]]
+t1ps[[3L]]/t2ps[[3L]]  ## PS
+t1de[[3L]]/t2de[[3L]]  ## DE
 @
 
 

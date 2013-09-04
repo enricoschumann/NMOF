@@ -1,5 +1,13 @@
 2013-09-04  Enrico Schumann  <es@enricoschumann.net>
 
+	* DESCRIPTION (Version): Version: 0.28-2
+
+	* vignettes/LSselect.Rnw: reduced number of restarts
+
+	* vignettes/DEnss.Rnw: reduced number of restarts
+
+	* vignettes/PSlms.Rnw: small adjustments (style)
+
 	* R/options.R (vanillaOptionEuropean): removed old (commented)
 	code; changed upper integration limits for method 'heston' to
 	'Inf' (as in 'callCF')

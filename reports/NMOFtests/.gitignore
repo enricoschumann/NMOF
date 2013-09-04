@@ -1,0 +1,16 @@
+
+*R
+*aux
+*bbl
+*dvi
+*pdf
+*ps
+*tex
+/NMOFtests.blg
+/NMOFtests.fdb_latexmk
+/NMOFtests.idx
+/NMOFtests.ilg
+/NMOFtests.ind
+/NMOFtests.log
+/NMOFtests.out
+/NMOFtests.toc

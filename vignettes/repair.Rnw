@@ -32,8 +32,8 @@ options(continue = " ", digits = 5)
 \section{Introduction}
 
 \noindent There are several approaches for including constraints into
-heuristics, see Chapter~12 of \citet{Gilli2011b}. The notes in this
-vignette give some examples for simple repair mechanisms. These can be
+heuristics, see Chapter~12 of \citet{Gilli2011b}.  The notes in this
+vignette give examples for simple repair mechanisms.  These can be
 called in \texttt{DEopt}, \texttt{GAopt} and \texttt{PSopt} through
 the repair function; in \texttt{LSopt}/\texttt{TAopt}, they could be
 included in the neighbourhood function.
@@ -41,12 +41,15 @@ included in the neighbourhood function.
 set.seed(112233)
 options(digits = 3)
 @
+
 \section{Upper and lower limits}
+
 Suppose the solution \texttt{x} is to satisfy \texttt{all(x >= lo)}
 and \texttt{all(x <= up)}, with \texttt{lo} and \texttt{up} being
 vectors of \texttt{length(x)}.
 
 \subsection{Setting values to the boundaries}
+
 One strategy is to replace elements of \texttt{x} that violate a
 constraint with the boundary value. Such a repair function can be
 implemented very concisely. An example:
@@ -58,7 +61,8 @@ x
 @
 Three of the elements of \texttt{x} actually violate the constraints.
 <<>>=
-repair1a <- function(x,up,lo) pmin(up,pmax(lo,x))
+repair1a <- function(x,up,lo) 
+    pmin(up,pmax(lo,x))
 x
 repair1a(x, up, lo)
 @
@@ -106,14 +110,16 @@ The third of these functions would also work on matrices if
 X <- array(rnorm(25L), dim = c(5L, 5L))
 X
 repair1c(X, up = 0.5, lo = -0.5)
-@
-The  considerable speedup comes at a price, of course, since there is
-no checking (eg, for \texttt{NA} values) in \texttt{repair1b} and
-\texttt{repair1c}. We could also define new functions \texttt{pmin2}
+@ 
+The speedup comes at a price, of course, since there is no checking
+(eg, for \texttt{NA} values) in \texttt{repair1b} and
+\texttt{repair1c}.  We could also define new functions \texttt{pmin2}
 and \texttt{pmax2}.
 <<>>=
-pmax2 <- function(x1, x2) ( (x1 + x2) + abs(x1 - x2) ) / 2
-pmin2 <- function(x1, x2) ( (x1 + x2) - abs(x1 - x2) ) / 2
+pmax2 <- function(x1, x2) 
+    ((x1 + x2) + abs(x1 - x2)) / 2
+pmin2 <- function(x1, x2) 
+    ((x1 + x2) - abs(x1 - x2)) / 2
 @
 A test follows.
 <<>>=
@@ -139,10 +145,11 @@ The function \texttt{repair2} reflects a value that is too large or
 too small around the boundary. It restricts the change in a
 variable~\texttt{x[i]} to the range \texttt{up[i] - lo[i]}.
 <<>>=
-repair2 <- function(x,up,lo) {
+repair2 <- function(x, up, lo) {
     done <- TRUE
     e <- sum(x - up  + abs(x - up) + lo - x  + abs(lo - x))
-    if (e > 1e-12) done <- FALSE
+    if (e > 1e-12) 
+        done <- FALSE
     r <- up - lo
     while (!done) {
         adjU <- x - up
@@ -155,7 +162,8 @@ repair2 <- function(x,up,lo) {
 
         x <- x - (adjU - adjL)/2
         e <- sum(x - up  + abs(x - up) + lo - x  + abs(lo - x))
-        if (e < 1e-12) done <- TRUE
+        if (e < 1e-12) 
+            done <- TRUE
     }
     x
 }
@@ -163,6 +171,16 @@ x
 repair2(x, up, lo)
 system.time(for (i in strials) y4 <- repair2(x,up,lo))
 @
+
+%% <<>>=
+%% repair2b <- function(x, up, lo) {
+%%     x[x > up]  <-  x[x > up] - ((x[x > up] - up) %/% r)*r - (2 *  (x[x > up] - up) %% r)
+%%     x[x < lo]  <-  x[x < lo] + ((lo - x[x < lo]) %/% r)*r + 2 * (lo - x[x < lo]) %% r
+%% }
+%% x
+%% repair2b(x, up, lo)
+%% system.time(for (i in strials) y4 <- repair2(x,up,lo))
+%% @ 
 
 \subsection{Adjusting a cardinality limit}
 Let \texttt{x} be a logical vector.

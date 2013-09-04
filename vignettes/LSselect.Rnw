@@ -32,10 +32,10 @@ options(continue = " ", digits = 5)
 
 
 \section{Introduction}
+
 \noindent We provide a code example for a simple asset selection
-problem. The purpose of this vignette is to provide the code in a
-convenient way; for more details, please see \citet{Gilli2011b}. We
-start by attaching the package.
+problem; for more details, please see \citet{Gilli2011b}.  We start by
+attaching the package and fixing a seed.
 
 <<>>=
 require("NMOF")
@@ -57,6 +57,7 @@ The weights are stored in the vector $w$; the symbol $J$ stands for the set of a
 is the cardinality of this set, ie, the number of assets in the portfolio.
 
 \section{Setting up the algorithm}
+
 We start by attaching the package and creating random data. We
 simulate 500~assets: each gets a random volatility between 20\% and
 40\%, and all pairwise correlations are set to~0.6.
@@ -111,7 +112,9 @@ data <- list(Sigma = Sigma,
                 na = na,
                 nn = 1L)
 @
+
 \section{Solving the model}
+
 As an initial solution we use a random portfolio.
 <<>>=
 card0 <- sample(data$Kinf:data$Ksup, 1L, replace = FALSE)
@@ -145,7 +148,7 @@ plot(sqrt(sol1$Fmat[,2L]),
 
 We can also run the search repeatedly with the same starting value.
 <<fig = TRUE, height = 4>>=
-nRuns <- 10L
+nRuns <- 5L
 allRes <- restartOpt(LSopt, n = nRuns, OF, algo = algo, data = data)
 allResOF <- numeric(nRuns)
 for (i in seq_len(nRuns))
