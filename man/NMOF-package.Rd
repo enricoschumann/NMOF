@@ -29,8 +29,8 @@
   packages are \emph{suggested}, but they are not necessary to use the
   \pkg{NMOF} package. Package \pkg{MASS} is required to run the complete
   example for \code{\link{PSopt}} and also in one of the vignettes
-  (\code{PSlms}); packages \pkg{snow} and \pkg{parallel} are optional
-  for functions \code{\link{bracketing}}, \code{\link{GAopt}},
+  (\code{PSlms}); package \pkg{parallel} is optional for functions
+  \code{\link{bracketing}}, \code{\link{GAopt}},
   \code{\link{gridSearch}} and \code{\link{restartOpt}}, and they may
   become an option for other functions; \pkg{quadprog} is needed for a
   vignette (\code{TAportfolio}) and some tests; \pkg{RUnit} is needed to

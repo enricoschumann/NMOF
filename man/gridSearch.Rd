@@ -87,7 +87,7 @@ gridSearch(fun, levels, ..., lower, upper, npar = 1L, n = 5L,
   \code{multicore} is chosen but the functionality is not available,
   then \code{method} will be set to \code{loop} and a warning is
   issued. If \code{method == "snow"}, the function \code{clusterApply}
-  from package \pkg{snow} is used. In this case, the argument \code{cl}
+  from package \pkg{parallel} is used. In this case, the argument \code{cl}
   must either be a cluster object (see the documentation of
   \code{clusterApply}) or an integer. If an integer, a cluster will be
   set up via \code{makeCluster(c(rep("localhost", cl)), type = "SOCK")}

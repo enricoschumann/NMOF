@@ -37,7 +37,7 @@ GAopt <- function (OF, algo = list(), ...) {
     if (algoD$methodOF == "snow") {
         if (!suppressWarnings(require("parallel", quietly = TRUE))) {
             method <- "loop"
-            warning("package 'snow' not available")
+            warning("package 'parallel' not available")
         } else if (is.null(cl)) {
             method <- "loop"
             warning("no cluster 'cl' passed for method 'snow'")

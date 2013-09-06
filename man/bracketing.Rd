@@ -44,7 +44,7 @@ bracketing(fun, interval, ...,
   }
   \item{cl}{default is \code{NULL}. If \code{method} is \code{snow}, this must be a
     cluster object or an integer (the number of cores to be used). See the
-    documentation of package \pkg{snow}.}
+    documentation of packages \pkg{parallel} and \pkg{snow}.}
 }
 \details{
   \code{bracketing} evaluates \code{fun} at equal-spaced values of \code{x}
@@ -55,20 +55,20 @@ bracketing(fun, interval, ...,
   within a reported interval. \code{bracketing} will not narrow the chosen intervals.
 
   The argument \code{method} determines how \code{fun} is
-  evaluated. Default is \code{loop}. If \code{method == "vectorised"},
-  \code{fun} must be written such that it can be evaluated for a vector
-  \code{x} (see Examples). If \code{method} is \code{multicore},
-  function \code{mclapply} from package \pkg{parallel} is used. Further
-  settings for \code{mclapply} can be passed through the list
-  \code{mc.control}. If \code{multicore} is chosen but the functionality
-  is not available (eg, currently on Windows), then \code{method} will
-  be set to \code{loop} and a warning is issued. If \code{method} is
-  \code{snow}, function \code{clusterApply} from package \pkg{snow} is
-  used. In this case, the argument \code{cl} must either be a cluster
-  object (see the documentation of \code{clusterApply}) or an
-  integer. If an integer, a cluster will be set up via
-  \code{makeCluster(c(rep("localhost", cl)), type = "SOCK")}, and
-  \code{stopCluster} is called when the function is exited. If
+  evaluated. Default is \code{loop}. If \code{method} is
+  \code{"vectorised"}, \code{fun} must be written such that it can be
+  evaluated for a vector \code{x} (see Examples). If \code{method} is
+  \code{multicore}, function \code{mclapply} from package \pkg{parallel}
+  is used. Further settings for \code{mclapply} can be passed through
+  the list \code{mc.control}. If \code{multicore} is chosen but the
+  functionality is not available (eg, currently on Windows), then
+  \code{method} will be set to \code{loop} and a warning is issued. If
+  \code{method} is \code{snow}, function \code{clusterApply} from
+  package \pkg{parallel} is used. In this case, the argument \code{cl}
+  must either be a cluster object (see the documentation of
+  \code{clusterApply}) or an integer. If an integer, a cluster will be
+  set up via \code{makeCluster(c(rep("localhost", cl)), type = "SOCK")},
+  and \code{stopCluster} is called when the function is exited. If
   \code{snow} is chosen but the package is not available or \code{cl} is
   not specified, then \code{method} will be set to \code{loop} and a
   warning is issued. In case that \code{cl} is a cluster object,

@@ -13,7 +13,8 @@ bracketing <- function(fun, interval, ...,
         method == "vectorized" ||
         method == "vectorise")
         method <- "vectorised"
-    if (!is.null(cl)) method <- "snow"
+    if (!is.null(cl))
+        method <- "snow"
     if (method == "multicore") {
         if (!suppressWarnings(require("parallel", quietly = TRUE))) {
             method <- "loop"
@@ -22,7 +23,7 @@ bracketing <- function(fun, interval, ...,
     } else if (method == "snow") {
         if (!suppressWarnings(require("parallel", quietly = TRUE))) {
             method <- "loop"
-            warning("package 'snow' not available: use method 'loop'")
+            warning("package 'parallel' not available: use method 'loop'")
         } else if (is.null(cl)) {
             method <- "loop"
             warning("no cluster 'cl' passed for method 'snow'")

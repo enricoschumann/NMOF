@@ -117,7 +117,7 @@ GAopt (OF, algo = list(), ...)
       \code{algo$mc.control} (see below).}
 
     \item{\code{cl}}{a cluster object or the number of cores. See
-      documentation of package \code{snow}.}
+      documentation of package \code{parallel}.}
 
     \item{\code{mc.control}}{a list of named elements; optional settings
       for \code{mclapply} (for instance,
