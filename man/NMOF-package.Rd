@@ -41,6 +41,21 @@
   substantially revised. The patch level (\code{x.x-1}) is incremented
   with any published change.
 
+  \subsection{Data}{
+    ...
+  }
+
+  \subsection{Optimisation}{
+    ...
+  }
+
+  \subsection{Option Pricing}{
+    ...
+  }
+
+  \subsection{Simulation}{
+    ...
+  }
 }
 \author{Enrico Schumann
 
