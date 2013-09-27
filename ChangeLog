@@ -1,3 +1,7 @@
+2013-09-27  Enrico Schumann  <es@enricoschumann.net>
+
+	* man/NMOF-package.Rd: added (sub)sections
+
 2013-09-04  Enrico Schumann  <es@enricoschumann.net>
 
 	* DESCRIPTION (Version): Version: 0.28-2
