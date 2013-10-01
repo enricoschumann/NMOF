@@ -175,7 +175,7 @@ PSopt(OF, algo = list(), ...)
     lists \code{P} and \code{Pbest} of matrices; else \code{NA}.
   }
   \item{\code{initial.state}}{the value of \code{\link{.Random.seed}}
-    when the function was called.}
+    when \code{PSopt} was called.}
 
 }
 \references{
