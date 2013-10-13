@@ -18,23 +18,19 @@
   heuristics: Differential Evolution (\code{\link{DEopt}}), Genetic
   Algorithms (\code{\link{GAopt}}), (Stochastic) Local Search
   (\code{\link{LSopt}}), Particle Swarm (\code{\link{PSopt}}) and
-  Threshold Accepting (\code{\link{TAopt}}). The term heuristic is
-  understood here as a general purpose optimisation method.
-
-  There are also various functions for option pricing; for instance,
-  \code{\link{vanillaOptionEuropean}} or
-  \code{\link{vanillaOptionAmerican}}.
+  Threshold Accepting (\code{\link{TAopt}}). The term heuristic is meant
+  in the sense of general purpose optimisation method.  
   
   Dependencies: The package is completely written in \R. A number of
   packages are \emph{suggested}, but they are not necessary to use the
-  \pkg{NMOF} package. Package \pkg{MASS} is required to run the complete
-  example for \code{\link{PSopt}} and also in one of the vignettes
-  (\code{PSlms}); package \pkg{parallel} is optional for functions
-  \code{\link{bracketing}}, \code{\link{GAopt}},
-  \code{\link{gridSearch}} and \code{\link{restartOpt}}, and they may
-  become an option for other functions; \pkg{quadprog} is needed for a
-  vignette (\code{TAportfolio}) and some tests; \pkg{RUnit} is needed to
-  run the tests in subdirectory \sQuote{\code{unitTests}}.
+  \pkg{NMOF} package.  More specifically, package \pkg{MASS} is needed
+  to run the complete example for \code{\link{PSopt}} and also in one of
+  the vignettes (\code{PSlms}).  Package \pkg{parallel} is optional for
+  functions \code{\link{bracketing}}, \code{\link{GAopt}},
+  \code{\link{gridSearch}} and \code{\link{restartOpt}}, and may become
+  an option for other functions.  Package \pkg{quadprog} is needed for a
+  vignette (\code{TAportfolio}) and some tests.  Finally, \pkg{RUnit} is
+  needed to run the tests in subdirectory \sQuote{\code{unitTests}}.
 
   Version numbering: minor version numbers (like in \code{x.1-x}) are
   incremented when a feature is added or an existing feature is
@@ -50,6 +46,9 @@
   }
 
   \subsection{Option Pricing}{
+  There are also various functions for option pricing; for instance,
+  \code{\link{vanillaOptionEuropean}} or
+  \code{\link{vanillaOptionAmerican}}.
     ...
   }
 
