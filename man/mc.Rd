@@ -1,4 +1,5 @@
 \name{mc}
+\alias{mc}
 \alias{gbm}
 \alias{gbb}
 \title{

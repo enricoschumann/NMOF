@@ -1,3 +1,12 @@
+v0.29-0  (2013-10-13)
+
+  o added function 'drawdown'
+
+  o Code examples in subdirectory 'NMOFex' (manual)
+    updated.
+
+  o small updates in documentation
+
 v0.28-2  (2013-09-04)
 
   o vignettes are now all placed in vignettes, again [see NEWS entries
