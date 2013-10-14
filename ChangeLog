@@ -1,3 +1,9 @@
+2013-10-13  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Version): Version: 0.29-0
+
+	* R/drawdown.R: added drawdown
+
 2013-09-27  Enrico Schumann  <es@enricoschumann.net>
 
 	* man/NMOF-package.Rd: added (sub)sections
