@@ -38,22 +38,34 @@
   with any published change.
 
   \subsection{Data}{
-    ...
+
+    See \code{\link{bundData}}, \code{\link{fundData}} and
+    \code{\link{optionData}}.
+
   }
 
   \subsection{Optimisation}{
-    ...
-  }
 
-  \subsection{Option Pricing}{
-  There are also various functions for option pricing; for instance,
-  \code{\link{vanillaOptionEuropean}} or
-  \code{\link{vanillaOptionAmerican}}.
-    ...
-  }
+    There are functions for Differential Evolution (\code{\link{DEopt}}),
+    Genetic Algorithms (\code{\link{GAopt}}), (Stochastic) Local Search
+    (\code{\link{LSopt}}), Particle Swarm (\code{\link{PSopt}}) and
+    Threshold Accepting (\code{\link{TAopt}}). 
 
-  \subsection{Simulation}{
-    ...
+   }
+
+   \subsection{Option Pricing}{
+
+     See \code{\link{vanillaOptionEuropean}},
+     \code{\link{vanillaOptionAmerican}}, \code{\link{putCallParity}}.
+     For pricing methods that use the characteristic function, see
+     \code{\link{callCF}}.
+
+   }
+
+   \subsection{Simulation}{
+     
+    See \code{\link{resampleC}} and \code{\link{mc}}.
+
   }
 }
 \author{Enrico Schumann
