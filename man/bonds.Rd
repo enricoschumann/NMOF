@@ -60,7 +60,7 @@ ytm(cf, times, y0 = 0.05, tol = 1e-05, maxit = 1000L)
   Enrico Schumann
 }
 \seealso{
-  \code{\link{NS}}, code{\link{NSS}}
+  \code{\link{NS}}, \code{\link{NSS}}
 }
 \examples{
 cf <- c(5, 5, 5, 5, 5, 105)   ## cashflows
