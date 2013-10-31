@@ -1,5 +1,9 @@
 2013-10-31  Enrico Schumann  <es@enricoschumann.net>
 
+	* DESCRIPTION (Version): Version: 0.29-1
+
+	* R/bonds.R (ytm): slightly faster
+
 	* inst/unitTests/unitTestsBonds.R (test.ytm): added unit tests for
 	'ytm'
 
