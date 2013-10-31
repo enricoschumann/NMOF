@@ -47,8 +47,8 @@ ytm(cf, times, y0 = 0.05, tol = 1e-05, maxit = 1000L)
   \code{ytm} uses Newton's method to compute the yield-to-maturity of a
   bond (or internal interest rate). When used with a bond, the initial
   outlay (ie, the bonds dirty price) needs be included in the vector of
-  cashflows.  For coupon bond, a good starting value is often the coupon
-  divided by the dirty price of the bond.
+  cashflows.  For coupon bond, a good starting value \code{y0} is often
+  the coupon divided by the dirty price of the bond.
 
 }
 \value{
