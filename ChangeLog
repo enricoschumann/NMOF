@@ -1,3 +1,9 @@
+2013-11-02  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Version): Version: 0.29-2
+
+	* R/bonds.R (ytm): added argument 'offset'
+
 2013-10-31  Enrico Schumann  <es@enricoschumann.net>
 
 	* DESCRIPTION (Version): Version: 0.29-1

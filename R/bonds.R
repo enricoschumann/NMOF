@@ -13,13 +13,14 @@ y2df <- function(yields, times) {
 }
 
 ytm <- function(cf, times, y0 = 0.05,
-                tol = 1e-05, maxit = 1000L) {        
+                tol = 1e-05, maxit = 1000L, offset = 0) {        
     dr <- 1
     t1 <- times - 1
+    offset <- 1 + offset
     for (i in seq_len(maxit)) {
-        y1 <- 1 + y0
+        y1 <- offset + y0
         g <- sum(cf / y1 ^ times)
-        dg <- times * cf * 1/y1 ^ t1
+        dg <- times * cf * y1 ^ t1
         dg <- sum(dg)
         dr <- g/dg
         y0 <- y0 + dr
