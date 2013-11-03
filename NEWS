@@ -1,6 +1,10 @@
+v0.29-2  (2013-11-02)
+
+  o function 'ytm' has an argument 'offset' now; see ?ytm for examples
+
 v0.29-1  (2013-10-31)
 
-  o function 'ytm' slightly faster now
+  o function 'ytm' is slightly faster now
 
   o small additions to documentation
 
