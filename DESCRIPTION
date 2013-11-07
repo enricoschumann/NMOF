@@ -14,7 +14,8 @@ Description: Functions, examples and data from the book 'Numerical Methods
     and Optimization in Finance' by M. Gilli, D. Maringer and E. Schumann. 
     The package contains, in particular, implementations of several 
     optimisation heuristics (such as Differential Evolution, Genetic Algorithms 
-    and Threshold Accepting).
+    and Threshold Accepting); there are also functions for the valuation of 
+    financial instruments (such as bonds and options).
 License: GPL-3
 URL: http://nmof.net, http://enricoschumann.net/NMOF.htm
 LazyLoad: yes
