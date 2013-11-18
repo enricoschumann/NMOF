@@ -32,6 +32,7 @@ options(continue = " ", digits = 5)
 
 
 \section{Introduction}
+
 \noindent Heuristics often manipulate and evolve solutions through
 functions: new solutions are created as functions of existing
 solutions; solutions are evaluated through the objective function;
@@ -223,8 +224,12 @@ t3
 
 
 \subsection{Residuals in a linear model}
-We wish to compute the residuals~$r$ of a linear model, $y=X\theta+r$. Suppose we have a population $\Theta$ of solution vectors; each column
-in $\Theta$ is one particular solution $\theta$. Now, as before we could compute
+
+We wish to compute the residuals~$r$ of a linear model,
+$y=X\theta+r$. Suppose we have a population $\Theta$ of solution
+vectors; each column in $\Theta$ is one particular solution
+$\theta$. Now, as before we could compute
+
 \begin{align*}
 \text{r}=y-X\theta_i
 \end{align*}

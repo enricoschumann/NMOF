@@ -1,3 +1,10 @@
+2013-11-18  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Version): Version: 0.30-0
+
+	* R/bonds.R (y2df): removed
+	(duration): added function
+
 2013-11-02  Enrico Schumann  <es@enricoschumann.net>
 
 	* DESCRIPTION (Version): Version: 0.29-2

@@ -1,3 +1,7 @@
+v0.30-0  (2013-11-18)
+
+  o new function 'duration'
+
 v0.29-2  (2013-11-02)
 
   o function 'ytm' has an argument 'offset' now; see ?ytm for examples

@@ -1,5 +1,6 @@
 \name{vanillaBond}
 \alias{vanillaBond}
+\alias{duration}
 \alias{ytm}
 \title{
   Pricing Plain-Vanilla Bonds
@@ -13,6 +14,8 @@
 \usage{
 vanillaBond(cf, times, df, yields)
 ytm(cf, times, y0 = 0.05, tol = 1e-05, maxit = 1000L, offset = 0)
+
+duration(cf, times, yield, modified = TRUE, raw = FALSE)
 }
 \arguments{
   \item{cf}{
@@ -29,6 +32,9 @@ ytm(cf, times, y0 = 0.05, tol = 1e-05, maxit = 1000L, offset = 0)
     optional (instead of discount factors); zero yields to compute
     discount factor; if of length one, a flat zero curve is assumed
   }
+  \item{yield}{
+    numeric
+  }
   \item{y0}{
     starting value
   }
@@ -41,6 +47,13 @@ ytm(cf, times, y0 = 0.05, tol = 1e-05, maxit = 1000L, offset = 0)
   \item{offset}{
     numeric: a \sQuote{base} rate over which to compute the yield to
     maturity.  See Details.
+  }
+  \item{modified}{
+    logical: return modified duration (default \code{TRUE})
+  }
+  \item{raw}{
+    logical: default \code{FALSE}. Compute duration as first derivative
+    of cashflows' present value?
   }
 }
 \details{
@@ -129,6 +142,11 @@ colnames(M) <- format(alltimes, nsmall = 1)
 
 vanillaBond(cf = M, times = alltimes, yields = 0.02)
 
+## duration
+cf <- c(5, 5, 5, 5, 5, 105)   ## cashflows
+times <- 1:6                  ## maturities
+y <- 0.0127                   ## the "true" yield
 
-
+vanillaBond(cf, times, yields = y+0.001)-vanillaBond(cf, times, yields = y)
+duration(cf, times, yield = y, raw = TRUE)* 0.001
 }
