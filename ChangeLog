@@ -1,3 +1,7 @@
+2013-12-24  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/callMerton.R (callMerton): added function
+
 2013-11-18  Enrico Schumann  <es@enricoschumann.net>
 
 	* DESCRIPTION (Version): Version: 0.30-0

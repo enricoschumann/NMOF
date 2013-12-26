@@ -32,9 +32,9 @@ callMerton <- function(S, X, tau, r, q, v, lambda, muJ, vJ, N,
     
     for (n in 0:N) {
         v_n <- v + n*vJ/tau
-        r_n <- r - lambda*muJ+ n*log(1+muJ)/tau
-        call <- call + ( exp(-lambda2*tau) * (lambda2*tau)^n ) * 
-            callBSM(S,X,tau,r_n,q,v_n)/ factorial(n)
+        r_n <- r - lambda * muJ + n * log(1 + muJ)/tau
+        call <- call + ( exp(-lambda2 * tau) * (lambda2 * tau)^n ) * 
+            callBSM(S,X,tau,r_n,q,v_n)/factorial(n)
     }
     
     if (implVol) {
@@ -43,15 +43,20 @@ callMerton <- function(S, X, tau, r, q, v, lambda, muJ, vJ, N,
     call
 }
 
-S <- 100
-X <- 100
-tau <- 0.5
-r <- 0.01
-q <- 0.01
-v <- 0.2^2
-lambda <- .1
-muJ    <- -0.05
-vJ     <- 0.2^2
-N      <- 0
-
-callMerton(S, X, tau, r, q, v, lambda, muJ, vJ, N, implVol = FALSE)
+if (FALSE) {
+    S <- 100
+    X <- 90
+    tau <- .1
+    r <- 0.01
+    q <- 0.01
+    v <- 0.2^2
+    lambda <- 0.2
+    muJ    <- -0.1
+    vJ     <- 0.1^2
+    N      <- 10
+    
+    callMerton(S, X, tau, r, q, v, lambda, muJ, vJ, N, implVol = FALSE)
+    callCF(cf = cfMerton, S = S, X = X, tau = tau, r = r, q = q,
+           v = v, lambda = lambda, muJ = muJ, vJ = vJ, implVol = FALSE)
+    vanillaOptionEuropean(S,X,tau,r,q,v, greeks = FALSE)
+}
