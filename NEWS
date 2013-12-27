@@ -1,3 +1,12 @@
+v0.31-0  (2013-12-27)
+
+  o new function 'callMerton' for European calls under Merton's
+    jump--diffusion model
+
+  o new vignette "Overview of the NMOF package"
+
+  o smaller changes/updates in documentation
+
 v0.30-0  (2013-11-18)
 
   o new function 'duration'

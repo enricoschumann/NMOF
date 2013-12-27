@@ -1,3 +1,13 @@
+2013-12-27  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Version): Version: 0.31-0
+
+	* R/callMerton.R (callMerton): added implied vol computation
+
+	* vignettes/an_overview.Rnw: added vignette
+
+	* vignettes/LSselect.Rnw: updated (renamed variables)
+
 2013-12-24  Enrico Schumann  <es@enricoschumann.net>
 
 	* R/callMerton.R (callMerton): added function

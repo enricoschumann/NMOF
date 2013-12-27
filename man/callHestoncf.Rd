@@ -58,7 +58,7 @@ Enrico Schumann
 }
 
 \seealso{
-\code{\link{callCF}}\code{\link{EuropeanCall}}
+\code{\link{callCF}}, \code{\link{EuropeanCall}}
 }
 \examples{
 S <- 100; X <- 100; tau <- 1; r <- 0.02; q <- 0.01
