@@ -42,7 +42,6 @@ require("NMOF")
 set.seed(112233)
 @
 
-
 \section{The problem}
 
 \noindent We wish to select between $K_{\min}$ and~$K_{\max}$ out of

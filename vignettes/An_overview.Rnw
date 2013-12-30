@@ -36,6 +36,41 @@ options(continue = " ", digits = 5, max.print = 10)
 and data sets used in \cite{Gilli2011b}; it also contains several
 functions that have not been described in the book.
 
+
+The book explains tools for computational finance. It covers
+fundamental numerical analysis and computational techniques, for
+example for option pricing, but two topics are given special
+attention: simulation and optimization. Many chapters are organized as
+case studies, dealing with problems like portfolio insurance or risk
+estimation; in particular, several chapters explain optimization
+heuristics and how to use them for portfolio selection or the
+calibration of option pricing models. Such practical examples allow
+readers to learn the required steps for solving specific problems, and
+to apply these steps to other problems, too. At the same time, the
+chosen applications are relevant enough to make the book a useful
+reference on how to handle given problems. Some highlights:
+
+Option pricing: binomial trees, finite differences and Monte Carlo
+simulation; but also integration methods for pricing with the
+characteristic function (eg, Heston, Bates,
+Variance-Gamma). Calibration of surfaces under such models.
+
+Simulation: how to create random variates under specified marginal
+distributions, how to induce cross-sectional correlation (beyond
+Cholesky for Gaussian variates) and serial dependencies; examples for
+copulaes; resampling: bootstrapping data sets 
+
+Portfolio optimization:
+methods to optimize portfolio under any objective function (eg,
+drawdown, partial moments) and constraints (eg, cardinality
+constraints). Sample programs for classical mean-variance analysis are
+also given.  
+
+Yield-curve calibration: various strategies how to
+calibrate a yield-curve model: through fitting to bootstrapped yields,
+to bond prices or to yields-to-maturity
+
+
 More specifically, the package comes with implementations of several
 optimisation heuristics such as Differential Evolution and Genetic
 Algorithms.  There are also functions for the valuation of financial
