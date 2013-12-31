@@ -1,3 +1,7 @@
+v0.31-1  (2013-12-31)
+
+  o expanded vignette "Overview of the NMOF package"
+
 v0.31-0  (2013-12-27)
 
   o new function 'callMerton' for European calls under Merton's
