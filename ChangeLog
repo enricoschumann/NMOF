@@ -1,3 +1,9 @@
+2013-12-31  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Version): Version: 0.31-1
+
+	* vignettes/An_overview.Rnw: expanded overview vignette
+
 2013-12-27  Enrico Schumann  <es@enricoschumann.net>
 
 	* DESCRIPTION (Version): Version: 0.31-0
