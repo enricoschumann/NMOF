@@ -21,7 +21,7 @@
 \renewenvironment{Schunk}{\vspace{\topsep}}{\vspace{\topsep}}
 <<echo=false>>=
 require("NMOF")
-options(continue = " ", digits = 5, max.print = 10)
+options(continue = " ", digits = 5, max.print = 10, width = 85)
 @
 \begin{document}
 {\raggedright{\LARGE An Overview of the NMOF Package}}\medskip
@@ -30,53 +30,49 @@ options(continue = " ", digits = 5, max.print = 10)
 \noindent \texttt{es@enricoschumann.net}\\
 \bigskip
 
-\section{The package and the book}
+\section{The book and the package}
+
+\subsection{The book}
+
+\cite{Gilli2011b} is all about tools for computational finance, with
+emphasis on simulation and optimisation.  Many chapters are organised
+as case studies, covering portfolio insurance or risk estimation.  In
+particular, several chapters explain optimisation heuristics and show
+in detail how to use these methods for portfolio selection or the
+calibration of option pricing models.  Some highlights:
+
+\begin{itemize}
+\item Simulation: how to create random variates under specified
+  marginal distributions; how to induce cross-sectional correlation
+  (beyond Cholesky for Gaussian variates) and serial dependencies;
+  examples for copul\ae; resampling: bootstrapping data sets.
+
+\item Option pricing: binomial trees, finite differences and Monte
+  Carlo simulation; but also integration methods for pricing with the
+  characteristic function (eg, Heston, Bates,
+  Variance-Gamma). Calibration of surfaces under such models.
+
+\item Portfolio optimisation: methods to optimise portfolio under any
+  objective function (eg, drawdown, partial moments) and constraints
+  (eg, cardinality constraints). Sample programs for classical
+  mean-variance analysis are also given.
+
+\item Yield-curve calibration: various strategies how to calibrate a
+  yield-curve model: through fitting to bootstrapped yields, to bond
+  prices or to yields-to-maturity.
+\end{itemize}
+
+\subsection{The package}
 
 \noindent The \textsc{nmof} package provides many of the code examples
 and data sets used in \cite{Gilli2011b}; it also contains several
-functions that have not been described in the book.
+functions that have not been described in the book.  Notably, the
+package provides implementations of several optimisation heuristics
+such as Differential Evolution and Genetic Algorithms.  There are also
+functions for the valuation of financial instruments (such as bonds
+and options) and to help with stochastic simulations.
 
-
-The book explains tools for computational finance. It covers
-fundamental numerical analysis and computational techniques, for
-example for option pricing, but two topics are given special
-attention: simulation and optimization. Many chapters are organized as
-case studies, dealing with problems like portfolio insurance or risk
-estimation; in particular, several chapters explain optimization
-heuristics and how to use them for portfolio selection or the
-calibration of option pricing models. Such practical examples allow
-readers to learn the required steps for solving specific problems, and
-to apply these steps to other problems, too. At the same time, the
-chosen applications are relevant enough to make the book a useful
-reference on how to handle given problems. Some highlights:
-
-Option pricing: binomial trees, finite differences and Monte Carlo
-simulation; but also integration methods for pricing with the
-characteristic function (eg, Heston, Bates,
-Variance-Gamma). Calibration of surfaces under such models.
-
-Simulation: how to create random variates under specified marginal
-distributions, how to induce cross-sectional correlation (beyond
-Cholesky for Gaussian variates) and serial dependencies; examples for
-copulaes; resampling: bootstrapping data sets 
-
-Portfolio optimization:
-methods to optimize portfolio under any objective function (eg,
-drawdown, partial moments) and constraints (eg, cardinality
-constraints). Sample programs for classical mean-variance analysis are
-also given.  
-
-Yield-curve calibration: various strategies how to
-calibrate a yield-curve model: through fitting to bootstrapped yields,
-to bond prices or to yields-to-maturity
-
-
-More specifically, the package comes with implementations of several
-optimisation heuristics such as Differential Evolution and Genetic
-Algorithms.  There are also functions for the valuation of financial
-instruments (such as bonds and options) and to help with stochastic
-simulations.
-
+\section{What's in the package}
 
 \subsection{Optimisation}
   
@@ -102,31 +98,29 @@ See \texttt{{bundData}}, \texttt{{fundData}} and
 \texttt{{optionData}}.
 
 
-
-\section{Other resources}
-
 \subsection{Code examples from the book}
 
-All R code examples in the book can be displayed (and used) via the
-function \texttt{showExample}.  
-
+All \textsf{R} code examples in the book can be displayed (and used)
+via the function \texttt{showExample}.  Call it without any argument
+to see all examples.
 <<>>=
 showExample()
 @ 
-
-<<>>=
-showExample("randn")
-@ 
-
 
 \subsection{Vignettes}
 
 The package comes with a number of tutorials, written as vignettes.
 See \texttt{?vignette} for how to extract the code from these
 documents.
-<<>>=
+<<eval=false>>=
 vignette(package = "NMOF")
 @ 
+<<echo=false>>=
+x <- vignette(package = "NMOF")
+cat(paste(strwrap(x$results[,"Title"], exdent = 2), collapse = "\n"))
+@ 
+
+\section{Other resources}
 
 \subsection{Websites}
 <<eval=false>>=
@@ -148,15 +142,20 @@ file.show(system.file("NMOFex/NMOFman.R", package = "NMOF"))
 
 \subsection{Tests}
 
-
-
-<<>>=
-file.show(system.file("unitTests/report.txt",   package = "NMOF"))
-test.rep <- readLines(system.file("unitTests/report.txt",   package = "NMOF"))
+A goal for the \textsc{nmof} package is to provide reliable code.
+Thus, a large number of test cases is included.  
+<<echo=false>>=
+test.rep <- readLines(system.file("unitTests/report.txt", 
+                                  package = "NMOF"))
 nt <- gsub(".*\\((\\d+) checks?\\).*", "\\1",
            grep("\\(\\d+ checks?\\)", test.rep))
-cat("Number of unit tests: ", sum(as.numeric(nt)))
+cat("Package version  ", gsub("(.*)[.]([0-9]+)$", "\\1-\\2",
+                            packageVersion("NMOF")), "\n",
+    "Number of tests: ", sum(as.numeric(nt)), sep = "")
 @
+These tests are stored in subdirectory \texttt{unitTests}.
+
+
 \nocite{Gilli2011b}
 \bibliographystyle{plainnat}
 \bibliography{NMOF}
