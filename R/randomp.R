@@ -1,5 +1,5 @@
 ## -*- truncate-lines: t; -*-
-## Time-stamp: <2013-10-10 15:00:42 CEST (es)>
+## Time-stamp: <2014-01-06 16:13:59 CET (es)>
 
 ## create random portfolios
 
@@ -8,7 +8,7 @@ long.only <- function(n, budget = 1) {
     budget * ans/sum(ans)
 }
 
-long.only2 <- function(n, k, budget = 1) {
+long.only.k <- function(n, k, budget = 1) {
     ans <- numeric(n)
     i <- sample.int(n, k)
     ans[i] <- runif(length(i))
@@ -22,4 +22,9 @@ long.short <- function(n, budget = 1) {
         ans[tmp] <- -ans[tmp]
     }
     budget*ans/sum(ans)
+}
+
+random.p <- function(n, budget = 1,
+                     wmin = 0, wmax = Inf, abs.max = Inf) {
+
 }
