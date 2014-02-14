@@ -32,10 +32,10 @@
   vignette (\code{TAportfolio}) and some tests.  Finally, \pkg{RUnit} is
   needed to run the tests in subdirectory \sQuote{\code{unitTests}}.
 
-  Version numbering: minor version numbers (like in \code{x.1-x}) are
-  incremented when a feature is added or an existing feature is
-  substantially revised. The patch level (\code{x.x-1}) is incremented
-  with any published change.
+  Version numbering: package versions are numbered in the form
+  \code{major-minor-patch}.  Minor version numbers are incremented when
+  a feature is added or an existing feature is substantially revised.
+  The patch level is incremented with any published change.
 
   \subsection{Data}{
 
@@ -45,27 +45,27 @@
   }
 
   \subsection{Optimisation}{
-
+    
     There are functions for Differential Evolution (\code{\link{DEopt}}),
     Genetic Algorithms (\code{\link{GAopt}}), (Stochastic) Local Search
     (\code{\link{LSopt}}), Particle Swarm (\code{\link{PSopt}}) and
     Threshold Accepting (\code{\link{TAopt}}). 
 
-   }
+  }
+  
+  \subsection{Option Pricing}{
 
-   \subsection{Option Pricing}{
-
-     See \code{\link{vanillaOptionEuropean}},
-     \code{\link{vanillaOptionAmerican}}, \code{\link{putCallParity}}.
-     For pricing methods that use the characteristic function, see
-     \code{\link{callCF}}.
-
-   }
-
-   \subsection{Simulation}{
-     
+    See \code{\link{vanillaOptionEuropean}},
+    \code{\link{vanillaOptionAmerican}}, \code{\link{putCallParity}}.
+    For pricing methods that use the characteristic function, see
+    \code{\link{callCF}}.
+    
+  }
+  
+  \subsection{Simulation}{
+    
     See \code{\link{resampleC}} and \code{\link{mc}}.
-
+    
   }
 }
 \author{Enrico Schumann
