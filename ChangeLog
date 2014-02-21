@@ -1,3 +1,11 @@
+2014-02-21  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Version): Version: 0.31-2
+
+	* vignettes/An_overview.Rnw: added links to mailing lists
+
+	* man/optionData.Rd: removed call to 'data'
+
 2014-01-06  Enrico Schumann  <es@enricoschumann.net>
 
 	* R/randomp.R (random.p): 'sketch' of general function for

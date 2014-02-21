@@ -7,7 +7,7 @@
 \description{
   Closing prices of DAX index options as of 2012-02-10.
 }
-\usage{data(optionData)}
+\usage{optionData}
 \format{
   \code{optionData} is a list with six components:
   \describe{
