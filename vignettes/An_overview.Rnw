@@ -113,7 +113,7 @@ The package comes with a number of tutorials, written as vignettes.
 See \texttt{?vignette} for how to extract the code from these
 documents.
 <<eval=false>>=
-vignette(package = "NMOF")
+vignette(package = "NMOF")  ## display vignette titles
 @ 
 <<echo=false>>=
 x <- vignette(package = "NMOF")
@@ -124,16 +124,17 @@ cat(paste(strwrap(x$results[,"Title"], exdent = 2), collapse = "\n"))
 
 \subsection{Websites}
 
-<<eval=false>>=
-browseURL("http://nmof.net")                     ## the book-website
-browseURL("http://enricoschumann.net/NMOF.htm")  ## the package-website
-@ 
+\noindent The book website: \url{http://nmof.net} \smallskip
+
+\noindent The package website:
+\url{http://enricoschumann.net/NMOF.htm}
+
 
 \subsection{Manual}
 
 A manual is available from
-\url{http://enricoschumann.net/NMOF.htm#NMOFmanual} (though it is
-still work in process).  The code examples from the manual are also
+\url{http://enricoschumann.net/NMOF.htm#NMOFmanual}\,, though it is
+still work in process.  The code examples from the manual are also
 included in the package; they can be directly accessed from within
 \textsf{R}.
 
@@ -144,7 +145,7 @@ file.show(system.file("NMOFex/NMOFman.R", package = "NMOF"))
 \subsection{Tests}
 
 A goal for the \textsc{nmof} package is to provide reliable code.
-Thus, a large number of test cases is included.  
+Thus, a large number of test cases is included.
 <<echo=false>>=
 test.rep <- readLines(system.file("unitTests/report.txt", 
                                   package = "NMOF"))
@@ -156,17 +157,28 @@ cat("Package version  ", gsub("(.*)[.]([0-9]+)$", "\\1-\\2",
 @
 These tests are stored in subdirectory \texttt{unitTests}.
 
-\subsection{Mailing List}
 
 
 
-\subsection{Feedback and discussion}
 
-Applications, as long as they are finance-related, may be best
-discussed on R-SIG-Finance.
+\subsection{News, feedback and discussion}
 
-Please send bug reports or suggestions directly to the package
-maintainer.
+New releases and other news related to the book and the package are
+announced on the \texttt{NMOF-news} mailing list:
+
+\noindent \url{https://lists.r-forge.r-project.org/cgi-bin/mailman/listinfo/nmof-news}
+
+\medskip
+
+\noindent Applications, as long as they are finance-related, should be
+discussed on the \texttt{R-SIG-Finance} mailing list:
+\url{https://stat.ethz.ch/mailman/listinfo/r-sig-finance}
+
+\medskip
+
+\noindent Please send bug reports or suggestions directly to the
+package maintainer.
+
 
 
 \nocite{Gilli2011b}
