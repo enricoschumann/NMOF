@@ -6,10 +6,9 @@
 \description{
 
   Functions, data and other \R code from the book \sQuote{Numerical
-  Methods and Optimization in Finance}.  Many functions are still
-  experimental; interfaces may change in the future; there is little
-  error handling.  Comments/corrections/remarks/suggestions are very
-  welcome (please contact the maintainer directly).
+  Methods and Optimization in Finance}.
+  Comments/corrections/remarks/suggestions are very welcome (please
+  contact the maintainer directly).
 
 }
 \details{
