@@ -1,3 +1,9 @@
+2014-02-25  Enrico Schumann  <es@enricoschumann.net>
+
+	* man/colSubset.Rd: added file
+
+	* R/colSubset.R (colSubset): added function
+
 2014-02-21  Enrico Schumann  <es@enricoschumann.net>
 
 	* DESCRIPTION (Version): Version: 0.31-2
