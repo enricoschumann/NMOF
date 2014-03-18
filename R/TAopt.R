@@ -74,7 +74,7 @@ TAopt <- function(OF, algo = list(), ...) {
                 xc  <- xn
                 xcF <- xnF
             }
-            vT <- algoD$q * ( ((nT - 1L):0L) / nT )
+            vT <- algoD$q * ((nT - 1L):0)/nT
             vT <- quantile(diffF, vT, na.rm = FALSE)
             vT[nT] <- 0 ### set last threshold to zero
             if (printBar)
