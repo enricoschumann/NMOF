@@ -1,3 +1,12 @@
+2014-03-18  Enrico Schumann  <es@enricoschumann.net>
+
+	* NAMESPACE: added colSubset
+	added TA.info
+
+2014-03-17  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/TAopt.R (TA.info()): added function
+
 2014-02-25  Enrico Schumann  <es@enricoschumann.net>
 
 	* man/colSubset.Rd: added file
