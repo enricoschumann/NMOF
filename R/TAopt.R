@@ -128,6 +128,9 @@ TAopt <- function(OF, algo = list(), ...) {
     counter <- 0L
     for (t in seq_len(nT)) {
         for (s in seq_len(nS)) {
+            ## number of iterations
+            counter <- counter + 1L
+
             xn <- N1(xc)
             xnF <- OF1(xn)
             if (xnF <= (xcF + vT[t])) {
@@ -139,8 +142,6 @@ TAopt <- function(OF, algo = list(), ...) {
                 }
             }
 
-            ## number of iterations
-            counter <- counter + 1L
 
             if (printBar)
                 setTxtProgressBar(whatGen, value = counter)
@@ -179,4 +180,60 @@ TAopt <- function(OF, algo = list(), ...) {
     list(xbest = xbest, OFvalue = xbestF,
          Fmat = Fmat, xlist = xlist, vT = vT,
          initial.state = state)
+}
+
+
+                                        # METHODS
+
+print.TAopt <- function(x, ...) {
+    cat("Threshold Accepting.\n")
+    cat(".. objective function value of solution: ", x$OFvalue, "\n")    
+}
+
+plot.TAopt <- function(x, y, ...) {
+    plot(x$vT, xlab = "Threshold", ylab = "Values")
+    dev.new()
+    
+}
+
+
+TA.info <- function(n = 0L) {
+    e <- parent.frame(3L + n)
+    step <- NA
+    threshold <- NA
+    iteration <- NA
+    if (exists("s", envir = e, inherits = FALSE))
+        step <- get("s", envir = e, inherits = FALSE)
+    if (exists("t", envir = e, inherits = FALSE))
+        threshold <- get("t", envir = e, inherits = FALSE)
+    if (exists("counter", envir = e, inherits = FALSE))
+        iteration <- get("counter", envir = e, inherits = FALSE)
+    list(iteration = iteration,
+         step = step,
+         threshold = threshold)         
+}
+
+if (FALSE) {
+    ## objective function  
+    fun <- function(x) 
+        0
+
+    ## neighbourhood function  
+    nb <- function(x) {
+        tmp <- TA.info()
+        cat("current threshold ", tmp$threshold,
+            "| current step ", tmp$step,
+            "| current iteration ", tmp$iteration, "\n")
+        x
+    }
+
+    ## run TA  
+    algo <- list(nS = 5,
+                 nT = 2,
+                 nD = 20,
+                 x0 = rep(0, 5),
+                 neighbour = nb,
+                 printBar = FALSE)
+    ignore <- TAopt(fun, algo)
+
 }
