@@ -67,7 +67,8 @@ TAopt <- function(OF, algo = list(), ...) {
             diffF <- numeric(nD)
             diffF[] <- NA
             for (i in seq_len(nD)){
-                if (printBar) setTxtProgressBar(whatGen, value = i)
+                if (printBar)
+                    setTxtProgressBar(whatGen, value = i)
                 xn  <- N1(xc)
                 xnF <- OF1(xn)
                 diffF[i] <- abs(xcF - xnF)
@@ -133,7 +134,7 @@ TAopt <- function(OF, algo = list(), ...) {
 
             xn <- N1(xc)
             xnF <- OF1(xn)
-            if (xnF <= (xcF + vT[t])) {
+            if (xnF <= xcF + vT[t]) {
                 xc <- xn
                 xcF <- xnF
                 if (xnF <= xbestF) {
@@ -141,7 +142,6 @@ TAopt <- function(OF, algo = list(), ...) {
                     xbestF <- xnF
                 }
             }
-
 
             if (printBar)
                 setTxtProgressBar(whatGen, value = counter)
