@@ -51,7 +51,7 @@ TAopt <- function(OF, algo = list(), ...) {
 
     ## compute thresholds
     if (is.null(algoD$vT)) {
-        if (algoD$q < 1e-13) {
+        if (algoD$q < .Machine$double.eps^0.5) {
             vT <- numeric(nT)
         } else {
             if (printDetail) {
