@@ -61,7 +61,8 @@ TAopt <- function(OF, algo = list(), ...) {
                 startTime <- proc.time()
             }
             if (printBar)
-                whatGen <- txtProgressBar (min = 1, max = nD, style = 3)
+                whatGen <- txtProgressBar(min = 1, max = nD, style = 3,
+                                          getOption("width")*0.9)
             xc  <- x0
             xcF <- OF1(xc)
             diffF <- numeric(nD)
@@ -123,7 +124,8 @@ TAopt <- function(OF, algo = list(), ...) {
         flush.console()
     }
     if (printBar)
-        whatGen <- txtProgressBar(min = 1, max = niter, style = 3)
+        whatGen <- txtProgressBar(min = 1, max = niter, style = 3,
+                                  getOption("width")*0.9)
 
     ## main algorithm
     counter <- 0L
@@ -187,13 +189,12 @@ TAopt <- function(OF, algo = list(), ...) {
 
 print.TAopt <- function(x, ...) {
     cat("Threshold Accepting.\n")
-    cat(".. objective function value of solution: ", x$OFvalue, "\n")    
+    cat(".. objective function value of solution: ", x$OFvalue, "\n")
 }
 
 plot.TAopt <- function(x, y, ...) {
     plot(x$vT, xlab = "Threshold", ylab = "Values")
     dev.new()
-    
 }
 
 
@@ -202,38 +203,17 @@ TA.info <- function(n = 0L) {
     step <- NA
     threshold <- NA
     iteration <- NA
+    iteration.sampling <- NA
+    if (exists("i", envir = e, inherits = FALSE))
+        step <- get("i", envir = e, inherits = FALSE)
     if (exists("s", envir = e, inherits = FALSE))
         step <- get("s", envir = e, inherits = FALSE)
     if (exists("t", envir = e, inherits = FALSE))
         threshold <- get("t", envir = e, inherits = FALSE)
     if (exists("counter", envir = e, inherits = FALSE))
         iteration <- get("counter", envir = e, inherits = FALSE)
-    list(iteration = iteration,
+    list(iteration.sampling = iteration.sampling,
+         iteration = iteration,
          step = step,
-         threshold = threshold)         
-}
-
-if (FALSE) {
-    ## objective function  
-    fun <- function(x) 
-        0
-
-    ## neighbourhood function  
-    nb <- function(x) {
-        tmp <- TA.info()
-        cat("current threshold ", tmp$threshold,
-            "| current step ", tmp$step,
-            "| current iteration ", tmp$iteration, "\n")
-        x
-    }
-
-    ## run TA  
-    algo <- list(nS = 5,
-                 nT = 2,
-                 nD = 20,
-                 x0 = rep(0, 5),
-                 neighbour = nb,
-                 printBar = FALSE)
-    ignore <- TAopt(fun, algo)
-
+         threshold = threshold)
 }

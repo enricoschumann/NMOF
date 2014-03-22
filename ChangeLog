@@ -1,3 +1,7 @@
+2014-03-19  Enrico Schumann  <es@enricoschumann.net>
+
+	* man/TA.info.Rd: added file
+
 2014-03-18  Enrico Schumann  <es@enricoschumann.net>
 
 	* NAMESPACE: added colSubset
