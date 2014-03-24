@@ -1,14 +1,12 @@
-RUNIT TEST PROTOCOL -- Wed Mar 19 11:41:02 2014 
+RUNIT TEST PROTOCOL -- Mon Mar 24 20:59:13 2014 
 *********************************************** 
 Number of test functions: 21 
 Number of errors: 0 
-Number of failures: 1 
+Number of failures: 0 
 
  
 1 Test Suite : 
-NMOF - 21 test functions, 0 errors, 1 failure
-FAILURE in test.DEopt: Error in checkEquals(round(sol$xbest, 3), c(-4, -3, -2, -1, 0, 1, 2, 3,  : 
-  Mean relative difference: 0.000687543
+NMOF - 21 test functions, 0 errors, 0 failures
 
 
 
@@ -21,50 +19,48 @@ Involved directory:
 ~/Packages/NMOF/inst/unitTests 
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTests2.R 
-test.bracketing: (13 checks) ... OK (0 seconds)
-test.gridSearch: (18 checks) ... OK (0.17 seconds)
-test.xwGauss: (4 checks) ... OK (0 seconds)
+test.bracketing: (13 checks) ... OK (0.03 seconds)
+test.gridSearch: (18 checks) ... OK (1.02 seconds)
+test.xwGauss: (4 checks) ... OK (0.1 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsBonds.R 
-test.ytm: (6 checks) ... OK (0 seconds)
+test.ytm: (6 checks) ... OK (0.01 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestscallCF.R 
-test.callCF: (22 checks) ... OK (0.02 seconds)
+test.callCF: (22 checks) ... OK (0.13 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsDEopt.R 
-test.DEopt: FAILURE !! (check number 21)
-Error in checkEquals(round(sol$xbest, 3), c(-4, -3, -2, -1, 0, 1, 2, 3,  : 
-  Mean relative difference: 0.000687543
+test.DEopt: (23 checks) ... OK (17.64 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsGAopt.R 
-test.GAopt: (22 checks) ... OK (0.2 seconds)
+test.GAopt: (22 checks) ... OK (1.24 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsInternals.R 
-test.checkList: (10 checks) ... OK (0.01 seconds)
+test.checkList: (10 checks) ... OK (0.04 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsLSopt.R 
-test.LSopt: (7 checks) ... OK (0.26 seconds)
+test.LSopt: (7 checks) ... OK (1.54 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsMA.R 
-test.MA: (3 checks) ... OK (0 seconds)
+test.MA: (3 checks) ... OK (0.01 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsOptions.R 
-test.callHestoncf: (3 checks) ... OK (0.01 seconds)
-test.EuropeanCall: (6 checks) ... OK (0.01 seconds)
-test.EuropeanCallBE: (6 checks) ... OK (0.01 seconds)
+test.callHestoncf: (3 checks) ... OK (0.03 seconds)
+test.EuropeanCall: (6 checks) ... OK (0.04 seconds)
+test.EuropeanCallBE: (6 checks) ... OK (0.04 seconds)
 test.testFunctions: (6 checks) ... OK (0 seconds)
-test.vanillaOptionAmerican: (6 checks) ... OK (0.03 seconds)
-test.vanillaOptionEuropean: (2124 checks) ... OK (10.18 seconds)
-test.vanillaOptionImpliedVol: (12 checks) ... OK (0.16 seconds)
+test.vanillaOptionAmerican: (6 checks) ... OK (0.16 seconds)
+test.vanillaOptionEuropean: (2124 checks) ... OK (58.68 seconds)
+test.vanillaOptionImpliedVol: (12 checks) ... OK (0.94 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsPCparity.R 
-test.putCallParity: (10 checks) ... OK (0 seconds)
+test.putCallParity: (10 checks) ... OK (0.01 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsPSopt.R 
-test.PSopt: (14 checks) ... OK (3.63 seconds)
+test.PSopt: (14 checks) ... OK (22.04 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsRestartOpt.R 
-test.restartOpt: (1 checks) ... OK (0.15 seconds)
+test.restartOpt: (1 checks) ... OK (0.9 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsTAopt.R 
-test.TAopt: (13 checks) ... OK (0.35 seconds)
+test.TAopt: (13 checks) ... OK (2.08 seconds)

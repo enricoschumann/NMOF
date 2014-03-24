@@ -1,3 +1,8 @@
+2014-03-24  Enrico Schumann  <es@enricoschumann.net>
+
+	* vignettes/LSselect.Rnw: changed solution-representation from
+	numeric to logical
+
 2014-03-19  Enrico Schumann  <es@enricoschumann.net>
 
 	* man/TA.info.Rd: added file
