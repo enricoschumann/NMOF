@@ -1,3 +1,12 @@
+v0.32-0  (2013-03-26)
+
+  o new function 'colSubset'
+
+  o experimental: new function 'TA.info' for accessing information
+  during optimisation run (eg, current iteration)
+
+  o rewrote example in 'Asset selection with Local Search'
+
 v0.31-2  (2013-02-21)
 
   o various small updates in documentation and vignettes (eg,
@@ -5,14 +14,14 @@ v0.31-2  (2013-02-21)
 
 v0.31-1  (2013-12-31)
 
-  o expanded vignette "Overview of the NMOF package"
+  o expanded vignette 'Overview of the NMOF package'
 
 v0.31-0  (2013-12-27)
 
   o new function 'callMerton' for European calls under Merton's
     jump--diffusion model
 
-  o new vignette "Overview of the NMOF package"
+  o new vignette 'Overview of the NMOF package'
 
   o smaller changes/updates in documentation
 
@@ -188,7 +197,7 @@ v0.25-7  (2012-08-17)
 v0.25-6  (2012-08-07)
 
   o Package 'parallel' is now suggested. In functions gridSearch,
-    restartOpt, bracket: with method "multicore" the functions
+    restartOpt, bracket: with method 'multicore' the functions
     first check if package 'parallel' is available; if not, they
     look for package 'multicore'
 

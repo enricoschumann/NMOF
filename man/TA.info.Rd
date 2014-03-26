@@ -59,8 +59,8 @@ fun <- function(x)
 ## but it reports information
 nb <- function(x) {
     tmp <- TA.info()
-    cat("current threshold ", tmp$threshold,
-        "| current step ", tmp$step,
+    cat("current threshold ",   tmp$threshold,
+        "| current step ",      tmp$step,
         "| current iteration ", tmp$iteration, "\n")
     x
 }
@@ -73,5 +73,4 @@ algo <- list(nS = 5,
              neighbour = nb,
              printBar = FALSE)
 ignore <- TAopt(fun, algo)
-
 }

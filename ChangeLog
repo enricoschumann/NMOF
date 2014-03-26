@@ -1,3 +1,9 @@
+2014-03-26  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Version): Version: 0.32-0
+
+	* man/colSubset.Rd: escaped % in example
+
 2014-03-24  Enrico Schumann  <es@enricoschumann.net>
 
 	* vignettes/LSselect.Rnw: changed solution-representation from
