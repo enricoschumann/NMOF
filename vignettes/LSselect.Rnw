@@ -32,22 +32,21 @@ options(continue = " ", digits = 5)
 
 \section{Introduction}
 
-\noindent We provide a code example for a simple asset selection
-problem; for more details, please see \citet[ch. 12
-and~13]{Gilli2011b}.  The code example here is slightly different from
-that given in the book; to see the latter, see the script
-\texttt{exampleLS.R}:
+\noindent We provide a code example for a simple asset-selection
+model; please see \citet[ch. 12 and~13]{Gilli2011b} for more
+details.  The code example here differs slightly from the book's presentation.
+To see the latter, check the script \texttt{exampleLS.R} (after
+attaching the package):
 <<eval=false>>=
 showExample("exampleLS", chapter = "Portfolio")
 @ 
-
 We start by attaching the package and fixing a seed.
 <<>>=
 require("NMOF")
 set.seed(112233)
 @
 
-\section{The problem}
+\section{The model}
 
 \noindent We wish to select between $K_{\min}$ and~$K_{\max}$ out of
 $n_{\mathrm{A}}$ assets such that an equally-weighted portfolio of
@@ -67,15 +66,10 @@ cardinality of this set, ie, the number of assets in the portfolio.
 We simulate 500~assets: each gets a random volatility between 20\% and
 40\%, and all pairwise correlations are set to~0.6.
 <<>>=
-## number of assets
-na <- 500L                       
-
-## correlation matrix
-C <- array(0.6, dim = c(na, na)) 
+na <- 500L                          ## number of assets
+C <- array(0.6, dim = c(na, na))    ## correlation matrix
 diag(C) <- 1
-
-## covariance matrix
-minVol <- 0.20; maxVol <- 0.40
+minVol <- 0.20; maxVol <- 0.40      ## covariance matrix
 Vols <- (maxVol - minVol) * runif(na) + minVol
 Sigma <- outer(Vols, Vols) * C   
 @
@@ -110,17 +104,17 @@ neighbour <- function(xc, Data) {
 @
 We collect all necessary information in the list \texttt{Data}: the
 variance--corvariance matrix \texttt{Sigma}, the cardinality
-limits~\texttt{Kmin} and \texttt{Kmax}, the total number of assets
+limits \texttt{Kmin} and~\texttt{Kmax}, the total number of assets
 \texttt{na} (ie, the cardinality of the asset universe), and the
 parameter~\texttt{nc}.  This parameter controls the neighbourhood: it
 gives the number of assets that are to be changed when a new solution
 is computed.
 <<>>=
 Data <- list(Sigma = Sigma,
-             Kmin = 30L,
-             Kmax = 60L,
-             na = na,
-             nc = 1L)
+              Kmin = 30L,
+              Kmax = 60L,
+              na = na,
+              nc = 1L)
 @
 
 \section{Solving the model}
@@ -133,37 +127,40 @@ x0 <- logical(na)
 x0[assets] <- TRUE
 @ 
 With this implementation we assume that \texttt{Data\$Kmax >
-  Data\$Kmin}. (If \texttt{Data\$Kmax == Data\$Kmin}, then
+  Data\$Kmin}. (If \texttt{Data\$Kmax} equals \texttt{Data\$Kmin}, then
 \texttt{sample} returns a draw from \texttt{1:Data\$Kmin}.)
 
 We collect all settings for the algorithm in a list \texttt{algo}.
 <<>>=
 algo <- list(x0 = x0,
-      neighbour = neighbour,
-             nS = 5000L,
-    printDetail = FALSE,
-       printBar = FALSE)
+              neighbour = neighbour,
+              nS = 5000L,
+              printDetail = FALSE,
+              printBar = FALSE)
 @
 It remains to run the algorithm.
-<<fig = TRUE, height = 4>>=
+<<fig = TRUE, height = 3.5>>=
 system.time(sol1 <- LSopt(OF, algo, Data))
 sqrt(sol1$OFvalue)
-par(ylog = TRUE, bty = "n", las = 1, tck = 0.01)
-plot(sqrt(sol1$Fmat[ ,2L]),
-     type = "l", xlab = "", ylab = "Portfolio volatility")
+par(ylog = TRUE, bty = "n", las = 1, tck = 0.01, mar = c(4,4,1,1))
+plot(sqrt(sol1$Fmat[ ,2L]), main = "",
+     type = "l", ylab = "portfolio volatility", xlab = "iterations")
 @
+
 (Recall that the simulated data had volatilities between 20 and 40\%.)
 
 We can also run the search repeatedly with the same starting value.
-<<fig = TRUE, height = 4>>=
+<<fig = TRUE, height = 3.5>>=
 nRuns <- 3L
 allRes <- restartOpt(LSopt, n = nRuns, OF, algo = algo, Data = Data)
 allResOF <- numeric(nRuns)
 for (i in seq_len(nRuns))
     allResOF[i] <- sqrt(allRes[[i]]$OFvalue)
-par(bty = "n")
-plot(ecdf(allResOF), main = "Portfolio volatility", pch = 21)
+par(bty = "n", las = 1, tck = 0.01, mar = c(4,4,1,1))
+plot(ecdf(allResOF), xlab = "x: Portfolio volatility", pch = 21,
+     main = "")
 @
+
 (We run \texttt{LSopt} only \Sexpr{nRuns} times to keep the build time
 for the vignette acceptable. To get more meaningful results you should
 increase \texttt{nRuns}.)
