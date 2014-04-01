@@ -46,7 +46,7 @@ duration(cf, times, yield, modified = TRUE, raw = FALSE)
   }
   \item{offset}{
     numeric: a \sQuote{base} rate over which to compute the yield to
-    maturity.  See Details.
+    maturity.  See Details and Examples.
   }
   \item{modified}{
     logical: return modified duration (default \code{TRUE})
@@ -64,14 +64,16 @@ duration(cf, times, yield, modified = TRUE, raw = FALSE)
   \code{ytm} uses Newton's method to compute the yield-to-maturity of a
   bond (a.k.a. internal interest rate). When used with a bond, the initial
   outlay (ie, the bonds dirty price) needs be included in the vector of
-  cashflows.  For coupon bond, a good starting value \code{y0} is often
+  cashflows.  For coupon bond, a good starting value \code{y0} is
   the coupon divided by the dirty price of the bond.
 
+  An \code{offset} can be specified either as a single number or as a
+  vector of zero rates.  See Examples.
+  
   %% \deqn{\mathrm{upper\ partial\ moment} = \frac{1}{n} \sum_{x >
   %%     t}\left(x - t \right)^e}{%
   %%   upper partial moment = sum_{x > t}(x - t)^e / n}
-
-  
+    
 }
 \value{
   Numeric.
