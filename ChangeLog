@@ -1,3 +1,8 @@
+2014-04-01  Enrico Schumann  <es@enricoschumann.net>
+
+	* man/bonds.Rd: 'offset' can be a vector (that worked before as
+	well, but is now documented)
+
 2014-03-26  Enrico Schumann  <es@enricoschumann.net>
 
 	* DESCRIPTION (Version): Version: 0.32-0
