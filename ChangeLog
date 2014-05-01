@@ -1,3 +1,8 @@
+2014-05-01  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/integrate.R (xwGauss): use tolower before matching the method
+	(xwGauss): removed line ends
+
 2014-04-01  Enrico Schumann  <es@enricoschumann.net>
 
 	* man/bonds.Rd: 'offset' can be a vector (that worked before as
