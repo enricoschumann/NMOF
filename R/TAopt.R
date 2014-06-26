@@ -184,20 +184,6 @@ TAopt <- function(OF, algo = list(), ...) {
          initial.state = state)
 }
 
-
-                                        # METHODS
-
-print.TAopt <- function(x, ...) {
-    cat("Threshold Accepting.\n")
-    cat(".. objective function value of solution: ", x$OFvalue, "\n")
-}
-
-plot.TAopt <- function(x, y, ...) {
-    plot(x$vT, xlab = "Threshold", ylab = "Values")
-    dev.new()
-}
-
-
 TA.info <- function(n = 0L) {
     e <- parent.frame(3L + n)
     step <- NA
@@ -217,3 +203,18 @@ TA.info <- function(n = 0L) {
          step = step,
          threshold = threshold)
 }
+
+
+                                        # METHODS (not exported)
+
+print.TAopt <- function(x, ...) {
+    cat("Threshold Accepting.\n")
+    cat(".. objective function value of solution: ", x$OFvalue, "\n")
+}
+
+plot.TAopt <- function(x, y, ...) {
+    plot(x$vT, xlab = "Threshold", ylab = "Values")
+    dev.new()
+}
+
+
