@@ -44,14 +44,20 @@ PSopt <- function(OF, algo = list(), ...) {
     if (printBar && printDetail > 1)
         printBar <- FALSE
 
-    OF1 <- function(x) OF(x, ...)
-    Pe1 <- function(x) algoD$pen(x, ...)
-    Re1 <- function(x) algoD$repair(x, ...)
-    cV1 <- function(x) algoD$changeV(x, ...)
+    OF1 <- function(x)
+        OF(x, ...)
+    Pe1 <- function(x)
+        algoD$pen(x, ...)
+    Re1 <- function(x)
+        algoD$repair(x, ...)
+    cV1 <- function(x)
+        algoD$changeV(x, ...)
 
     ## auxiliary functions
-    pmax2 <- function(x1,x2) ( (x1 + x2) + abs(x1 - x2) ) / 2
-    pmin2 <- function(x1,x2) ( (x1 + x2) - abs(x1 - x2) ) / 2
+    pmax2 <- function(x1,x2)
+        ( (x1 + x2) + abs(x1 - x2) ) / 2
+    pmin2 <- function(x1,x2)
+        ( (x1 + x2) - abs(x1 - x2) ) / 2
 
     if (algoD$storeF)
         Fmat <- array(NA, c(nG, nP)) else Fmat <- NA
@@ -83,18 +89,25 @@ PSopt <- function(OF, algo = list(), ...) {
                 mP[ ,s] <- Re1(mP[ ,s])
         } else {
             mP <- Re1(mP)
+            if (!all(dim(mP) == c(d, nP)))
+                stop("repair function returned population matrix of wrong size")
         }
     }
     if (algoD$loopOF) {
         for(s in seq_len(nP)) vF[s] <- OF1(mP[,s])
     } else {
         vF <- OF1(mP)
+        if (length(vF) != nP)
+            stop("objective function returned vector of wrong length")
+
     }
     if (!is.null(algoD$pen)) {
         if(algoD$loopPen){
             for(s in seq_len(nP)) vPv[s] <- Pe1(mP[,s])
         } else {
             vPv <- Pe1(mP)
+            if (length(vPv) != nP)
+                stop("penalty function returned vector of wrong length")
         }
         vF <- vF + vPv
     }
