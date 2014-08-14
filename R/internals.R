@@ -80,7 +80,7 @@ Chapters <- c("Introduction",
               "Econometric models",
               "Calibrating option pricing models")
 
-## dividends until expiry (used in vanillaOption*)
+## dividends until expiry (used in vanillaOption.*)
 
 due <- function(D, tauD, tau, q) {
     if (any(q != 0) && any(D != 0))

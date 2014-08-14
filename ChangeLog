@@ -1,3 +1,12 @@
+2014-08-14  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Version): Version: 0.32-1
+
+	* man/PSopt.Rd: small update (mention 'loopChangeV')
+
+	* R/PSopt.R (PSopt): added tests that vectorised functions return
+	objects of correct size
+
 2014-05-01  Enrico Schumann  <es@enricoschumann.net>
 
 	* R/integrate.R (xwGauss): use tolower before matching the method

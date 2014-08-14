@@ -14,15 +14,15 @@ test.DEopt <- function() {
     ##format(sol$OFvalue, digits = 12)
     checkEquals(round(sol$OFvalue,2), -3.31)
 
-    ## without max vector, DE should give error
+    ## ERROR: without max vector
     algo$max <- NULL
     checkException(res <- DEopt(OF = trefethen, algo), silent = TRUE)
 
-    ## unused parameter 'z' should cause error
+    ## ERROR: unused parameter 'z'
     algo$max <- c( 3,  3)
     checkException(res <- DEopt(OF = trefethen, algo, z = 2), silent = TRUE)
 
-    ## 'z' is required but not provided >> error
+    ## ERROR: 'z' is required but not provided
     trefethen2 <- function(xx, z) {
         x <- xx[1]; y <- xx[2]
         res <- exp(sin(50*x)) + sin(60*exp(y)) + sin(70*sin(x)) +
