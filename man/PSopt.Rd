@@ -53,12 +53,12 @@ PSopt(OF, algo = list(), ...)
   Conceptually, \acronym{PS} consists of two loops: one loop across the
   iterations and, in any given generation, one loop across the
   solutions.  This is the default, controlled by the variables
-  \code{algo$loopOF}, \code{algo$loopRepair} and \code{algo$loopPen},
-  which all default to \code{TRUE}. But it does not matter in what order
-  the solutions are evaluated (or repaired or penalised), so the second
-  loop can be vectorised. Examples are given in the vignettes and in the
-  book. The respective \code{algo$loopFun} must then be set to
-  \code{FALSE}.
+  \code{algo$loopOF}, \code{algo$loopRepair}, \code{algo$loopPen} and
+  \code{loopChangeV} which all default to \code{TRUE}. But it does not
+  matter in what order the solutions are evaluated (or repaired or
+  penalised), so the second loop can be vectorised. Examples are given
+  in the vignettes and in the book. The respective \code{algo$loopFun}
+  must then be set to \code{FALSE}.
 
   The objective function, the repair function and and the penalty
   function will be called as \code{fun(solution, \dots)}.
