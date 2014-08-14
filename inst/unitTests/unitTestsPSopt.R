@@ -70,4 +70,28 @@ test.PSopt <- function() {
     algo$minmaxConstr <- TRUE
     sol <- PSopt(OF, algo, X)
     checkEquals(round(sol$xbest,3), c(-4, -3, -2, -1, 0, 1, 2, 3, 4, 4))
+
+    ## ERROR: vectorised comp and wrong dim
+    X <- 1:10 - 5
+    OF <- function(x, X)  ## correct
+        colSums(abs(x - X))
+    OF <- function(x, X) {  ## WRONG
+        res <- colSums(abs(x - X))
+        res <- res[-1]
+    }
+    algo <- list(nP = 20, nG = 2,
+                 min = rep(-3, length(X)),
+                 max = rep( 3,  length(X)),
+                 loopOF = FALSE, loopRepair = FALSE, loopPen = FALSE,
+                 printBar = FALSE, printDetail = FALSE,
+                 storeF = FALSE, storeSolutions = FALSE)
+    checkException(sol <- PSopt(OF, algo, X), silent = TRUE)
+
+    OF <- function(x, X)  ## correct
+        colSums(abs(x - X))
+    algo$repair <- function(x, X) {
+        x[,-1]
+    }
+    checkException(sol <- PSopt(OF, algo, X), silent = TRUE)
+
 }
