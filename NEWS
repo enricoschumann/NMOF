@@ -1,3 +1,14 @@
+v0.33-0  (2013-08-22)
+
+  o updates in documentation and vignettes
+
+v0.32-1  (2013-08-14)
+
+  o argument 'offset' in 'ytm' can be a vector (that worked before as
+    well, but is now documented)
+
+  o several small updates in documentation
+
 v0.32-0  (2013-03-26)
 
   o new function 'colSubset'
