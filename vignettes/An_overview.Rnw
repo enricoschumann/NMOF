@@ -151,8 +151,8 @@ Thus, a large number of test cases is included.
 <<echo=false>>=
 test.rep <- readLines(system.file("unitTests/report.txt", 
                                   package = "NMOF"))
-nt <- gsub(".*\\((\\d+) checks?\\).*", "\\1",
-           grep("\\(\\d+ checks?\\)", test.rep))
+nt <- gsub(".*\\(([0-9]+) checks?\\).*", "\\1",
+           test.rep[grep("\\(\\d+ checks?\\)", test.rep)])
 cat("Package version  ", gsub("(.*)[.]([0-9]+)$", "\\1-\\2",
                             packageVersion("NMOF")), "\n",
     "Number of tests: ", sum(as.numeric(nt)), sep = "")
@@ -183,7 +183,7 @@ package maintainer, for instance by using \texttt{bug.report}.
 <<eval=false>>=
 require("utils")
 bug.report("[NMOF] Unexpected behaviour in function XXX", 
-           maintainer("NMOF"), package = "NMOF")
+            maintainer("NMOF"), package = "NMOF")
 @ 
 
 

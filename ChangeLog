@@ -2,6 +2,8 @@
 
 	* DESCRIPTION (Version): Version: 0.33-0
 
+	* man/NMOF-package.Rd: corrected regexp in examples
+
 	* inst/CITATION: added address
 
 	* vignettes/An_overview.Rnw: updated

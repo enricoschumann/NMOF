@@ -114,8 +114,8 @@ file.show(system.file("NMOFex/NMOFman.R", package = "NMOF"))
 ## unit tests
 file.show(system.file("unitTests/report.txt",   package = "NMOF"))
 test.rep <- readLines(system.file("unitTests/report.txt",   package = "NMOF"))
-nt <- gsub(".*\\\\((\\\\d+) checks?\\\\).*", "\\\\1",
-           grep("\\\\(\\\\d+ checks?\\\\)", test.rep))
+nt <- gsub(".*\\\\(([0-9]+) checks?\\\\).*", "\\\\1",
+           test.rep[grep("\\\\(\\\\d+ checks?\\\\)", test.rep)])
 message("Number of unit tests: ", sum(as.numeric(nt)))
 }
 }
