@@ -34,18 +34,20 @@ options(continue = " ", digits = 5, max.print = 10, width = 85)
 
 \subsection{The book}
 
-\cite{Gilli2011b} is all about tools for computational finance, with
-emphasis on simulation and optimisation.  Many chapters are organised
-as case studies, covering portfolio insurance or risk estimation.  In
-particular, several chapters explain optimisation heuristics and show
-in detail how to use these methods for portfolio selection or the
-calibration of option pricing models.  Some highlights:
+`Numerical Methods and Optimization in Finance' (\textsc{nmof},
+\citealp{Gilli2011b}) is all about tools for computational finance,
+with emphasis on simulation and optimisation.  Many chapters are
+organised as case studies, covering topics such as portfolio insurance
+or the valuation of financial derivatives.  In particular, several
+chapters explain optimisation heuristics and show in detail how to use
+these methods for portfolio selection or the calibration of option
+pricing models.  Some highlights:
 
 \begin{itemize}
 \item Simulation: how to create random variates under specified
   marginal distributions; how to induce cross-sectional correlation
   (beyond Cholesky for Gaussian variates) and serial dependencies;
-  examples for copul\ae; resampling: bootstrapping data sets.
+  examples for copul\ae; resampling, bootstrapping data sets.
 
 \item Option pricing: binomial trees, finite differences and Monte
   Carlo simulation; but also integration methods for pricing with the
@@ -55,7 +57,7 @@ calibration of option pricing models.  Some highlights:
 \item Portfolio optimisation: methods to optimise portfolio under any
   objective function (eg, drawdown, partial moments) and constraints
   (eg, cardinality constraints). Sample programs for classical
-  mean-variance analysis are also given.
+  mean-variance analysis are also included.
 
 \item Yield-curve calibration: various strategies how to calibrate a
   yield-curve model: through fitting to bootstrapped yields, to bond
@@ -67,10 +69,10 @@ calibration of option pricing models.  Some highlights:
 \noindent The \textsc{nmof} package provides many of the code examples
 and data sets used in \cite{Gilli2011b}; it also contains several
 functions that have not been described in the book.  Notably, the
-package provides implementations of several optimisation heuristics
-such as Differential Evolution and Genetic Algorithms.  There are also
-functions for the valuation of financial instruments (such as bonds
-and options) and to help with stochastic simulations.
+package provides implementations of a number of optimisation
+heuristics, among them Differential Evolution and Genetic Algorithms.
+There are also functions for valuing financial instruments (such as
+bonds and options) and helper functions for stochastic simulations.
 
 \section{What's in the package}
 
@@ -78,15 +80,15 @@ and options) and to help with stochastic simulations.
   
 There are functions for Differential Evolution (\texttt{{DEopt}}),
 Genetic Algorithms (\texttt{{GAopt}}), (Stochastic) Local Search
-(\texttt{{LSopt}}), Particle Swarm (\texttt{{PSopt}}) and
-Threshold Accepting (\texttt{{TAopt}}). 
+(\texttt{{LSopt}}), Particle Swarm (\texttt{{PSopt}}), Threshold
+Accepting (\texttt{{TAopt}}) and grid search (\texttt{gridSearch}).
 
-\subsection{Option Pricing}
+\subsection{Pricing financial instruments}
 
-See \texttt{{vanillaOptionEuropean}},
+For options, see \texttt{{vanillaOptionEuropean}},
 \texttt{{vanillaOptionAmerican}}, \texttt{{putCallParity}}.  For
 pricing methods that use the characteristic function, see
-\texttt{{callCF}}.
+\texttt{{callCF}}.  For bond pricing, see \texttt{vanillaBond}.
 
 \subsection{Simulation}
   
@@ -163,8 +165,8 @@ These tests are stored in subdirectory \texttt{unitTests}.
 
 \subsection{News, feedback and discussion}
 
-New releases and other news related to the book and the package are
-announced on the \texttt{NMOF-news} mailing list:
+New package releases and other news related to the book or the package
+are announced on the \texttt{NMOF-news} mailing list:
 
 \noindent \url{https://lists.r-forge.r-project.org/cgi-bin/mailman/listinfo/nmof-news}
 
@@ -177,8 +179,12 @@ discussed on the \texttt{R-SIG-Finance} mailing list:
 \medskip
 
 \noindent Please send bug reports or suggestions directly to the
-package maintainer.
-
+package maintainer, for instance by using \texttt{bug.report}.
+<<eval=false>>=
+require("utils")
+bug.report("[NMOF] Unexpected behaviour in function XXX", 
+           maintainer("NMOF"), package = "NMOF")
+@ 
 
 
 \nocite{Gilli2011b}

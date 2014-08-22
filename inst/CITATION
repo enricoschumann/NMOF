@@ -9,9 +9,9 @@ citEntry(entry = "book",
          author = aa,
          year = "2011",
          publisher = "Academic Press",
+         address = "Waltham, MA, USA",
          url  = "http://nmof.net",
          textVersion = 
-         paste("Gilli, Manfred; Maringer, Dietmar; and Schumann, Enrico. ", 
+         paste("Manfred Gilli, Dietmar Maringer and Enrico Schumann. ", 
                "Numerical Methods and Optimization in Finance. ",
-               "Academic Press, 2011.", sep = "")
-)
+               "Academic Press, 2011.", sep = ""))
