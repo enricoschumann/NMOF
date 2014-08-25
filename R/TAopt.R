@@ -109,7 +109,8 @@ TAopt <- function(OF, algo = list(), ...) {
     ## evaluate initial solution
     xc <- x0
     xcF <- OF1(xc)
-    xbest <- xc; xbestF <- xcF
+    xbest <- xc
+    xbestF <- xcF
 
     if (algoD$storeF) {
         Fmat <- array(NA, dim = c(niter, 2L))
