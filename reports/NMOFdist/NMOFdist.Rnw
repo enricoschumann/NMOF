@@ -2,7 +2,7 @@
 
 \title{Distributed computations with the NMOF package}
 \author{Enrico Schumann\\\footnotesize\href{mailto:es@enricoschumann.net}{\texttt{es@enricoschumann.net}}}
-\date{2013-07-22}
+\date{2014-09-08}
 
 % *LANGUAGE/ENCODING*
 \usepackage[british]{babel}
@@ -91,25 +91,24 @@ options(continue = " ", digits = 3, width = 65)
 
 \section{Overview}
 
-\noindent This manuscript contains several examples of distributed
-computations (more specifically, using several cores on one machine)
-in the \nmof{} package \citep*{Gilli2011b}. Such computations are
-supported in the functions \texttt{bracketing}, \texttt{GAopt},
-\texttt{gridSearch}, \texttt{restartOpt} through either
-\texttt{parallel} (before, it was \texttt{multicore};
-\citealp{Urbanek2011}) or \texttt{snow} \citep{Tierney2011}. This
-report mainly serves as a convenient check for these functions. I am
+This manuscript contains several examples of distributed computations
+-- more specifically, using several cores on one machine -- in the
+\nmof\ package \citep*{Gilli2011b}.  Such computations are supported in
+the functions \texttt{bracketing}, \texttt{GAopt},
+\texttt{gridSearch}, \texttt{restartOpt} through package
+\texttt{parallel} (before, it was \texttt{multicore}
+\citealp{Urbanek2011}) and \texttt{snow} \citep{Tierney2011}). This
+report mainly serves as a convenient collection of test cases for these functions. I am
 grateful for comments and corrections.
 
 The latest version of the package is available from
 \url{http://enricoschumann.net/R/packages/NMOF/index.htm}; the package
 is also available from \caps{cran}. To install the package from within
-\R{}, type
+\R, type
 <<eval = FALSE>>=
 install.packages("NMOF") ## CRAN
 install.packages("NMOF", repos = "http://R-Forge.R-project.org")
 @
-
 to download and install it. For all examples, the package needs to be
 attached.
 <<>>=
@@ -118,14 +117,14 @@ set.seed(1122344)
 nC <- 2L ## the number of cores to be used
 @
 
-We also attach a number of other packages. Note that we still use
-package \texttt{snow} explicitly. 
+We attach package \textsf{parallel}; we will use package
+\textsf{rbenchmark} \citep{Kusnierczyk2010} to measure the time that
+computations need.
 
 <<>>=
 require("rbenchmark")
 require("parallel")
 @
-
 
 We also attach a package that helps to generate random numbers for
 parallel computations.
@@ -134,9 +133,9 @@ parallel computations.
 require("rlecuyer")
 @
 
-This document is written with Sweave \citep{Leisch2002}. The code is
+This report is written with Sweave \citep{Leisch2002}. The code is
 part of the package; it can be found in the subdirectory
-\texttt{NMOFex}.  To show the code in \R{}, you can use the function
+\texttt{NMOFex}.  To show the code in \R, you can use the function
 \texttt{system.file}.
 <<eval = FALSE>>=
 whereToLook <- system.file("NMOFex/NMOFdist.R", package = "NMOF")
@@ -149,7 +148,7 @@ The latest pdf version of this report can be obtained from
 
 \section{Simple tests}
 
-\subsection{Making things slow}
+\subsection{Slowing things down}
 
 We first run a simple test to see if a specific function is expensive
 enough for distributed computation.
@@ -165,13 +164,13 @@ repl <- 10        ## how many restarts
 sq <- seq_len(n)
 @
 
-Note that we set up the cluster for \texttt{snow} before we measure
-the computing time.
+Note that we set up the cluster for \texttt{clusterApply} before we
+measure the computing time.
 
 <<>>=
 cl <- makeCluster(c(rep("localhost", nC)), type = "SOCK")
 benchmark(lapply(sq, testFun, delay),                ## serial
-          mclapply(sq, testFun, delay),              ## package 'parallel'
+          mclapply(sq, testFun, delay),              ## package 'multicore'
           clusterApply(cl, sq, testFun, delay),      ## package 'snow'
           columns = c("test", "elapsed", "relative"),
           order = "relative", replications = repl)
@@ -180,20 +179,20 @@ stopCluster(cl)
 
 \subsection{Copying arguments}
 
-With \texttt{snow}, it can help to copy constant function arguments to
-the nodes.
-
-Suppose we have a Least-Squares objective function.
+With \texttt{clusterApply}, it can help to copy constant function
+arguments to the nodes.  Suppose we have a Least-Squares objective
+function.
 <<>>=
 OF <- function(b, X, y) {
     temp <- X %*% b - y
     sum(temp^2)
 }
 @ 
-
 For this function, \texttt{b} are the parameters to be optimised, but
-\texttt{X} and \texttt{y} stay fixed. We create some random
-\texttt{X}, \texttt{y} and \texttt{b}.
+\texttt{X} and \texttt{y} stay fixed.  
+
+We run an experiment.  We start by creating random \texttt{X},
+\texttt{y} and \texttt{b}.
 <<>>=
 ncol <- 10; nrow <- 200
 X <- array(rnorm(nrow*ncol), dim= c(nrow,ncol))
@@ -206,8 +205,8 @@ Just a test.
 OF(b, X, y)
 @ 
 
-Suppose we used such a function in a multiple-solution heuristic like
-DE.  We assume the population \texttt{lP} has size \texttt{n}.
+Suppose we used such a function in a multiple-solution heuristic such
+as~DE.  We assume the population \texttt{lP} has size \texttt{n}.
 <<>>=
 n <- 50            ## how many calls per lapply
 sq <- seq_len(n)
@@ -244,9 +243,11 @@ benchmark(lapply,
           order = "relative", replications = 50)
 stopCluster(cl)
 @ 
+Both parallel computations are slow, as the objective function is not
+expensive enough.  But parallel without copying is faster, nevertheless.
+
 
 We compare the results.
-
 <<>>=
 all.equal(ignore1, ignore2)
 all.equal(ignore2, ignore3)
