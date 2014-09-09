@@ -95,7 +95,7 @@ showExample("equations.R")
 showExample("exampleLS.R", chapter = 13)
 
 ## show NEWS file
-news(Version >= "0.27-0", package = "NMOF")
+news(Version >= "0.30-0", package = "NMOF")
 
 ## vignettes
 vignette(package = "NMOF")
@@ -113,9 +113,10 @@ file.show(system.file("NMOFex/NMOFman.R", package = "NMOF"))
 
 ## unit tests
 file.show(system.file("unitTests/report.txt",   package = "NMOF"))
+}
 test.rep <- readLines(system.file("unitTests/report.txt",   package = "NMOF"))
 nt <- gsub(".*\\\\(([0-9]+) checks?\\\\).*", "\\\\1",
            test.rep[grep("\\\\(\\\\d+ checks?\\\\)", test.rep)])
 message("Number of unit tests: ", sum(as.numeric(nt)))
-}
+
 }
