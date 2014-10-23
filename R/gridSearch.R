@@ -13,14 +13,14 @@ gridSearch <- function(fun, levels, ..., lower, upper,
         method <- tolower(method[1L])
     } else if (!is.null(cl)) {
         method <- "snow"
-    } else {
+    } else
         method <- "loop"
-    }
-    if (method == "snow") {
-        if (is.null(cl)) {
-            method <- "loop"
-            warning("no cluster 'cl' passed for method 'snow': use method 'loop'")
-        }
+
+    if (method == "snow" && is.null(cl)) {
+        method <- "loop"
+        warning("no cluster ", sQuote("cl"),
+                " passed for method ", sQuote("snow"),
+                ": will use method ", sQuote("loop"))
     }
 
     n <- makeInteger(n, "'n'", 2L)
