@@ -3,28 +3,20 @@ bracketing <- function(fun, interval, ...,
                        upper = max(interval),
                        n = 20L,
                        method = c("loop",
-                       "vectorised", "multicore", "snow"),
+                                  "vectorised",
+                                  "multicore",
+                                  "snow"),
                        mc.control = list(),
                        cl = NULL) {
 
     n <- makeInteger(n, "'n'", 2)
     method <- tolower(method[1L])
-    if (method == "vectorize"  ||
-        method == "vectorized" ||
-        method == "vectorise")
-        method <- "vectorised"
+    if (method == "vectorize"  || method == "vectorized" || method == "vectorise")
+            method <- "vectorised"
     if (!is.null(cl))
         method <- "snow"
-    if (method == "multicore") {
-        if (!suppressWarnings(require("parallel", quietly = TRUE))) {
-            method <- "loop"
-            warning("package 'parallel' not available: use method 'loop'")
-        }
-    } else if (method == "snow") {
-        if (!suppressWarnings(require("parallel", quietly = TRUE))) {
-            method <- "loop"
-            warning("package 'parallel' not available: use method 'loop'")
-        } else if (is.null(cl)) {
+    if (method == "snow") {
+        if (is.null(cl)) {
             method <- "loop"
             warning("no cluster 'cl' passed for method 'snow'")
         }
@@ -64,7 +56,7 @@ bracketing <- function(fun, interval, ...,
                fn <- clusterApply(cl, xs, fun, ...)
                fn <- unlist(fn)
            }
-           ) ## end switch
+           ) 
 
     ## find diffs
     iSigns <- which(fn[-n] * fn[-1L] < 0)
