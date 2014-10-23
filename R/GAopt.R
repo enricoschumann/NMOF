@@ -35,10 +35,11 @@ GAopt <- function (OF, algo = list(), ...) {
     cl <- algoD$cl
 
     if (algoD$methodOF == "snow") {
-        if (!suppressWarnings(require("parallel", quietly = TRUE))) {
-            method <- "loop"
-            warning("package 'parallel' not available")
-        } else if (is.null(cl)) {
+        ## if (!suppressWarnings(require("parallel", quietly = TRUE))) {
+        ##     method <- "loop"
+        ##     warning("package 'parallel' not available")
+        ## } else
+        if (is.null(cl)) {
             method <- "loop"
             warning("no cluster 'cl' passed for method 'snow'")
         } else {
@@ -49,12 +50,12 @@ GAopt <- function (OF, algo = list(), ...) {
             }
         }
     } else if (algoD$methodOF == "multicore") {
-        if (!suppressWarnings(require("parallel", quietly = TRUE))) {
-            warning("package 'parallel' not available: use method 'loop'")
-        } else {
-            domc <- TRUE
-            mc.settings <- mcList(algoD$mc.control)
-        }
+        ## if (!suppressWarnings(require("parallel", quietly = TRUE))) {
+        ##     warning("package 'parallel' not available: use method 'loop'")
+        ## } else {
+        domc <- TRUE
+        mc.settings <- mcList(algoD$mc.control)
+        ## }
     }
 
     printDetail <- algoD$printDetail
