@@ -12,19 +12,11 @@ restartOpt <- function(fun, n, OF, algo, ...,
         fun(OF = OF, algo = algo, ...)
     if (!is.null(cl))
         method <- "snow"
-    if (method == "multicore") {
-        if (!suppressWarnings(require("parallel", quietly = TRUE))) {
-            method <- "loop"
-            warning("package 'parallel' not available: use method 'loop'")
-        }
-    } else if (method == "snow") {
-        if (!suppressWarnings(require("parallel", quietly = TRUE))) {
-            method <- "loop"
-            warning("package 'parallel' not available: use method 'loop'")
-        } else if (is.null(cl)) {
-            method <- "loop"
-            warning("no cluster 'cl' passed for method 'snow': use method 'loop'")
-        }
+    if (method == "snow" && is.null(cl)) {
+        method <- "loop"
+        warning("no cluster ", sQuote("cl"),
+                " passed for method ", sQuote("snow"),
+                ": will use method ", sQuote("loop"))
     }
     if (method == "multicore") {
         mc.settings <- mcList(mc.control)
@@ -40,9 +32,8 @@ restartOpt <- function(fun, n, OF, algo, ...,
             on.exit(stopCluster(cl))
         }
         allResults <- clusterApply(cl, seq_len(n), fun2)
-    } else {
+    } else
         allResults <- lapply(seq_len(n), fun2)
-    }
 
     if (best.only) {
         tmp <- sapply(allResults, `[[`, "OFvalue")
