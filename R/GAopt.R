@@ -26,36 +26,29 @@ GAopt <- function (OF, algo = list(), ...) {
                 inherits = FALSE))
         state <- NA else state <- .Random.seed
 
-
-    if (algoD$methodOF == "vectorised" && identical(algoD$loopOF, TRUE))
+    methodOF <- tolower(algoD$methodOF)
+    if (methodOF == "vectorised" && identical(algoD$loopOF, TRUE))
         algoD$loopOF <- FALSE
 
     dosnow <- FALSE
     domc <- FALSE
     cl <- algoD$cl
 
-    if (algoD$methodOF == "snow") {
-        ## if (!suppressWarnings(require("parallel", quietly = TRUE))) {
-        ##     method <- "loop"
-        ##     warning("package 'parallel' not available")
-        ## } else
+    if (methodOF == "snow") {
         if (is.null(cl)) {
             method <- "loop"
-            warning("no cluster 'cl' passed for method 'snow'")
+            warning("no cluster ", sQuote("cl"), " passed for method ", sQuote("snow"))
         } else {
             dosnow <- TRUE
+            cl <- as.numeric(cl)
             if (is.numeric(cl)) {
                 cl <- makeCluster(c(rep("localhost", cl)), type = "SOCK")
                 on.exit(stopCluster(cl))
             }
         }
-    } else if (algoD$methodOF == "multicore") {
-        ## if (!suppressWarnings(require("parallel", quietly = TRUE))) {
-        ##     warning("package 'parallel' not available: use method 'loop'")
-        ## } else {
+    } else if (methodOF == "multicore") {
         domc <- TRUE
         mc.settings <- mcList(algoD$mc.control)
-        ## }
     }
 
     printDetail <- algoD$printDetail
@@ -145,22 +138,19 @@ GAopt <- function (OF, algo = list(), ...) {
     ## evaluate initial population
     if (algoD$loopOF) {
         if (dosnow) {
-            ## run clusterApply
-            for (s in snP) lP[[s]] <- mP[ ,s]
+            for (s in snP)
+                lP[[s]] <- mP[ ,s]
             vF <- unlist(clusterApply(cl, lP, OF, ...))
         } else if (domc) {
-            ## run mclapply
-            for (s in snP) lP[[s]] <- mP[ ,s]
+            for (s in snP)
+                lP[[s]] <- mP[ ,s]
             vF <- unlist(mclapply(lP, OF, ...,
                                   mc.preschedule = mc.settings$mc.preschedule,
                                   mc.set.seed = mc.settings$mc.set.seed,
                                   mc.silent = mc.settings$mc.silent,
                                   mc.cores = mc.settings$mc.cores,
-                                  mc.cleanup = mc.settings$mc.cleanup
-                                  )
-                         )
+                                  mc.cleanup = mc.settings$mc.cleanup))
         } else {
-            ## run loop
             for (s in snP)
                 vF[s] <- OF1(mP[, s])
         }
@@ -209,11 +199,9 @@ GAopt <- function (OF, algo = list(), ...) {
         }
         if (algoD$loopOF) {
             if (dosnow) {
-                ## run clusterApply
                 for (s in snP) lP[[s]] <- mC[ ,s]
                 vFc <- unlist(clusterApply(cl, lP, OF, ...))
             } else if (domc) {
-                ## run mclapply
                 for (s in snP) lP[[s]] <- mC[ ,s]
                 vFc <- unlist(mclapply(lP, OF, ...,
                                     mc.preschedule = mc.settings$mc.preschedule,
@@ -224,7 +212,6 @@ GAopt <- function (OF, algo = list(), ...) {
                                     )
                               )
             } else {
-                ## run loop
                 for (s in snP) vFc[s] <- OF1(mC[, s])
             }
         } else {
