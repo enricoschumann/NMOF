@@ -18,7 +18,9 @@ bracketing <- function(fun, interval, ...,
     if (method == "snow") {
         if (is.null(cl)) {
             method <- "loop"
-            warning("no cluster 'cl' passed for method 'snow'")
+            warning("no cluster ", sQuote("cl"),
+                    " passed for method ", sQuote("snow"),
+                    ": will use method ", sQuote("loop"))
         }
     }
     if (!missing(interval)) {
