@@ -37,10 +37,11 @@ GAopt <- function (OF, algo = list(), ...) {
     if (methodOF == "snow") {
         if (is.null(cl)) {
             method <- "loop"
-            warning("no cluster ", sQuote("cl"), " passed for method ", sQuote("snow"))
+            warning("no cluster ", sQuote("cl"),
+                    " passed for method ", sQuote("snow"),
+                    ": will use method ", sQuote("loop"))
         } else {
             dosnow <- TRUE
-            cl <- as.numeric(cl)
             if (is.numeric(cl)) {
                 cl <- makeCluster(c(rep("localhost", cl)), type = "SOCK")
                 on.exit(stopCluster(cl))
