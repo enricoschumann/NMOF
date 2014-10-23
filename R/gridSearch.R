@@ -16,16 +16,8 @@ gridSearch <- function(fun, levels, ..., lower, upper,
     } else {
         method <- "loop"
     }
-    if (method == "multicore") {
-        if (!suppressWarnings(require("parallel", quietly = TRUE))) {
-            method <- "loop"
-            warning("package 'parallel' not available: use method 'loop'")
-        }
-    } else if (method == "snow") {
-        if (!suppressWarnings(require("parallel", quietly = TRUE))) {
-            method <- "loop"
-            warning("package 'parallel' not available: use method 'loop'")
-        } else if (is.null(cl)) {
+    if (method == "snow") {
+        if (is.null(cl)) {
             method <- "loop"
             warning("no cluster 'cl' passed for method 'snow': use method 'loop'")
         }
@@ -110,12 +102,10 @@ gridSearch <- function(fun, levels, ..., lower, upper,
 
     ## what to return
     if (inherits(i, "try-error") || any(is.na(i)) || length(i) == 0L) {
-        ## function evaluated to NA, or results are empty
         warning("cannot compute minimum (NA values in results, ...)")
         list(minfun = NA, minlevels = NA,
              values = results, levels = lstLevels)
-    } else {
-        ## (apparently) no problems
+    } else {  ## (apparently) no problems
         list(minfun = results[i], minlevels = lstLevels[[i]],
              values = results, levels = lstLevels)
     }
