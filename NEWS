@@ -1,24 +1,36 @@
-v0.33-0  (2013-08-22)
+v0.34-0  (2014-10-23)
+
+  o Functions such 'mclapply' from package 'parallel' are imported;
+    'parallel' is no longer attached when these functions are used
+    (ie, the package is not added to the user's search path).  [Please
+    note that the CRAN version of NMOF has required R (>= 2.14) for
+    some time now, and since that R-version package 'parallel' has
+    been available anyway.]
+
+  o report 'Distributed computations with the NMOF package' was
+    updated
+
+v0.33-0  (2014-08-22)
 
   o updates in documentation and vignettes
 
-v0.32-1  (2013-08-14)
+v0.32-1  (2014-08-14)
 
   o argument 'offset' in 'ytm' can be a vector (that worked before as
     well, but is now documented)
 
   o several small updates in documentation
 
-v0.32-0  (2013-03-26)
+v0.32-0  (2014-03-26)
 
   o new function 'colSubset'
 
   o experimental: new function 'TA.info' for accessing information
-  during optimisation run (eg, current iteration)
+    during optimisation run (eg, current iteration)
 
   o rewrote example in 'Asset selection with Local Search'
 
-v0.31-2  (2013-02-21)
+v0.31-2  (2014-02-21)
 
   o various small updates in documentation and vignettes (eg,
     links to mailing lists)

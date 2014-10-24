@@ -1,3 +1,4 @@
+importFrom(parallel, makeCluster, stopCluster, clusterApply, mclapply)
 export(bracketing,
        colSubset,
        DEopt,

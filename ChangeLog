@@ -1,3 +1,18 @@
+2014-10-23  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Version): Version: 0.34-0
+
+	* R/*: removed all 'require("parallel")' tests from 'GAopt',
+	'bracketing', 'gridSearch' and 'restartOpt'
+
+2014-09-09  Enrico Schumann  <es@enricoschumann.net>
+
+	* man/NMOF-package.Rd: move some examples out of 'dontrun'
+
+2014-09-05  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Imports): added parallel (before in Suggests)
+
 2014-08-22  Enrico Schumann  <es@enricoschumann.net>
 
 	* DESCRIPTION (Version): Version: 0.33-0
