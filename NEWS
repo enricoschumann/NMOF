@@ -1,6 +1,6 @@
 v0.34-0  (2014-10-23)
 
-  o Functions such 'mclapply' from package 'parallel' are imported;
+  o Functions such as 'mclapply' from package 'parallel' are imported;
     'parallel' is no longer attached when these functions are used
     (ie, the package is not added to the user's search path).  [Please
     note that the CRAN version of NMOF has required R (>= 2.14) for
