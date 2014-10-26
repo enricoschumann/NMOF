@@ -151,7 +151,7 @@ testFun <- function(ignore, delay) {
     1
 }
  
-delay <- 0.01     ## running time of function
+delay <- 0.05     ## running time of function
 n <- 8            ## how many calls per lapply
 repl <- 10        ## how many restarts
 sq <- seq_len(n)
@@ -379,9 +379,9 @@ distribution.  But how about \texttt{loopfun}?  That is, why not split
 the matrix \texttt{P} into smaller submatrices, and then let the nodes
 loop over these submatrices.
 
-We make our matrix larger.
+We make our matrix larger (more columns).
 <<>>=
-ncol <- 20
+ncol <- 100
 nrow <- 1000
 P <- array(rnorm(nrow * ncol), dim = c(nrow, ncol))
 
