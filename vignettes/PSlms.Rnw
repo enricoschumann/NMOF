@@ -1,4 +1,6 @@
 % \VignetteIndexEntry{Robust Regression with Particle Swarm Optimisation and Differential Evolution}
+% \VignetteKeyword{Least Median of Squares}
+% \VignetteKeyword{Particle Swarm Optimisation}
 % \VignetteKeyword{optimize}
 \documentclass[a4paper]{article}
 \usepackage[noae]{Sweave}

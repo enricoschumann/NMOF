@@ -1,5 +1,6 @@
 % \VignetteIndexEntry{An Overview of the NMOF Package}
-% \VignetteKeyword{optimize,heuristics}
+% \VignetteKeyword{heuristics}
+% \VignetteKeyword{optimize}
 \documentclass[a4paper,11pt]{article}
 \usepackage[left = 2.5cm, top = 2cm, bottom = 3cm, right = 3.5cm]{geometry}
 \usepackage[noae]{Sweave}

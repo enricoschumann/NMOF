@@ -1,5 +1,8 @@
 % \VignetteIndexEntry{Fitting the Nelson--Siegel--Svensson model with Differential Evolution}
-% \VignetteKeyword{optimize,heuristics}
+% \VignetteKeyword{heuristics}
+% \VignetteKeyword{Differential Evolution}
+% \VignetteKeyword{yield curve}
+% \VignetteKeyword{optimize}
 % \SweaveOpts{keep.source = FALSE}
 \documentclass[a4paper,11pt]{article}
 \usepackage[left=2.5cm,top=2cm,bottom=3cm,right=3.5cm]{geometry}

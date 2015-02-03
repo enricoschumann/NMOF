@@ -1,3 +1,10 @@
+2015-02-03  Enrico Schumann  <enrico.schumann@aq-advisors.ch>
+
+	* DESCRIPTION (Version): Version: 0.34-1
+
+	* vignettes/: updated 'VignetteKeyword' as requested by the CRAN
+	maintainers
+
 2015-01-27  Enrico Schumann  <es@enricoschumann.net>
 
 	* vignettes/.install_extras: added file (NMOF.bib now installed

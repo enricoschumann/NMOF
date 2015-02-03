@@ -1,5 +1,8 @@
 % \VignetteIndexEntry{Portfolio Optimisation with Threshold Accepting}
-% \VignetteKeyword{optimize,heuristics}
+% \VignetteKeyword{heuristics}
+% \VignetteKeyword{optimize}
+% \VignetteKeyword{Threshold Accepting}
+% \VignetteKeyword{portfolio optimisation}
 \documentclass[a4paper]{article}
 \usepackage[left = 2.5cm, top = 2cm, bottom = 3cm, right = 3.5cm]{geometry}
 \usepackage[noae]{Sweave}

@@ -1,4 +1,7 @@
 % \VignetteIndexEntry{Asset selection with Local Search}
+% \VignetteKeyword{Local Search}
+% \VignetteKeyword{asset allocation}
+% \VignetteKeyword{heuristics}
 % \VignetteKeyword{optimize}
 \documentclass[a4paper]{article}
 \usepackage[left=2.5cm,top=2cm, bottom=3cm, right=3.5cm]{geometry}
