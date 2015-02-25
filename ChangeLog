@@ -23,7 +23,7 @@
 
 2014-09-09  Enrico Schumann  <es@enricoschumann.net>
 
-	* man/NMOF-package.Rd: move some examples out of 'dontrun'
+	* man/NMOF-package.Rd: moved some examples out of 'dontrun'
 
 2014-09-05  Enrico Schumann  <es@enricoschumann.net>
 
