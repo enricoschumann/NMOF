@@ -79,7 +79,7 @@ DEopt <- function(OF, algo = list(), ...) {
         Fmat <- array(NA, c(nG, nP)) else Fmat <- NA
 
     if (is.null(algoD$initP)) {
-        mP <- vmin + diag(vmax - vmin) %*% mRU(d, nP)
+        mP <- vmin + mRU(d, nP) * (vmax - vmin)
     } else {
         if (is.function(algoD$initP))
             mP <- algoD$initP() else mP <- algoD$initP
@@ -92,8 +92,8 @@ DEopt <- function(OF, algo = list(), ...) {
         xlist <- NA
 
     ## evaluate initial population
-    ## 1) repair
-    if (mm)
+    ## 1) repair (only required if initP not specified)
+    if (mm && !is.null(algoD$initP))
         mP <- repair1c(mP, vmax, vmin)
     if (!is.null(algoD$repair)) {
         if (algoD$loopRepair){
@@ -148,7 +148,7 @@ DEopt <- function(OF, algo = list(), ...) {
 
         ## repair/evaluate/penalise updated population
         if (mm)
-            mP <- repair1c(mP, vmax, vmin)
+            mPv <- repair1c(mPv, vmax, vmin)
         if (!is.null(algoD$repair)) {
             if (algoD$loopRepair) {
                 for (s in snP)
