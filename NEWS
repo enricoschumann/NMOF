@@ -2,7 +2,7 @@ v0.34-2  (2015-05-05)
 
   o fixed: 'DEopt' did not properly handle the 'minmaxConstr' option,
     which could result in solutions that violated the box constraints.
-    (Thanks to David Ashear to reporting.)
+    (Thanks to David Ashear for reporting.)
 
 v0.34-0  (2014-10-23)
 

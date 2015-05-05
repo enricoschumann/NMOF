@@ -4,7 +4,7 @@
 
 	* R/DEopt.R (DEopt): fixed -- 'DEopt' did not properly handle
 	'minmaxConstr', which could result in solutions that violated the
-	box constraints. (Thanks to David Ashear to reporting.)
+	box constraints. (Thanks to David Ashear for reporting.)
 
 	* inst/unitTests/unitTestsDEopt.R: added test case for box
 	constraints
