@@ -67,7 +67,7 @@ PSopt <- function(OF, algo = list(), ...) {
     d <- length(vmax)
     vF <- numeric(nP); vF[] <- NA; vPv <- vF
     if (is.null(algoD$initP)) {
-        mP <- vmin + diag(vmax - vmin) %*% mRU(d, nP)
+        mP <- vmin + mRU(d, nP) * (vmax - vmin)
     } else {
         if (is.function(algoD$initP))
             mP <- algoD$initP() else mP <- algoD$initP

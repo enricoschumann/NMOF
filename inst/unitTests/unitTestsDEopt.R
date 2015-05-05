@@ -145,4 +145,23 @@ test.DEopt <- function() {
         sol2 <- DEopt(OF = trefethen, algo)
         checkEquals(sol, sol2)
     }
+
+    ## box constraints (see ChangeLog entry 2015-05-05)
+    n <- 10; solution <- rep(-5, n)
+        
+    algo <- list(min = rep(0, n),
+                 max = rep(5, n),
+                 printDetail = FALSE,
+                 printBar = FALSE,
+                 minmaxConstr = TRUE,
+                 nG = 10)
+
+    OF <- function(x, solution)
+        sum(abs(x - solution))
+    
+    for (i in 1:100) {
+        sol <- DEopt(OF = OF, algo = algo, solution = solution)
+        checkTrue(all(sol$xbest >= 0))
+    }
+        
 }
