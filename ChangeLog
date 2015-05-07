@@ -1,3 +1,8 @@
+2015-05-07  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/EuropeanCallBE.R (EuropeanCallBE): remove unnecessary final
+	assignment
+
 2015-05-05  Enrico Schumann  <es@enricoschumann.net>
 
 	* DESCRIPTION (Version): Version: 0.34-2
