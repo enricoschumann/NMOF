@@ -1,3 +1,7 @@
+v0.35-0  (2015-05-12)
+
+  o new function 'pm' for computing partial moments
+
 v0.34-2  (2015-05-05)
 
   o fixed: 'DEopt' did not properly handle the 'minmaxConstr' option,
