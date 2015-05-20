@@ -1,3 +1,4 @@
 /.Rbuildignore~
 *~
 TODO_NMOF.org
+/inst/unitTests/report.txt
