@@ -1,3 +1,12 @@
+2015-06-04  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Version): Version: 0.35-1
+
+2015-06-03  Enrico Schumann  <es@enricoschumann.net>
+
+	* man/callMerton.Rd: small correction in parameter description
+	(suggested by Laurs Leth)
+
 2015-05-12  Enrico Schumann  <es@enricoschumann.net>
 
 	* DESCRIPTION (Version): Version: 0.35-0

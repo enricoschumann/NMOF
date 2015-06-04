@@ -21,7 +21,7 @@ callMerton(S, X, tau, r, q, v, lambda, muJ, vJ, N, implVol = FALSE)
   \item{v}{variance}
   \item{lambda}{jump intensity}
   \item{muJ}{mean jump-size}
-  \item{vJ}{variance of jump-size}
+  \item{vJ}{variance of log jump-size}
   \item{N}{The number of jumps.  See Details.}
   \item{implVol}{compute equivalent Black--Scholes--Merton volatility?
                  Default is \code{FALSE}.}
