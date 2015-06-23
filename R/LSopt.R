@@ -98,13 +98,11 @@ LSopt <- function(OF, algo = list(), ...) {
 LS.info <- function(n = 0L) {
     e <- parent.frame(3L + n)
     step <- NA
-    threshold <- NA
     iteration <- NA
-    iteration.sampling <- NA
     ## if (exists("i", envir = e, inherits = FALSE))
     ##     step <- get("i", envir = e, inherits = FALSE)
     if (exists("s", envir = e, inherits = FALSE))
-        interation <- step <- get("s", envir = e, inherits = FALSE)
+        iteration <- step <- get("s", envir = e, inherits = FALSE)
     ## if (exists("t", envir = e, inherits = FALSE))
     ##     threshold <- get("t", envir = e, inherits = FALSE)
     ## if (exists("counter", envir = e, inherits = FALSE))

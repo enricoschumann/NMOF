@@ -1,3 +1,8 @@
+v0.36-0  (2015-06-23)
+
+  o experimental: new function 'LS.info' for accessing information
+    during optimisation run (eg, current iteration)
+
 v0.35-1  (2015-06-04)
 
   o small correction in parameter description in 'callMerton'

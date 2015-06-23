@@ -1,3 +1,13 @@
+2015-06-23  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Version): Version: 0.36-0
+
+	* NAMESPACE: export 'LS.info'
+
+	* R/LSopt.R (LS.info): added function
+
+	* man/LS.info.Rd: added file
+
 2015-06-04  Enrico Schumann  <es@enricoschumann.net>
 
 	* DESCRIPTION (Version): Version: 0.35-1
