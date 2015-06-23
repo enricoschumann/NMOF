@@ -19,7 +19,7 @@
 \details{
 
   \bold{This function is still experimental.}
-  
+
   The function can be called in the neighbourhood function or the
   objective function during a run of \code{\link{TAopt}}.  It evaluates
   to a list with the state of the optimisation run, such as the current
@@ -29,7 +29,7 @@
   information.  If the function is called within another function in the
   neighbourhood or objective function, the argument \code{n} needs to be
   increased.
-  
+
 }
 \value{
 A list
@@ -49,10 +49,10 @@ A list
   \code{\link{TAopt}}
 }
 \examples{
-### MINIMAL EXAMPLE for TAopt 
+### MINIMAL EXAMPLE for TAopt
 
 ## objective function evaluates to a constant
-fun <- function(x)   
+fun <- function(x)
     0
 
 ## neighbourhood function does not even change the solution,
@@ -65,7 +65,7 @@ nb <- function(x) {
     x
 }
 
-## run TA  
+## run TA
 algo <- list(nS = 5,
              nT = 2,
              nD = 10,
