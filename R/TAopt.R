@@ -77,6 +77,8 @@ TAopt <- function(OF, algo = list(), ...) {
                 xcF <- xnF
             }
             vT <- algoD$q * ((nT - 1L):0)/nT
+            if (any(is.na(diffF)))
+                stop("objective function evaluated to NA")
             vT <- quantile(diffF, vT, na.rm = FALSE)
             vT[nT] <- 0 ### set last threshold to zero
             if (printBar)
@@ -98,7 +100,8 @@ TAopt <- function(OF, algo = list(), ...) {
         vT <- rep.int(vT, stepUp + 1L)
     if (algoD$scale < 0) {
         scale <- 0
-        warning("'scale' set to 0 ('scale' must be nonnegative)")
+        warning(sQuote("scale"), " set to 0 (",
+                sQuote("scale"), " must be nonnegative)")
     } else {
         scale <- algoD$scale
     }
