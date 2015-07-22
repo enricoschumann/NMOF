@@ -1,3 +1,10 @@
+2015-07-22  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Version): Version: 0.36-1
+
+	* R/TAopt.R (TAopt): more informative error message when objective
+	function evaluates to NA during computation of thresholds
+
 2015-06-23  Enrico Schumann  <es@enricoschumann.net>
 
 	* DESCRIPTION (Version): Version: 0.36-0
