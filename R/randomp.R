@@ -1,7 +1,12 @@
 ## -*- truncate-lines: t; -*-
-## Time-stamp: <2014-01-06 16:13:59 CET (es)>
-
 ## create random portfolios
+
+## n .. number of assets available
+## k .. number of assets in solution
+## sum_w .. sum of weights (typically 1)
+## abssum_w .. sum of absolute weights (useful for long/short portfolios)
+## wmin ..
+## wmax ..
 
 long.only <- function(n, budget = 1) {
     ans <- runif(n)
@@ -22,9 +27,4 @@ long.short <- function(n, budget = 1) {
         ans[tmp] <- -ans[tmp]
     }
     budget*ans/sum(ans)
-}
-
-random.p <- function(n, budget = 1,
-                     wmin = 0, wmax = Inf, abs.max = Inf) {
-
 }
