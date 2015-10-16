@@ -1,3 +1,10 @@
+2015-10-16  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Version): Version: 0.36-2
+
+	* NAMESPACE: explicitly import functions from all packages other
+	than 'base': 'grDevices', 'graphics', 'stats', 'utils'
+
 2015-07-22  Enrico Schumann  <es@enricoschumann.net>
 
 	* DESCRIPTION (Version): Version: 0.36-1

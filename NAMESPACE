@@ -1,4 +1,11 @@
-importFrom(parallel, makeCluster, stopCluster, clusterApply, mclapply)
+importFrom("parallel",
+           clusterApply, makeCluster, mclapply, stopCluster)
+importFrom("grDevices", "dev.new")
+importFrom("graphics", "plot")
+importFrom("stats", "dnorm", "integrate", "median", "pnorm",
+           "quantile", "rnorm", "runif", "sd", "uniroot")
+importFrom("utils", "flush.console", "setTxtProgressBar",
+           "txtProgressBar")
 export(bracketing,
        colSubset,
        DEopt,
