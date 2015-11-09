@@ -43,10 +43,10 @@ TAopt <- function(OF, algo = list(), ...) {
         cat("\nThreshold Accepting.\n")
 
 
-    nT <- makeInteger(algoD$nT, "'algo$nT'")
-    nS <- makeInteger(algoD$nS, "'algo$nS'")
-    nD <- makeInteger(algoD$nD, "'algo$nD'")
-    stepUp <- makeInteger(algoD$stepUp, "'algo$stepUp'", 0L)
+    nT <- makeInteger(algoD$nT, "algo$nT")
+    nS <- makeInteger(algoD$nS, "algo$nS")
+    nD <- makeInteger(algoD$nD, "algo$nD")
+    stepUp <- makeInteger(algoD$stepUp, "algo$stepUp", 0L)
     niter <- nS * nT * (stepUp+1L)
 
     ## compute thresholds

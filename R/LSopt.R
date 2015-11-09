@@ -15,9 +15,9 @@ LSopt <- function(OF, algo = list(), ...) {
     if (!is.function(algoD$neighbour))
         stop("'algo$neighbour' must be a function")
     if (is.null(algoD$x0))
-        stop("specify start solution 'algo$x0'")
+        stop("specify start solution ", sQuote("algo$x0"))
 
-    nS <- makeInteger(algoD$nS,"'algo$nS'")
+    nS <- makeInteger(algoD$nS,"algo$nS")
 
     OF1 <- function(x) OF(x, ...)
     N1 <- function(x) algoD$neighbour(x, ...)

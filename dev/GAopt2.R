@@ -31,9 +31,9 @@ GAopt2 <- function (OF, algo = list(), ...) {
         stop("'algo$nB' must be specified")
     if (algoD$prob > 1 || algoD$prob < 0)
         stop("'algo$prob' must be between 0 and 1")
-    nB <- NMOF:::makeInteger(algoD$nB, 'algo$nB')
-    nP <- NMOF:::makeInteger(algoD$nP, 'algo$nP')
-    nG <- NMOF:::makeInteger(algoD$nG, 'algo$nG')
+    nB <- NMOF:::makeInteger(algoD$nB, "algo$nB")
+    nP <- NMOF:::makeInteger(algoD$nP, "algo$nP")
+    nG <- NMOF:::makeInteger(algoD$nG, "algo$nG")
 
     cl <- algoD$cl
     lP <- vector(mode = "list", length = nP)  ## length nP

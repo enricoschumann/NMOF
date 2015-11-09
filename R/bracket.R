@@ -9,7 +9,7 @@ bracketing <- function(fun, interval, ...,
                        mc.control = list(),
                        cl = NULL) {
 
-    n <- makeInteger(n, "'n'", 2)
+    n <- makeInteger(n, "n", 2)
     method <- tolower(method[1L])
     if (method == "vectorize"  || method == "vectorized" || method == "vectorise")
             method <- "vectorised"

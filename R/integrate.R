@@ -8,7 +8,7 @@ changeInterval <- function(nodes, weights,
 }
 
 xwGauss <- function(n, method = "legendre") {
-    n <- makeInteger(n, "'n'", 1L)
+    n <- makeInteger(n, "n", 1L)
     method <- match.arg(tolower(method),
                         choices = c("legendre", "laguerre", "hermite"))
     switch(method,

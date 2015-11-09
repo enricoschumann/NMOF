@@ -1,7 +1,7 @@
 makeInteger <- function(x, label, min = 1L) {
-    x <- as.integer(x)
+    x <- suppressWarnings(as.integer(x))
     if (is.na(x) || x < min)
-        stop(label, " must be an integer greater/equal to ", min)
+        stop(sQuote(label), " must be an integer not smaller than ", min)
     x
 }
 

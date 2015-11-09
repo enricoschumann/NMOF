@@ -1,5 +1,8 @@
 2015-11-09  Enrico Schumann  <es@enricoschumann.net>
 
+	* R/DEopt.R (DEopt and other files): updated invocations of
+	'makeInteger'
+
 	* R/internals.R (makeInteger): use 'sQuote' to quote argument name
 
 	* R/restartOpt.R (restartOpt): when 'cl' is specified and 'method'

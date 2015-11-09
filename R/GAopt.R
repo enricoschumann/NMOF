@@ -72,9 +72,9 @@ GAopt <- function (OF, algo = list(), ...) {
     if (algoD$prob > 1 || algoD$prob < 0)
         stop("'algo$prob' must be between 0 and 1")
 
-    nB <- makeInteger(algoD$nB, 'algo$nB')
-    nP <- makeInteger(algoD$nP, 'algo$nP')
-    nG <- makeInteger(algoD$nG, 'algo$nG')
+    nB <- makeInteger(algoD$nB, "algo$nB")
+    nP <- makeInteger(algoD$nP, "algo$nP")
+    nG <- makeInteger(algoD$nG, "algo$nG")
     lP <- vector(mode = "list", length = nP)
 
     crossover <- tolower(algoD$crossover[1L])

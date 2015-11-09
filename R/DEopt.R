@@ -58,8 +58,8 @@ DEopt <- function(OF, algo = list(), ...) {
     if (printBar && printDetail > 1)
         printBar <- FALSE
 
-    nG <- makeInteger(algoD$nG, "'algoD$nG'", 1L)
-    nP <- makeInteger(algoD$nP, "'algoD$nP'", 1L)
+    nG <- makeInteger(algoD$nG, "algoD$nG", 1L)
+    nP <- makeInteger(algoD$nP, "algoD$nP", 1L)
 
     OF1 <- function(x)
         OF(x, ...)

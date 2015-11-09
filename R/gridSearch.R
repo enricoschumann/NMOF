@@ -23,7 +23,7 @@ gridSearch <- function(fun, levels, ..., lower, upper,
                 ": will use method ", sQuote("loop"))
     }
 
-    n <- makeInteger(n, "'n'", 2L)
+    n <- makeInteger(n, "n", 2L)
 
     if (missing(levels) && !missing(lower) && !missing(upper)) {
         lower <- as.numeric(lower)
