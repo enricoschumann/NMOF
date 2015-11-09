@@ -1,13 +1,15 @@
 2015-11-09  Enrico Schumann  <es@enricoschumann.net>
 
-	* R/DEopt.R (DEopt and other files): updated invocations of
-	'makeInteger'
-
-	* R/internals.R (makeInteger): use 'sQuote' to quote argument name
+	* DESCRIPTION (Version): Version: 0.36-3
 
 	* R/restartOpt.R (restartOpt): when 'cl' is specified and 'method'
 	is identical to 'loop', the function will now issue a warning
 	before changing method to 'snow'
+
+	* R/DEopt.R (DEopt and other files): updated invocations of
+	'makeInteger'
+
+	* R/internals.R (makeInteger): use 'sQuote' to quote argument name
 
 2015-10-16  Enrico Schumann  <es@enricoschumann.net>
 

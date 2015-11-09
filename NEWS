@@ -1,3 +1,9 @@
+v0.36-3  (2015-11-09)
+
+  o restartOpt: when 'cl' is specified and 'method' is identical to
+    'loop', the function will now issue a warning before changing
+    method to 'snow'
+
 v0.36-2  (2015-10-16)
 
   o functions from packages other than 'base' are now explicity
