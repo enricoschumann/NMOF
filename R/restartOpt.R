@@ -2,16 +2,20 @@ restartOpt <- function(fun, n, OF, algo, ...,
                        method = c("loop", "multicore", "snow"),
                        mc.control = list(),
                        cl = NULL, best.only = FALSE) {
-    n <- makeInteger(n, "'n'", 1L)
-    method <- tolower(method[1L])
+    n <- makeInteger(n, "n", 1L)
     force(fun)
     force(OF)
     force(algo)
-    tmp <- list(...)  ## force does not work
+    tmp <- list(...)  ## force does not work for '...'
     fun2 <- function(ignore)
         fun(OF = OF, algo = algo, ...)
-    if (!is.null(cl))
+    if (!is.null(cl)) {
+        if (identical(method, "loop"))
+            warning(sQuote("cl"), " specified: method changed to ",
+                    sQuote("snow"))
         method <- "snow"
+    }
+    method <- tolower(method[1L])
     if (method == "snow" && is.null(cl)) {
         method <- "loop"
         warning("no cluster ", sQuote("cl"),
