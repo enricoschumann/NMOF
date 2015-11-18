@@ -1,7 +1,12 @@
 2015-11-18  Enrico Schumann  <es@enricoschumann.net>
 
+	* DESCRIPTION (Version): Version: 0.36-4
+
 	* R/bracket.R (bracketing): the resulting matrix's columns are
 	named 'lower' and 'upper'
+
+	* inst/unitTests/unitTests2.R (test.bracketing): updated unit
+	tests to include column names
 
 2015-11-09  Enrico Schumann  <es@enricoschumann.net>
 
