@@ -1,3 +1,8 @@
+2015-11-18  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/bracket.R (bracketing): the resulting matrix's columns are
+	named 'lower' and 'upper'
+
 2015-11-09  Enrico Schumann  <es@enricoschumann.net>
 
 	* DESCRIPTION (Version): Version: 0.36-3

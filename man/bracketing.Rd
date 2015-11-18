@@ -76,7 +76,8 @@ bracketing(fun, interval, ...,
 
 }
 \value{
-  a numeric matrix with two columns. Each row contains one interval
+  A numeric matrix with two columns, named \emph{lower} and
+  \emph{upper}. Each row contains one interval
   that contains at least one root. If no roots were found, the matrix
   has zero rows.
 }
@@ -85,8 +86,9 @@ bracketing(fun, interval, ...,
     Methods and Optimization in Finance}. Elsevier.
   \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
 
-  Schumann, E. (2013) The \pkg{NMOF} Manual.
-  \url{http://enricoschumann.net/NMOF.htm}
+  Schumann, E. (2011--2015) Financial Optimisation with R (a.k.a. The
+  \pkg{NMOF} Manual).
+  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 
 }
 \author{
