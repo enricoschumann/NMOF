@@ -1,5 +1,6 @@
 \name{gridSearch}
 \alias{gridSearch}
+\concept{grid search}
 \title{
   Grid Search
 }

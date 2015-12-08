@@ -1,5 +1,6 @@
 \name{DEopt}
 \alias{DEopt}
+\concept{Differential Evolution}
 \title{
   Optimisation with Differential Evolution
 }

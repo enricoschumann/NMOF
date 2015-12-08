@@ -1,3 +1,7 @@
+2015-12-08  Enrico Schumann  <es@enricoschumann.net>
+
+	* man/*: added \concept to several help files
+
 2015-11-18  Enrico Schumann  <es@enricoschumann.net>
 
 	* DESCRIPTION (Version): Version: 0.36-4

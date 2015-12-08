@@ -1,5 +1,6 @@
 \name{callHestoncf}
 \alias{callHestoncf}
+\concept{Heston model}
 \title{
 Price of a European Call under the Heston Model
 }

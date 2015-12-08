@@ -1,5 +1,6 @@
 \name{GAopt}
 \alias{GAopt}
+\concept{Genetic Algorithm}
 \title{
   Optimisation with a Genetic Algorithm
 }
