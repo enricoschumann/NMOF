@@ -1,3 +1,8 @@
+v0.36-4  (2015-11-18)
+
+  o bracketing: the resulting matrix's columns are named 'lower' and
+    'upper'
+
 v0.36-3  (2015-11-09)
 
   o restartOpt: when 'cl' is specified and 'method' is identical to
