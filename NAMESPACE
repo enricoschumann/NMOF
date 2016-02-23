@@ -56,3 +56,6 @@ export(bracketing,
        vanillaOptionImpliedVol,
        xwGauss,
        ytm)
+
+S3method(plot, TAopt)
+## S3method(plot, TAopt)

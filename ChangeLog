@@ -1,3 +1,10 @@
+2016-02-23  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/TAopt.R (TAopt): Experimental. An argument 'classify' can now
+	be specified (passed through 'algo' settings). Default is FALSE;
+	if TRUE, the result gets a class attribute 'TAopt'. Methods for
+	'plot' and 'print' have been added.
+
 2015-12-08  Enrico Schumann  <es@enricoschumann.net>
 
 	* man/*: added \concept to several help files

@@ -1,66 +1,108 @@
-RUNIT TEST PROTOCOL -- Wed Nov 18 11:10:51 2015 
+RUNIT TEST PROTOCOL -- Thu Jan  7 10:06:17 2016 
 *********************************************** 
 Number of test functions: 21 
-Number of errors: 0 
+Number of errors: 20 
 Number of failures: 0 
 
  
 1 Test Suite : 
-NMOF - 21 test functions, 0 errors, 0 failures
+org - 21 test functions, 20 errors, 0 failures
+ERROR in test.bracketing: Error in mode(current) : could not find function "bracketing"
+ERROR in test.gridSearch: Error in func() : could not find function "gridSearch"
+ERROR in test.xwGauss: Error in func() : could not find function "xwGauss"
+ERROR in test.ytm: Error in func() : could not find function "vanillaBond"
+ERROR in test.callCF: Error in func() : could not find function "callCF"
+ERROR in test.DEopt: Error in func() : could not find function "DEopt"
+ERROR in test.GAopt: Error in func() : could not find function "GAopt"
+ERROR in test.LSopt: Error in func() : could not find function "LSopt"
+ERROR in test.MA: Error in all.equal(target, current, tolerance = tolerance, ...) : 
+  could not find function "MA"
+ERROR in test.callHestoncf: Error in func() : could not find function "callHestoncf"
+ERROR in test.EuropeanCall: Error in func() : could not find function "EuropeanCall"
+ERROR in test.EuropeanCallBE: Error in func() : could not find function "EuropeanCall"
+ERROR in test.testFunctions: Error in as.vector(target) : could not find function "tfAckley"
+ERROR in test.vanillaOptionAmerican: Error in func() : could not find function "vanillaOptionAmerican"
+ERROR in test.vanillaOptionEuropean: Error in func() : could not find function "vanillaOptionEuropean"
+ERROR in test.vanillaOptionImpliedVol: Error in func() : could not find function "vanillaOptionEuropean"
+ERROR in test.putCallParity: Error in func() : could not find function "vanillaOptionEuropean"
+ERROR in test.PSopt: Error in func() : object 'tfRosenbrock' not found
+ERROR in test.restartOpt: Error in func() : could not find function "restartOpt"
+ERROR in test.TAopt: Error in func() : could not find function "TAopt"
 
 
 
 Details 
 *************************** 
-Test Suite: NMOF 
+Test Suite: org 
 Test function regexp: ^test.+ 
 Test file regexp: unitTests.+ 
 Involved directory: 
 ~/Packages/NMOF/inst/unitTests 
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTests2.R 
-test.bracketing: (13 checks) ... OK (0.01 seconds)
-test.gridSearch: (18 checks) ... OK (0.13 seconds)
-test.xwGauss: (4 checks) ... OK (0 seconds)
+test.bracketing: ERROR !! 
+Error in mode(current) : could not find function "bracketing"
+test.gridSearch: ERROR !! 
+Error in func() : could not find function "gridSearch"
+test.xwGauss: ERROR !! 
+Error in func() : could not find function "xwGauss"
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsBonds.R 
-test.ytm: (6 checks) ... OK (0 seconds)
+test.ytm: ERROR !! 
+Error in func() : could not find function "vanillaBond"
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestscallCF.R 
-test.callCF: (22 checks) ... OK (0.02 seconds)
+test.callCF: ERROR !! 
+Error in func() : could not find function "callCF"
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsDEopt.R 
-test.DEopt: (123 checks) ... OK (2.12 seconds)
+test.DEopt: ERROR !! 
+Error in func() : could not find function "DEopt"
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsGAopt.R 
-test.GAopt: (22 checks) ... OK (0.13 seconds)
+test.GAopt: ERROR !! 
+Error in func() : could not find function "GAopt"
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsInternals.R 
-test.checkList: (10 checks) ... OK (0.01 seconds)
+test.checkList: (10 checks) ... OK (0 seconds)
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsLSopt.R 
-test.LSopt: (7 checks) ... OK (0.16 seconds)
+test.LSopt: ERROR !! 
+Error in func() : could not find function "LSopt"
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsMA.R 
-test.MA: (3 checks) ... OK (0 seconds)
+test.MA: ERROR !! 
+Error in all.equal(target, current, tolerance = tolerance, ...) : 
+  could not find function "MA"
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsOptions.R 
-test.callHestoncf: (3 checks) ... OK (0 seconds)
-test.EuropeanCall: (6 checks) ... OK (0 seconds)
-test.EuropeanCallBE: (6 checks) ... OK (0 seconds)
-test.testFunctions: (6 checks) ... OK (0 seconds)
-test.vanillaOptionAmerican: (6 checks) ... OK (0.01 seconds)
-test.vanillaOptionEuropean: (2124 checks) ... OK (8.37 seconds)
-test.vanillaOptionImpliedVol: (12 checks) ... OK (0.1 seconds)
+test.callHestoncf: ERROR !! 
+Error in func() : could not find function "callHestoncf"
+test.EuropeanCall: ERROR !! 
+Error in func() : could not find function "EuropeanCall"
+test.EuropeanCallBE: ERROR !! 
+Error in func() : could not find function "EuropeanCall"
+test.testFunctions: ERROR !! 
+Error in as.vector(target) : could not find function "tfAckley"
+test.vanillaOptionAmerican: ERROR !! 
+Error in func() : could not find function "vanillaOptionAmerican"
+test.vanillaOptionEuropean: ERROR !! 
+Error in func() : could not find function "vanillaOptionEuropean"
+test.vanillaOptionImpliedVol: ERROR !! 
+Error in func() : could not find function "vanillaOptionEuropean"
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsPCparity.R 
-test.putCallParity: (10 checks) ... OK (0 seconds)
+test.putCallParity: ERROR !! 
+Error in func() : could not find function "vanillaOptionEuropean"
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsPSopt.R 
-test.PSopt: (16 checks) ... OK (2.48 seconds)
+test.PSopt: ERROR !! 
+Error in func() : object 'tfRosenbrock' not found
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsRestartOpt.R 
-test.restartOpt: (1 checks) ... OK (0.1 seconds)
+test.restartOpt: ERROR !! 
+Error in func() : could not find function "restartOpt"
 --------------------------- 
 Test file: /home/es/Packages/NMOF/inst/unitTests/unitTestsTAopt.R 
-test.TAopt: (13 checks) ... OK (0.23 seconds)
+test.TAopt: ERROR !! 
+Error in func() : could not find function "TAopt"

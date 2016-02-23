@@ -11,7 +11,8 @@ TAopt <- function(OF, algo = list(), ...) {
                   stepUp = 0L,
                   scale = 1,
                   storeF = TRUE,
-                  storeSolutions = FALSE)
+                  storeSolutions = FALSE,
+                  classify = FALSE)
 
     checkList(algo, algoD)
     algoD[names(algo)] <- algo
@@ -22,12 +23,13 @@ TAopt <- function(OF, algo = list(), ...) {
 
     ## user *must* specify the following
     if (is.null(algoD$neighbour))
-        stop("specify a neighbourhood function 'algo$neighbour'")
+        stop("specify a neighbourhood function ", sQuote("algo$neighbour"))
     if (!is.function(algoD$neighbour))
-        stop("'algo$neighbour' must be a function")
+        stop(sQuote("algo$neighbour"), " must be a function")
     if (is.null(algoD$x0))
-        stop("specify start solution 'algo$x0'")
-    if (is.function(algoD$x0)) ## evaluate x0 if function
+        stop("specify start solution ", sQuote("algo$x0"))
+
+    if (is.function(algoD$x0)) 
         x0 <- algoD$x0() else x0 <- eval(algoD$x0)
 
     OF1 <- function(x)
@@ -80,7 +82,7 @@ TAopt <- function(OF, algo = list(), ...) {
             if (any(is.na(diffF)))
                 stop("objective function evaluated to NA")
             vT <- quantile(diffF, vT, na.rm = FALSE)
-            vT[nT] <- 0 ### set last threshold to zero
+            vT[nT] <- 0  ## set last threshold to zero
             if (printBar)
                 close(whatGen)
             if (printDetail) {
@@ -135,7 +137,7 @@ TAopt <- function(OF, algo = list(), ...) {
     counter <- 0L
     for (t in seq_len(nT)) {
         for (s in seq_len(nS)) {
-            ## number of iterations
+            ## counter = total number of iterations
             counter <- counter + 1L
 
             xn <- N1(xc)
@@ -164,7 +166,6 @@ TAopt <- function(OF, algo = list(), ...) {
                 xlist[[c(2L, counter)]] <- xc
             }
 
-            ## print info
             if (printDetail > 1) {
                 if (counter %% printDetail == 0L) {
                     cat("Best solution (iteration ", counter,
@@ -182,10 +183,12 @@ TAopt <- function(OF, algo = list(), ...) {
     if (printBar)
         close(whatGen)
 
-    ## return best solution
-    list(xbest = xbest, OFvalue = xbestF,
-         Fmat = Fmat, xlist = xlist, vT = vT,
-         initial.state = state)
+    ans <- list(xbest = xbest, OFvalue = xbestF,
+                Fmat = Fmat, xlist = xlist, vT = vT,
+                initial.state = state)
+    if (algo$classify)
+        class(ans) <- "TAopt"
+    ans
 }
 
 TA.info <- function(n = 0L) {
@@ -217,8 +220,16 @@ print.TAopt <- function(x, ...) {
 }
 
 plot.TAopt <- function(x, y, ...) {
-    plot(x$vT, xlab = "Threshold", ylab = "Values")
-    dev.new()
+    dev.new(title = "TAopt: Threshold sequence")
+    plot(x$vT, xlab = "Threshold", ylab = "Values",
+         main = "TAopt: Threshold Sequence", type = "b")
+    if (!is.null(x$Fmat)) {
+        dev.new(title = "Objective function values")
+        plot(x$Fmat[,1], type = "l", log = "y", col = grey(0.6),
+             xlab = "iteration", ylab = "objective function value")
+        lines(x$Fmat[,2], type = "l", col = grey(0.3))
+        lines(cummin(x$Fmat[,2]), type = "l", col = "blue")
+    }
 }
 
 
