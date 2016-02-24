@@ -58,4 +58,4 @@ export(bracketing,
        ytm)
 
 S3method(plot, TAopt)
-## S3method(plot, TAopt)
+S3method(print, TAopt)

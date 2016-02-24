@@ -186,7 +186,7 @@ TAopt <- function(OF, algo = list(), ...) {
     ans <- list(xbest = xbest, OFvalue = xbestF,
                 Fmat = Fmat, xlist = xlist, vT = vT,
                 initial.state = state)
-    if (algo$classify)
+    if (algoD$classify)
         class(ans) <- "TAopt"
     ans
 }
@@ -212,7 +212,7 @@ TA.info <- function(n = 0L) {
 }
 
 
-                                        # METHODS (not exported)
+                                        # METHODS
 
 print.TAopt <- function(x, ...) {
     cat("Threshold Accepting.\n")
