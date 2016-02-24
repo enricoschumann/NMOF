@@ -33,7 +33,7 @@
 \details{
 
   For a vector \eqn{x}{\emph{x}} of length \eqn{n}{\emph{n}}, partial
-  moments are computed such:
+  moments are computed as follows:
 
   \deqn{\mathrm{upper\ partial\ moment} = \frac{1}{n} \sum_{x >
       t}\left(x - t \right)^e}{%
@@ -49,7 +49,8 @@
   If \code{normalise} is \code{TRUE}, the result is raised to
   \code{1/xp}.  If \code{x} is a matrix, the function will compute the
   partial moments column-wise.
-  
+
+  See Gilli, Maringer and Schumann (2011), Section 13.3.
 }
 \value{
   numeric
