@@ -1,3 +1,7 @@
+2016-03-02  Enrico Schumann  <es@enricoschumann.net>
+
+	* NAMESPACE: import 'lines', 'grey' from package 'grDevices'
+
 2016-02-23  Enrico Schumann  <es@enricoschumann.net>
 
 	* R/TAopt.R (TAopt): Experimental. An argument 'classify' can now

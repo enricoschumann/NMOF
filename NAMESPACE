@@ -1,6 +1,6 @@
 importFrom("parallel",
            clusterApply, makeCluster, mclapply, stopCluster)
-importFrom("grDevices", "dev.new")
+importFrom("grDevices", "dev.new", "lines", "grey")
 importFrom("graphics", "plot")
 importFrom("stats", "dnorm", "integrate", "median", "pnorm",
            "quantile", "rnorm", "runif", "sd", "uniroot")
