@@ -1,0 +1,20 @@
+RUNIT TEST PROTOCOL -- Thu Apr  7 16:57:55 2016 
+*********************************************** 
+Number of test functions: 0 
+Number of errors: 0 
+Number of failures: 0 
+
+ 
+1 Test Suite : 
+NMOF - 0 test functions, 0 errors, 0 failures
+
+
+
+Details 
+*************************** 
+Test Suite: NMOF 
+Test function regexp: ^test.+ 
+Test file regexp: ut_.* 
+Involved directory: 
+~/Packages/NMOF/inst/unitTests 
+no test files 
