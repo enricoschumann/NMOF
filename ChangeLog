@@ -1,5 +1,7 @@
 2016-04-07  Enrico Schumann  <es@enricoschumann.net>
 
+        * DESCRIPTION (Version): 0.36-5
+
 	* R/repairMatrix.R (repairMatrix): new argument
 	'eps', which specifies the replacement value for
 	negative eigenvalues
