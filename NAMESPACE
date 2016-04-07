@@ -1,7 +1,7 @@
 importFrom("parallel",
            clusterApply, makeCluster, mclapply, stopCluster)
-importFrom("grDevices", "dev.new", "lines", "grey")
-importFrom("graphics", "plot")
+importFrom("grDevices", "dev.new", "grey")
+importFrom("graphics", "plot", "lines")
 importFrom("stats", "dnorm", "integrate", "median", "pnorm",
            "quantile", "rnorm", "runif", "sd", "uniroot")
 importFrom("utils", "flush.console", "setTxtProgressBar",

@@ -4,13 +4,17 @@
 Repair an Indefinite Correlation Matrix
 }
 \description{
-The function \sQuote{repairs} an indefinite correlation matrix by replacing its negative eigenvalues by zero.
+
+  The function \sQuote{repairs} an indefinite correlation matrix by
+  replacing its negative eigenvalues by zero.
+
 }
 \usage{
-repairMatrix(C)
+repairMatrix(C, eps = 0)
 }
 \arguments{
   \item{C}{a correlation matrix}
+  \item{eps}{a small number}
 }
 \details{
 
