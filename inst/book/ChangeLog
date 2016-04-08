@@ -6,7 +6,7 @@
         "if(is.na())" in OF (as a safeguard if "lambda" gets negative
         during the search)
 
-        
+
 About this file
         This ChangeLog reports how the R-files in the package have been
 	changed compared with the versions printed in the book. The file
