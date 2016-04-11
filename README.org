@@ -2,8 +2,8 @@
 
   The NMOF package provides many of the code examples and
   data sets used in the book "Numerical Methods and
-  Optimization in Finance" by M. Gilli, D. Maringer and
-  E. Schumann (2011), ISBN 978-0123756626. The package also
+  Optimization in Finance" by [[http://www.unige.ch/ses/dsec/static/gilli/][M. Gilli]], [[https://wwz.unibas.ch/personen/profil/person/maringer/][D. Maringer]] and
+  [[http://enricoschumann.net/][E. Schumann]] (2011), ISBN 978-0123756626. The package also
   contains several functions that have not been described in
   the book. Notably, the package provides implementations of
   a number of optimisation heuristics, among them
@@ -15,7 +15,7 @@
 ** Installing the package
 
    The latest build of the package is always available from
-   [[http://enricoschumann.net/R/packages/NMOF/index.htm]] A
+   [[http://enricoschumann.net/R/packages/NMOF/index.htm]]. A
    stable version is available from [[https://cran.r-project.org/][CRAN]].
 
    To install the package from within an R session, type:
@@ -38,7 +38,7 @@ discussed on the =R-SIG-Finance= mailing list:
 
 
 Please send bug reports or suggestions directly to the
-package maintainer, for instance by using \texttt{bug.report}.
+package maintainer, for instance by using =bug.report=.
 
 #+BEGIN_SRC R :eval never :export code
 require("utils")
@@ -50,3 +50,6 @@ bug.report("[NMOF] Unexpected behaviour in function XXX",
 
 ** References
 
+   Manfred Gilli, Dietmar Maringer and Enrico Schumann.
+   [[http://www.amazon.com/Numerical-Methods-Optimization-Finance-Manfred/dp/0123756626/][/Numerical Methods and Optimization in Finance/]]. Academic
+   Press, 2011. 
