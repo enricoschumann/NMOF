@@ -1,5 +1,7 @@
 2016-04-11  Enrico Schumann  <es@enricoschumann.net>
 
+	* R/TAopt.R (print.TAopt): return 'invisible(x)'
+
 	* R/TAopt.R (plot.TAopt): new argument 'plot.type';
 	use 'do.call' for invoking plot
 

@@ -108,13 +108,18 @@ TAopt(OF, algo = list(), \dots)
       function values for every solution in every generation are stored
       and returned as matrix \code{Fmat}.}
 
-    \item{\code{storeSolutions}}{default is \code{FALSE}. If
+    \item{\code{storeSolutions}}{Default is \code{FALSE}. If
       \code{TRUE}, the solutions (ie, decision variables) in every
       generation are stored and returned in list
       \code{xlist} (see Value section below). To check, for instance,
       the current solution at the end of the \code{i}th generation, retrieve
       \code{xlist[[c(2L, i)]]}.}
-      
+
+    \item{\code{classify}}{Logical; default is \code{FALSE}. If
+    \code{TRUE}, the result will have a class attribute \code{TAopt}
+    attached.}
+
+    
     } % end describe
 
       At the minimum, \code{algo} needs to contain an initial solution
@@ -150,6 +155,9 @@ TAopt(OF, algo = list(), \dots)
     \item{\code{initial.state}}{the value of \code{\link{.Random.seed}}
       when the function was called.}
 
+    If \code{algo$classify} was set to \code{TRUE}, the resulting list
+    will have a class attribute \code{TAopt}.
+    
   }
   \note{If the \code{\dots} argument is used, then all the objects passed
     with \code{\dots} need to go into the objective function and the

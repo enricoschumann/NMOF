@@ -215,8 +215,9 @@ TA.info <- function(n = 0L) {
                                         # METHODS
 
 print.TAopt <- function(x, ...) {
-    cat("Threshold Accepting.\n")
-    cat(".. objective function value of solution: ", x$OFvalue, "\n")
+    cat("Threshold Accepting\n")
+    cat("_ final objective-function value: ", x$OFvalue, "\n")
+    invisible(x)
 }
 
 plot.TAopt <- function(x, y, plot.type = "interactive", ...) {
