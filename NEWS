@@ -1,3 +1,12 @@
+v0.37-0  (2016-04-11)
+
+  o TAopt: experimental/rudimentary plot and print
+    methods. The methods are invoked if 'algo$classify' is
+    TRUE (default is FALSE in order to keep old behaviour)
+
+  o there is now a public Git repository at
+    https://github.com/enricoschumann/NMOF
+
 v0.36-5  (2016-04-07)
 
   o repairMatrix: new argument 'eps', which specifies the
