@@ -219,17 +219,35 @@ print.TAopt <- function(x, ...) {
     cat(".. objective function value of solution: ", x$OFvalue, "\n")
 }
 
-plot.TAopt <- function(x, y, ...) {
-    dev.new(title = "TAopt: Threshold sequence")
-    plot(x$vT, xlab = "Threshold", ylab = "Values",
-         main = "TAopt: Threshold Sequence", type = "b")
-    if (!is.null(x$Fmat)) {
-        dev.new(title = "Objective function values")
-        plot(x$Fmat[,1], type = "l", log = "y", col = grey(0.6),
-             xlab = "iteration", ylab = "objective function value")
-        lines(x$Fmat[,2], type = "l", col = grey(0.3))
-        lines(cummin(x$Fmat[,2]), type = "l", col = "blue")
-    }
+plot.TAopt <- function(x, y, plot.type = "interactive", ...) {
+    if (plot.type == "interactive") {
+        dev.new(title = "TAopt: Threshold sequence")
+        defaults <- list(x    = x$vT,
+                         xlab = "Threshold",
+                         ylab = "Values",
+                         main = "TAopt: Threshold Sequence",
+                         type = "b")
+        do.call("plot", defaults)
+        if (!is.null(x$Fmat)) {
+            dev.new(title = "TAopt: Objective function values")
+            defaults <- list(x    = x$Fmat[,1L],
+                             xlab = "Iteration",
+                             ylab = "Objective function value",
+                             main = "TAopt: Objective function values",
+                             type = "l",
+                             col  = grey(0.6))
+            do.call("plot", defaults, ...)
+
+            defaults$x <- x$Fmat[,2L]
+            defaults$col <- grey(0.2)
+            do.call("lines", defaults, ...)
+
+            defaults$x <- cummin(x$Fmat[,2L])
+            defaults$col <- "blue"
+            do.call("lines", defaults, ...)
+        }
+    } else
+        warning("plot.type not supported")
 }
 
 
