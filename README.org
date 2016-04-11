@@ -1,0 +1,10 @@
+* NMOF -- Numerical Methods and Optimisation in Finance
+
+
+The NMOF package provides many of the code examples and data sets used
+in Gilli, Maringer and Schumann (2011); it also contains several
+functions that have not been described in the book. Notably, the
+package provides implementations of a number of optimisation
+heuristics, among them Differential Evolution and Genetic Algorithms.
+There are also functions for valuing financial instruments such as
+bonds and options and helper functions for stochastic simulations.

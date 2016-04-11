@@ -1,10 +1,11 @@
-dev
-dev/
+.es_keywords
 .git
 .gitignore
-THANKS
-.es_keywords
 ChangeLog
+README.org
+THANKS
+TODO_NMOF.org
+dev
+dev/
 reports
 reports/
-TODO_NMOF.org
