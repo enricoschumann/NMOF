@@ -1,10 +1,52 @@
-* NMOF -- Numerical Methods and Optimisation in Finance
+* Numerical Methods and Optimisation in Finance
+
+  The NMOF package provides many of the code examples and
+  data sets used in the book "Numerical Methods and
+  Optimization in Finance" by M. Gilli, D. Maringer and
+  E. Schumann (2011), ISBN 978-0123756626. The package also
+  contains several functions that have not been described in
+  the book. Notably, the package provides implementations of
+  a number of optimisation heuristics, among them
+  Differential Evolution and Genetic Algorithms. There are
+  also functions for valuing financial instruments such as
+  bonds and options, and helper functions for stochastic
+  simulations.
+
+** Installing the package
+
+   The latest build of the package is always available from
+   [[http://enricoschumann.net/R/packages/NMOF/index.htm]] A
+   stable version is available from [[https://cran.r-project.org/][CRAN]].
+
+   To install the package from within an R session, type:
+#+BEGIN_SRC R :eval never :export code
+install.packages('NMOF')  ## CRAN version
+install.packages('NMOF', type = 'source',
+                 repos = c('http://enricoschumann.net/R', getOption('repos')))
+#+END_SRC
+
+** News, feedback and discussion
+
+   New package releases and other news related to the book
+   or the package are announced on the =NMOF-news= mailing
+   list:
+   [[https://lists.r-forge.r-project.org/cgi-bin/mailman/listinfo/nmof-news]]
+
+Applications, as long as they are finance-related, should be
+discussed on the =R-SIG-Finance= mailing list:
+[[https://stat.ethz.ch/mailman/listinfo/r-sig-finance]]
 
 
-The NMOF package provides many of the code examples and data sets used
-in Gilli, Maringer and Schumann (2011); it also contains several
-functions that have not been described in the book. Notably, the
-package provides implementations of a number of optimisation
-heuristics, among them Differential Evolution and Genetic Algorithms.
-There are also functions for valuing financial instruments such as
-bonds and options and helper functions for stochastic simulations.
+Please send bug reports or suggestions directly to the
+package maintainer, for instance by using \texttt{bug.report}.
+
+#+BEGIN_SRC R :eval never :export code
+require("utils")
+bug.report("[NMOF] Unexpected behaviour in function XXX", 
+            maintainer("NMOF"), package = "NMOF")
+#+END_SRC
+
+
+
+** References
+
