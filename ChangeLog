@@ -1,5 +1,7 @@
 2016-04-12  Enrico Schumann  <es@enricoschumann.net>
 
+	* README.org: add RSS feed; format improvements
+
 	* vignettes/An_overview.Rnw: add link to RSS feed
 
 	* inst/unitTests/runTests.R: fixed -- 'testFileRegexp'
