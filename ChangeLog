@@ -1,3 +1,8 @@
+2016-04-12  Enrico Schumann  <es@enricoschumann.net>
+
+	* inst/unitTests/runTests.R: fixed -- 'testFileRegexp'
+	was wrong and so unit test were not run
+
 2016-04-11  Enrico Schumann  <es@enricoschumann.net>
 
         * DESCRIPTION (Version): 0.36-6
