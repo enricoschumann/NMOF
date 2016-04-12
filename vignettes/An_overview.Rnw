@@ -150,7 +150,7 @@ file.show(system.file("NMOFex/NMOFman.R", package = "NMOF"))
 A goal for the \textsc{nmof} package is to provide reliable code.
 Thus, a large number of test cases is included.
 <<echo=false>>=
-test.rep <- readLines(system.file("unitTests/report.txt", 
+test.rep <- readLines(system.file("unitTests/test_results.txt", 
                                   package = "NMOF"))
 nt <- gsub(".*\\(([0-9]+) checks?\\).*", "\\1",
            test.rep[grep("\\(\\d+ checks?\\)", test.rep)])
@@ -166,15 +166,22 @@ These tests are stored in subdirectory \texttt{unitTests}.
 
 \subsection{News, feedback and discussion}
 
-New package releases and other news related to the book or the package
-are announced on the \texttt{NMOF-news} mailing list:
+\noindent New package releases and other news related to the book or
+the package are announced on the \texttt{NMOF-news} mailing list:\smallskip
 
-\noindent \url{https://lists.r-forge.r-project.org/cgi-bin/mailman/listinfo/nmof-news}
+\url{https://lists.r-forge.r-project.org/cgi-bin/mailman/listinfo/nmof-news}
+\medskip
+
+\noindent An \textsc{rss} feed of the package \textsc{news} file is
+available at\smallskip
+
+\url{http://enricoschumann.net/R/packages/NMOF/NMOF_news.xml}\,.
 
 \medskip
 
 \noindent Applications, as long as they are finance-related, should be
-discussed on the \texttt{R-SIG-Finance} mailing list:
+discussed on the \texttt{R-SIG-Finance} mailing list:\smallskip 
+
 \url{https://stat.ethz.ch/mailman/listinfo/r-sig-finance}
 
 \medskip
