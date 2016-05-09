@@ -29,7 +29,8 @@ install.packages('NMOF', type = 'source',
 ** News, feedback and discussion
 
    New package releases and other news related to the book or the
-   package are announced on the [[https://lists.r-forge.r-project.org/cgi-bin/mailman/listinfo/nmof-news][NMOF-news mailing list]].
+   package are announced on the [[https://lists.r-forge.r-project.org/cgi-bin/mailman/listinfo/nmof-news][NMOF-news mailing list]]. The list is
+   also available via [[http://dir.gmane.org/gmane.comp.finance.nmof.announce][Gmane]].
 
    An [[http://enricoschumann.net/R/packages/NMOF/NMOF_news.xml][RSS feed of the package NEWS file]] is also available.
    
