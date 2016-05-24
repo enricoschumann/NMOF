@@ -1,11 +1,12 @@
 \name{testFunctions}
 \alias{testFunctions}
 \alias{tfAckley}
-\alias{tfTrefethen}
+\alias{tfEggholder}
 \alias{tfGriewank}
 \alias{tfRastrigin}
 \alias{tfRosenbrock}
 \alias{tfSchwefel}
+\alias{tfTrefethen}
 \alias{tfTrefethen}
 \concept{Test functions for global optimisation}
 \title{
@@ -17,6 +18,7 @@
 }
 \usage{
 tfAckley(x)
+tfEggholder(x)
 tfGriewank(x)
 tfRastrigin(x)
 tfRosenbrock(x)
@@ -31,14 +33,23 @@ tfTrefethen(x)
 }
 \details{
 
-  All functions take as argument only one variable, a numeric vector
-  \code{x} whose length determines the dimensionality of the problem.
+  All functions take as argument only one variable, a
+  numeric vector \code{x} whose length determines the
+  dimensionality of the problem.
 
   The \emph{Ackley} function is implemented as
   \deqn{\exp(1) + 20 -20 \exp{\left(-0.2 \sqrt{\frac{1}{n}\sum_{i=1}^n x_i^2}\right)} - \exp{\left(\frac{1}{n}\sum_{i=1}^n  \cos(2 \pi x_i)\right)}\,.}{exp(1) + 20 - 20 * exp(-0.2 * sqrt(sum(x^2)/n)) - exp(sum(cos(2 * pi * x))/n)}
   The minimum function value is zero; reached at \eqn{x=0}{x = 0}.
 
-  The \emph{Griewank} function is given by \deqn{1+\frac{1}{4000} \sum^n_{i=1} x_i^2 - \prod_{i=1}^n \cos \left(\frac{x_i}{\sqrt{i}}\right)\,.}{sum(x^2)/4000 - prod(cos(x/sqrt(1:n))) + 1}
+  The \emph{Eggholder} takes a two-dimensional \code{x},
+  here written as \eqn{x}{x} and \eqn{y}{y}. It is defined as  
+  \deqn{-(y + 47) \sin\left(\sqrt{|y + \frac{x}{2} + 47|}\right) -
+    x \sin\left(\sqrt{|x - (y + 47)|}\right)\,.}{-(y + 47) * sin(sqrt(abs(y + x/2 + 47))) -
+    x * sin(sqrt(abs(x - (y + 47))))}
+  The minimum function value is -959.6407; reached at \code{c(512, 404.2319)}.
+      
+  The \emph{Griewank} function is given by
+  \deqn{1+\frac{1}{4000} \sum^n_{i=1} x_i^2 - \prod_{i=1}^n \cos \left(\frac{x_i}{\sqrt{i}}\right)\,.}{sum(x^2)/4000 - prod(cos(x/sqrt(1:n))) + 1}
   The function is minimised at \eqn{x=0}{x = 0}; its minimum value is zero.
 
   The \emph{Rastrigin} function: \deqn{10n + \sum_{i=1}^n \left(x_i^2 -10\cos(2\pi x_i)\right)\,.}{10*n + sum(x^2 - 10 * cos(2 * pi * x))}
