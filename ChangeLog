@@ -1,5 +1,7 @@
 2016-05-24  Enrico Schumann  <es@enricoschumann.net>
 
+        * DESCRIPTION (Version): 0.37-1
+
 	* R/testFun.R (tfEggholder): new test function
 
 2016-04-12  Enrico Schumann  <es@enricoschumann.net>
