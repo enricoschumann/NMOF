@@ -59,7 +59,7 @@ TAopt(OF, algo = list(), \dots)
     \item{\code{q}}{The highest quantile for the threshold
       sequence. Defaults to 0.5. Only used if \code{algo$vT} is
       \code{NULL}. If \code{q} is zero, \code{TAopt} will run with
-      zero-thresholds (ie, like a Local Search).}
+      \code{algo$nT} zero-thresholds (ie, like a Local Search).}
 
     \item{\code{x0}}{The initial solution. If this is a function, it will
       be called once without arguments to compute an initial solution, ie,
