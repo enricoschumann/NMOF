@@ -1,5 +1,7 @@
 2016-06-08  Enrico Schumann  <es@enricoschumann.net>
 
+        * DESCRIPTION (Version): 0.37-2
+
 	* R/TAopt.R (TA.info): add 'xbest' to the data
 	that 'TA.info' provides
 
