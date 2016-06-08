@@ -36,6 +36,7 @@ A list
 \item{step}{current step}
 \item{threshold}{current threshold (the number, not the value)}
 \item{iteration}{current iteration}
+\item{xbest}{the best solution found so far}
 }
 \references{
     Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical

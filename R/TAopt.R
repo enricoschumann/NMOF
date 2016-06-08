@@ -133,7 +133,6 @@ TAopt <- function(OF, algo = list(), ...) {
         whatGen <- txtProgressBar(min = 1, max = niter, style = 3,
                                   getOption("width")*0.9)
 
-    ## main algorithm
     counter <- 0L
     for (t in seq_len(nT)) {
         for (s in seq_len(nS)) {
@@ -197,6 +196,7 @@ TA.info <- function(n = 0L) {
     threshold <- NA
     iteration <- NA
     iteration.sampling <- NA
+    xbest <- NA
     if (exists("i", envir = e, inherits = FALSE))
         step <- get("i", envir = e, inherits = FALSE)
     if (exists("s", envir = e, inherits = FALSE))
@@ -205,10 +205,13 @@ TA.info <- function(n = 0L) {
         threshold <- get("t", envir = e, inherits = FALSE)
     if (exists("counter", envir = e, inherits = FALSE))
         iteration <- get("counter", envir = e, inherits = FALSE)
+    if (exists("xbest", envir = e, inherits = FALSE))
+        xbest <- get("xbest", envir = e, inherits = FALSE)
     list(iteration.sampling = iteration.sampling,
          iteration = iteration,
          step = step,
-         threshold = threshold)
+         threshold = threshold,
+         xbest = if (is.list(xbest)) list(xbest) else xbest)
 }
 
 
