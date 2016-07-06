@@ -1,3 +1,9 @@
+v0.37-3  (2016-07-06)
+
+  o TAopt: new option 'OF.target', which lets the
+    algorithm stop when a desired objective-function
+    value is reached
+
 v0.37-2  (2016-06-08)
 
   o TA.info: the best solution ('xbest') is now also

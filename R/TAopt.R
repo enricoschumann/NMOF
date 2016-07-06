@@ -12,7 +12,8 @@ TAopt <- function(OF, algo = list(), ...) {
                   scale = 1,
                   storeF = TRUE,
                   storeSolutions = FALSE,
-                  classify = FALSE)
+                  classify = FALSE,
+                  OF.target = NULL)
 
     checkList(algo, algoD)
     algoD[names(algo)] <- algo
@@ -37,6 +38,8 @@ TAopt <- function(OF, algo = list(), ...) {
     N1 <- function(x)
         algoD$neighbour(x, ...)
 
+    target.reached <- FALSE
+    
     printDetail <- algoD$printDetail
     printBar <- algoD$printBar
     if (printBar && printDetail > 1)
@@ -173,8 +176,21 @@ TAopt <- function(OF, algo = list(), ...) {
                     flush.console()
                 }
             }
-
+            
+            ## check stopif value
+            if (!is.null(algo$OF.target) && xbestF <= algo$OF.target) {
+                if (printDetail) {
+                    cat("Target value (", prettyNum(algo$OF.target), ") ",
+                        "for objective function reached: ",
+                        prettyNum(xbestF), "\n", sep = "")
+                    flush.console()
+                    target.reached  <- TRUE
+                }
+                break    
+            }
         }
+        if (target.reached)
+            break
     }
     if (printDetail)
         cat("Finished.\nBest solution overall: ",
@@ -250,8 +266,10 @@ plot.TAopt <- function(x, y, plot.type = "interactive", ...) {
             defaults$col <- "blue"
             do.call("lines", defaults, ...)
         }
-    } else
-        warning("plot.type not supported")
+    } else {
+        .NotYetUsed("plot.type")
+    }
+    invisible()
 }
 
 

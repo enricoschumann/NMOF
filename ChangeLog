@@ -1,3 +1,9 @@
+2016-07-06  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/TAopt.R (TAopt): add new option
+	'OF.target', which lets the algorithm stop when
+	a desired objective-function value is reached
+
 2016-06-08  Enrico Schumann  <es@enricoschumann.net>
 
         * DESCRIPTION (Version): 0.37-2

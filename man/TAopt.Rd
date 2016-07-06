@@ -119,7 +119,12 @@ TAopt(OF, algo = list(), \dots)
     \code{TRUE}, the result will have a class attribute \code{TAopt}
     attached.}
 
-    
+  \item{\code{OF.target}}{Numeric; when specified, the algorithm will
+    stop when an objective-function value as low as \code{OF.target} (or
+    lower) is achieved. This is useful when an optimal
+    objective-function value is known: the algorithm will then stop and
+    not waste time searching for a better solution.}
+  
     } % end describe
 
       At the minimum, \code{algo} needs to contain an initial solution
