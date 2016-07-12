@@ -1,3 +1,9 @@
+v0.37-4  (2016-07-12)
+
+  o fixed: 'DEopt' did not work for univariate
+    optimisation models. (Thanks to Torsten von
+    Bartenwerffer for reporting.)
+
 v0.37-3  (2016-07-06)
 
   o TAopt: new option 'OF.target', which lets the

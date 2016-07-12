@@ -1,3 +1,9 @@
+2016-07-12  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/DEopt.R (DEopt): fixed -- function now also
+	works for univariate models; reported by
+	Torsten von Bartenwerffer
+
 2016-07-06  Enrico Schumann  <es@enricoschumann.net>
 
         * DESCRIPTION (Version): 0.37-3

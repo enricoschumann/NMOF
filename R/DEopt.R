@@ -98,7 +98,7 @@ DEopt <- function(OF, algo = list(), ...) {
     if (!is.null(algoD$repair)) {
         if (algoD$loopRepair){
             for (s in snP)
-                mP[ ,s] <- Re1(mP[ ,s])
+                mP[ ,s] <- Re1(mP[ , s, drop=FALSE])
         } else {
             mP <- Re1(mP)
             if (!all(dim(mP) == c(d, nP)))
@@ -108,7 +108,7 @@ DEopt <- function(OF, algo = list(), ...) {
     ## 2) evaluate
     if (algoD$loopOF){
         for (s in snP)
-            vF[s] <- OF1(mP[ ,s])
+            vF[s] <- OF1(mP[ , s, drop=FALSE])
     } else {
         vF <- OF1(mP)
         if (length(vF) != nP)
@@ -117,7 +117,7 @@ DEopt <- function(OF, algo = list(), ...) {
     ## 3) penalise
     if (!is.null(algoD$pen)) {
         if (algoD$loopPen) {
-            for (s in snP) vPv[s] <- Pe1(mP[ ,s])
+            for (s in snP) vPv[s] <- Pe1(mP[ ,s , drop=FALSE])
         } else {
             vPv <- Pe1(mP)
             if (length(vPv) != nP)
@@ -142,7 +142,8 @@ DEopt <- function(OF, algo = list(), ...) {
         R3 <- R2[snP1]
 
         ## prelim. update
-        mPv <- mP[ ,R1] + F * (mP[ ,R2] - mP[ ,R3])
+        mPv <- mP[ , R1, drop=FALSE] +
+            F * (mP[ , R2, drop=FALSE] - mP[ , R3, drop=FALSE])
         vI <- runif(d * nP) > algoD$CR
         mPv[vI] <- mP[vI]
 
@@ -152,21 +153,21 @@ DEopt <- function(OF, algo = list(), ...) {
         if (!is.null(algoD$repair)) {
             if (algoD$loopRepair) {
                 for (s in snP)
-                    mPv[ ,s] <- Re1(mPv[ ,s])
+                    mPv[ ,s] <- Re1(mPv[ , s, drop=FALSE])
             } else {
                 mPv <- Re1(mPv)
             }
         }
         if (algoD$loopOF) {
             for (s in snP)
-                vFv[s] <- OF1(mPv[ ,s])
+                vFv[s] <- OF1(mPv[ , s, drop=FALSE])
         } else {
             vFv <- OF1(mPv)
         }
         if (!is.null(algoD$pen)) {
             if (algoD$loopPen){
                 for (s in snP)
-                    vPv[s] <- Pe1(mPv[ ,s])
+                    vPv[s] <- Pe1(mPv[ , s, drop=FALSE])
             } else {
                 vPv <- Pe1(mPv)
             }
@@ -174,7 +175,7 @@ DEopt <- function(OF, algo = list(), ...) {
         }
         ## find improvements
         logik <- vFv < vF
-        mP[ ,logik] <- mPv[ ,logik]
+        mP[ ,logik] <- mPv[ ,logik, drop=FALSE]
         vF[logik] <- vFv[logik]
         if (algoD$storeF)
             Fmat[g, ] <- vF
