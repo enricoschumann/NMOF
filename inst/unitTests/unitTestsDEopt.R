@@ -163,5 +163,24 @@ test.DEopt <- function() {
         sol <- DEopt(OF = OF, algo = algo, solution = solution)
         checkTrue(all(sol$xbest >= 0))
     }
+
+
+    ## univariate model
+    n <- 1; solution <- rep(0, n)
+        
+    algo <- list(min = rep(-5, n),
+                 max = rep(5, n),
+                 printDetail = FALSE,
+                 printBar = FALSE,
+                 minmaxConstr = TRUE,
+                 nG = 100)
+
+    OF <- function(x, solution)
+        sum(abs(x - solution))
+    
+    for (i in 1:10) {
+        sol <- DEopt(OF = OF, algo = algo, solution = solution)
+        checkTrue(abs(sol$xbest - 0) < 1e-10)
+    }
         
 }
