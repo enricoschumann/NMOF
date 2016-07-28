@@ -84,14 +84,14 @@ For European options the formula of Messrs Black, Scholes and Merton is
 used. It can be used for equities (set \code{q} equal to the dividend
 yield), futures (Black, 1976; set \code{q} equal to \code{r}),
 currencies (Garman and Kohlhagen, 1983; set \code{q} equal to the
-foreign risk-free rate). For future-style options (eg, the German Bund
+foreign risk-free rate). For future-style options (e.g. options on the German Bund
 future), set \code{q} and \code{r} equal to zero.
 
-The Greeks here are in their raw (\sQuote{textbook}) form with only
-exception: Theta is made negative. In practice, the other Greeks are
-also typically adjusted. Theta is often divided by 365 (or some other
-yearly day count) Vega and Rho are divided by 100 to give the
-sensitivity for one percentage point move in volatility/the interest
+The Greeks are provided in their raw (\sQuote{textbook}) form with only one
+exception: Theta is made negative. For practical use, the other Greeks are
+also typically adjusted: Theta is often divided by 365 (or some other
+yearly day count); Vega and Rho are divided by 100 to give the
+sensitivity for one percentage-point move in volatility/the interest
 rate. Raw Gamma is not much use if not adjusted for the actual move in
 the underlier.
 
