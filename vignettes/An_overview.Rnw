@@ -36,7 +36,7 @@ options(continue = " ", digits = 5, max.print = 10, width = 85)
 \subsection{The book}
 
 `Numerical Methods and Optimization in Finance' (\textsc{nmof},
-\citealp{Gilli2011b}) is all about tools for computational finance,
+\citealp{Gilli2011b}) is about tools for computational finance,
 with emphasis on simulation and optimisation.  Many chapters are
 organised as case studies, covering topics such as portfolio insurance
 or the valuation of financial derivatives.  In particular, several
@@ -72,8 +72,8 @@ and data sets used in \cite{Gilli2011b}; it also contains several
 functions that have not been described in the book.  Notably, the
 package provides implementations of a number of optimisation
 heuristics, among them Differential Evolution and Genetic Algorithms.
-There are also functions for valuing financial instruments (such as
-bonds and options) and helper functions for stochastic simulations.
+There are also functions for valuing financial instruments, such as
+bonds and options, and helper functions for stochastic simulations.
 
 \section{What's in the package}
 
@@ -127,11 +127,27 @@ cat(paste(strwrap(x$results[,"Title"], exdent = 2), collapse = "\n"))
 
 \subsection{Websites}
 
-\noindent The book website: \url{http://nmof.net} \smallskip
+\noindent The book's website: \url{http://nmof.net} \smallskip
 
-\noindent The package website:
-\url{http://enricoschumann.net/NMOF.htm}
+\noindent The package's website:
+\url{http://enricoschumann.net/NMOF.htm}\medskip
 
+\noindent The stable version is available from \textsc{cran}. The
+development version is available from
+
+\url{http://enricoschumann.net/R/packages/NMOF/index.htm}\medskip
+
+\noindent To install the package from an R session, type:
+<<eval=false>>=
+install.packages("NMOF", type = "source",
+                 repos = c("http://enricoschumann.net/R", 
+                           getOption("repos")))
+@ 
+
+
+\noindent The source code is also available in the GitHub repository
+
+\url{https://github.com/enricoschumann/NMOF}.
 
 \subsection{Manual}
 
