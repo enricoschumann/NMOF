@@ -1,14 +1,16 @@
 gbm <- function(npaths, timesteps, r, v, tau, S0) {
-    if (missing(S0))
-        s0 <- 0 else s0 <- log(S0)
+    s0 <-  if (missing(S0))
+               0
+           else
+               log(S0)
     dt <- tau/timesteps
     ans <- numeric((timesteps + 1L) * npaths)
     dim(ans) <- c(timesteps + 1L, npaths)
-    ans[-1L,] <- rnorm(timesteps * npaths,
+    ans[-1L, ] <- rnorm(timesteps * npaths,
                       mean = (r - 0.5 * v)*dt,
                       sd = sqrt(dt * v))
     if (timesteps > 1L) {
-        ans[1L,] <- s0
+        ans[1L, ] <- s0
         for (j in seq_len(npaths))
             ans[ ,j] <- cumsum(ans[ ,j])
     } else
