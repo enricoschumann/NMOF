@@ -1,17 +1,29 @@
-citHeader("To cite NMOF in publications use:")
+citHeader("To cite NMOF in publications please use:")
 
-aa <- c(person("Manfred", "Gilli", role = "aut"),
-        person("Dietmar", "Maringer", role = "aut"),
-        person("Enrico", "Schumann", role = c("aut","cre")))
+citEntry(entry  = "book",
+         title  = "Numerical Methods and Optimization in Finance",
 
-citEntry(entry = "book",
-         title = "Numerical Methods and Optimization in Finance",
-         author = aa,
-         year = "2011",
+         author = c(person("Manfred", "Gilli", role = "aut"),
+                    person("Dietmar", "Maringer", role = "aut"),
+                    person("Enrico", "Schumann", role = c("aut", "cre"))),
+
+         year   = "2011",
          publisher = "Academic Press",
          address = "Waltham, MA, USA",
-         url  = "http://nmof.net",
+         url     = "http://nmof.net",
+         note    = "ISBN 0123756626",
          textVersion = 
          paste("Manfred Gilli, Dietmar Maringer and Enrico Schumann. ", 
                "Numerical Methods and Optimization in Finance. ",
                "Academic Press, 2011.", sep = ""))
+
+citEntry(entry  = "manual",
+         title  = paste0("Numerical Methods and Optimization in Finance (NMOF) ",
+                         "Manual. Package version ", meta$Version, ")"),         
+         author = person("Enrico", "Schumann", role = c("aut", "cre")),
+         year   = paste0("2012--", sub("-.*", "", meta$Date)),
+         url       = "http://enricoschumann.net/NMOF.htm",
+         textVersion = 
+         paste0("Enrico Schumann. ", 
+               "Numerical Methods and Optimization in Finance (NMOF). ",
+               "Manual. Package version ", meta$Version, "."))
