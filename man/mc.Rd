@@ -109,6 +109,36 @@ delta.mc <- (mc(paths2, payoff, X = 100, r = r, tau = tau)-
 delta <- vanillaOptionEuropean(S0, X = 100, tau = tau,
                                r = r, v = v)$delta
 delta.mc - delta 
+
+
+
+
+## a fanplot
+steps <- 100
+paths <- results <- gbm(1000, steps, r = 0, v = 0.2^2,
+                        tau = 1, S0 = 100)
+
+levels <- seq(0.01, 0.49, length.out = 20)
+greys  <- seq(0.9,  0.50, length.out = length(levels))
+
+## start with an empty plot ...
+plot(0:steps, rep(100, steps+1), ylim = range(paths),
+     xlab = "", ylab = "", lty = 0, type = "l")
+
+## ... and add polygons
+for (level in levels) {
+
+    l <- apply(paths, 1, quantile, level)
+    u <- apply(paths, 1, quantile, 1 - level)
+    col <- grey(greys[level == levels])
+    polygon(c(0:steps, steps:0), c(l, rev(u)),
+            col = col, border = NA)
+
+    ## add border lines
+    ## lines(0:steps, l, col = grey(0.4))
+    ## lines(0:steps, u, col = grey(0.4))
+}
+
 }
 
 

@@ -1,5 +1,7 @@
 2016-08-23  Enrico Schumann  <es@enricoschumann.net>
 
+	* man/mc.Rd: add fanplot example
+
 	* inst/CITATION: add NMOF manual
 
 2016-07-12  Enrico Schumann  <es@enricoschumann.net>
