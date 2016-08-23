@@ -1,3 +1,7 @@
+v0.37-5  (2016-08-23)
+
+  o gbm: add fanplot example
+
 v0.37-4  (2016-07-12)
 
   o fixed: 'DEopt' did not work for univariate
