@@ -1,5 +1,7 @@
 2016-08-23  Enrico Schumann  <es@enricoschumann.net>
 
+        * DESCRIPTION (Version): 0.37-5
+
 	* man/mc.Rd: add fanplot example
 
 	* inst/CITATION: add NMOF manual
