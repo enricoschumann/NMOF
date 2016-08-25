@@ -21,7 +21,7 @@ citEntry(entry  = "manual",
          title  = paste0("Numerical Methods and Optimization in Finance (NMOF) ",
                          "Manual. Package version ", meta$Version, ")"),         
          author = person("Enrico", "Schumann", role = c("aut", "cre")),
-         year   = paste0("2012--", sub("-.*", "", meta$Date)),
+         year   = paste0("2011--", sub("-.*", "", meta$Date)),
          url       = "http://enricoschumann.net/NMOF.htm",
          textVersion = 
          paste0("Enrico Schumann. ", 
