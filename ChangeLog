@@ -1,4 +1,6 @@
-2016-08-26  Enrico Schumann  <es@enricoschumann.net>
+2016-08-27  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 0.37-6
 
 	* R/mc.R (gbb): fixed -- 'gbb' failed when only
 	a single path was to be computed
