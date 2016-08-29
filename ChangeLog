@@ -1,3 +1,9 @@
+2016-08-29  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/portfolio.R (erc): experimental -- add
+	functions for computing ERC, min-variance
+	portfolios [not exported]
+
 2016-08-27  Enrico Schumann  <es@enricoschumann.net>
 
         * DESCRIPTION (Version): 0.37-6
