@@ -27,6 +27,8 @@ LSopt <- function(OF, algo = list(), ...) {
 
     printDetail  <- algoD$printDetail
     printBar  <- algoD$printBar
+    if (printBar && printDetail > 1)
+        printBar <- FALSE
 
     if (algoD$storeF) {
         Fmat <- array(NA, dim = c(nS, 2L))
