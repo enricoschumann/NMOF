@@ -42,6 +42,7 @@ erc <- function(cov,  wmin = 0, wmax = 1, method = "ls") {
 
 ## function for computing the minimum-variance portfolio
 minvar <- function(var, wmin = 0, wmax = 1, method = "qp") {
+
     na <- dim(var)[1L]
     if (length(wmin) == 1L)
         wmin <- rep(wmin, na)
@@ -50,7 +51,7 @@ minvar <- function(var, wmin = 0, wmax = 1, method = "qp") {
     Q <- 2 * var
     A <- rbind(1, -diag(na), diag(na))
     bvec <- c(1, -wmax, wmin)
-    solve.QP(Dmat = Q,
+    quadprog::solve.QP(Dmat = Q,
                        dvec = rep(0, na),
                        Amat = t(A),
                        bvec = bvec,
@@ -75,11 +76,11 @@ mv_frontier <- function(m, var, wmin = 0, wmax = 1, n = 50) {
     sq <- seq(0.0001, 0.9999, length.out = n)
     for (i in seq_len(n)) {
         lambda <- sq[i]
-        result <- solve.QP(Dmat = 2*(1-lambda)*var,
-                           dvec = lambda*m,
-                           Amat = t(A),
-                           bvec = c(1, -wmax, wmin),
-                           meq  = 1L)
+        result <- quadprog::solve.QP(Dmat = 2*(1-lambda)*var,
+                                     dvec = lambda*m,
+                                     Amat = t(A),
+                                     bvec = c(1, -wmax, wmin),
+                                     meq  = 1L)
         rets[i] <- sum(m*result$solution)
         risk[i] <- sqrt(result$solution %*% var %*% result$solution)
         portfolios[, i] <- result$solution
