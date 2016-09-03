@@ -90,7 +90,7 @@ TAopt(OF, algo = list(), \dots)
     \item{\code{printBar}}{If \code{TRUE} (default is \code{FALSE}), a
       \code{\link{txtProgressBar}} (from package \pkg{utils}) is
       printed. The progress bar is not shown if \code{printDetail} is
-      \code{TRUE}.}
+      an integer greater than 1.}
 
     \item{\code{scale}}{The thresholds are multiplied by
     \code{scale}. Default is 1.}

@@ -54,8 +54,11 @@ LSopt(OF, algo = list(), ...)
       is printed. If an integer \code{i} greater then one, information
       is printed at very \code{i}th step.}
 
-    \item{\code{printBar}}{If \code{TRUE} (the default), a
-      \code{txtProgressBar} (from package \pkg{utils}) is printed).}
+    \item{\code{printBar}}{If \code{TRUE} (the
+      default), a \code{txtProgressBar} (from package
+      \pkg{utils}) is printed).  The progress bar is
+      not shown if \code{printDetail} is an integer
+      greater than 1.}
 
     \item{\code{storeF}}{if \code{TRUE} (the default), the objective
       function values for every solution in every generation are stored
