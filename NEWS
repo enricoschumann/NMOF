@@ -1,6 +1,13 @@
+v0.38-0  (2016-09-03)
+
+  o fixed: LSopt did not switch off 'printBar' in cases
+    when 'printDetail > 1'
+  
+  o updates to documentation of LSopt/TAopt
+
 v0.37-6  (2016-08-27)
 
-  o fixed : 'gbb' failed when only a single path was to
+  o fixed: 'gbb' failed when only a single path was to
     be computed
 
 v0.37-5  (2016-08-23)
@@ -31,8 +38,9 @@ v0.37-1  (2016-05-24)
 v0.37-0  (2016-04-11)
 
   o TAopt: experimental/rudimentary plot and print
-    methods. The methods are invoked if 'algo$classify' is
-    TRUE (default is FALSE in order to keep old behaviour)
+    methods. The methods are invoked if 'algo$classify'
+    is TRUE (default is FALSE in order to keep old
+    behaviour)
 
   o there is now a public Git repository at
     https://github.com/enricoschumann/NMOF

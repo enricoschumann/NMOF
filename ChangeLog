@@ -8,6 +8,11 @@
 	* R/portfolio.R (minvar, mv_frontier): use `::`
 	notation for 'solve.QP'
 
+2016-09-02  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/LSopt: switch off printBar if
+	'printDetail > 1'
+
 2016-08-29  Enrico Schumann  <es@enricoschumann.net>
 
 	* R/portfolio.R (erc): experimental -- add
