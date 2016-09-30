@@ -1,0 +1,61 @@
+\name{xtContractValue}
+\alias{xtContractValue}
+\title{
+  Contract Value of Australian Government Bond Future
+}
+\description{
+
+  Compute the contract value of an Australian
+  government-bond future from its quoted price.
+
+}
+\usage{
+xtContractValue(quoted.price, coupon, do.round = TRUE)
+}
+\arguments{
+  \item{quoted.price}{
+    The price, as in \code{99.02}.
+}
+  \item{coupon}{
+    numeric; should be 6, not 0.06
+}
+  \item{do.round}{
+    If \code{TRUE}, round as done by ASX clearing house.
+}
+}
+\details{
+
+  Australian government-bond futures, traded at the
+  Australian Securities Exchange (\acronym{asx}), are
+  quoted as \code{100 - yield}. The function computes
+  the actual contract value from the quoted price.
+
+}
+\value{
+  A numeric vector.
+}
+\references{
+
+  \url{http://www.rba.gov.au/mkt-operations/resources/tech-notes/pricing-formulae.html}
+
+}
+\author{
+  Enrico Schumann
+}
+%% \seealso{
+%% %% ~~objects to See Also as \code{\link{help}}, ~~~
+%% }
+\examples{
+quoted.price <- 99
+coupon <- 6
+xtContractValue(quoted.price, coupon)
+
+## compute multiplier
+(xtContractValue(quoted.price, coupon) -
+ xtContractValue(quoted.price - 0.01, coupon))*100
+
+quoted.price <- seq(90, 100, by = 0.1)
+plot(100 - quoted.price,
+     xtContractValue(quoted.price, coupon),
+     xlab = "Yield", ylab = "Contract value")
+}

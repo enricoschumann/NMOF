@@ -55,6 +55,7 @@ export(bracketing,
        vanillaOptionAmerican,
        vanillaOptionEuropean,
        vanillaOptionImpliedVol,
+       xtContractValue,
        xwGauss,
        ytm)
 
