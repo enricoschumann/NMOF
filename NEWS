@@ -1,3 +1,9 @@
+v0.39-0  (2016-09-30)
+
+  o new function 'xtContractValue', for computing
+    contract values of Australian government-bond
+    futures
+
 v0.38-0  (2016-09-03)
 
   o fixed: LSopt did not switch off 'printBar' in cases

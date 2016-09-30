@@ -50,9 +50,11 @@ quoted.price <- 99
 coupon <- 6
 xtContractValue(quoted.price, coupon)
 
-## compute multiplier
-(xtContractValue(quoted.price, coupon) -
- xtContractValue(quoted.price - 0.01, coupon))*100
+xtMultiplier <- function(quoted.price, coupon, do.round = TRUE) {
+    (xtContractValue(quoted.price, coupon) -
+     xtContractValue(quoted.price - 0.01, coupon))*100
+}
+xtMultiplier(quoted.price, coupon)
 
 quoted.price <- seq(90, 100, by = 0.1)
 plot(100 - quoted.price,
