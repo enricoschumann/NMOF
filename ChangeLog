@@ -1,6 +1,6 @@
 2016-09-30  Enrico Schumann  <es@enricoschumann.net>
 
-	* DESCRIPTION (Version): Version: 0.39-0
+	* DESCRIPTION (Version): 0.39-0
 
 	* R/xtContractValue.R (xtContractValue): add function
 
