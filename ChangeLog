@@ -1,3 +1,9 @@
+2016-10-19  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Version): 0.40-0
+
+	* R/xtContractValue.R (xtTickValue): add function
+
 2016-09-30  Enrico Schumann  <es@enricoschumann.net>
 
 	* DESCRIPTION (Version): 0.39-0

@@ -16,3 +16,8 @@ xtContractValue <- function(quoted.price, coupon, do.round = TRUE) {
 
     1000*(do.round(c*(1-v^20)/i,8) + 100*do.round(v^20,8))
 }
+
+xtTickValue <- function(quoted.price, coupon, do.round = TRUE) {
+    (xtContractValue(quoted.price + 0.01, coupon, do.round = do.round) -
+     xtContractValue(quoted.price - 0.01, coupon, do.round = do.round))*100/2
+}

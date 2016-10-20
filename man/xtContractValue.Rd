@@ -1,5 +1,6 @@
 \name{xtContractValue}
 \alias{xtContractValue}
+\alias{xtTickValue}
 \title{
   Contract Value of Australian Government Bond Future
 }
@@ -11,6 +12,7 @@
 }
 \usage{
 xtContractValue(quoted.price, coupon, do.round = TRUE)
+xtTickValue(quoted.price, coupon, do.round = TRUE)
 }
 \arguments{
   \item{quoted.price}{
@@ -30,6 +32,9 @@ xtContractValue(quoted.price, coupon, do.round = TRUE)
   quoted as \code{100 - yield}. The function computes
   the actual contract value from the quoted price.
 
+  \code{xtTickValue} computes the tick value via a
+  central difference.
+  
 }
 \value{
   A numeric vector.
@@ -49,13 +54,8 @@ xtContractValue(quoted.price, coupon, do.round = TRUE)
 quoted.price <- 99
 coupon <- 6
 xtContractValue(quoted.price, coupon)
-
-xtMultiplier <- function(quoted.price, coupon, do.round = TRUE) {
-    (xtContractValue(quoted.price, coupon) -
-     xtContractValue(quoted.price - 0.01, coupon))*100
-}
-xtMultiplier(quoted.price, coupon)
-
+xtTickValue(quoted.price, coupon)
+## convexity
 quoted.price <- seq(90, 100, by = 0.1)
 plot(100 - quoted.price,
      xtContractValue(quoted.price, coupon),

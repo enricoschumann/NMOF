@@ -1,3 +1,8 @@
+v0.40-0  (2016-10-20)
+
+  o new function 'xtTickValue', which computes the tick
+    value for of Australian government-bond futures
+
 v0.39-0  (2016-09-30)
 
   o new function 'xtContractValue', for computing
