@@ -7,6 +7,12 @@ erc <- function(cov,  wmin = 0, wmax = 1, method = "ls") {
         sd(x * tmp / c(sqrt(x %*% tmp)))
     }
 
+    na <- dim(cov)[1L]
+    if (length(wmin) == 1L)
+        wmin <- rep(wmin, na)
+    if (length(wmax) == 1L)
+        wmax <- rep(wmax, na)
+
     N <- function (w, Data) {
         toSell <- which(w > Data$wmin)
         toBuy <- which(w < Data$wmax)
@@ -14,16 +20,16 @@ erc <- function(cov,  wmin = 0, wmax = 1, method = "ls") {
         j <- toBuy[sample.int(length(toBuy), size = 1L)]
         eps <- Data$epsmin + runif(1L) *
             (Data$epsmax-Data$epsmin) * (Data$nS-LS.info()$s)/Data$nS
-        eps <- min(w[i] - Data$wmin, Data$wmax - w[j], eps)
+        eps <- min(w[i] - Data$wmin[i], Data$wmax[j] - w[j], eps)
         w[i] <- w[i] - eps
         w[j] <- w[j] + eps
         w
     }
 
     Data <- list(S = cov,
-                 na = dim(cov)[1L],
-                 wmin = 0,
-                 wmax = 1,
+                 na = na,
+                 wmin = wmin,
+                 wmax = wmax,
                  epsmin = 0.0001,
                  epsmax = 0.1,             
                  eps = 0.0005,

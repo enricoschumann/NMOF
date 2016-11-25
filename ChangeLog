@@ -1,3 +1,11 @@
+2016-11-25  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/portfolio.R (erc): fixed -- 'wmin' and
+	'wmax' were ignored
+	(erc): 'wmin' and 'wmax' may now be vectors,
+	specifying holding-size constraints for each
+	asset
+
 2016-10-19  Enrico Schumann  <es@enricoschumann.net>
 
 	* DESCRIPTION (Version): 0.40-0
@@ -279,7 +287,7 @@
 
 2014-03-18  Enrico Schumann  <es@enricoschumann.net>
 
-	* NAMESPACE: added colSubset
+	* NAMESPACE: added colSubset;
 	added TA.info
 
 2014-03-17  Enrico Schumann  <es@enricoschumann.net>
@@ -344,8 +352,8 @@
 
 	* R/bonds.R (ytm): slightly faster
 
-	* inst/unitTests/unitTestsBonds.R (test.ytm): added unit tests for
-	'ytm'
+	* inst/unitTests/unitTestsBonds.R (test.ytm):
+	added unit tests for 'ytm'
 
 2013-10-13  Enrico Schumann  <es@enricoschumann.net>
 
@@ -516,31 +524,32 @@
         * R/options.R (vanillaOptionEuropean): experimental -- new
         arguments 'model' (default is NULL) and '...'
 
-        * R/options.R (vanillaOptionEuropean): small correction in check
-        for 'q' and 'D'
+        * R/options.R (vanillaOptionEuropean): small
+	correction in check for 'q' and 'D'
 
 2012-12-10  Enrico Schumann  <es@enricoschumann.net>
 
         * R/options.R (putCallParity): added function
 
-        * R/MC.R (MCpricing): added several skeletons for functions
-        (BrownianMotion, BrownianBridge, MCpricing)
+        * R/MC.R (MCpricing): added several skeletons
+	for functions (BrownianMotion, BrownianBridge, MCpricing)
 
-        * R/bonds.R: added several functions for bond pricing:
-        vanillaBond, y2df (yields to discountfactors) and ytm
-        (yield-to-maturity)
+        * R/bonds.R: added several functions for bond
+	pricing: vanillaBond, y2df (yields to
+	discountfactors) and ytm (yield-to-maturity)
 
 2012-11-29  Enrico Schumann  <es@enricoschumann.net>
 
         * DESCRIPTION (Version): 0.27-0 (CRAN release candidate)
 
-        * R/qTable.R: added arguments funs, tabular.format and skip. (To
-        keep old behaviour, set skip to FALSE.)
+        * R/qTable.R: added arguments funs,
+	tabular.format and skip. (To keep old
+	behaviour, set skip to FALSE.)
 
 2012-11-19  Enrico Schumann  <es@enricoschumann.net>
 
-        * inst/unitTests/unitTestsPSopt.R (OF): several changes in unit
-        tests
+        * inst/unitTests/unitTestsPSopt.R (OF): several
+	changes in unit tests
 
 2012-10-26  Enrico Schumann  <es@enricoschumann.net>
 
@@ -562,8 +571,8 @@
 
 2012-09-03  Enrico Schumann  <es@enricoschumann.net>
 
-        * man/options.Rd: added functions 'vanillaOptionEuropean' and
-        '-American'
+        * man/options.Rd: added functions
+	'vanillaOptionEuropean' and '-American'
 
 2012-08-27  Enrico Schumann  <es@enricoschumann.net>
 
@@ -578,26 +587,31 @@
 
 2012-08-07  Enrico Schumann  <es@enricoschumann.net>
 
-        * R/restartOpt.R (restartOpt): new argument 'best.only'; if TRUE,
-        only the best run will be reported. Default is FALSE:
+        * R/restartOpt.R (restartOpt): new argument
+	'best.only'; if TRUE, only the best run will be
+	reported. Default is FALSE:
 
 2012-08-04  Enrico Schumann  <es@enricoschumann.net>
 
-        * DESCRIPTION (Suggests): added package parallel
+        * DESCRIPTION (Suggests): added package
+	parallel
 
-        * R/restartOpt.R: with method "multicore" the function first
-	checks if package 'parallel' is available; if not, it looks for
-	package multicore
+        * R/restartOpt.R: with method "multicore" the
+	function first checks if package 'parallel' is
+	available; if not, it looks for package
+	multicore
 
 2012-08-01  Enrico Schumann  <es@enricoschumann.net>
 
-        * R/gridSearch.R (gridSearch): with method "multicore" the
-	function first checks if package 'parallel' is available; if not,
-	it looks for package multicore
+        * R/gridSearch.R (gridSearch): with method
+	"multicore" the function first checks if
+	package 'parallel' is available; if not, it
+	looks for package multicore
 
-        * R/bracket.R (bracketing): with method "multicore" the function
-	first checks if package 'parallel' is available; if not, it looks
-	for package multicore
+        * R/bracket.R (bracketing): with method
+	"multicore" the function first checks if
+	package 'parallel' is available; if not, it
+	looks for package multicore
 
 2012-07-20  Enrico Schumann  <es@enricoschumann.net>
 
@@ -612,8 +626,8 @@
 
 2012-07-18  Enrico Schumann  <es@enricoschumann.net>
 
-        * R/DEopt.R: added tests that vectorised functions return objects
-        of correct size
+        * R/DEopt.R: added tests that vectorised
+	functions return objects of correct size
 
 2012-06-19  Enrico Schumann  <enricoschumann@yahoo.de>
 
@@ -621,17 +635,20 @@
 
 2012-06-16  Enrico Schumann  <enricoschumann@yahoo.de>
 
-        * R/NS.R (NS, NSS): removed (useless) assignment of result
+        * R/NS.R (NS, NSS): removed (useless)
+	assignment of result
 
 2012-06-05  Enrico Schumann  <enricoschumann@yahoo.de>
 
-        * R/TAopt.R (TAopt, LSopt): if 'x0' is not a function, it is
-        initialised with eval(x0); thus, it can be an expression
+        * R/TAopt.R (TAopt, LSopt): if 'x0' is not a
+	function, it is initialised with eval(x0);
+	thus, it can be an expression
 
 2012-05-22  Enrico Schumann  <enricoschumann@yahoo.de>
 
-        * man/LSopt.Rd: fixed small typo in greedy neighbour definition;
-        examples of LSopt reworked
+        * man/LSopt.Rd: fixed small typo in greedy
+	neighbour definition; examples of LSopt
+	reworked
 
 2012-04-21  Enrico Schumann  <enricoschumann@yahoo.de>
 
