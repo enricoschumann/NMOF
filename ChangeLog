@@ -1,5 +1,9 @@
 2016-11-25  Enrico Schumann  <es@enricoschumann.net>
 
+	* R/restartOpt.R (restartOpt): do no longer use
+	which.min, which silently drops NAs, to
+	determine best solution
+
 	* R/portfolio.R (erc): fixed -- 'wmin' and
 	'wmax' were ignored
 	(erc): 'wmin' and 'wmax' may now be vectors,

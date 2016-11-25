@@ -41,10 +41,12 @@ restartOpt <- function(fun, n, OF, algo, ...,
 
     if (best.only) {
         tmp <- sapply(allResults, `[[`, "OFvalue")
-        i <- which.min(tmp)
+        i <- which(min(tmp) == tmp)  ## not 'which.min',
+                                     ## which returns
+                                     ## position of first min
         if (length(i) > 1L)
-            warning("several 'best' runs")
-        allResults <- allResults[[i]]
+            warning("several ", sQuote("best"), " runs")
+        allResults <- allResults[[ i[[1]] ]]
     }
     allResults
 }
