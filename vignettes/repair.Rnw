@@ -22,7 +22,7 @@
 \fvset{listparameters={\setlength{\topsep}{0pt}}}
 \renewenvironment{Schunk}{\vspace{\topsep}}{\vspace{\topsep}}
 <<echo=false>>=
-options(continue = " ", digits = 5)
+options(continue = "  ", digits = 5, max.print = 25, width = 70)
 @
 \begin{document}
 {\raggedright{\LARGE Repairing solutions}}\medskip
@@ -34,7 +34,7 @@ options(continue = " ", digits = 5)
 \section{Introduction}
 
 \noindent There are several approaches for including constraints into
-heuristics, see Chapter~12 of \citet{Gilli2011b}.  The notes in this
+heuristics; see Chapter~12 of \citet{Gilli2011b}.  The notes in this
 vignette give examples for simple repair mechanisms.  These can be
 called in \texttt{DEopt}, \texttt{GAopt} and \texttt{PSopt} through
 the repair function; in \texttt{LSopt}/\texttt{TAopt}, they could be
