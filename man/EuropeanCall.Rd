@@ -42,6 +42,10 @@ Trees. \acronym{COMISEF} Working Paper Series No. 008.
 Higham, D. (2002) Nine Ways to Implement the Binomial Method for Option
 Valuation in MATLAB. \emph{SIAM Review}, \bold{44}(4), pp. 661--677.
 \url{http://personal.strath.ac.uk/d.j.higham/papers/binom.pdf} .
+
+Schumann, E. (2016) Financial Optimisation with R (\pkg{NMOF} Manual).
+\url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+
 }
 \author{
 Enrico Schumann

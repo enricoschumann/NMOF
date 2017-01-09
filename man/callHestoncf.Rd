@@ -52,6 +52,10 @@ Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods
 Heston, S.L. (1993) A Closed-Form Solution for Options with Stochastic
 Volatility with Applications to Bonds and Currency options.
 \emph{Review of Financial Studies} \strong{6}(2), 327--343.
+
+  Schumann, E. (2016) Financial Optimisation with R (\pkg{NMOF} Manual).
+  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+
 }
 
 \author{

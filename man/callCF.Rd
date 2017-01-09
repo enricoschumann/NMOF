@@ -90,8 +90,8 @@ cfVG(om, S, tau, r, q, nu, theta, sigma)
   Volatility with Applications to Bonds and Currency options.
   \emph{Review of Financial Studies} \strong{6} (2), 327--343.
 
-  Schumann, E. (2013) The \pkg{NMOF} Manual.
-  \url{http://enricoschumann.net/NMOF.htm}
+  Schumann, E. (2016) Financial Optimisation with R (\pkg{NMOF} Manual).
+  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 
 }
 \author{

@@ -198,8 +198,8 @@ TAopt(OF, algo = list(), \dots)
     Deterministic Update in Simulated Annealing. Physics Letters A.
     \strong{146} (4), 204--208.
 
-    Schumann, E. (2011--2016) The \pkg{NMOF} Manual.
-    \url{http://enricoschumann.net/NMOF.htm}
+    Schumann, E. (2016) Financial Optimisation with R (\pkg{NMOF} Manual).
+    \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 
     Winker, P. (2001). \emph{Optimization Heuristics in Econometrics:
     Applications of Threshold Accepting}. Wiley.
