@@ -61,6 +61,9 @@ with \code{W_0} equal to zero.  Then, at each \code{t}, it subtracts t/T
     Methods and Optimization in Finance}. Elsevier.
     \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
 
+  Schumann, E. (2016) Financial Optimisation with R (\pkg{NMOF} Manual).
+  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+
 }
 \author{
   Enrico Schumann

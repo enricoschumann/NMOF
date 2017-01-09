@@ -57,6 +57,9 @@ Merton, R.C. (1976) Option Pricing when Underlying Stock Returns are
 Discontinuous. \emph{Journal of Financial Economics} \strong{3}(1--2),
 125--144.
 
+  Schumann, E. (2016) Financial Optimisation with R (\pkg{NMOF} Manual).
+  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+
 }
 \author{
 Enrico Schumann

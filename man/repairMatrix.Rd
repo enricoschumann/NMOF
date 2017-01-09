@@ -36,6 +36,9 @@ Returns a numeric matrix.
   create a valid correlation matrix for risk management and option
   pricing purposes.
 
+  Schumann, E. (2016) Financial Optimisation with R (\pkg{NMOF} Manual).
+  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+
 }
 \author{
 Enrico Schumann

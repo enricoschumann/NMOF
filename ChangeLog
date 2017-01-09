@@ -1,3 +1,7 @@
+2017-01-31  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/CPPIgap.R (CPPI): Add function and docs
+
 2016-11-30  Enrico Schumann  <es@enricoschumann.net>
 
 	* vignettes/repair.Rnw: set 'max.print' and

@@ -22,6 +22,10 @@ Schumann, E. (2010) \emph{Essays on Practical Financial Optimisation},
 Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods
   and Optimization in Finance}. Elsevier.
 \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
+
+Schumann, E. (2016) Financial Optimisation with R (\pkg{NMOF} Manual).
+\url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+
 }
 \examples{
 apply(fundData, 2, summary)

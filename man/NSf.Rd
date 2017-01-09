@@ -40,6 +40,9 @@ NSSf(lambda1, lambda2, tm)
 
   Nelson, C.R. and Siegel, A.F. (1987) Parsimonious Modeling of Yield Curves. \emph{Journal of Business}, \strong{60}(4), pp. 473--489.
 
+  Schumann, E. (2016) Financial Optimisation with R (\pkg{NMOF} Manual).
+  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+
   Svensson, L.E. (1994) Estimating and Interpreting Forward Interest Rates: Sweden 1992--1994. \acronym{IMF} Working Paper 94/114.
 }
 \author{

@@ -59,6 +59,10 @@ changeInterval(nodes, weights, oldmin, oldmax, newmin, newmax)
 
   Golub, G.H. and Welsch, J.H. (1969). Calculation of Gauss Quadrature Rules. \emph{Mathematics of Computation},
   \bold{23}(106), pp. 221--230+s1--s10.
+
+  Schumann, E. (2016) Financial Optimisation with R (\pkg{NMOF} Manual).
+  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+
 }
 \author{
   Enrico Schumann
