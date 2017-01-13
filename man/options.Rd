@@ -130,7 +130,7 @@ Dividends (\code{D}) are modelled via the escrowed-dividend model.
 Enrico Schumann
 }
 \seealso{
-\code{\link{EuropeanCall}}, code{\link{callCF}}
+\code{\link{EuropeanCall}}, \code{\link{callCF}}
 }
 \examples{
 S <- 100; X <- 100; tau <- 1; r <- 0.02; q <- 0.06; vol <- 0.3
