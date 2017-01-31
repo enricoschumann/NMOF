@@ -1,3 +1,13 @@
+v0.99-0  (2017-02-28)
+
+  o ... [not yet released]
+
+  o new function 'CPPI', which simulates a
+    constant-proportion portfolio-insurance strategy
+
+  o new function 'SAopt': optimisation with
+    Simulated Annealing
+
 v0.40-0  (2016-10-20)
 
   o new function 'xtTickValue', which computes the tick
@@ -13,7 +23,7 @@ v0.38-0  (2016-09-03)
 
   o fixed: LSopt did not switch off 'printBar' in cases
     when 'printDetail > 1'
-  
+
   o updates to documentation of LSopt/TAopt
 
 v0.37-6  (2016-08-27)
@@ -225,7 +235,7 @@ v0.27-5  (2013-04-26)
     dividend handling
 
 v0.27-4  (2013-04-22)
- 
+
   o function 'putCallParity' added
 
   o for 'vanillaOptionEuropean', a parameter 'vol' can be passed via
@@ -235,47 +245,47 @@ v0.27-4  (2013-04-22)
   o a few internal changes and doc changes
 
 v0.27-3  (2013-01-04)
- 
-  o Experimental: 'vanillaOptionEuropean' has arguments 'model' 
-    (default is NULL which corresponds to Black-Scholes-Merton) 
-    and '...'. This allows to pass other models; for 
+
+  o Experimental: 'vanillaOptionEuropean' has arguments 'model'
+    (default is NULL which corresponds to Black-Scholes-Merton)
+    and '...'. This allows to pass other models; for
     example, 'heston'. With 'greeks' set to TRUE, the function
-    also returns (some) derivatives. More will be added over 
-    time, so the results should be extracted by name, not by 
-    position (eg, x[["delta"]], but not x[[2L]]). 
+    also returns (some) derivatives. More will be added over
+    time, so the results should be extracted by name, not by
+    position (eg, x[["delta"]], but not x[[2L]]).
     (Adding derivatives for non-BSM models was suggested by
     Nitesh Kumar.)
 
 v0.27-2  (2013-01-03)
- 
-  o Small corrections in docs for 'ytm' and 
+
+  o Small corrections in docs for 'ytm' and
     'vanillaOptionEuropean'.
 
 v0.27-1  (2013-01-02)
- 
-  o Added functions 'ytm' and 'vanillaBond': compute 
+
+  o Added functions 'ytm' and 'vanillaBond': compute
     yield-to-maturity and price of plain-vanilla bond.
 
 v0.27-0  (2012-11-29)
- 
+
   o Function 'qTable' has new arguments 'funs', 'tabular.format'
-    and 'skip'; see vignette 'qTableEx' and ?qTable. 
+    and 'skip'; see vignette 'qTableEx' and ?qTable.
     The function now (correctly) adds more space at the end of
-    the tabular (unless 'skip' is FALSE, which corresponds to the 
+    the tabular (unless 'skip' is FALSE, which corresponds to the
     previous behaviour).
 
 v0.26-4  (2012-11-14)
- 
+
   o Minor changes in documentation and examples.
 
   o Code examples in subdirectory 'NMOFex' (manual)
     updated.
 
 v0.26-3  (2012-10-25)
- 
+
   o Important: all option pricing functions that return lists of
-    named elements (callCF, vanillaOptionE/A, callHestoncf) 
-    now call the theoretical option value just 'value'. Before, 
+    named elements (callCF, vanillaOptionE/A, callHestoncf)
+    now call the theoretical option value just 'value'. Before,
     they returned 'price' or 'callPrice', which could be confusing
     for instance in case of implied vol calculations.
 
