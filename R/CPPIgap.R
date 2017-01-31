@@ -1,9 +1,10 @@
-## -*- truncate-lines: t; fill-column: 65; comment-column: 50; -*-
+## -*- truncate-lines: t; -*-
 
 CPPI <- function(S, multiplier, floor, r, tau = 1, gap = 1) {
+
     T <- length(S) - 1  ## number of periods: 1, ..., T
    dt <- tau/T          ## timestep
-    m <- multiplier     
+    m <- multiplier
     B <-                ## bond investment
     C <-                ## cushion
     V <-                ## value
@@ -22,11 +23,11 @@ CPPI <- function(S, multiplier, floor, r, tau = 1, gap = 1) {
         B[t] <- B[t - 1] * exp(r*dt)
         V[t] <- N[t - 1] * S[t] + B[t]
         C[t] <- max(0, V[t] - F[t])
-        
+
         if (t %% gap == 0L) {
             E[t] <- min(m * C[t], V[t])
             N[t] <- E[t]/S[t]
-            B[t] <- V[t] - E[t]            
+            B[t] <- V[t] - E[t]
         } else {
             E[t] <- V[t] - B[t]
             N[t] <- N[t - 1]
@@ -34,4 +35,3 @@ CPPI <- function(S, multiplier, floor, r, tau = 1, gap = 1) {
     }
     list(V = V, C = C, B = B, F = F, E = E, N = N, S = S)
 }
-
