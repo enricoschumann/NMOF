@@ -1,3 +1,10 @@
+2017-01-31  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/SAopt.R (SAopt): add function
+	(SA.info): add function
+	(print.SAopt): add function, not exported
+	(plot.SAopt): add function, not exported
+
 2016-11-30  Enrico Schumann  <es@enricoschumann.net>
 
 	* vignettes/repair.Rnw: set 'max.print' and

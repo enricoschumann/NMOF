@@ -1,12 +1,13 @@
 SAopt <- function(OF, algo = list(), ...) {
-    algoD <- list(nD = 2000L, ## random steps for computing thresholds
-                  nT = 10L,   ## number of thresholds
+    algoD <- list(nD = 2000L, ## random steps for computing acc. prob.
+                  nT = 10L,   ## number of 
                   nS = 1000L, ## steps per threshold
-                  initT = 1,  ## starting quantile for thresholds
+                  initT = NULL,  ## starting temperature
+                  initProb = 0.4,  ## starting temperature
+                  finalT = 0,
                   alpha = 0.9,
-                  sx = 1,
+                  mStep = 1,
                   x0 = NULL,  ## initial solution
-                  vT = NULL,  ## threshold sequence
                   neighbour = NULL,
                   printDetail = TRUE,
                   printBar = TRUE,
@@ -39,73 +40,60 @@ SAopt <- function(OF, algo = list(), ...) {
         algoD$neighbour(x, ...)
 
     target.reached <- FALSE
-    T <-  algoD$initT
-    alpha <-  algoD$alpha
+    T <- algoD$initT
+    alpha <- algoD$alpha
     
     printDetail <- algoD$printDetail
     printBar <- algoD$printBar
     if (printBar && printDetail > 1)
         printBar <- FALSE
     if (printDetail)
-        cat("\nThreshold Accepting.\n")
+        cat("\nSimulated Annealing.\n")
 
 
     nT <- makeInteger(algoD$nT, "algo$nT")
     nS <- makeInteger(algoD$nS, "algo$nS")
     nD <- makeInteger(algoD$nD, "algo$nD")
-    stepUp <- makeInteger(algoD$stepUp, "algo$stepUp", 0L)
-    niter <- nS * nT * (stepUp+1L)
-
-    ## compute thresholds
-    if (is.null(algoD$vT)) {
-        if (algoD$q < .Machine$double.eps^0.5) {
-            vT <- numeric(nT)
-        } else {
-            if (printDetail) {
-                cat("\nComputing thresholds ... ")
-                flush.console()
-                gc(FALSE)
-                startTime <- proc.time()
-            }
-            if (printBar)
-                whatGen <- txtProgressBar(min = 1, max = nD, style = 3,
-                                          getOption("width")*0.9)
-            xc  <- x0
-            xcF <- OF1(xc)
-            diffF <- numeric(nD)
-            diffF[] <- NA
-            for (i in seq_len(nD)){
-                if (printBar)
-                    setTxtProgressBar(whatGen, value = i)
-                xn  <- N1(xc)
-                xnF <- OF1(xn)
-                diffF[i] <- abs(xcF - xnF)
-                xc  <- xn
-                xcF <- xnF
-            }
-            vT <- algoD$q * ((nT - 1L):0)/nT
-            if (any(is.na(diffF)))
-                stop("objective function evaluated to NA")
-            vT <- quantile(diffF, vT, na.rm = FALSE)
-            vT[nT] <- 0  ## set last threshold to zero
-            if (printBar)
-                close(whatGen)
-            if (printDetail) {
-                cat("OK.")
-                endTime <- proc.time()
-                cat("\nEstimated remaining running time:",
-                    as.numeric(endTime[3L] - startTime[3L]) /
-                    nD * niter * (stepUp + 1L),
-                    "secs.\n")
-                flush.console()
-            }
-        }
-    } else {
-        vT <- algoD$vT
-    }
-    vT <- vT * scale
-    nT <- length(vT)
     niter <- nS * nT
+    if (printDetail) {
+        cat("\nComputing alpha ... ")
+        flush.console()
+        gc(FALSE)
+        startTime <- proc.time()
+    }
+    if (printBar)
+        whatGen <- txtProgressBar(min = 1, max = nD, style = 3,
+                                  getOption("width")*0.9)
+    xc  <- x0
+    xcF <- OF1(xc)
+    diffF <- numeric(nD)
+    diffF[] <- NA
+    for (i in seq_len(nD)){
+        if (printBar)
+            setTxtProgressBar(whatGen, value = i)
+        xn  <- N1(xc)
+        xnF <- OF1(xn)
+        diffF[i] <- abs(xcF - xnF)
+        xc  <- xn
+        xcF <- xnF
+    }
+    if (any(is.na(diffF)))
+        stop("objective function evaluated to NA")
+
+    T <- uniroot(function(T) algoD$initProb - sum(exp(-diffF/T))/nD,
+                 interval = c(0.001, 1))$root
+
+    if (printBar)
+        close(whatGen)
+    if (printDetail) {
+        cat("OK.")
+        endTime <- proc.time()
+        cat("\nEstimated remaining running time:",
+            as.numeric(endTime[3L] - startTime[3L]) /
+            nD * niter ,
+            "secs.\n")
+        flush.console()
+    }
 
     ## evaluate initial solution
     xc <- x0
@@ -185,6 +173,8 @@ SAopt <- function(OF, algo = list(), ...) {
         }
         if (target.reached)
             break
+        ## mStep
+        
         T <- T*alpha
     }
     if (printDetail)
@@ -194,7 +184,7 @@ SAopt <- function(OF, algo = list(), ...) {
         close(whatGen)
 
     ans <- list(xbest = xbest, OFvalue = xbestF,
-                Fmat = Fmat, xlist = xlist, vT = vT,
+                Fmat = Fmat, xlist = xlist, 
                 initial.state = state)
     if (algoD$classify)
         class(ans) <- "SAopt"
@@ -267,4 +257,9 @@ plot.SAopt <- function(x, y, plot.type = "interactive", ...) {
     invisible()
 }
 
+## algo <- list(nS = 3000L,             ## number of steps to make
+##              neighbour = neighbour,  ## neighbourhood function
+##              x0 = x0,                ## initial solution
+##              printBar = FALSE)       
 
+## sol1 <- SAopt(OF, algo = algo, Data = Data)
