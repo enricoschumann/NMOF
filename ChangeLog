@@ -2,9 +2,19 @@
 
         * DESCRIPTION (Version): 0.99-0 [unreleased]
 
+2017-02-01  Enrico Schumann  <es@enricoschumann.net>
+
+	* inst/unitTests/unitTestsSAopt.R (test.SAopt):
+	add unit tests for 'SAopt'
+
 2017-01-31  Enrico Schumann  <es@enricoschumann.net>
 
 	* R/CPPIgap.R (CPPI): Add function and docs
+
+	* R/SAopt.R (SAopt): add function
+	(SA.info): add function
+	(print.SAopt): add function, not exported
+	(plot.SAopt): add function, not exported
 
 2016-11-30  Enrico Schumann  <es@enricoschumann.net>
 

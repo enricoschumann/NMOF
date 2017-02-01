@@ -19,6 +19,8 @@ export(
     NSSf,
     NSf,
     PSopt,
+    SA.info,
+    SAopt,
     TA.info,
     TAopt,
     bracketing,
