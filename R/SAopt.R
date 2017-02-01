@@ -199,7 +199,7 @@ SAopt <- function(OF, algo = list(), ...) {
         }
         if (target.reached || T <= algoD$finalT)
             break
-        nS <- round(algomStep*nS)
+        nS <- round(algoD$mStep*nS)
         T <- T*alpha
     }
     if (printDetail)
