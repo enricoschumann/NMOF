@@ -22,7 +22,7 @@ SAopt(OF, algo = list(), \dots)
 }
 \details{
 
-  Threshold Accepting (\acronym{SA}) changes an initial solution
+  Simulated Annealing (\acronym{SA}) changes an initial solution
   iteratively; the algorithm stops after a fixed number of
   iterations. Conceptually, \acronym{TA} consists of a loop than runs
   for a number of iterations. In each iteration, a current solution
@@ -210,7 +210,7 @@ SAopt(OF, algo = list(), \dots)
   }
 
   \seealso{
-    \code{\link{LSopt}},  \code{\link{restartOpt}}
+    \code{\link{LSopt}}, \code{\link{TAopt}}, \code{\link{restartOpt}}
   }
   \examples{
 ## Aim: given a matrix x with n rows and 2 columns,
@@ -223,7 +223,7 @@ SAopt(OF, algo = list(), \dots)
 n <- 100L
 rho <- 0.7
 C <- matrix(rho, 2L, 2L); diag(C) <- 1
-x <- matrix(rnorm(n * 2L), n, 2L) %*% chol(C)
+x <- matrix(rnorm(n * 2L), n, 2L) \%*\% chol(C)
 
 ## collect data
 data <- list(x = x, n = n, nmin = 40L)
