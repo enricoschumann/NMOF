@@ -8,6 +8,7 @@ importFrom("utils", "flush.console", "setTxtProgressBar",
            "txtProgressBar")
 export(
     DEopt,
+    CPPI,
     EuropeanCall,
     EuropeanCallBE,
     GAopt,
