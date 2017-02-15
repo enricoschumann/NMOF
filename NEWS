@@ -1,13 +1,14 @@
-v0.99-0  (2017-02-28)
+v0.99-0  (2017-02-15)
 
-  o ... [not yet released]
-
-  o new function 'CPPI', which simulates a
-    constant-proportion portfolio-insurance strategy
+  o new function 'CPPI': simulate a constant-proportion
+    portfolio-insurance strategy
 
   o new function 'SAopt': optimisation with
     Simulated Annealing
-    
+
+  o new function 'minvar': compute minimum-variance
+    portfolios
+
   o manual has been updated:
     http://enricoschumann.net/NMOF.htm#NMOFmanual
   

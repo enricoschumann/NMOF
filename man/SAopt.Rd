@@ -48,8 +48,20 @@ SAopt(OF, algo = list(), \dots)
     
     \item{\code{nD}}{The number of random steps to calibrate the
       temperature. Defaults to 2000.}
-    
-    
+
+    \item{\code{initT}}{Initial temperature. Defaults to \code{NULL}, in
+    which case it is automatically chosen so that \code{initProb} is
+    achieved.}
+
+    \item{\code{finalT}}{Final temperature. Defaults to 0.}
+
+    \item{\code{alpha}}{The cooling constant. The current temperature is
+    multiplied by this value. Default is 0.9.}
+
+  \item{\code{mStep}}{Step multiplier. The default is 1, which implies
+    constant number of steps per temperature. If greater than 1, the step
+    number \code{nS} is increased to \code{m*nS} (and rounded).}
+
     \item{\code{x0}}{The initial solution. If this is a function, it will
       be called once without arguments to compute an initial solution, ie,
       \code{x0 <- algo$x0()}. This can be useful when the routine is

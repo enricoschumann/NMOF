@@ -1,6 +1,15 @@
-2017-02-28  Enrico Schumann  <es@enricoschumann.net>
+2017-02-15  Enrico Schumann  <es@enricoschumann.net>
 
-        * DESCRIPTION (Version): 0.99-0 [unreleased]
+        * DESCRIPTION (Version): 0.99-0
+
+	* NAMESPACE: export 'minvar'
+
+	* R/portfolio.R (minvar): add check whether
+	quadprog is 'available'
+
+	* man/minvar.Rd: add file
+
+	* man/SAopt.Rd: update docs
 
 2017-02-01  Enrico Schumann  <es@enricoschumann.net>
 
