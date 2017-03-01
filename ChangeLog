@@ -1,3 +1,8 @@
+2017-03-01  Enrico Schumann  <es@enricoschumann.net>
+
+	* man/DEopt.Rd, GAopt.Rd, PSopt.Rd: fix
+	documentation of 'xlist'
+
 2017-02-15  Enrico Schumann  <es@enricoschumann.net>
 
         * DESCRIPTION (Version): 0.99-0

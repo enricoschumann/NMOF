@@ -153,7 +153,8 @@ GAopt (OF, algo = list(), ...)
     the objective function values of all solutions over the generations;
     else \code{NA}}
   \item{xlist}{if \code{algo$storeSolutions} is \code{TRUE}, a list that
-    contains a list \code{P} of matrices; else \code{NA}.}
+    contains a list \code{P} of matrices and a matrix \code{initP} (the
+    initial solution); else \code{NA}.}
   \item{\code{initial.state}}{the value of \code{\link{.Random.seed}}
     when the function was called.}
 
@@ -164,7 +165,7 @@ GAopt (OF, algo = list(), ...)
     Methods and Optimization in Finance}. Elsevier.
   \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
 
-  Schumann, E. (2016) Financial Optimisation with R (\pkg{NMOF} Manual).
+  Schumann, E. (2017) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 
 }

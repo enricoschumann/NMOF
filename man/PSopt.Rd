@@ -173,7 +173,8 @@ PSopt(OF, algo = list(), ...)
   \item{Fmat}{if \code{algo$storeF} is \code{TRUE}, a matrix of size \code{algo$nG}
     times \code{algo$nP}. Each column contains the best objective function value found by the particular solution.}
   \item{xlist}{if \code{algo$storeSolutions} is \code{TRUE}, a list that contains two
-    lists \code{P} and \code{Pbest} of matrices; else \code{NA}.
+    lists \code{P} and \code{Pbest} of matrices, and a matrix \code{initP} (the
+    initial solution); else \code{NA}.
   }
   \item{\code{initial.state}}{the value of \code{\link{.Random.seed}}
     when \code{PSopt} was called.}
@@ -189,7 +190,7 @@ PSopt(OF, algo = list(), ...)
   Methods and Optimization in Finance}. Elsevier.
   \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
 
-  Schumann, E. (2016) Financial Optimisation with R (\pkg{NMOF} Manual).
+  Schumann, E. (2017) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 
 }

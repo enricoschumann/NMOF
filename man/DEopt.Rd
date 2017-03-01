@@ -141,7 +141,8 @@ DEopt(OF, algo = list(), ...)
     \code{algo$nG} times \code{algo$nP} containing the objective function
     values of all solutions over the generations; else \code{NA}.}
   \item{\code{xlist}}{if \code{algo$storeSolutions} is \code{TRUE}, a list that
-    contains a list \code{P} of matrices; else \code{NA}.}
+    contains a list \code{P} of matrices and a matrix \code{initP} (the
+    initial solution); else \code{NA}.}
   \item{\code{initial.state}}{the value of \code{\link{.Random.seed}}
     when the function was called.}
 
@@ -156,7 +157,7 @@ DEopt(OF, algo = list(), ...)
   Portfolios. \emph{Intelligent Systems in Accounting, Finance and Management},
   \bold{15}(1), pp. 57--71.
 
-  Schumann, E. (2016) Financial Optimisation with R (\pkg{NMOF} Manual).
+  Schumann, E. (2017) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 
   Storn, R., and Price, K. (1997) Differential Evolution -- a Simple and
