@@ -38,12 +38,12 @@ CPPI(S, multiplier, floor, r, tau = 1, gap = 1)
   Based on Dietmar Maringer's MATLAB code (function
   CPPIgap, Listing 9.1).
 
-  See Gilli, Maringer and Schumann, 2011, chapter 9
+  See Gilli, Maringer and Schumann, 2011, chapter 9.
 
 }
 \value{
 A list:
-\item{V}{nomalised value (always starts at 1)}
+\item{V}{normalised value (always starts at 1)}
 \item{C}{cushion}
 \item{B}{bond investment}
 \item{F}{floor}
