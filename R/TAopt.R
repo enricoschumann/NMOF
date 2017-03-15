@@ -178,9 +178,9 @@ TAopt <- function(OF, algo = list(), ...) {
             }
             
             ## check stopif value
-            if (!is.null(algo$OF.target) && xbestF <= algo$OF.target) {
+            if (!is.null(algoD$OF.target) && xbestF <= algoD$OF.target) {
                 if (printDetail) {
-                    cat("Target value (", prettyNum(algo$OF.target), ") ",
+                    cat("Target value (", prettyNum(algoD$OF.target), ") ",
                         "for objective function reached: ",
                         prettyNum(xbestF), "\n", sep = "")
                     flush.console()
@@ -189,6 +189,9 @@ TAopt <- function(OF, algo = list(), ...) {
                 break    
             }
         }
+
+        ## the second break is required since
+        ## break only exits the innermost loop
         if (target.reached)
             break
     }
@@ -200,7 +203,7 @@ TAopt <- function(OF, algo = list(), ...) {
 
     ans <- list(xbest = xbest, OFvalue = xbestF,
                 Fmat = Fmat, xlist = xlist, vT = vT,
-                initial.state = state)
+                initial.state = state, x0 = x0)
     if (algoD$classify)
         class(ans) <- "TAopt"
     ans
@@ -234,8 +237,13 @@ TA.info <- function(n = 0L) {
                                         # METHODS
 
 print.TAopt <- function(x, ...) {
-    cat("Threshold Accepting\n")
-    cat("_ final objective-function value: ", x$OFvalue, "\n")
+    nt <- length(x$vT)
+    ns <- dim(x$Fmat)[[1L]]
+    cat("Threshold Accepting\n-------------------\n")
+    cat(" - ", nt, " thresholds with ", ns, " steps: ",
+        format(nt*ns, big.mark = ","), " iterations \n", sep = "")
+    cat(" - initial objective-function value: ", prettyNum(x$x0),      "\n", sep = "")
+    cat(" -   final objective-function value: ", prettyNum(x$OFvalue), "\n", sep = "")
     invisible(x)
 }
 
@@ -265,11 +273,14 @@ plot.TAopt <- function(x, y, plot.type = "interactive", ...) {
             defaults$x <- cummin(x$Fmat[,2L])
             defaults$col <- "blue"
             do.call("lines", defaults, ...)
+            legend("topright",
+                   legend = c("new solution (xn)",
+                              "accepted solution (xc)", "best solution"),
+                   col = c(grey(0.6), grey(0.2), "blue"),
+                   lwd = 5, box.lwd = 0)
         }
     } else {
         .NotYetUsed("plot.type")
     }
     invisible()
 }
-
-
