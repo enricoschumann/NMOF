@@ -1,3 +1,20 @@
+2017-04-01  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 1.0-0 [unreleased]
+
+2017-03-15  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/LSopt.R (LSopt): add new option
+	'OF.target', which lets the algorithm stop when
+	a desired objective-function value is reached
+
+	* NAMESPACE: import 'graphics::legend'
+
+2017-03-10  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/SAopt.R: safeguard computation of initial
+	temparature
+
 2017-03-01  Enrico Schumann  <es@enricoschumann.net>
 
 	* man/DEopt.Rd, GAopt.Rd, PSopt.Rd: fix
