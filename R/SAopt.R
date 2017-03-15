@@ -90,10 +90,11 @@ SAopt <- function(OF, algo = list(), ...) {
         if (any(is.na(diffF)))
             stop("objective function evaluated to NA")
         
-        ## TODO: wrap in try
-        T <- uniroot(function(T)
+        T <- try(uniroot(function(T)
                          algoD$initProb - sum(exp(-diffF/T))/nD,
-                     interval = c(0.00001, 1))$root
+                         interval = c(0.00001, 2))$root, silent = TRUE)
+        if (inherits(T, "try-error"))
+            T <- -mean(diffF)/log(algoD$initProb)
         if (printBar)
             close(whatGen)
         
@@ -195,8 +196,13 @@ SAopt <- function(OF, algo = list(), ...) {
                 break    
             }
         }
+
+        ## the second break for target.reached is
+        ## required since break only exits the
+        ## innermost loop
         if (target.reached || T <= algoD$finalT)
             break
+
         nS <- round(algoD$mStep*nS)
         T <- T*alpha
     }
