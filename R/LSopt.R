@@ -1,7 +1,8 @@
 LSopt <- function(OF, algo = list(), ...) {
     algoD <- list(nS = 1000L, neighbour = NULL, x0 = NULL,
                   printDetail = TRUE, printBar = TRUE,
-                  storeF = TRUE, storeSolutions = FALSE)
+                  storeF = TRUE, storeSolutions = FALSE,
+                  OF.target = NULL)
 
     checkList(algo, algoD)
     algoD[names(algo)] <- algo
@@ -85,6 +86,16 @@ LSopt <- function(OF, algo = list(), ...) {
             xlist[[c(2L, s)]] <- xc
         }
 
+        ## check stopif value
+        if (!is.null(algoD$OF.target) && xcF <= algoD$OF.target) {
+            if (printDetail) {
+                cat("Target value (", prettyNum(algoD$OF.target), ") ",
+                    "for objective function reached: ",
+                    prettyNum(xcF), "\n", sep = "")
+                flush.console()
+            }
+            break    
+        }
     }
     if (printBar)
         close(whatGen)
