@@ -36,7 +36,8 @@ minvar(var, wmin = 0, wmax = 1, method = "qp")
 
 }
 \value{
-  a numeric vector: the portfolio weights
+  a numeric vector (the portfolio weights) with an attribute
+  \code{variance} (the portfolio's variance)
 }
 \references{
 

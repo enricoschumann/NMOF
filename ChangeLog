@@ -2,6 +2,12 @@
 
         * DESCRIPTION (Version): 1.0-0 [unreleased]
 
+2017-03-18  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/portfolio.R (minvar): the result gains an
+	attribute 'variance', which returns the
+	portfolio variance
+
 2017-03-15  Enrico Schumann  <es@enricoschumann.net>
 
 	* R/LSopt.R (LSopt): add new option

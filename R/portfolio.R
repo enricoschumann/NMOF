@@ -39,7 +39,7 @@ erc <- function(cov,  wmin = 0, wmax = 1, method = "ls") {
                  list(neighbour = N,
                       nS = Data$nS,
                       x0 = rep(1/Data$na, Data$na),
-                      printDetail = FALSE, ## print info every 1000 steps
+                      printDetail = FALSE,
                       printBar = FALSE),
                  Data)
     w <- sol$xbest
@@ -59,11 +59,14 @@ minvar <- function(var, wmin = 0, wmax = 1, method = "qp") {
     Q <- 2 * var
     A <- rbind(1, -diag(na), diag(na))
     bvec <- c(1, -wmax, wmin)
-    quadprog::solve.QP(Dmat = Q,
-                       dvec = rep(0, na),
-                       Amat = t(A),
-                       bvec = bvec,
-                       meq  = 1L)$solution
+    qp_res <- quadprog::solve.QP(Dmat = Q,
+                                 dvec = rep(0, na),
+                                 Amat = t(A),
+                                 bvec = bvec,
+                                 meq  = 1L)
+    ans <- qp_res$solution
+    attr(ans, "variance") <- qp_res$value
+    ans
 }
 
 
