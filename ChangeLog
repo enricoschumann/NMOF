@@ -2,6 +2,13 @@
 
         * DESCRIPTION (Version): 1.0-0 [unreleased]
 
+2017-03-21  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/portfolio.R (mv_frontier,mvFrontier):
+	rename 'mv_frontier' to 'mvFrontier'
+	(mvFrontier): 'm' is now recycled if of length 1;
+	add check whether 'quadprog' is available
+
 2017-03-18  Enrico Schumann  <es@enricoschumann.net>
 
 	* R/portfolio.R (minvar): the result gains an
@@ -33,7 +40,7 @@
 	* NAMESPACE: export 'minvar'
 
 	* R/portfolio.R (minvar): add check whether
-	quadprog is 'available'
+	'quadprog' is available
 
 	* man/minvar.Rd: add file
 

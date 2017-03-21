@@ -71,12 +71,18 @@ minvar <- function(var, wmin = 0, wmax = 1, method = "qp") {
 
 
 ## function for computing n points of the efficient frontier
-mv_frontier <- function(m, var, wmin = 0, wmax = 1, n = 50) {
+mvFrontier <- function(m, var, wmin = 0, wmax = 1, n = 50) {
+
+    if (!requireNamespace("quadprog"))
+        stop("package ", sQuote("quadprog"), " is not available")
+
     na <- dim(var)[1L]
     if (length(wmin) == 1L)
         wmin <- rep(wmin, na)
     if (length(wmax) == 1L)
         wmax <- rep(wmax, na)
+    if (length(m) == 1L)
+        m <- rep(m, na)
 
     rets <- risk <- numeric(n)
     portfolios <- array(0, dim = c(na, n))
