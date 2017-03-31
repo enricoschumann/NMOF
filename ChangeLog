@@ -2,6 +2,11 @@
 
         * DESCRIPTION (Version): 1.0-0 [unreleased]
 
+2017-03-31  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/portfolio.R (minvar): allow Inf and -Inf as
+	maximum/minimum weights
+
 2017-03-21  Enrico Schumann  <es@enricoschumann.net>
 
 	* R/portfolio.R (mv_frontier,mvFrontier):

@@ -52,13 +52,17 @@ minvar <- function(var, wmin = 0, wmax = 1, method = "qp") {
     if (!requireNamespace("quadprog"))
         stop("package ", sQuote("quadprog"), " is not available")
     na <- dim(var)[1L]
-    if (length(wmin) == 1L)
+    if (length(wmin) == 1L && is.finite(wmin))
         wmin <- rep(wmin, na)
-    if (length(wmax) == 1L)
+    if (length(wmax) == 1L && is.finite(wmax))
         wmax <- rep(wmax, na)
     Q <- 2 * var
-    A <- rbind(1, -diag(na), diag(na))
-    bvec <- c(1, -wmax, wmin)
+    A <- rbind(numeric(na) + 1,
+               if (!is.finite(wmax)) NULL else -diag(na),
+               if (!is.finite(wmin)) NULL else  diag(na))
+    bvec <- c(1,
+              if (!is.finite(wmax)) NULL else -wmax,
+              if (!is.finite(wmin)) NULL else  wmin)
     qp_res <- quadprog::solve.QP(Dmat = Q,
                                  dvec = rep(0, na),
                                  Amat = t(A),
