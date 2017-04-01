@@ -1,5 +1,8 @@
 resampleC <- function(..., size, cormat) {
     n <- length(data <- list(...))
+    if (n == 2L && length(cormat) == 1L)
+        cormat <- array(c(1, cormat, cormat, 1),
+                        dim = c(2L, 2L))
     m <- sapply(data, NROW)
     ns <- seq_len(n)
     defnames <- paste("var", ns, sep = "")
@@ -13,7 +16,7 @@ resampleC <- function(..., size, cormat) {
     cormat <- 2*sin(cormat*pi/6)
     ee <- eigen(cormat)
     if (any(ee$values < 0))
-        warning("'cormat' has eigenvalues smaller than zero")
+        warning(sQuote("cormat"), " has eigenvalues smaller than zero")
     U <- pnorm(X %*% t(ee$vectors %*% diag(sqrt(ee$values))))
     ii <- ceiling(U %*% diag(m))
 
