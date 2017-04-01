@@ -1,6 +1,18 @@
 2017-04-01  Enrico Schumann  <es@enricoschumann.net>
 
-        * DESCRIPTION (Version): 1.0-0 [unreleased]
+        * DESCRIPTION (Version): 1.0-0
+
+	* R/resampleC.R (resampleC): if only two series
+	are passed, 'cormat' can be a single number (the
+	correlation)
+
+	* R/TAopt.R (TA.info): 'OF.sampling' is TRUE
+	when the algorithm samples the objective
+	function and FALSE during the actual
+	optimisation
+
+	* R/TAopt.R (TAopt): improved printed output
+	when 'printDetail' and 'printBar' are both TRUE
 
 2017-03-31  Enrico Schumann  <es@enricoschumann.net>
 
@@ -31,7 +43,7 @@
 2017-03-10  Enrico Schumann  <es@enricoschumann.net>
 
 	* R/SAopt.R: safeguard computation of initial
-	temparature
+	temperature
 
 2017-03-01  Enrico Schumann  <es@enricoschumann.net>
 

@@ -45,7 +45,7 @@ TAopt <- function(OF, algo = list(), ...) {
     if (printBar && printDetail > 1)
         printBar <- FALSE
     if (printDetail)
-        cat("\nThreshold Accepting.\n")
+        cat("\nThreshold Accepting\n")
 
 
     nT <- makeInteger(algoD$nT, "algo$nT")
@@ -60,14 +60,16 @@ TAopt <- function(OF, algo = list(), ...) {
             vT <- numeric(nT)
         } else {
             if (printDetail) {
-                cat("\nComputing thresholds ... ")
+                cat("\n  Computing thresholds ... ")
+                if (printBar)
+                    cat("\n")
                 flush.console()
                 gc(FALSE)
                 startTime <- proc.time()
             }
             if (printBar)
                 whatGen <- txtProgressBar(min = 1, max = nD, style = 3,
-                                          getOption("width")*0.9)
+                                          width = getOption("width")*0.75)
             xc  <- x0
             xcF <- OF1(xc)
             diffF <- numeric(nD)
@@ -89,12 +91,12 @@ TAopt <- function(OF, algo = list(), ...) {
             if (printBar)
                 close(whatGen)
             if (printDetail) {
-                cat("OK.")
+                cat("  OK", sep = "")
                 endTime <- proc.time()
-                cat("\nEstimated remaining running time:",
+                cat("\n  Estimated remaining running time:",
                     as.numeric(endTime[3L] - startTime[3L]) /
                     nD * niter * (stepUp + 1L),
-                    "secs.\n\n")
+                    "secs\n")
                 flush.console()
             }
         }
@@ -128,13 +130,13 @@ TAopt <- function(OF, algo = list(), ...) {
         xlist <- list(xn = vector("list", length = niter),
                       xc = vector("list", length = niter)) else xlist <- NA
     if (printDetail) {
-        cat("\nRunning Threshold Accepting...\n")
-        cat("Initial solution: ", prettyNum(xbestF),"\n")
+        cat("\n  Running Threshold Accepting ...\n")
+        cat("  Initial solution:", prettyNum(xbestF),"\n")
         flush.console()
     }
     if (printBar)
         whatGen <- txtProgressBar(min = 1, max = niter, style = 3,
-                                  getOption("width")*0.9)
+                                  width = getOption("width")*0.75)
 
     counter <- 0L
     for (t in seq_len(nT)) {
@@ -170,7 +172,7 @@ TAopt <- function(OF, algo = list(), ...) {
 
             if (printDetail > 1) {
                 if (counter %% printDetail == 0L) {
-                    cat("Best solution (iteration ", counter,
+                    cat("  Best solution (iteration ", counter,
                         "/", niter, "): ",
                         prettyNum(xbestF),"\n", sep = "")
                     flush.console()
@@ -195,11 +197,12 @@ TAopt <- function(OF, algo = list(), ...) {
         if (target.reached)
             break
     }
-    if (printDetail)
-        cat("Finished.\nBest solution overall: ",
-            prettyNum(xbestF), "\n", sep = "")
     if (printBar)
         close(whatGen)
+
+    if (printDetail)
+        cat("  Finished.\n  Best solution overall: ",
+            prettyNum(xbestF), "\n", sep = "")
 
     ans <- list(xbest = xbest, OFvalue = xbestF,
                 Fmat = Fmat, xlist = xlist, vT = vT,
@@ -214,7 +217,7 @@ TA.info <- function(n = 0L) {
     step <- NA
     threshold <- NA
     iteration <- NA
-    iteration.sampling <- NA
+    OF.sampling <- NA
     xbest <- NA
     if (exists("i", envir = e, inherits = FALSE))
         step <- get("i", envir = e, inherits = FALSE)
@@ -226,7 +229,7 @@ TA.info <- function(n = 0L) {
         iteration <- get("counter", envir = e, inherits = FALSE)
     if (exists("xbest", envir = e, inherits = FALSE))
         xbest <- get("xbest", envir = e, inherits = FALSE)
-    list(iteration.sampling = iteration.sampling,
+    list(OF.sampling = is.na(iteration),
          iteration = iteration,
          step = step,
          threshold = threshold,

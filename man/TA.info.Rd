@@ -33,9 +33,12 @@
 }
 \value{
 A list
-\item{step}{current step}
-\item{threshold}{current threshold (the number, not the value)}
+\item{OF.sampling}{logical: if \code{TRUE}, is the algorithm sampling the objective
+  function to compute thresholds; otherwise (i.e. during the actual
+  optimisation) \code{FALSE}}
 \item{iteration}{current iteration}
+\item{step}{current step (i.e. for a given threshold)}
+\item{threshold}{current threshold (the number, not the value)}
 \item{xbest}{the best solution found so far}
 }
 \references{
@@ -73,9 +76,26 @@ nb <- function(x) {
 ## run TA
 algo <- list(nS = 5,
              nT = 2,
-             nD = 10,
+             nD = 3,
              x0 = rep(0, 5),
              neighbour = nb,
-             printBar = FALSE)
+             printBar = FALSE,
+             printDetail = FALSE)
 ignore <- TAopt(fun, algo)
+
+## printed output:
+##    current threshold  NA | current step  1 | current iteration  NA 
+##    current threshold  NA | current step  2 | current iteration  NA 
+##    current threshold  NA | current step  3 | current iteration  NA 
+##    current threshold   1 | current step  1 | current iteration  1 
+##    current threshold   1 | current step  2 | current iteration  2 
+##    current threshold   1 | current step  3 | current iteration  3 
+##    current threshold   1 | current step  4 | current iteration  4 
+##    current threshold   1 | current step  5 | current iteration  5 
+##    current threshold   2 | current step  1 | current iteration  6 
+##    current threshold   2 | current step  2 | current iteration  7 
+##    current threshold   2 | current step  3 | current iteration  8 
+##    current threshold   2 | current step  4 | current iteration  9 
+##    current threshold   2 | current step  5 | current iteration  10 
+
 }
