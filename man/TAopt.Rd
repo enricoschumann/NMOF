@@ -117,7 +117,8 @@ TAopt(OF, algo = list(), \dots)
 
     \item{\code{classify}}{Logical; default is \code{FALSE}. If
     \code{TRUE}, the result will have a class attribute \code{TAopt}
-    attached.}
+    attached. This feature is \strong{experimental}: the supported
+    methods (plot, summary) may change without warning.}
 
   \item{\code{OF.target}}{Numeric; when specified, the algorithm will
     stop when an objective-function value as low as \code{OF.target} (or

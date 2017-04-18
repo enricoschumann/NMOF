@@ -245,7 +245,7 @@ print.TAopt <- function(x, ...) {
     cat("Threshold Accepting\n-------------------\n")
     cat(" - ", nt, " thresholds with ", ns, " steps: ",
         format(nt*ns, big.mark = ","), " iterations \n", sep = "")
-    cat(" - initial objective-function value: ", prettyNum(x$x0),      "\n", sep = "")
+    ## cat(" - initial objective-function value: ", prettyNum(x$x0),      "\n", sep = "")
     cat(" -   final objective-function value: ", prettyNum(x$OFvalue), "\n", sep = "")
     invisible(x)
 }
