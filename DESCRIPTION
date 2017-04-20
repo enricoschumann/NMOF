@@ -1,8 +1,8 @@
 Package: NMOF
 Type: Package
 Title: Numerical Methods and Optimization in Finance
-Version: 1.0-1
-Date: 2017-04-05
+Version: 1.0-2
+Date: 2017-04-20
 Maintainer: Enrico Schumann <es@enricoschumann.net>
 Authors@R: person("Enrico", "Schumann",
                   role  = c("aut", "cre"),
@@ -24,4 +24,4 @@ URL: http://nmof.net, http://enricoschumann.net/NMOF.htm
 LazyLoad: yes
 LazyData: yes
 Classification/JEL: C61, C63
-ByteCompile: yes
+ByteCompile: no

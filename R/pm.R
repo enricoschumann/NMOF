@@ -62,7 +62,10 @@ cm <- function(x, xp = 2, threshold = 0, lower = TRUE,
         sum(x*x*x*x, na.rm = na.rm)/16
     else 
         sum(x^xp, na.rm = na.rm)/2^xp
-    ans <- ans/sum(x > threshold)
+    if ((sx <- sum(x > threshold)) > 0)
+        ans <- ans/sx
+    else
+        ans <- 0
 
     if (normalise)
         ans^(1/xp)

@@ -1,6 +1,18 @@
+2017-04-20  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Version): 1.0-2
+	(ByteCompile): set to no
+
+	* R/pm.R (cm): with no data points below
+	'threshold', a lower conditional moment is set
+	to zero instead of NaN; with no data points
+	above 'threshold', an upper conditional moment
+	is set to zero (the function is not exported)
+
 2017-04-05  Enrico Schumann  <es@enricoschumann.net>
 
 	* DESCRIPTION (Version): 1.0-1
+	(ByteCompile): set to yes
 
 	* R/pm.R (cm): fix computation of conditional
 	moment (function is not exported)
