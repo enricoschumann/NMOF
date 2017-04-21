@@ -32,9 +32,18 @@
   needed to run the tests in subdirectory \sQuote{\code{unitTests}}.
 
   Version numbering: package versions are numbered in the form
-  \code{major-minor-patch}.  Minor version numbers are incremented when
-  a feature is added or an existing feature is substantially revised.
-  The patch level is incremented with any published change.
+  \code{major-minor-patch}.
+  The \emph{patch} level is incremented with any published change, which
+  means that a new version has been pushed to
+  \url{http://enricoschumann.net/R/packages/NMOF/}. 
+  \emph{Minor} version numbers are incremented when a feature is added or an
+  existing feature is substantially revised. (Such changes will be
+  reported in the NEWS file.)
+  The \emph{major} version number will only be increased if there were a
+  new edition of the book.
+  
+  The source code of the \pkg{NMOF} package is also hosted at
+  \url{https://github.com/enricoschumann/NMOF/}. 
 
   \subsection{Data}{
 
@@ -52,7 +61,7 @@
 
   }
   
-  \subsection{Option Pricing}{
+  \subsection{Pricing Financial Instruments}{
 
     See \code{\link{vanillaOptionEuropean}},
     \code{\link{vanillaOptionAmerican}}, \code{\link{putCallParity}}.
@@ -77,7 +86,7 @@
   Methods and Optimization in Finance}. Elsevier.
   \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
 
-  Schumann, E. (2016) Financial Optimisation with R (\pkg{NMOF} Manual).
+  Schumann, E. (2017) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 
 }
@@ -95,7 +104,7 @@ showExample("equations.R")
 showExample("exampleLS.R", chapter = 13)
 
 ## show NEWS file
-news(Version >= "0.30-0", package = "NMOF")
+news(Version >= "0.39-0", package = "NMOF")
 
 ## vignettes
 vignette(package = "NMOF")
@@ -112,9 +121,9 @@ file.show(system.file("NMOFex/README",   package = "NMOF"))
 file.show(system.file("NMOFex/NMOFman.R", package = "NMOF"))
 
 ## unit tests
-file.show(system.file("unitTests/report.txt",   package = "NMOF"))
+file.show(system.file("unitTests/test_results.txt",   package = "NMOF"))
 }
-test.rep <- readLines(system.file("unitTests/report.txt",   package = "NMOF"))
+test.rep <- readLines(system.file("unitTests/test_results.txt",   package = "NMOF"))
 nt <- gsub(".*\\\\(([0-9]+) checks?\\\\).*", "\\\\1",
            test.rep[grep("\\\\(\\\\d+ checks?\\\\)", test.rep)])
 message("Number of unit tests: ", sum(as.numeric(nt)))
