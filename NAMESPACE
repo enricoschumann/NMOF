@@ -35,6 +35,7 @@ export(
     cfVG,
     changeInterval,
     colSubset,
+    divRatio,
     drawdown,
     duration,
     gbb,

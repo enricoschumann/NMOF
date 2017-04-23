@@ -1,3 +1,7 @@
+2017-04-23  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/divRatio.R: add function
+
 2017-04-20  Enrico Schumann  <es@enricoschumann.net>
 
 	* DESCRIPTION (Version): 1.0-2
