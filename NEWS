@@ -1,3 +1,8 @@
+v1.1-0  (2017-05-01)
+
+  o new function 'divRatio' for computing the
+    diversification ratio
+
 v1.0-0  (2017-04-01)
 
   o 'LSopt' gains an option 'OF.target', which lets the
