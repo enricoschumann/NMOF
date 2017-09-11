@@ -25,6 +25,8 @@ export(
     TA.info,
     TAopt,
     bracketing,
+    bundFuture,
+    bundFutureImpliedRate,
     callCF,
     callHestoncf,
     callMerton,
