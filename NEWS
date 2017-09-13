@@ -1,6 +1,12 @@
+v1.2-0  (2017-09-13)
+
+  o new functions 'bundFuture' and
+    'bundFutureImpliedRate', for computing theoretical
+    futures prices and implied repo rates, respectively
+
 v1.1-0  (2017-05-01)
 
-  o new function 'divRatio' for computing the
+  o new function 'divRatio', for computing the
     diversification ratio
 
 v1.0-0  (2017-04-01)

@@ -1,3 +1,11 @@
+2017-09-12  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Version): Version: 1.2-0
+
+	* R/bundFuture.R
+	(bundFuture,bundFutureImpliedRate): add
+	functions
+
 2017-05-01  Enrico Schumann  <es@enricoschumann.net>
 
 	* DESCRIPTION (Version): 1.1-0
