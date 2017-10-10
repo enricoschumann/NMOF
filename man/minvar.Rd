@@ -43,7 +43,7 @@ minvar(var, wmin = 0, wmax = 1, method = "qp")
 
     Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical
     Methods and Optimization in Finance}. Elsevier.
-    \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
+    \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-375662-6}
 
     Schumann, E. (2017) Financial Optimisation with R (\pkg{NMOF} Manual).
     \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
@@ -88,8 +88,14 @@ if (requireNamespace("quadprog")) {
            wmin = c(0.1,0,0,0,0), ## enforce at least 10\% weight in CBK.DE 
            wmax = 0.5)
     
-    minvar(var, wmin = -Inf, wmax = 0.5)  ## no lower bounds
-    minvar(var, wmin =  0.1, wmax = Inf)  ## no upper bounds
+    minvar(var, wmin = -Inf, wmax = Inf)   ## no bounds
+    ## [1] -0.0467  0.0900  0.0117  0.4534  0.4916
+
+    minvar(var, wmin = -Inf, wmax = 0.45)  ## no lower bounds
+    ## [1] -0.0284  0.0977  0.0307  0.4500  0.4500
+
+    minvar(var, wmin =  0.1, wmax = Inf)   ## no upper bounds
+    ## [1] 0.100 0.100 0.100 0.363 0.337
     
 }
 }

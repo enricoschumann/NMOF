@@ -79,17 +79,20 @@ bonds and options, and helper functions for stochastic simulations.
 
 \subsection{Optimisation}
   
-There are functions for Differential Evolution (\texttt{{DEopt}}),
-Genetic Algorithms (\texttt{{GAopt}}), (Stochastic) Local Search
-(\texttt{{LSopt}}), Particle Swarm (\texttt{{PSopt}}), Threshold
-Accepting (\texttt{{TAopt}}) and grid search (\texttt{gridSearch}).
+There are functions for Differential Evolution
+(\texttt{DEopt}), Genetic Algorithms (\texttt{GAopt}),
+(Stochastic) Local Search (\texttt{LSopt}), Particle
+Swarm (\texttt{PSopt}), Simulated Annealing
+(\texttt{SAopt}), Threshold Accepting (\texttt{TAopt})
+and grid search~(\texttt{gridSearch}).
 
 \subsection{Pricing financial instruments}
 
 For options, see \texttt{{vanillaOptionEuropean}},
 \texttt{{vanillaOptionAmerican}}, \texttt{{putCallParity}}.  For
 pricing methods that use the characteristic function, see
-\texttt{{callCF}}.  For bond pricing, see \texttt{vanillaBond}.
+\texttt{{callCF}}.  For bond/bond-futures pricing, see \texttt{vanillaBond}, 
+\texttt{bundFuture} and \texttt{xtContractValue}.
 
 \subsection{Simulation}
   
@@ -99,7 +102,6 @@ See \texttt{{resampleC}}, \texttt{{mc}} and \texttt{repairMatrix}.
 
 See \texttt{{bundData}}, \texttt{{fundData}} and
 \texttt{{optionData}}.
-
 
 \subsection{Code examples from the book}
 
@@ -130,20 +132,19 @@ cat(paste(strwrap(x$results[,"Title"], exdent = 2), collapse = "\n"))
 \noindent The book's website: \url{http://nmof.net} \smallskip
 
 \noindent The package's website:
-\url{http://enricoschumann.net/NMOF.htm}\medskip
+\url{http://enricoschumann.net/NMOF}\medskip
 
 \noindent The stable version is available from \textsc{cran}. The
 development version is available from
 
 \url{http://enricoschumann.net/R/packages/NMOF/index.htm}\medskip
 
-\noindent To install the package from an R session, type:
+\noindent To install the development version from an R session, type:
 <<eval=false>>=
 install.packages("NMOF", type = "source",
                  repos = c("http://enricoschumann.net/R", 
                            getOption("repos")))
 @ 
-
 
 \noindent The source code is also available in the GitHub repository
 

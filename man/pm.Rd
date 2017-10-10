@@ -32,7 +32,7 @@
 }
 \details{
 
-  For a vector \eqn{x}{\emph{x}} of length \eqn{n}{\emph{n}}, partial
+  For a vector \eqn{\emph{x}}{x} of length \eqn{\emph{n}}{n}, partial
   moments are computed as follows:
 
   \deqn{\mathrm{upper\ partial\ moment} = \frac{1}{n} \sum_{x >
@@ -43,8 +43,8 @@
       t}\left(t - x \right)^e}{%
     lower partial moment = sum_{x < t}(t - x)^e / n}
 
-  The \code{threshold} is denoted \eqn{t}{\emph{t}}, the exponent
-  \code{xp} is labelled \eqn{e}{\emph{e}}.
+  The \code{threshold} is denoted \eqn{\emph{t}}{t}, the exponent
+  \code{xp} is labelled \eqn{\emph{e}}{e}.
 
   If \code{normalise} is \code{TRUE}, the result is raised to
   \code{1/xp}.  If \code{x} is a matrix, the function will compute the
@@ -61,7 +61,7 @@
     Methods and Optimization in Finance}, Chapter 13. Elsevier.
     \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
 
-  Schumann, E. (2016) Financial Optimisation with R (\pkg{NMOF} Manual).
+  Schumann, E. (2017) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
     
 }

@@ -1,6 +1,21 @@
+2017-10-10  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Version): 1.2-1
+
+	* R/portfolio.R (minvar): remove (harmless)
+	warning when weight-limit vectors have
+	length > 1
+
+	* inst/unitTests/unitTests_portfolio.R
+	(test.minvar): add tests
+
+	* man/NMOF-package.Rd: add more links
+
+	* man/pm.Rd: fix equation format
+
 2017-09-12  Enrico Schumann  <es@enricoschumann.net>
 
-	* DESCRIPTION (Version): Version: 1.2-0
+	* DESCRIPTION (Version): 1.2-0
 
 	* R/bundFuture.R
 	(bundFuture,bundFutureImpliedRate): add
@@ -259,7 +274,7 @@
 
 2015-11-18  Enrico Schumann  <es@enricoschumann.net>
 
-	* DESCRIPTION (Version): Version: 0.36-4
+	* DESCRIPTION (Version): 0.36-4
 
 	* R/bracket.R (bracketing): the resulting matrix's columns are
 	named 'lower' and 'upper'
@@ -269,7 +284,7 @@
 
 2015-11-09  Enrico Schumann  <es@enricoschumann.net>
 
-	* DESCRIPTION (Version): Version: 0.36-3
+	* DESCRIPTION (Version): 0.36-3
 
 	* R/restartOpt.R (restartOpt): when 'cl' is specified and 'method'
 	is identical to 'loop', the function will now issue a warning
@@ -282,21 +297,21 @@
 
 2015-10-16  Enrico Schumann  <es@enricoschumann.net>
 
-	* DESCRIPTION (Version): Version: 0.36-2
+	* DESCRIPTION (Version): 0.36-2
 
 	* NAMESPACE: explicitly import functions from all packages other
 	than 'base': 'grDevices', 'graphics', 'stats', 'utils'
 
 2015-07-22  Enrico Schumann  <es@enricoschumann.net>
 
-	* DESCRIPTION (Version): Version: 0.36-1
+	* DESCRIPTION (Version): 0.36-1
 
 	* R/TAopt.R (TAopt): more informative error message when objective
 	function evaluates to NA during computation of thresholds
 
 2015-06-23  Enrico Schumann  <es@enricoschumann.net>
 
-	* DESCRIPTION (Version): Version: 0.36-0
+	* DESCRIPTION (Version): 0.36-0
 
 	* NAMESPACE: export 'LS.info'
 
@@ -306,7 +321,7 @@
 
 2015-06-04  Enrico Schumann  <es@enricoschumann.net>
 
-	* DESCRIPTION (Version): Version: 0.35-1
+	* DESCRIPTION (Version): 0.35-1
 
 2015-06-03  Enrico Schumann  <es@enricoschumann.net>
 
@@ -315,7 +330,7 @@
 
 2015-05-12  Enrico Schumann  <es@enricoschumann.net>
 
-	* DESCRIPTION (Version): Version: 0.35-0
+	* DESCRIPTION (Version): 0.35-0
 
 	* R/pm.R (pm): new function 'pm' (partial moment)
 
@@ -326,7 +341,7 @@
 
 2015-05-05  Enrico Schumann  <es@enricoschumann.net>
 
-	* DESCRIPTION (Version): Version: 0.34-2
+	* DESCRIPTION (Version): 0.34-2
 
 	* R/DEopt.R (DEopt): fixed -- 'DEopt' did not properly handle
 	'minmaxConstr', which could result in solutions that violated the
@@ -337,7 +352,7 @@
 
 2015-02-03  Enrico Schumann  <es@enricoschumann.net>
 
-	* DESCRIPTION (Version): Version: 0.34-1
+	* DESCRIPTION (Version): 0.34-1
 
 	* vignettes/: updated 'VignetteKeyword' as requested by the CRAN
 	maintainers
@@ -353,7 +368,7 @@
 
 2014-10-23  Enrico Schumann  <es@enricoschumann.net>
 
-	* DESCRIPTION (Version): Version: 0.34-0
+	* DESCRIPTION (Version): 0.34-0
 
 	* R/*: removed all 'require("parallel")' tests from 'GAopt',
 	'bracketing', 'gridSearch' and 'restartOpt'
@@ -368,7 +383,7 @@
 
 2014-08-22  Enrico Schumann  <es@enricoschumann.net>
 
-	* DESCRIPTION (Version): Version: 0.33-0
+	* DESCRIPTION (Version): 0.33-0
 
 	* man/NMOF-package.Rd: corrected regexp in examples
 
@@ -378,7 +393,7 @@
 
 2014-08-14  Enrico Schumann  <es@enricoschumann.net>
 
-	* DESCRIPTION (Version): Version: 0.32-1
+	* DESCRIPTION (Version): 0.32-1
 
 	* man/PSopt.Rd: small update (mention 'loopChangeV')
 
@@ -397,7 +412,7 @@
 
 2014-03-26  Enrico Schumann  <es@enricoschumann.net>
 
-	* DESCRIPTION (Version): Version: 0.32-0
+	* DESCRIPTION (Version): 0.32-0
 
 	* man/colSubset.Rd: escaped % in example
 
@@ -427,7 +442,7 @@
 
 2014-02-21  Enrico Schumann  <es@enricoschumann.net>
 
-	* DESCRIPTION (Version): Version: 0.31-2
+	* DESCRIPTION (Version): 0.31-2
 
 	* vignettes/An_overview.Rnw: added links to mailing lists
 
@@ -440,13 +455,13 @@
 
 2013-12-31  Enrico Schumann  <es@enricoschumann.net>
 
-	* DESCRIPTION (Version): Version: 0.31-1
+	* DESCRIPTION (Version): 0.31-1
 
 	* vignettes/An_overview.Rnw: expanded overview vignette
 
 2013-12-27  Enrico Schumann  <es@enricoschumann.net>
 
-	* DESCRIPTION (Version): Version: 0.31-0
+	* DESCRIPTION (Version): 0.31-0
 
 	* R/callMerton.R (callMerton): added implied vol computation
 
@@ -460,20 +475,20 @@
 
 2013-11-18  Enrico Schumann  <es@enricoschumann.net>
 
-	* DESCRIPTION (Version): Version: 0.30-0
+	* DESCRIPTION (Version): 0.30-0
 
 	* R/bonds.R (y2df): removed
 	(duration): added function
 
 2013-11-02  Enrico Schumann  <es@enricoschumann.net>
 
-	* DESCRIPTION (Version): Version: 0.29-2
+	* DESCRIPTION (Version): 0.29-2
 
 	* R/bonds.R (ytm): added argument 'offset'
 
 2013-10-31  Enrico Schumann  <es@enricoschumann.net>
 
-	* DESCRIPTION (Version): Version: 0.29-1
+	* DESCRIPTION (Version): 0.29-1
 
 	* R/bonds.R (ytm): slightly faster
 
@@ -482,7 +497,7 @@
 
 2013-10-13  Enrico Schumann  <es@enricoschumann.net>
 
-	* DESCRIPTION (Version): Version: 0.29-0
+	* DESCRIPTION (Version): 0.29-0
 
 	* R/drawdown.R: added drawdown
 
@@ -492,7 +507,7 @@
 
 2013-09-04  Enrico Schumann  <es@enricoschumann.net>
 
-	* DESCRIPTION (Version): Version: 0.28-2
+	* DESCRIPTION (Version): 0.28-2
 
 	* vignettes/LSselect.Rnw: reduced number of restarts
 
@@ -510,7 +525,7 @@
 
 2013-07-22  Enrico Schumann  <es@enricoschumann.net>
 
-	* DESCRIPTION (Version): Version: 0.28-1
+	* DESCRIPTION (Version): 0.28-1
 
 	* R/callCF.R (callCF): changed upper integration limits to 'Inf'
 

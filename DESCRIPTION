@@ -1,8 +1,8 @@
 Package: NMOF
 Type: Package
 Title: Numerical Methods and Optimization in Finance
-Version: 1.2-0
-Date: 2017-09-13
+Version: 1.2-1
+Date: 2017-10-10
 Maintainer: Enrico Schumann <es@enricoschumann.net>
 Authors@R: person("Enrico", "Schumann",
                   role  = c("aut", "cre"),
@@ -20,7 +20,7 @@ Description: Functions, examples and data from the book
  instruments, such as bonds and options, and functions that
  help with stochastic simulations.
 License: GPL-3
-URL: http://nmof.net, http://enricoschumann.net/NMOF.htm
+URL: http://nmof.net, http://enricoschumann.net/NMOF
 LazyLoad: yes
 LazyData: yes
 Classification/JEL: C61, C63

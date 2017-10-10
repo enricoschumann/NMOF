@@ -45,12 +45,6 @@
   The source code of the \pkg{NMOF} package is also hosted at
   \url{https://github.com/enricoschumann/NMOF/}. 
 
-  \subsection{Data}{
-
-    See \code{\link{bundData}}, \code{\link{fundData}} and
-    \code{\link{optionData}}.
-
-  }
 
   \subsection{Optimisation}{
     
@@ -63,10 +57,13 @@
   
   \subsection{Pricing Financial Instruments}{
 
-    See \code{\link{vanillaOptionEuropean}},
+    For options: See \code{\link{vanillaOptionEuropean}},
     \code{\link{vanillaOptionAmerican}}, \code{\link{putCallParity}}.
     For pricing methods that use the characteristic function, see
     \code{\link{callCF}}.
+
+    For bonds and bond futures: See \code{\link{vanillaBond}},
+    \code{\link{bundFuture}} and \code{\link{xtContractValue}}.
     
   }
   
@@ -75,6 +72,14 @@
     See \code{\link{resampleC}} and \code{\link{mc}}.
     
   }
+
+  \subsection{Data}{
+
+    See \code{\link{bundData}}, \code{\link{fundData}} and
+    \code{\link{optionData}}.
+    
+  }
+
 }
 \author{Enrico Schumann
 
@@ -84,7 +89,7 @@
 
   Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical
   Methods and Optimization in Finance}. Elsevier.
-  \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
+  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-375662-6}
 
   Schumann, E. (2017) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
@@ -93,7 +98,7 @@
 \keyword{package}
 \examples{
 \dontrun{
-require("NMOF")
+library("NMOF")
 
 ## overview
 packageDescription("NMOF")
@@ -104,7 +109,7 @@ showExample("equations.R")
 showExample("exampleLS.R", chapter = 13)
 
 ## show NEWS file
-news(Version >= "0.39-0", package = "NMOF")
+news(Version >= "0.40-0", package = "NMOF")
 
 ## vignettes
 vignette(package = "NMOF")
@@ -114,7 +119,7 @@ edit(nss)
 
 ## book website
 browseURL("http://nmof.net")
-browseURL("http://enricoschumann.net/NMOF.htm")
+browseURL("http://enricoschumann.net/NMOF/")
 
 ## more examples
 file.show(system.file("NMOFex/README",   package = "NMOF"))
