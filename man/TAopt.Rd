@@ -199,7 +199,11 @@ TAopt(OF, algo = list(), \dots)
     Deterministic Update in Simulated Annealing. Physics Letters A.
     \strong{146} (4), 204--208.
 
-    Schumann, E. (2016) Financial Optimisation with R (\pkg{NMOF} Manual).
+    Schumann, E. (2012) Remarks on 'A comparison of some
+    heuristic optimization methods'.
+    \url{http://enricoschumann.net/R/remarks.htm}
+
+    Schumann, E. (2017) Financial Optimisation with R (\pkg{NMOF} Manual).
     \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 
     Winker, P. (2001). \emph{Optimization Heuristics in Econometrics:
