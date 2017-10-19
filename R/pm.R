@@ -13,7 +13,7 @@ pm <- function(x, xp = 2, threshold = 0, lower = TRUE,
     if (lower)
         x <- x - abs(x)
     else
-        x <- x + abs(x)        
+        x <- x + abs(x)
     x <- abs(x)
 
     ans <- if (xp == 1L)
@@ -24,7 +24,7 @@ pm <- function(x, xp = 2, threshold = 0, lower = TRUE,
         sum(x*x*x, na.rm = na.rm)/8
     else if (xp == 4L)
         sum(x*x*x*x, na.rm = na.rm)/16
-    else 
+    else
         sum(x^xp, na.rm = na.rm)/2^xp
     ans <- ans/n
 
@@ -32,9 +32,7 @@ pm <- function(x, xp = 2, threshold = 0, lower = TRUE,
         ans^(1/xp)
     else
         ans
-
 }
-
 
 cm <- function(x, xp = 2, threshold = 0, lower = TRUE,
                normalise = FALSE, na.rm = FALSE) {
@@ -42,14 +40,14 @@ cm <- function(x, xp = 2, threshold = 0, lower = TRUE,
     if (length(d <- dim(x))) {
         n <- d[1L]
         sum <- colSums
-    } else 
+    } else
         n <- length(x)
 
     x <- x - threshold
     if (lower)
         x <- x - abs(x)
     else
-        x <- x + abs(x)        
+        x <- x + abs(x)
     x <- abs(x)
 
     ans <- if (xp == 1L)
@@ -60,7 +58,7 @@ cm <- function(x, xp = 2, threshold = 0, lower = TRUE,
         sum(x*x*x, na.rm = na.rm)/8
     else if (xp == 4L)
         sum(x*x*x*x, na.rm = na.rm)/16
-    else 
+    else
         sum(x^xp, na.rm = na.rm)/2^xp
     if ((sx <- sum(x > threshold)) > 0)
         ans <- ans/sx

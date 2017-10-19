@@ -94,7 +94,7 @@ LSopt <- function(OF, algo = list(), ...) {
                     prettyNum(xcF), "\n", sep = "")
                 flush.console()
             }
-            break    
+            break
         }
     }
     if (printBar)

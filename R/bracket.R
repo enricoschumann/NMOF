@@ -58,7 +58,7 @@ bracketing <- function(fun, interval, ...,
                fn <- clusterApply(cl, xs, fun, ...)
                fn <- unlist(fn)
            }
-           ) 
+           )
 
     ## find diffs
     iSigns <- which(fn[-n] * fn[-1L] < 0)

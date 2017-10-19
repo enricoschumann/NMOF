@@ -21,4 +21,3 @@ EuropeanCall <- function(S0, X, r, tau, sigma, M = 101) {
         C <- v * (p * C[(1+f7):(i+1+f7)] + (1-p) * C[(0+f7):(i+f7)])
     C
 }
-

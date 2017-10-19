@@ -31,7 +31,7 @@ erc <- function(cov,  wmin = 0, wmax = 1, method = "ls") {
                  wmin = wmin,
                  wmax = wmax,
                  epsmin = 0.0001,
-                 epsmax = 0.1,             
+                 epsmax = 0.1,
                  eps = 0.0005,
                  nS = 1000)
 
@@ -93,10 +93,10 @@ mvFrontier <- function(m, var, wmin = 0, wmax = 1, n = 50) {
 
     rets <- risk <- numeric(n)
     portfolios <- array(0, dim = c(na, n))
-        
+
     dvec <- numeric(na)
     A <- rbind(1, -diag(na), diag(na))
-    
+
     sq <- seq(0.0001, 0.9999, length.out = n)
     for (i in seq_len(n)) {
         lambda <- sq[i]

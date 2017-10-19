@@ -30,7 +30,7 @@ TAopt <- function(OF, algo = list(), ...) {
     if (is.null(algoD$x0))
         stop("specify start solution ", sQuote("algo$x0"))
 
-    if (is.function(algoD$x0)) 
+    if (is.function(algoD$x0))
         x0 <- algoD$x0() else x0 <- eval(algoD$x0)
 
     OF1 <- function(x)
@@ -39,7 +39,7 @@ TAopt <- function(OF, algo = list(), ...) {
         algoD$neighbour(x, ...)
 
     target.reached <- FALSE
-    
+
     printDetail <- algoD$printDetail
     printBar <- algoD$printBar
     if (printBar && printDetail > 1)
@@ -178,7 +178,7 @@ TAopt <- function(OF, algo = list(), ...) {
                     flush.console()
                 }
             }
-            
+
             ## check stopif value
             if (!is.null(algoD$OF.target) && xbestF <= algoD$OF.target) {
                 if (printDetail) {
@@ -188,7 +188,7 @@ TAopt <- function(OF, algo = list(), ...) {
                     flush.console()
                     target.reached  <- TRUE
                 }
-                break    
+                break
             }
         }
 

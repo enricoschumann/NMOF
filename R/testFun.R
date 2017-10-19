@@ -31,7 +31,7 @@ tfTrefethen <- function(x) {
 
 tfEggholder  <- function(x) {
     x1 <- x[1L]
-    x2 <- x[2L]    
+    x2 <- x[2L]
     -(x2 + 47) * sin(sqrt(abs(x2 + x1/2 + 47))) -
         x1 * sin(sqrt(abs(x1 - (x2 + 47))))
 }

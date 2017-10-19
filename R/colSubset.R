@@ -1,12 +1,11 @@
 ## -*- truncate-lines: t; -*-
-## Time-stamp: <2014-03-26 17:12:19 CET (es)>
 
 colSubset <- function(x) {
 
     nr <- dim(x)[1L]
-    nc <- dim(x)[2L]    
+    nc <- dim(x)[2L]
     QR <- qr(x)
-    
+
     if ((qrank <- QR$rank) == nc) {
         ans <- list(columns = seq_len(nc),
                     multiplier = diag(nc))

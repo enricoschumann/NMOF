@@ -25,5 +25,5 @@ gbb <- function(npaths, timesteps, S0, ST, v, tau) {
     rbind(S0, t(ans + as.matrix(rep(ST - S0, npaths)) %*% w), deparse.level=0)
 }
 
-mc <- function(paths, payoff, ...) 
-    payoff(paths, ...) 
+mc <- function(paths, payoff, ...)
+    payoff(paths, ...)

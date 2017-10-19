@@ -9,7 +9,7 @@ qTable  <- function(X, xmin = NULL, xmax = NULL, labels = NULL,
         tabular.format <- paste("r",
                                 paste(rep("r", length(funs)), collapse = ""),
                                 "r", sep ="")
-    
+
     X <- as.matrix(X)
     if (nrow(X) < 10L)
         warning(sQuote("X"), " has less than 10 rows")
@@ -55,14 +55,14 @@ qTable  <- function(X, xmin = NULL, xmax = NULL, labels = NULL,
     for (cc in seq_len(dim(X)[2L])) {
 
         if (length(funs)>0L) {
-            str0 <- paste(cnames[cc], " & ", 
+            str0 <- paste(cnames[cc], " & ",
                           paste(fff(sapply(funs, do.call, list(X[ ,cc]))),
                                 collapse = " & "),
                           sep = "")
         } else {
             str0 <- cnames[cc]
         }
-        
+
         str1 <- paste("& \\begin{picture}(1,0)(",
                       xoffset, ",", yoffset, ")", sep = "")
 
@@ -102,7 +102,7 @@ qTable  <- function(X, xmin = NULL, xmax = NULL, labels = NULL,
                  STR,
                  "\n", strScale,
                  ifelse(skip,"\n\\\\\\end{tabular}","\n\\end{tabular}"))
-    
+
     ## add line thickness
     if (!is.null(linethickness))
         STR <- rbind(paste("\\linethickness{",
@@ -120,6 +120,5 @@ qTable  <- function(X, xmin = NULL, xmax = NULL, labels = NULL,
         cat(STR, "\n", sep = "", file = filename)
     }
     STR
-    
-}
 
+}

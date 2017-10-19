@@ -5,19 +5,19 @@ vanillaOptionEuropean <- function(S, X, tau, r, q = 0, v,
     tmp <- due(D, tauD, tau, q)
     tauD <- tmp$tauD
     D <- tmp$D
-    
+
     if (any(tau <= 0))
         stop(sQuote("tau"), " must be a positive number")
 
-    I <- switch(type, "call" = 1, "put" = -1)    
+    I <- switch(type, "call" = 1, "put" = -1)
     S <- S - sum(exp(-r*tauD)*D)  ## forward
     exq <- exp(-q * tau)
     exr <- exp(-r * tau)
     Sexq <- S * exq
     Xexr <- X * exr
-    
+
     if (is.null(model) || tolower(model) == "bsm") {
-        dots <- list(...)        
+        dots <- list(...)
         if (missing(v) && !is.null(vol <- dots[["vol"]]))
             v <- vol^2
         if (any(v <= 0))
@@ -26,7 +26,7 @@ vanillaOptionEuropean <- function(S, X, tau, r, q = 0, v,
         d2 <- d1 - sqrt(v * tau)
         N1 <- pnorm(I * d1)
         N2 <- pnorm(I * d2)
-        value <- I*(Sexq * N1 - Xexr * N2)        
+        value <- I*(Sexq * N1 - Xexr * N2)
         if (greeks) {
             delta <- I * exq * N1
             theta <-  - Sexq*dnorm(d1)*sqrt(v)/ (2*sqrt(tau)) -
@@ -50,20 +50,21 @@ vanillaOptionEuropean <- function(S, X, tau, r, q = 0, v,
         P2 <- function(om, S, X, tau, r, q, ...)
             Re(exp(-(0+1i) * log(X) * om) *
                cf(om, S, tau, r, q, ...)/((0+1i) * om))
-        vP1 <- 0.5 + 1/pi * integrate(P1, lower = 1e-08, upper = Inf, 
+        vP1 <- 0.5 + 1/pi * integrate(P1, lower = 1e-08, upper = Inf,
                                       S, X, tau, r, q, ...)$value
-        vP2 <- 0.5 + 1/pi * integrate(P2, lower = 1e-08, upper = Inf, 
+        vP2 <- 0.5 + 1/pi * integrate(P2, lower = 1e-08, upper = Inf,
                                       S, X, tau, r, q, ...)$value
         value <- Sexq * vP1 - Xexr * vP2
         if (I < 0)
             value <- putCallParity(what = "put", call = value,
-                                   put = NULL, S, X, tau, r, q, tauD, D)        
+                                   put = NULL, S, X, tau, r, q, tauD, D)
         if (!greeks)
             value else {
                 list(value = value, delta = exq * vP1 - exq *(I < 0))
             }
-    }    
+    }
 }
+
 vanillaOptionAmerican <- function(S, X, tau, r, q, v,
                                   tauD = 0, D = 0, type = "call",
                                   greeks = TRUE, M = 101) {
@@ -74,7 +75,7 @@ vanillaOptionAmerican <- function(S, X, tau, r, q, v,
 
     if (any(tau <= 0))
         stop(sQuote("tau"), " must be a positive number")
-    
+
     pmax2 <- function(y1,y2)
         (y1 + y2 + abs(y1 - y2)) / 2
 
@@ -152,7 +153,6 @@ vanillaOptionImpliedVol <- function(exercise = "european",
 }
 putCallParity <- function(what, call, put, S, X, tau, r, q = 0, tauD = 0, D = 0) {
 
-
     tmp <- due(D, tauD, tau, q)
     tauD <- tmp$tauD
     D <- tmp$D
@@ -160,7 +160,7 @@ putCallParity <- function(what, call, put, S, X, tau, r, q = 0, tauD = 0, D = 0)
 
     if (any(tau <= 0))
         stop(sQuote("tau"), " must be a positive number")
-    
+
     ## call + X * exp(-r*tau) = put + S * exp(-q * tau) - D
 
     switch(what,
@@ -169,10 +169,11 @@ putCallParity <- function(what, call, put, S, X, tau, r, q = 0, tauD = 0, D = 0)
            stop(sQuote(what), " is not supported (yet)"))
 }
 if (FALSE) {
+    ## TODO compare with/move to NMOF manual
     ## test cases for implied vol
     impliedVol <- function(price, S, X, tau, r, q, vol0 = 0.15, I = 1,
                            tol = 1e-4, maxit = 200) {
-        
+
         for (i in seq_len(maxit)) {
             tmp <- bsm(S, X, tau, r, q, vol0, I)
             step <- (tmp$value - price)/tmp$vega
@@ -197,7 +198,7 @@ if (FALSE) {
     tau <- sample(seq(0.1,5,by=0.1), cases, replace = TRUE)
     vol <- sample(seq(0.2,0.7,by=0.01), cases, replace = TRUE)
     prices <- vanillaOptionEuropean(S,X,tau,r,q,v=vol^2, greeks=FALSE)
-    
+
     v0 <- numeric(cases)
     for (i in seq_len(cases)) {
         tmp <- try(vanillaOptionImpliedVol("european", price = prices[i],
@@ -205,15 +206,15 @@ if (FALSE) {
                                          r = r[i], q=q[i]))
         if (inherits(tmp, "try-error"))
             message("error in i ", i)
-        else 
+        else
             v0[i] <- tmp
     }
-    
+
     ci <- 1:cases
     iv <- impliedVol(prices[ci],S[ci],X[ci],tau[ci],r[ci],q[ci],
                      vol0 = pmax(sqrt(abs(log(S[ci]/X[ci])+(r[ci]-q[ci])*tau[ci])*2/tau[ci]),0.1))
     ##data.frame(iv=iv, true=vol[ci], diff = round(iv-vol[ci],4))
-        
+
     summary(abs(v0-vol))
     summary(abs(iv - vol[ci]))
     boxplot(list(abs(v0-vol), abs(iv - vol[ci])))

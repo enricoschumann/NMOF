@@ -1,5 +1,4 @@
 ## -*- truncate-lines: t; -*-
-## Time-stamp: <2013-10-13 21:16:35 CEST (es)>
 
 drawdown <- function(v, relative = TRUE, summary = TRUE) {
     cv  <- cummax(v)
@@ -14,6 +13,6 @@ drawdown <- function(v, relative = TRUE, summary = TRUE) {
              high.position = peakTime,
              low           = v[troughTime],
              low.position  = troughTime)
-    } else 
-        rd    
+    } else
+        rd
 }

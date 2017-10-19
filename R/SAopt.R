@@ -45,7 +45,7 @@ SAopt <- function(OF, algo = list(), ...) {
     target.reached <- FALSE
     T <- algoD$initT
     alpha <- algoD$alpha
-    
+
     printDetail <- algoD$printDetail
     printBar <- algoD$printBar
     if (printBar && printDetail > 1)
@@ -58,8 +58,7 @@ SAopt <- function(OF, algo = list(), ...) {
     nS <- makeInteger(algoD$nS, "algo$nS")
     nD <- makeInteger(algoD$nD, "algo$nD")
     niter <- nS * nT
-    
-    
+
     if (!is.null(algoD$initT)) {
         T <- algoD$initT
     } else {
@@ -89,7 +88,7 @@ SAopt <- function(OF, algo = list(), ...) {
         }
         if (any(is.na(diffF)))
             stop("objective function evaluated to NA")
-        
+
         T <- try(uniroot(function(T)
                          algoD$initProb - sum(exp(-diffF/T))/nD,
                          interval = c(0.00001, 2))$root, silent = TRUE)
@@ -97,7 +96,7 @@ SAopt <- function(OF, algo = list(), ...) {
             T <- -mean(diffF)/log(algoD$initProb)
         if (printBar)
             close(whatGen)
-        
+
         if (printDetail) {
             cat("OK")
             endTime <- proc.time()
@@ -146,7 +145,7 @@ SAopt <- function(OF, algo = list(), ...) {
     for (t in seq_len(nT)) {
         for (s in seq_len(nS)) {
             counter <- counter + 1L
-            
+
             xn <- N1(xc)
             xnF <- OF1(xn)
             if (xnF <= xcF || exp((xcF - xnF)/T) > runif(1L)) {
@@ -155,12 +154,12 @@ SAopt <- function(OF, algo = list(), ...) {
                 if (xnF <= xbestF) {
                     xbest <- xn
                     xbestF <- xnF
-                }                
+                }
             }
-            
+
             if (printBar)
                 setTxtProgressBar(whatGen, value = counter)
-            
+
             ## store OF values
             if (algoD$storeF) {
                 Fmat[counter, 1L] <- xnF ## proposed sol.
@@ -172,7 +171,7 @@ SAopt <- function(OF, algo = list(), ...) {
                 xlist[[c(1L, counter)]] <- xn
                 xlist[[c(2L, counter)]] <- xc
             }
-            
+
             if (printDetail > 1) {
                 if (counter %% printDetail == 0L) {
                     cat("Best solution (iteration ", counter,
@@ -181,7 +180,7 @@ SAopt <- function(OF, algo = list(), ...) {
                     flush.console()
                 }
             }
-            
+
             ## check target value
             if (!is.null(algoD$OF.target) && xbestF <= algoD$OF.target) {
                 if (printDetail) {
@@ -193,7 +192,7 @@ SAopt <- function(OF, algo = list(), ...) {
                     flush.console()
                     target.reached  <- TRUE
                 }
-                break    
+                break
             }
         }
 
@@ -215,7 +214,7 @@ SAopt <- function(OF, algo = list(), ...) {
         close(whatGen)
 
     ans <- list(xbest = xbest, OFvalue = xbestF,
-                Fmat = Fmat, xlist = xlist, 
+                Fmat = Fmat, xlist = xlist,
                 initial.state = state)
     if (algoD$classify)
         class(ans) <- "SAopt"
