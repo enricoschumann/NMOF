@@ -1,0 +1,181 @@
+% \VignetteIndexEntry{Solving the N-Queens Problem with Local Search}
+% \VignetteKeyword{Local Search}
+% \VignetteKeyword{Simulated Annealing}
+% \VignetteKeyword{Threshold Accepting}
+% \VignetteKeyword{heuristics}
+% \VignetteKeyword{optimize}
+\documentclass[a4paper]{article}
+\usepackage[left=2.5cm,top=2cm, bottom=3cm, right=3.5cm]{geometry}
+\usepackage[noae]{Sweave}
+\usepackage{mathptmx}
+\usepackage{amsmath,amstext}
+\usepackage{hyperref}
+\usepackage{natbib}
+\usepackage{units}
+\usepackage{color}
+\definecolor{grau2}{rgb}{.2,.2,.2}
+\definecolor{grau7}{rgb}{.7,.7,.7}
+% define *Sweave* layout
+\DefineVerbatimEnvironment{Sinput}{Verbatim}{}
+\DefineVerbatimEnvironment{Soutput}{Verbatim}{frame=single,xleftmargin=0em,%
+  formatcom=\color{grau2},rulecolor=\color{grau7}}
+\DefineVerbatimEnvironment{Scode}{Verbatim}{xleftmargin=2em}
+\fvset{listparameters={\setlength{\topsep}{0pt}}}
+\renewenvironment{Schunk}{\vspace{\topsep}}{\vspace{\topsep}}
+<<echo=false>>=
+options(continue = "  ", digits = 5, max.print = 1000)
+@
+
+\begin{document}
+{\raggedright{\LARGE Solving the \emph{N}-Queens Problem with Local Search}}\medskip
+
+\noindent Enrico Schumann\\
+\noindent \texttt{es@enricoschumann.net}\\
+\bigskip
+
+
+\noindent This vignette provides example code for a combinatorial
+problem: the \emph{N-Queens Problem}. 
+
+\nocite{Gilli2011b}
+
+
+\section{Goal}
+
+The goal is to place N queens on a chess-board of size $N \times N$ in
+such a way that no queen is attacked. To solve the problem with a
+Local Search (LS), we need three components:
+\begin{enumerate}
+\item a way to represent a solution (i.e. a position on the
+  chessboard);
+\item tem a way to evaluate such a solution,
+\item and, since we use a LS, a method to modify a solution.
+\end{enumerate}
+
+We start by attaching the package and fixing a seed.
+<<>>=
+require("NMOF")
+set.seed(112233)
+@
+
+\section{Representing a solution}
+
+A queen may move vertically, horizontally and a diagonal. That means
+on any row there cannot be more than one queen; thus, we may store a
+position as a vector of columns on which the queens are placed. (In
+chess, rows would be called ranks and columns would be files, but we
+prefer matrix terminology.)
+<<>>=
+N <- 8
+
+print_board <- function(p) {
+    n <- length(p)
+    row <- rep("-", n)
+    for (i in seq_len(n)) {
+        row_i <- row
+        row_i[p[i]] <- "Q"
+       
+        cat(paste(row_i, collapse = " "))
+        cat("\n")
+    }
+}
+@ 
+
+A solution (not a valid one: the queens attack each other on the
+diagonal).
+<<>>=
+p <- 1:N
+print_board(p)
+@ 
+
+\section{Evaluation a solution}
+
+
+Diagonals and reverse diagonals.
+<<>>=
+mat <- array(NA, dim = c(N,N))
+for (r in 1:N) {
+    for (c in 1:N) {
+        mat[r,c] <- c - r
+    }
+}
+mat
+
+mat <- array(NA, dim = c(N,N))
+for (r in 1:N) {
+    for (c in 1:N) {
+        mat[r,c] <- c + r - (N+1)
+    }
+}
+mat
+@ 
+
+The objective function: the number of attacks.
+
+<<>>=
+n_attacks <- function(p) {
+    sum(duplicated(p)) +
+    sum(duplicated(p - seq_along(p))) +
+    sum(duplicated(p + seq_along(p) - (length(p)+1)))
+}
+@ 
+
+<<>>=
+n_attacks(p)
+@ 
+
+
+\section{Changing a solution}
+
+
+<<>>=
+neighbour <- function(p) {
+    step <- 4
+    i <- sample.int(N, 1)
+    p[i] <- p[i] + sample(c(1:step, -(1:step)), 1)
+    
+    if (p[i] > N)
+        p[i] <- 1
+    else if (p[i] < 1)
+        p[i] <- N
+    p
+}
+@ 
+
+<<>>=
+print_board(p)
+print_board(p <- neighbour(p))
+print_board(p <- neighbour(p))
+@ 
+
+\section{Solving the model}
+
+<<>>=
+p0 <- sample.int(N)
+print_board(p0)
+
+sol <- LSopt(n_attacks, list(x0 = p0,
+                             neighbour = neighbour,
+                             printBar = FALSE,
+                             nS = 2000))
+print_board(sol$xbest)
+
+sol <- TAopt(n_attacks, list(x0 = p0,
+                             neighbour = neighbour,
+                             printBar = FALSE,
+                             nS = 1000))
+print_board(sol$xbest)
+
+sol <- SAopt(n_attacks, list(x0 = p0,
+                             neighbour = neighbour,
+                             printBar = FALSE,
+                             nS = 1000))
+print_board(sol$xbest)
+@ 
+
+
+
+
+\bibliographystyle{plainnat}
+\bibliography{NMOF}
+\end{document}
