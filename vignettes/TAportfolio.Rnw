@@ -20,7 +20,7 @@
 \fvset{listparameters={\setlength{\topsep}{0pt}}}
 \renewenvironment{Schunk}{\vspace{\topsep}}{\vspace{\topsep}}
 <<echo=false>>=
-options(continue = " ", digits = 5)
+options(continue = "  ", digits = 5)
 @
 \begin{document}
 {\raggedright{\LARGE Portfolio Optimisation with Threshold Accepting}}\medskip

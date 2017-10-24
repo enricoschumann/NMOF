@@ -22,7 +22,7 @@
 \renewenvironment{Schunk}{\vspace{\topsep}}{\vspace{\topsep}}
 <<echo=false>>=
 require("NMOF")
-options(continue = " ", digits = 5, max.print = 10, width = 85)
+options(continue = "  ", digits = 5, max.print = 10, width = 85)
 @
 \begin{document}
 {\raggedright{\LARGE An Overview of the NMOF Package}}\medskip
