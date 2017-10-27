@@ -35,39 +35,58 @@ options(continue = "  ", digits = 5, max.print = 1000)
 
 
 \noindent This vignette provides example code for a combinatorial
-problem: the \emph{N-Queens Problem}. 
+problem: the \emph{N-Queens Problem}.
+
 
 \nocite{Gilli2011b}
 
 
 \section{Goal}
 
-The goal is to place N queens on a chess-board of size $N \times N$ in
-such a way that no queen is attacked. To solve the problem with a
-Local Search (LS), we need three components:
+The goal is to place N queens on a chess-board of size
+$N \times N$ in such a way that no queen is attacked. A
+queen may move vertically, horizontally and a
+diagonal. So whenever there is more than one queen on
+any row, column or diagonal,the position is invalid. To
+solve the problem with a Local Search (LS), we need
+three components:
 \begin{enumerate}
-\item a way to represent a solution (i.e. a position on the
-  chessboard);
-\item tem a way to evaluate such a solution,
-\item and, since we use a LS, a method to modify a solution.
+\item a way to represent a solution (i.e. a position on
+  the chessboard);
+\item a way to evaluate such a solution,
+\item and, since we use a LS, a method to modify a
+  solution.
 \end{enumerate}
 
 We start by attaching the package and fixing a seed.
 <<>>=
 require("NMOF")
-set.seed(112233)
+set.seed(1345767)
 @
 
 \section{Representing a solution}
 
-A queen may move vertically, horizontally and a diagonal. That means
-on any row there cannot be more than one queen; thus, we may store a
+Since on any row there cannot be more than one queen, we may store a
 position as a vector of columns on which the queens are placed. (In
 chess, rows would be called ranks and columns would be files, but we
-prefer matrix terminology.)
+prefer matrix terminology.) Thus, a candidate solution \texttt{p} (p
+for position) could look as follows:
 <<>>=
-N <- 8
+N <- 8              ## board size
+p <- sample.int(N)  ## a random solution
+data.frame(row = 1:N, column = p)
+@ 
 
+Or (a very bad solution):
+<<>>=
+p <- rep(1, N) 
+data.frame(row = 1:N, column = p)
+@ 
+
+
+We may also wanto to visualise a position, for which
+may use the function \texttt{print_board}.
+<<>>=
 print_board <- function(p) {
     n <- length(p)
     row <- rep("-", n)
@@ -79,21 +98,19 @@ print_board <- function(p) {
         cat("\n")
     }
 }
-@ 
 
-A solution (not a valid one: the queens attack each other on the
-diagonal).
-<<>>=
-p <- 1:N
 print_board(p)
 @ 
 
 \section{Evaluation a solution}
 
+We need to compute on what row, column, diagonal (top
+left to bottom right) or reverse diagonal (top right to
+bottom left) a queen stands. Rows and columns are
+simple; we label the diagonals as follows.
 
-Diagonals and reverse diagonals.
 <<>>=
-mat <- array(NA, dim = c(N,N))
+mat <- array(NA, dim = c(N,N))  ## diagonals
 for (r in 1:N) {
     for (c in 1:N) {
         mat[r,c] <- c - r
@@ -101,36 +118,52 @@ for (r in 1:N) {
 }
 mat
 
-mat <- array(NA, dim = c(N,N))
+mat <- array(NA, dim = c(N,N))  ## reverse diagonal
 for (r in 1:N) {
     for (c in 1:N) {
-        mat[r,c] <- c + r - (N+1)
+        mat[r,c] <- c + r - (N + 1)
     }
 }
 mat
 @ 
 
-The objective function: the number of attacks.
+Note that for reverse diagonals, the \texttt{N + 1}
+would not necessary; it serves to only to shift the
+diagonal labels so that the main diagonal is zero.
+
+So for a given solution \texttt{p}, we know the row,
+column, diagonal and reverse diagonal for each queen.
+
+We define the quality of a solution by the number of
+attacks that happen: for a valid solution, that number
+should be zero.
 
 <<>>=
 n_attacks <- function(p) {
+    ## more than one Q on a column?
     sum(duplicated(p)) +
-    sum(duplicated(p - seq_along(p))) +
-    sum(duplicated(p + seq_along(p) - (length(p)+1)))
-}
-@ 
+        
+    ## more than one Q on a diagonal?
+    sum(duplicated(p - seq_along(p))) +   
 
-<<>>=
+    ## more than one Q on a reverse diagonal?
+    sum(duplicated(p + seq_along(p)))
+}
+
 n_attacks(p)
 @ 
 
 
 \section{Changing a solution}
 
+A given by position may be modified by picking one row
+randomly and then moving the queen there to the left or
+right. We allow for moves up to three \texttt{step}
+squares.
 
 <<>>=
 neighbour <- function(p) {
-    step <- 4
+    step <- 3
     i <- sample.int(N, 1)
     p[i] <- p[i] + sample(c(1:step, -(1:step)), 1)
     
@@ -150,8 +183,12 @@ print_board(p <- neighbour(p))
 
 \section{Solving the model}
 
+We use three LS method: a `classical' local search,
+Threshold Accepting and Simulated Annealing.
+
 <<>>=
-p0 <- sample.int(N)
+## p0 <- sample.int(N)
+p0 <- rep(1, N)
 print_board(p0)
 
 sol <- LSopt(n_attacks, list(x0 = p0,
