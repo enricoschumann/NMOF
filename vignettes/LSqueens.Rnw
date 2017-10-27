@@ -85,7 +85,7 @@ data.frame(row = 1:N, column = p)
 
 
 We may also wanto to visualise a position, for which
-may use the function \texttt{print_board}.
+may use the function \texttt{print\_board}.
 <<>>=
 print_board <- function(p) {
     n <- length(p)
