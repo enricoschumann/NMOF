@@ -102,7 +102,7 @@ print_board <- function(p) {
 print_board(p)
 @ 
 
-\section{Evaluation a solution}
+\section{Evaluating a solution}
 
 We need to compute on what row, column, diagonal (top
 left to bottom right) or reverse diagonal (top right to
