@@ -114,3 +114,39 @@ mvFrontier <- function(m, var, wmin = 0, wmax = 1, n = 50) {
          volatility = risk,
          portfolios = portfolios)
 }
+
+
+mvPortfolio <- function(m, var, min.return, wmin = 0, wmax = 1) {
+
+    if (!requireNamespace("quadprog"))
+        stop("package ", sQuote("quadprog"), " is not available")
+
+    na <- dim(var)[1L]
+    if (length(wmin) == 1L)
+        wmin <- rep(wmin, na)
+    if (length(wmax) == 1L)
+        wmax <- rep(wmax, na)
+    if (length(m) == 1L)
+        m <- rep(m, na)
+
+    Q <- 2 * var
+    A <- array( 1, dim = c(1L, na))
+    a <- 1
+    B <- array(m, dim = c(1L, na))
+    B <- rbind(B,-diag(na),diag(na))
+    b <- rbind(min.return, array(-wmax, dim = c(na,1L)),
+               array( wmin, dim = c(na,1L)))
+    result <- solve.QP(Dmat = Q,
+                       dvec = rep(0,na),
+                       Amat = t(rbind(A,B)),
+                       bvec = rbind(a,b),
+                       meq  = 1L)
+
+    result
+}
+
+## m <- c(0.01,0.01)
+## vols <- c(0.05, 0.025)
+## rho <- array(c(1, 0.9, 0.9, 1), dim = c(2,2))
+## var <- diag(vols) %*% rho %*% diag(vols)
+## mvPortfolio(m, var, 0.01, -5, 5)
