@@ -61,7 +61,7 @@ three components:
 We start by attaching the package and fixing a seed.
 <<>>=
 require("NMOF")
-set.seed(1345767)
+set.seed(134577)
 @
 
 \section{Representing a solution}
@@ -92,9 +92,9 @@ print_board <- function(p) {
     row <- rep("-", n)
     for (i in seq_len(n)) {
         row_i <- row
-        row_i[p[i]] <- "Q"
+        row_i[p[i]] <- "*"
        
-        cat(paste(row_i, collapse = " "))
+        cat(paste(row_i, collapse = ""))
         cat("\n")
     }
 }
@@ -128,7 +128,7 @@ mat
 @ 
 
 Note that for reverse diagonals, the \texttt{N + 1}
-would not necessary; it serves to only to shift the
+would not be necessary; it serves only to shift the
 diagonal labels so that the main diagonal is zero.
 
 So for a given solution \texttt{p}, we know the row,
@@ -158,8 +158,8 @@ n_attacks(p)
 
 A given by position may be modified by picking one row
 randomly and then moving the queen there to the left or
-right. We allow for moves up to three \texttt{step}
-squares.
+right. We allow for moves up to \texttt{step}
+squares, which we set to 3 in the example.
 
 <<>>=
 neighbour <- function(p) {
@@ -194,7 +194,7 @@ print_board(p0)
 sol <- LSopt(n_attacks, list(x0 = p0,
                              neighbour = neighbour,
                              printBar = FALSE,
-                             nS = 2000))
+                             nS = 10000))
 print_board(sol$xbest)
 
 sol <- TAopt(n_attacks, list(x0 = p0,
@@ -209,8 +209,6 @@ sol <- SAopt(n_attacks, list(x0 = p0,
                              nS = 1000))
 print_board(sol$xbest)
 @ 
-
-
 
 
 \bibliographystyle{plainnat}

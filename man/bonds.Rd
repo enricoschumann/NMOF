@@ -1,6 +1,7 @@
 \name{vanillaBond}
 \alias{vanillaBond}
 \alias{duration}
+\alias{convexity}
 \alias{ytm}
 \title{
   Pricing Plain-Vanilla Bonds
@@ -16,6 +17,7 @@ vanillaBond(cf, times, df, yields)
 ytm(cf, times, y0 = 0.05, tol = 1e-05, maxit = 1000L, offset = 0)
 
 duration(cf, times, yield, modified = TRUE, raw = FALSE)
+convexity(cf, times, yield, raw = FALSE)
 }
 \arguments{
   \item{cf}{
@@ -23,17 +25,20 @@ duration(cf, times, yield, modified = TRUE, raw = FALSE)
     should be arranged in rows; times-to-payment correspond to columns.
   }
   \item{times}{
-    times-to-payment; a numeric vector.
+    times-to-payment; a numeric vector
   }
   \item{df}{
-    discount factors; a numeric vector.
+    discount factors; a numeric vector
   }
   \item{yields}{
     optional (instead of discount factors); zero yields to compute
     discount factor; if of length one, a flat zero curve is assumed
   }
   \item{yield}{
-    numeric
+
+    numeric vector of length one (both duration and
+    convexity assume a flat yield curve)
+
   }
   \item{y0}{
     starting value
@@ -49,7 +54,7 @@ duration(cf, times, yield, modified = TRUE, raw = FALSE)
     maturity.  See Details and Examples.
   }
   \item{modified}{
-    logical: return modified duration (default \code{TRUE})
+    logical: return modified duration? (default \code{TRUE})
   }
   \item{raw}{
 
@@ -68,7 +73,7 @@ duration(cf, times, yield, modified = TRUE, raw = FALSE)
 
   \code{ytm} uses Newton's method to compute the yield-to-maturity of a
   bond (a.k.a. internal interest rate). When used with a bond, the initial
-  outlay (ie, the bonds dirty price) needs be included in the vector of
+  outlay (i.e. the bonds dirty price) needs be included in the vector of
   cashflows.  For a coupon bond, a good starting value \code{y0} is
   the coupon divided by the dirty price of the bond.
 
