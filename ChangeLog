@@ -1,3 +1,15 @@
+2017-12-06  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/TAopt.R (TAopt): new option 'nI', for
+	number of iterations. If specified, it will
+	override 'nS'. The option makes it easier to
+	switch between functions 'LSopt', 'TAopt' and
+	'SAopt'.
+
+	* R/SAopt.R (SAopt): new option nI
+
+	* R/LSopt.R (LSopt): new option nI
+
 2017-12-05  Enrico Schumann  <es@enricoschumann.net>
 
 	* R/bonds.R (convexity): add function
