@@ -41,26 +41,27 @@ problem: the \emph{N-Queens Problem}.
 \nocite{Gilli2011b}
 
 
-\section{Goal}
+\section{The problem}
 
-The goal is to place N queens on a chess-board of size
+The goal is to place $N$~queens on a chess-board of size
 $N \times N$ in such a way that no queen is attacked. A
-queen may move vertically, horizontally and a
+queen may move vertically, horizontally and on a
 diagonal. So whenever there is more than one queen on
-any row, column or diagonal,the position is invalid. To
+any row, column or diagonal, the position is invalid. To
 solve the problem with a Local Search (LS), we need
 three components:
 \begin{enumerate}
 \item a way to represent a solution (i.e. a position on
   the chessboard);
-\item a way to evaluate such a solution,
+\item a way to evaluate such a solution;
 \item and, since we use a LS, a method to modify a
   solution.
 \end{enumerate}
 
-We start by attaching the package and fixing a seed.
+\noindent We start by attaching the package and fixing
+a seed.
 <<>>=
-require("NMOF")
+library("NMOF")
 set.seed(134577)
 @
 
@@ -77,24 +78,24 @@ p <- sample.int(N)  ## a random solution
 data.frame(row = 1:N, column = p)
 @ 
 
-Or (a very bad solution):
+\noindent Or (a very bad solution):
 <<>>=
 p <- rep(1, N) 
 data.frame(row = 1:N, column = p)
 @ 
 
 
-We may also wanto to visualise a position, for which
+\noindent We may also want to visualise a position, for which
 may use the function \texttt{print\_board}.
 <<>>=
-print_board <- function(p) {
+print_board <- function(p, q.char = "Q", sep = " ") {
     n <- length(p)
     row <- rep("-", n)
     for (i in seq_len(n)) {
         row_i <- row
-        row_i[p[i]] <- "*"
+        row_i[p[i]] <- q.char
        
-        cat(paste(row_i, collapse = ""))
+        cat(paste(row_i, collapse = sep))
         cat("\n")
     }
 }
@@ -111,29 +112,24 @@ simple; we label the diagonals as follows.
 
 <<>>=
 mat <- array(NA, dim = c(N,N))  ## diagonals
-for (r in 1:N) {
-    for (c in 1:N) {
+for (r in 1:N)
+    for (c in 1:N)
         mat[r,c] <- c - r
-    }
-}
 mat
 
 mat <- array(NA, dim = c(N,N))  ## reverse diagonal
-for (r in 1:N) {
-    for (c in 1:N) {
+for (r in 1:N)
+    for (c in 1:N)
         mat[r,c] <- c + r - (N + 1)
-    }
-}
 mat
 @ 
 
-Note that for reverse diagonals, the \texttt{N + 1}
+\noindent Note that for reverse diagonals, the \texttt{N + 1}
 would not be necessary; it serves only to shift the
 diagonal labels so that the main diagonal is zero.
 
-So for a given solution \texttt{p}, we know the row,
+Thus for a given solution \texttt{p}, we know the row,
 column, diagonal and reverse diagonal for each queen.
-
 We define the quality of a solution by the number of
 attacks that happen: for a valid solution, that number
 should be zero.
@@ -156,10 +152,10 @@ n_attacks(p)
 
 \section{Changing a solution}
 
-A given by position may be modified by picking one row
+A given position may be modified by picking one row
 randomly and then moving the queen there to the left or
 right. We allow for moves up to \texttt{step}
-squares, which we set to 3 in the example.
+squares, which we set to \texttt{3} in the example.
 
 <<>>=
 neighbour <- function(p) {
@@ -183,12 +179,13 @@ print_board(p <- neighbour(p))
 
 \section{Solving the model}
 
-We use three LS method: a `classical' local search,
-Threshold Accepting and Simulated Annealing.
+We use three different LS methods: a `classical' 
+Stochastic Local Search (\texttt{LSopt}),
+Threshold Accepting (\texttt{TAopt}) and 
+Simulated Annealing (\texttt{SAopt}).
 
 <<>>=
-## p0 <- sample.int(N)
-p0 <- rep(1, N)
+p0 <- rep(1, N)  ## or a random initial solution: p0 <- sample.int(N)
 print_board(p0)
 
 sol <- LSopt(n_attacks, list(x0 = p0,

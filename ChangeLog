@@ -1,3 +1,9 @@
+2018-02-21  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/colSubset.R (colSubset): explicitly set
+	LAPACK=FALSE (the default already); see
+	https://stat.ethz.ch/pipermail/r-devel/2018-January/075398.html
+
 2017-12-06  Enrico Schumann  <es@enricoschumann.net>
 
 	* R/TAopt.R (TAopt): new option 'nI', for
