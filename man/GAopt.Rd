@@ -78,6 +78,9 @@ GAopt (OF, algo = list(), ...)
     \item{\code{nP}}{population size. Defaults to 50. Using default
     settings may not be a good idea.}
 
+    \item{\code{nG}}{number of iterations (\sQuote{generations}).
+    Defaults to 300. Using default settings may not be a good idea.}
+
     \item{\code{crossover}}{The crossover method. Default is
     \code{"onePoint"}; also possible is \dQuote{uniform}.}
 
