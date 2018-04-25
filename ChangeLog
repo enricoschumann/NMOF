@@ -1,3 +1,7 @@
+2018-04-24  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Version): 1.4-0
+
 2018-02-21  Enrico Schumann  <es@enricoschumann.net>
 
 	* R/colSubset.R (colSubset): explicitly set
