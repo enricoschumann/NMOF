@@ -1,3 +1,7 @@
+2018-05-04  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/market_data.R (French): add function
+
 2018-05-01  Enrico Schumann  <es@enricoschumann.net>
 
 	* R/market_data.R (Shiller): add function
