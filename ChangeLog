@@ -1,3 +1,7 @@
+2018-05-01  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/market_data.R (Shiller): add function
+
 2018-04-24  Enrico Schumann  <es@enricoschumann.net>
 
 	* DESCRIPTION (Version): 1.4-0
