@@ -24,3 +24,59 @@ Shiller <- function(destfile = tempfile(fileext = ".xls"),
     data <- data[!is.na(data[["Date"]]), ]
     data
 }
+
+.ftp <- "http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/"
+
+French <- function(dataset = "variance", weighting = "equal",
+                   frequency = "monthly", price.series = FALSE) {
+    file <- if (dataset == "variance")        
+                "Portfolios_Formed_on_VAR_CSV.zip"
+            else if (dataset == "industry49")
+                "49_Industry_Portfolios_CSV.zip"
+
+    file <- paste0(.ftp, file)
+    
+    tmp <- tempfile()
+    download.file(file, tmp, quiet = TRUE)
+    
+    tmp2 <- unzip(tmp)
+    txt <- readLines(tmp2)
+    file.remove(tmp2)
+    
+
+    i <- if (tolower(weighting) == "equal")
+             grep("Equal Weighted Returns -- Monthly", txt)
+         else if (tolower(weighting) == "value")
+             grep("Value Weighted Returns -- Monthly", txt)
+         else
+            stop("weighting must be 'equal' or 'value'")
+    
+    j <- grep("^$", txt)
+    j <- j[min(which(j > i))]
+    
+    ans <- txt[(i+1):(j-1)]
+    ans <- read.table(text = ans, header = TRUE,
+                      stringsAsFactors = FALSE, sep = ",",
+                      check.names = FALSE)
+    for (cc in seq_len(ncol(ans)))
+        ans[[cc]][ ans[[cc]] < -99 ] <- NA
+
+    timestamp <- datetimeutils::end_of_month(
+                                    as.Date(paste0(ans[[1]], "01"),
+                                            format = "%Y%m%d"))
+    ans <- ans[ ,-1] ## drop timestamp
+    ans <- ans/100
+    
+    if (price.series) {
+        ans <- rbind(0, ans)
+        timestamp <- c(end_of_previous_month(timestamp[1L]),
+                       timestamp)
+        for (cc in seq_len(ncol(ans))) {
+            ans[[cc]][ is.na(ans[[cc]]) ] <- 0
+            ans[[cc]] <- cumprod(1+ans[[cc]])
+        }
+        
+    }
+    row.names(ans) <- as.character(timestamp)
+    ans
+}
