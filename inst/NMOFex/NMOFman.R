@@ -1,4 +1,4 @@
-### R code from vignette source '/home/es/Documents/Books/NMOFman/NMOFman.Rnw'
+### R code from vignette source '/media/storage/es19/Documents/Books/NMOFman/NMOFman.Rnw'
 ### Encoding: UTF-8
 
 ###################################################
@@ -1547,7 +1547,7 @@ callCF(cf = cfBSM, S = S, X = X, tau = tau, r = r, q = q,
 
 
 ###################################################
-### code chunk number 142: NMOFman.Rnw:2862-2867
+### code chunk number 142: NMOFman.Rnw:2863-2868
 ###################################################
 cf <- c(5, 5, 5, 5, 5, 105) ## cashflows
 times <- 1:6                ## times to payment
@@ -1557,7 +1557,7 @@ b0
 
 
 ###################################################
-### code chunk number 143: NMOFman.Rnw:2876-2883
+### code chunk number 143: NMOFman.Rnw:2877-2884
 ###################################################
 vanillaBond <- function(cf, times, df, yields) {
     if (missing(times))
@@ -1569,7 +1569,7 @@ vanillaBond <- function(cf, times, df, yields) {
 
 
 ###################################################
-### code chunk number 144: NMOFman.Rnw:2888-2891
+### code chunk number 144: NMOFman.Rnw:2889-2892
 ###################################################
 cf <- c(rep(5, 9), 105)
 vanillaBond(cf, yields = 0.05)
@@ -1577,19 +1577,19 @@ vanillaBond(cf, yields = 0.03)
 
 
 ###################################################
-### code chunk number 145: NMOFman.Rnw:2900-2901
+### code chunk number 145: NMOFman.Rnw:2901-2902
 ###################################################
 2^(1:5)
 
 
 ###################################################
-### code chunk number 146: NMOFman.Rnw:2912-2913
+### code chunk number 146: NMOFman.Rnw:2913-2914
 ###################################################
 vanillaBond(cf, 1:10, yield = NS(c(0.03,0,0,2), 1:10))
 
 
 ###################################################
-### code chunk number 147: NMOFman.Rnw:2922-2928
+### code chunk number 147: NMOFman.Rnw:2923-2929
 ###################################################
   cf <- c(5, 5, 5, 5, 5, 105) ## cashflows
   times <- 1:6                ## times to payment
@@ -1600,7 +1600,7 @@ vanillaBond(cf, 1:10, yield = NS(c(0.03,0,0,2), 1:10))
 
 
 ###################################################
-### code chunk number 148: NMOFman.Rnw:2934-2970
+### code chunk number 148: NMOFman.Rnw:2935-2971
 ###################################################
 ytm <- function(cf, times, y0 = 0.05,
                 tol = 1e-05, h = 1e-05, maxit = 1000L) {        
@@ -1641,13 +1641,13 @@ ytm2(cf, times, y0=0.062, maxit = 5000)
 
 
 ###################################################
-### code chunk number 149: NMOFman.Rnw:2981-2982
+### code chunk number 149: NMOFman.Rnw:2982-2983
 ###################################################
 (initial.value <- 5/b0)
 
 
 ###################################################
-### code chunk number 150: NMOFman.Rnw:2985-2989
+### code chunk number 150: NMOFman.Rnw:2986-2990
 ###################################################
 ytm(cf,  times, y0 = 0.7, maxit = 5000)
 ytm(cf,  times, y0 = initial.value)
@@ -1656,7 +1656,7 @@ ytm2(cf, times, y0 = initial.value)
 
 
 ###################################################
-### code chunk number 151: NMOFman.Rnw:3044-3060
+### code chunk number 151: NMOFman.Rnw:3045-3061
 ###################################################
 mu <- 1
 sigma <- 2
@@ -1677,7 +1677,7 @@ x1 <- z * sigma + mu
 
 
 ###################################################
-### code chunk number 152: NMOFman.Rnw:3065-3069
+### code chunk number 152: NMOFman.Rnw:3066-3070
 ###################################################
 par(mfrow = c(1, 2), mar = c(3, 3, 1, 1),
     bty = "n", las = 1, ps = 8, tck = 0.001, mgp = c(3, 0.5, 0))
@@ -1686,7 +1686,7 @@ hist(x0, xlab = "")
 
 
 ###################################################
-### code chunk number 153: NMOFman.Rnw:3071-3075
+### code chunk number 153: NMOFman.Rnw:3072-3076
 ###################################################
 par(mfrow = c(1, 2), mar = c(3, 3, 1, 1),
     bty = "n", las = 1, ps = 8, tck = 0.001, mgp = c(3, 0.5, 0))
@@ -1695,7 +1695,7 @@ hist(x1, xlab = "")
 
 
 ###################################################
-### code chunk number 154: NMOFman.Rnw:3081-3085
+### code chunk number 154: NMOFman.Rnw:3082-3086
 ###################################################
 x1 <- x1[1:750]
 x2 <- rnorm(200)
@@ -1704,14 +1704,14 @@ x4 <- rbinom(100, size = 50, prob = 0.4)
 
 
 ###################################################
-### code chunk number 155: NMOFman.Rnw:3089-3091
+### code chunk number 155: NMOFman.Rnw:3090-3092
 ###################################################
 cormat <- array(0.5, dim = c(4, 4))
 diag(cormat) <- 1
 
 
 ###################################################
-### code chunk number 156: NMOFman.Rnw:3095-3098
+### code chunk number 156: NMOFman.Rnw:3096-3099
 ###################################################
 results <- resampleC(x1 = x1, x2 = x2, x3 = x3, x4 = x4,
                      size = 50, cormat = cormat)
@@ -1719,7 +1719,7 @@ cor(results, method = "spearman")
 
 
 ###################################################
-### code chunk number 157: NMOFman.Rnw:3101-3115
+### code chunk number 157: NMOFman.Rnw:3102-3116
 ###################################################
 ## this function is taken from ?pairs
 panel.hist <- function(x, ...) {
@@ -1738,7 +1738,7 @@ pairs(results,
 
 
 ###################################################
-### code chunk number 158: NMOFman.Rnw:3120-3130
+### code chunk number 158: NMOFman.Rnw:3121-3131
 ###################################################
 par(mfrow = c(2, 4), mar = c(3, 5, 1, 1),
     bty = "n", las = 1, ps = 8, tck = 0.001, mgp = c(3, 0.5, 0))
@@ -1753,7 +1753,7 @@ hist(results[ ,"x4"], xlab = "", ylab = "")
 
 
 ###################################################
-### code chunk number 159: NMOFman.Rnw:3223-3231
+### code chunk number 159: NMOFman.Rnw:3224-3232
 ###################################################
 na <- 500L                      ## number of assets
 
@@ -1766,7 +1766,7 @@ Sigma <- outer(Vols, Vols) * C
 
 
 ###################################################
-### code chunk number 160: NMOFman.Rnw:3242-3248
+### code chunk number 160: NMOFman.Rnw:3243-3249
 ###################################################
 OF <- function(x, Data) {
     sx <- sum(x)
@@ -1777,7 +1777,7 @@ OF <- function(x, Data) {
 
 
 ###################################################
-### code chunk number 161: NMOFman.Rnw:3251-3261
+### code chunk number 161: NMOFman.Rnw:3252-3262
 ###################################################
 neighbour <- function(xc, Data) {
     xn <- xc
@@ -1792,7 +1792,7 @@ neighbour <- function(xc, Data) {
 
 
 ###################################################
-### code chunk number 162: NMOFman.Rnw:3267-3272
+### code chunk number 162: NMOFman.Rnw:3268-3273
 ###################################################
 Data <- list(Sigma = Sigma,   ## cov-matrix
              Kinf  = 30L,     ## min cardinality
@@ -1802,7 +1802,7 @@ Data <- list(Sigma = Sigma,   ## cov-matrix
 
 
 ###################################################
-### code chunk number 163: NMOFman.Rnw:3275-3279
+### code chunk number 163: NMOFman.Rnw:3276-3280
 ###################################################
 card0 <- sample(Data$Kinf:Data$Ksup, 1L, replace = FALSE)
 assets <- sample.int(na, card0, replace = FALSE)
@@ -1811,7 +1811,7 @@ x0[assets] <- TRUE
 
 
 ###################################################
-### code chunk number 164: NMOFman.Rnw:3284-3292
+### code chunk number 164: NMOFman.Rnw:3285-3293
 ###################################################
 ## Local Search
 algo <- list(x0 = x0, neighbour = neighbour, nS = 5000L,
@@ -1824,7 +1824,7 @@ system.time(solTA <- TAopt(OF, algo = algo, Data = Data))
 
 
 ###################################################
-### code chunk number 165: NMOFman.Rnw:3376-3383
+### code chunk number 165: NMOFman.Rnw:3377-3384
 ###################################################
 OF2 <- function(x, Data) {
     res <- colSums(Data$Sigma %*% x * x)
@@ -1836,7 +1836,7 @@ OF2 <- function(x, Data) {
 
 
 ###################################################
-### code chunk number 166: NMOFman.Rnw:3390-3393
+### code chunk number 166: NMOFman.Rnw:3391-3394
 ###################################################
 algo <- list(nB = na, nP = 100L, nG = 500L, prob = 0.002,
              printBar = FALSE, loopOF = FALSE)
@@ -1844,7 +1844,7 @@ system.time(solGA <- GAopt(OF = OF2, algo = algo, Data = Data))
 
 
 ###################################################
-### code chunk number 167: NMOFman.Rnw:3398-3402
+### code chunk number 167: NMOFman.Rnw:3399-3403
 ###################################################
 cat("Local Search        ", format(sqrt(solLS$OFvalue), digits = 4), "\n",
     "Threshold Accepting ", format(sqrt(solTA$OFvalue), digits = 4), "\n",
@@ -1853,7 +1853,7 @@ cat("Local Search        ", format(sqrt(solLS$OFvalue), digits = 4), "\n",
 
 
 ###################################################
-### code chunk number 168: NMOFman.Rnw:3431-3439
+### code chunk number 168: NMOFman.Rnw:3432-3440
 ###################################################
 na <- 100L                                 ## number of assets
 ns <- 200L                                 ## number of scenarios
@@ -1866,7 +1866,7 @@ R <- R %*% diag(vols)
 
 
 ###################################################
-### code chunk number 169: NMOFman.Rnw:3464-3474
+### code chunk number 169: NMOFman.Rnw:3465-3475
 ###################################################
 Data <- list(R = t(R),              ## scenarios
              theta = 0.005,         ## return threshold
@@ -1881,7 +1881,7 @@ Data <- list(R = t(R),              ## scenarios
 
 
 ###################################################
-### code chunk number 170: NMOFman.Rnw:3481-3484
+### code chunk number 170: NMOFman.Rnw:3482-3485
 ###################################################
 x0 <- Data$min + runif(Data$na)*(Data$max - Data$min)
 x0[1:5]
@@ -1889,7 +1889,7 @@ sum(x0)
 
 
 ###################################################
-### code chunk number 171: NMOFman.Rnw:3490-3494
+### code chunk number 171: NMOFman.Rnw:3491-3495
 ###################################################
 temp <- R %*% x0             ## compute portfolio returns
 temp <- temp - Data$theta    ## subtract return threshold
@@ -1898,7 +1898,7 @@ sum(temp)/ns                 ## compute semivariance
 
 
 ###################################################
-### code chunk number 172: NMOFman.Rnw:3500-3507
+### code chunk number 172: NMOFman.Rnw:3501-3508
 ###################################################
 OF <- function(x, Data) {
     Rx <- crossprod(Data$R, x)
@@ -1910,14 +1910,14 @@ OF <- function(x, Data) {
 
 
 ###################################################
-### code chunk number 173: NMOFman.Rnw:3515-3517
+### code chunk number 173: NMOFman.Rnw:3516-3518
 ###################################################
 OF(x0, Data)
 OF(cbind(x0, x0, x0), Data)
 
 
 ###################################################
-### code chunk number 174: NMOFman.Rnw:3525-3538
+### code chunk number 174: NMOFman.Rnw:3526-3539
 ###################################################
 repair <- function(x, Data) {
     myFun <- function(x)
@@ -1935,7 +1935,7 @@ repair2 <- function(x, Data) {
 
 
 ###################################################
-### code chunk number 175: NMOFman.Rnw:3544-3550
+### code chunk number 175: NMOFman.Rnw:3545-3551
 ###################################################
 sum(x0)
 sum(repair(x0, Data))
@@ -1946,14 +1946,14 @@ colSums(repair2(cbind(x0, x0, x0), Data))
 
 
 ###################################################
-### code chunk number 176: NMOFman.Rnw:3556-3558
+### code chunk number 176: NMOFman.Rnw:3557-3559
 ###################################################
 summary(repair (x0, Data)-x0)
 summary(repair2(x0, Data)-x0)
 
 
 ###################################################
-### code chunk number 177: NMOFman.Rnw:3563-3574
+### code chunk number 177: NMOFman.Rnw:3564-3575
 ###################################################
 penalty <- function(x, Data) {
     up <- Data$max
@@ -1969,7 +1969,7 @@ penalty <- function(x, Data) {
 
 
 ###################################################
-### code chunk number 178: NMOFman.Rnw:3582-3588
+### code chunk number 178: NMOFman.Rnw:3583-3589
 ###################################################
 x0[1L] <- 0.30
 penalty(x0, Data)
@@ -1980,7 +1980,7 @@ penalty(cbind(x0, x0, x0), Data)
 
 
 ###################################################
-### code chunk number 179: NMOFman.Rnw:3593-3606
+### code chunk number 179: NMOFman.Rnw:3594-3607
 ###################################################
 algo <- list(nP = 100,        ## population size
              nG = 1000,       ## number of generations
@@ -1998,7 +1998,7 @@ algo <- list(nP = 100,        ## population size
 
 
 ###################################################
-### code chunk number 180: NMOFman.Rnw:3612-3619
+### code chunk number 180: NMOFman.Rnw:3613-3620
 ###################################################
 system.time(sol <- DEopt(OF = OF,algo = algo,Data = Data))
 16 * 100 * sqrt(sol$OFvalue)   ## solution quality
@@ -2010,7 +2010,7 @@ all(all.equal(sum(sol$xbest), 1),  ## budget constraint
 
 
 ###################################################
-### code chunk number 181: NMOFman.Rnw:3629-3639
+### code chunk number 181: NMOFman.Rnw:3630-3640
 ###################################################
 ## looping over the population
 algo$loopOF <- TRUE; algo$loopPen <- TRUE; algo$loopRepair <- TRUE
@@ -2025,7 +2025,7 @@ t1[[3L]]/t2[[3L]]
 
 
 ###################################################
-### code chunk number 182: NMOFman.Rnw:3650-3662
+### code chunk number 182: NMOFman.Rnw:3651-3663
 ###################################################
 algo$printDetail <- FALSE
 restartsDE <- restartOpt(fun = DEopt,      ## what function
@@ -2042,7 +2042,7 @@ weightsDE  <- sapply(restartsDE, `[[`, "xbest")
 
 
 ###################################################
-### code chunk number 183: NMOFman.Rnw:3667-3672
+### code chunk number 183: NMOFman.Rnw:3668-3673
 ###################################################
 par(bty = "n", las = 1, mar = c(3, 4, 0, 0),
     ps = 8, tck = 0.001)
@@ -2052,7 +2052,7 @@ mtext("OF value",  side = 1, line = 2)
 
 
 ###################################################
-### code chunk number 184: NMOFman.Rnw:3676-3682
+### code chunk number 184: NMOFman.Rnw:3677-3683
 ###################################################
 par(bty = "n", las = 1, mar = c(3, 4, 0, 0),
     ps = 8, tck = 0.001)
@@ -2063,7 +2063,7 @@ mtext("weights", side = 2, line = 1.3, las = 1, padj = -4)
 
 
 ###################################################
-### code chunk number 185: NMOFman.Rnw:3695-3709
+### code chunk number 185: NMOFman.Rnw:3696-3710
 ###################################################
 algo$printDetail <- FALSE;  algo$nP <- 200L; restarts <- 20L
 nGs <- c(500L, 1500L, 3000L)
@@ -2082,7 +2082,7 @@ res <- simplify2array(lstOFvaluesDE)
 
 
 ###################################################
-### code chunk number 186: NMOFman.Rnw:3714-3728
+### code chunk number 186: NMOFman.Rnw:3715-3729
 ###################################################
 algo$repair <- repair2
 lstOFvaluesDE <- list()
@@ -2101,7 +2101,7 @@ res2 <- simplify2array(lstOFvaluesDE)
 
 
 ###################################################
-### code chunk number 187: NMOFman.Rnw:3733-3743
+### code chunk number 187: NMOFman.Rnw:3734-3744
 ###################################################
 allres <- as.vector(rbind(res,res2))
 xlims <- pretty(allres); xlims <- c(min(xlims), max(xlims))
@@ -2116,7 +2116,7 @@ for (i in 1:3)
 
 
 ###################################################
-### code chunk number 188: NMOFman.Rnw:3753-3760
+### code chunk number 188: NMOFman.Rnw:3754-3761
 ###################################################
 weightsDE <- sapply(restartsDE, `[[`, "xbest")
 par(bty = "n", las = 1, mar = c(3, 4, 0, 0),
@@ -2128,7 +2128,7 @@ mtext("weights", side = 2, line = 1.3, las = 1, padj = -4)
 
 
 ###################################################
-### code chunk number 189: NMOFman.Rnw:3774-3791
+### code chunk number 189: NMOFman.Rnw:3775-3792
 ###################################################
 algo <- list(nP = 100L,      ## population size
              nG = 1000L,     ## number of generations
@@ -2150,7 +2150,7 @@ sol$xbest >= Data$min)
 
 
 ###################################################
-### code chunk number 190: NMOFman.Rnw:3799-3806
+### code chunk number 190: NMOFman.Rnw:3800-3807
 ###################################################
 changeV <- function(x, Data) {
     myFun <- function(x) x - (sum(x))/Data$na
@@ -2162,7 +2162,7 @@ colSums(changeV(cbind(x0, x0, x0), Data))
 
 
 ###################################################
-### code chunk number 191: NMOFman.Rnw:3811-3815
+### code chunk number 191: NMOFman.Rnw:3812-3816
 ###################################################
 initP <- Data$min + diag(Data$max - Data$min) %*%
     array(runif(length(Data$min) * algo$nP),
@@ -2171,7 +2171,7 @@ colSums(initP <- repair(initP,Data))[1:10] ## check
 
 
 ###################################################
-### code chunk number 192: NMOFman.Rnw:3820-3826
+### code chunk number 192: NMOFman.Rnw:3821-3827
 ###################################################
 algo$changeV <- changeV        ## function to adjust velocity
 algo$initP <- initP            ## initial population
@@ -2182,7 +2182,7 @@ system.time(sol <- PSopt(OF = OF,algo = algo, Data = Data))
 
 
 ###################################################
-### code chunk number 193: NMOFman.Rnw:3830-3833
+### code chunk number 193: NMOFman.Rnw:3831-3834
 ###################################################
 all(all.equal(sum(sol$xbest), 1), ## budget constraint
 sol$xbest <= Data$max,
@@ -2190,7 +2190,7 @@ sol$xbest >= Data$min)
 
 
 ###################################################
-### code chunk number 194: NMOFman.Rnw:3836-3839
+### code chunk number 194: NMOFman.Rnw:3837-3840
 ###################################################
 algo$loopOF <- FALSE; algo$loopPen <- FALSE
 algo$loopRepair <- FALSE; algo$loopChangeV <- FALSE
@@ -2198,7 +2198,7 @@ system.time(sol <- PSopt(OF = OF, algo = algo, Data = Data))
 
 
 ###################################################
-### code chunk number 195: NMOFman.Rnw:3844-3860
+### code chunk number 195: NMOFman.Rnw:3845-3861
 ###################################################
 algo$printDetail <- FALSE
 restartsPS <- restartOpt(fun = PSopt,
@@ -2219,7 +2219,7 @@ mtext("OF value",  side = 1, line = 2)
 
 
 ###################################################
-### code chunk number 196: NMOFman.Rnw:3871-3893
+### code chunk number 196: NMOFman.Rnw:3872-3894
 ###################################################
 Data$R <- R  ## not transposed any more
 
@@ -2246,7 +2246,7 @@ OF <- function(x, Data) {
 
 
 ###################################################
-### code chunk number 197: NMOFman.Rnw:3897-3909
+### code chunk number 197: NMOFman.Rnw:3898-3910
 ###################################################
 w0 <- runif(Data$na); w0 <- w0/sum(w0)
 x0 <- list(w = w0, Rw = R %*% w0)
@@ -2263,7 +2263,7 @@ system.time(sol2 <- TAopt(OF,algo,Data))
 
 
 ###################################################
-### code chunk number 198: NMOFman.Rnw:3913-3934
+### code chunk number 198: NMOFman.Rnw:3914-3935
 ###################################################
 restartsTA <- restartOpt(fun = TAopt,
                          n = 20L,
@@ -2289,14 +2289,14 @@ lines(ecdf(OFvaluesTA), cex = 0.4)
 
 
 ###################################################
-### code chunk number 199: NMOFman.Rnw:3946-3948
+### code chunk number 199: NMOFman.Rnw:3947-3949
 ###################################################
 require("NMOF")
 require("FRAPO")
 
 
 ###################################################
-### code chunk number 200: NMOFman.Rnw:3953-4147
+### code chunk number 200: NMOFman.Rnw:3954-4148
 ###################################################
 erc <- function(cov,  wmin = 0, wmax = 1, method = "ls") {
 
@@ -2495,7 +2495,7 @@ rowSums(ctb)
 
 
 ###################################################
-### code chunk number 201: NMOFman.Rnw:4173-4179
+### code chunk number 201: NMOFman.Rnw:4174-4180
 ###################################################
 na <- 50
 no <- 5000
@@ -2506,13 +2506,13 @@ R <- D %*% w
 
 
 ###################################################
-### code chunk number 202: NMOFman.Rnw:4184-4185
+### code chunk number 202: NMOFman.Rnw:4185-4186
 ###################################################
 require("compiler")
 
 
 ###################################################
-### code chunk number 203: NMOFman.Rnw:4192-4198
+### code chunk number 203: NMOFman.Rnw:4193-4199
 ###################################################
 var1 <- function(R) {
     n <- NROW(R)
@@ -2523,7 +2523,7 @@ var(R) - var1(R)
 
 
 ###################################################
-### code chunk number 204: NMOFman.Rnw:4204-4217
+### code chunk number 204: NMOFman.Rnw:4205-4218
 ###################################################
 var1 <- function(R) {
     n <- NROW(R)
@@ -2541,7 +2541,7 @@ system.time(for (i in seq_len(runs))
 
 
 ###################################################
-### code chunk number 205: NMOFman.Rnw:4224-4251
+### code chunk number 205: NMOFman.Rnw:4225-4252
 ###################################################
 pm0 <- function(x, xp = 2, threshold = 0, lower = TRUE) {    
     n <- NROW(x)
@@ -2573,7 +2573,7 @@ pm2 <- cmpfun(pm1)
 
 
 ###################################################
-### code chunk number 206: NMOFman.Rnw:4257-4278
+### code chunk number 206: NMOFman.Rnw:4258-4279
 ###################################################
 pm0(R)
 pm1(R)
@@ -2599,7 +2599,7 @@ system.time(for (i in seq_len(runs))
 
 
 ###################################################
-### code chunk number 207: NMOFman.Rnw:4315-4322
+### code chunk number 207: NMOFman.Rnw:4316-4323
 ###################################################
 size <- 20L
 x <- logical(size)
@@ -2611,7 +2611,7 @@ Data$size <- size
 
 
 ###################################################
-### code chunk number 208: NMOFman.Rnw:4326-4346
+### code chunk number 208: NMOFman.Rnw:4327-4347
 ###################################################
 compareLogicals <- function(x,y, sep = "", ## true = "1", false = "0", 
                          mark = "^", below = TRUE) {
@@ -2636,20 +2636,20 @@ compareLogicals <- function(x,y, sep = "", ## true = "1", false = "0",
 
 
 ###################################################
-### code chunk number 209: NMOFman.Rnw:4353-4354
+### code chunk number 209: NMOFman.Rnw:4354-4355
 ###################################################
 compareLogicals(x, x)    ## there should be no difference
 
 
 ###################################################
-### code chunk number 210: NMOFman.Rnw:4358-4360
+### code chunk number 210: NMOFman.Rnw:4359-4361
 ###################################################
 z <- x; z[2L] <- !z[2L]
 compareLogicals(x, z)
 
 
 ###################################################
-### code chunk number 211: NMOFman.Rnw:4369-4376
+### code chunk number 211: NMOFman.Rnw:4370-4377
 ###################################################
 Data$n <- 5L  ## how many elements to change
 neighbour <- function(x, Data) {
@@ -2661,7 +2661,7 @@ compareLogicals(x, neighbour(x, Data))
 
 
 ###################################################
-### code chunk number 212: NMOFman.Rnw:4386-4397
+### code chunk number 212: NMOFman.Rnw:4387-4398
 ###################################################
 neighbour <- function(x, Data) {
     ## required: x must have at least one TRUE and one FALSE
@@ -2677,7 +2677,7 @@ compareLogicals(x, neighbour(x, Data))
 
 
 ###################################################
-### code chunk number 213: NMOFman.Rnw:4404-4422
+### code chunk number 213: NMOFman.Rnw:4405-4423
 ###################################################
 size <- 5L
 x0 <- runif(size)
@@ -2700,7 +2700,7 @@ res$OFvalue < 0.005
 
 
 ###################################################
-### code chunk number 214: NMOFman.Rnw:4443-4713
+### code chunk number 214: NMOFman.Rnw:4444-4714
 ###################################################
 ## N1: This neighbour enforces a budget constraint, a non-negativity
 ## constraint and a maximum holding size
@@ -2975,14 +2975,14 @@ ign <- TAopt(ofunU, TAsettings2U, Data)
 
 
 ###################################################
-### code chunk number 215: NMOFman.Rnw:4748-4750
+### code chunk number 215: NMOFman.Rnw:4749-4751
 ###################################################
 maxabs <- function(x, lim)
     max(sum(abs(x)) - lim, 0)
 
 
 ###################################################
-### code chunk number 216: NMOFman.Rnw:4755-4838
+### code chunk number 216: NMOFman.Rnw:4756-4839
 ###################################################
 require("compiler")
 
@@ -3070,7 +3070,7 @@ system.time(for (i in 1:10000) w <- N(w))
 
 
 ###################################################
-### code chunk number 217: NMOFman.Rnw:4853-4864
+### code chunk number 217: NMOFman.Rnw:4854-4865
 ###################################################
 makeCashFlows <- function(coupon, T) {
     t1 <- T - floor(T)                  ## time to first coupon
@@ -3086,7 +3086,7 @@ makeCashFlows(3, 10.2)
 
 
 ###################################################
-### code chunk number 218: NMOFman.Rnw:4868-4888
+### code chunk number 218: NMOFman.Rnw:4869-4889
 ###################################################
 cf1 <- c(rep(5.75,  8), 105.75); tm1 <- 0:8 + 0.5
 cf2 <- c(rep(4.25, 17), 104.25); tm2 <- 1:18
@@ -3111,7 +3111,7 @@ cf20 <- c(rep(3.00, 14), 103.00); tm20 <- 1:15
 
 
 ###################################################
-### code chunk number 219: NMOFman.Rnw:4894-4909
+### code chunk number 219: NMOFman.Rnw:4895-4910
 ###################################################
 cfList <- list( cf1, cf2, cf3, cf4, cf5, cf6, cf7, cf8, cf9,cf10,
                cf11,cf12,cf13,cf14,cf15,cf16,cf17,cf18,cf19,cf20)
@@ -3131,7 +3131,7 @@ cfMatrix[1:10, 1:10]
 
 
 ###################################################
-### code chunk number 220: NMOFman.Rnw:4916-4920
+### code chunk number 220: NMOFman.Rnw:4917-4921
 ###################################################
 betaTRUE <- c(5,-2,1,10,1,3)
 yM <- NSS(betaTRUE,tm)
@@ -3140,7 +3140,7 @@ bM <- diFa %*% cfMatrix
 
 
 ###################################################
-### code chunk number 221: NMOFman.Rnw:4924-4928
+### code chunk number 221: NMOFman.Rnw:4925-4929
 ###################################################
 Data <- list(bM = bM, tm = tm, cfMatrix = cfMatrix, model = NSS,
              ww = 1,
@@ -3149,7 +3149,7 @@ Data <- list(bM = bM, tm = tm, cfMatrix = cfMatrix, model = NSS,
 
 
 ###################################################
-### code chunk number 222: NMOFman.Rnw:4938-4948
+### code chunk number 222: NMOFman.Rnw:4939-4949
 ###################################################
 OF2 <- function(param, Data) {
   tm <- Data$tm
@@ -3164,7 +3164,7 @@ OF2 <- function(param, Data) {
 
 
 ###################################################
-### code chunk number 223: NMOFman.Rnw:4952-4967
+### code chunk number 223: NMOFman.Rnw:4953-4968
 ###################################################
 penalty <- function(mP, Data) {
     minV <- Data$min
@@ -3184,7 +3184,7 @@ penalty <- function(mP, Data) {
 
 
 ###################################################
-### code chunk number 224: NMOFman.Rnw:4972-4988
+### code chunk number 224: NMOFman.Rnw:4973-4989
 ###################################################
 algo <- list(nP  = 200L,
              nG  = 1000L,
@@ -3205,14 +3205,14 @@ sol <- DEopt(OF = OF2, algo = algo, Data = Data)
 
 
 ###################################################
-### code chunk number 225: NMOFman.Rnw:4995-4997
+### code chunk number 225: NMOFman.Rnw:4996-4998
 ###################################################
 max( abs(Data$model(sol$xbest, tm) - Data$model(betaTRUE, tm)))
 sol$OFvalue
 
 
 ###################################################
-### code chunk number 226: NMOFman.Rnw:5002-5019
+### code chunk number 226: NMOFman.Rnw:5003-5020
 ###################################################
 s0 <- algo$min + (algo$max - algo$min) * runif(length(algo$min))
 system.time(sol2 <- nlminb(s0,OF2,Data = Data,
@@ -3234,7 +3234,7 @@ legend(x = "bottom", legend = c("true yields", "DE", "nlminb"),
 
 
 ###################################################
-### code chunk number 227: NMOFman.Rnw:5024-5027
+### code chunk number 227: NMOFman.Rnw:5025-5028
 ###################################################
 diFa <- 1 / ((1 + NSS(sol$xbest,tm)/100)^tm)
 b <- diFa %*% cfMatrix
@@ -3242,7 +3242,7 @@ b - bM
 
 
 ###################################################
-### code chunk number 228: NMOFman.Rnw:5032-5036
+### code chunk number 228: NMOFman.Rnw:5033-5037
 ###################################################
 par(ps = 8, bty = "n", las = 1, tck = 0.01,
     mgp = c(3, 0.5, 0), mar = c(4, 4, 1, 1))
@@ -3251,7 +3251,7 @@ xlab = "maturities in years", ylab = "yield error in %")
 
 
 ###################################################
-### code chunk number 229: NMOFman.Rnw:5043-5047
+### code chunk number 229: NMOFman.Rnw:5044-5048
 ###################################################
 par(ps = 8, bty = "n", las = 1, tck = 0.01,
 mgp = c(3, 0.5, 0), mar = c(4, 4, 1, 1))
@@ -3260,7 +3260,7 @@ xlab = "maturities in years", ylab = "price error in %")
 
 
 ###################################################
-### code chunk number 230: NMOFman.Rnw:5055-5059
+### code chunk number 230: NMOFman.Rnw:5056-5060
 ###################################################
 beta <- c(5,-2,1,10,1,3)
 yM <- NSS(beta,tm)
@@ -3269,7 +3269,7 @@ b <- diFa %*% cfMatrix
 
 
 ###################################################
-### code chunk number 231: NMOFman.Rnw:5064-5070
+### code chunk number 231: NMOFman.Rnw:5065-5071
 ###################################################
 B <- cbind(c(5,-2,1,10,1,3), c(4,-2,1,10,1,3))
 Y <- array(0, dim = c(length(tm), ncol(B)))
@@ -3280,7 +3280,7 @@ t(cfMatrix) %*% D - as.vector(b)
 
 
 ###################################################
-### code chunk number 232: NMOFman.Rnw:5081-5100
+### code chunk number 232: NMOFman.Rnw:5082-5101
 ###################################################
 fy <- function(ytm, cf, tm)
     sum( cf / ( (1 + ytm)^tm ) )
@@ -3304,7 +3304,7 @@ compYield <- function(cf, tm, guess = NULL) {
 
 
 ###################################################
-### code chunk number 233: NMOFman.Rnw:5104-5130
+### code chunk number 233: NMOFman.Rnw:5105-5131
 ###################################################
 OF3 <- function(param, Data) {
     tm <- Data$tm
@@ -3335,7 +3335,7 @@ OF3 <- function(param, Data) {
 
 
 ###################################################
-### code chunk number 234: NMOFman.Rnw:5140-5145
+### code chunk number 234: NMOFman.Rnw:5141-5146
 ###################################################
 betaTRUE <- c(5,-2,1,10,1,3)
 yM <- NSS(betaTRUE, tm)
@@ -3345,7 +3345,7 @@ rM <- apply(rbind(-bM, cfMatrix), 2, compYield, c(0, tm))
 
 
 ###################################################
-### code chunk number 235: NMOFman.Rnw:5150-5170
+### code chunk number 235: NMOFman.Rnw:5151-5171
 ###################################################
 Data <- list(rM = rM, tm = tm,
              cfMatrix = cfMatrix,
@@ -3370,7 +3370,7 @@ algo <- list(nP = 100L,
 
 
 ###################################################
-### code chunk number 236: NMOFman.Rnw:5173-5176
+### code chunk number 236: NMOFman.Rnw:5174-5177
 ###################################################
 sol <- DEopt(OF = OF3, algo = algo, Data = Data)
 max(abs(Data$model(sol$xbest,tm) - Data$model(betaTRUE,tm)))
@@ -3378,7 +3378,7 @@ sol$OFvalue
 
 
 ###################################################
-### code chunk number 237: NMOFman.Rnw:5181-5189
+### code chunk number 237: NMOFman.Rnw:5182-5190
 ###################################################
 s0 <- algo$min + (algo$max - algo$min) * runif(length(algo$min))
 sol2 <- nlminb(s0, OF3, Data = Data,
@@ -3391,7 +3391,7 @@ sol2$objective
 
 
 ###################################################
-### code chunk number 238: NMOFman.Rnw:5192-5201
+### code chunk number 238: NMOFman.Rnw:5193-5202
 ###################################################
 par(ps = 8, bty = "n", las = 1, tck = 0.01,
     mgp = c(3, 0.5, 0), mar = c(4, 4, 1, 1))
@@ -3405,27 +3405,27 @@ legend(x = "bottom", legend = c("true yields","DE","nlminb"),
 
 
 ###################################################
-### code chunk number 239: NMOFman.Rnw:5205-5207
+### code chunk number 239: NMOFman.Rnw:5206-5208
 ###################################################
 betaTRUE
 round(sol$xbest,3)
 
 
 ###################################################
-### code chunk number 240: NMOFman.Rnw:5220-5221
+### code chunk number 240: NMOFman.Rnw:5221-5222
 ###################################################
 rm(list = ls())
 
 
 ###################################################
-### code chunk number 241: NMOFman.Rnw:5225-5227
+### code chunk number 241: NMOFman.Rnw:5226-5228
 ###################################################
 require("NMOF")
 set.seed(94679)
 
 
 ###################################################
-### code chunk number 242: NMOFman.Rnw:5249-5268
+### code chunk number 242: NMOFman.Rnw:5250-5269
 ###################################################
 randomData <- function(p = 200L,      ## number of available regressors
                         n = 200L,      ## number of observations
@@ -3449,14 +3449,14 @@ randomData <- function(p = 200L,      ## number of available regressors
 
 
 ###################################################
-### code chunk number 243: NMOFman.Rnw:5272-5274
+### code chunk number 243: NMOFman.Rnw:5273-5275
 ###################################################
 rD <- randomData(p = 100L, n = 200L, s = 1,
                  constant = TRUE, maxReg = 10L)
 
 
 ###################################################
-### code chunk number 244: NMOFman.Rnw:5277-5283
+### code chunk number 244: NMOFman.Rnw:5278-5284
 ###################################################
 Data <- list(X = rD$X,
              y = rD$y,
@@ -3467,7 +3467,7 @@ Data <- list(X = rD$X,
 
 
 ###################################################
-### code chunk number 245: NMOFman.Rnw:5286-5290
+### code chunk number 245: NMOFman.Rnw:5287-5291
 ###################################################
 x0 <- logical(Data$p)
 temp <- sample.int(Data$maxk, 1L)
@@ -3476,19 +3476,19 @@ x0[temp] <- TRUE
 
 
 ###################################################
-### code chunk number 246: NMOFman.Rnw:5299-5300
+### code chunk number 246: NMOFman.Rnw:5300-5301
 ###################################################
 rD$K
 
 
 ###################################################
-### code chunk number 247: NMOFman.Rnw:5303-5304
+### code chunk number 247: NMOFman.Rnw:5304-5305
 ###################################################
 which(x0)
 
 
 ###################################################
-### code chunk number 248: NMOFman.Rnw:5317-5321
+### code chunk number 248: NMOFman.Rnw:5318-5322
 ###################################################
 result1 <- lm(Data$y ~ -1 + Data$X[ ,x0])
 result2 <- qr.solve(Data$X[ ,x0], Data$y)
@@ -3497,7 +3497,7 @@ all.equal(as.numeric(coef(result1)), as.numeric(result2))
 
 
 ###################################################
-### code chunk number 249: NMOFman.Rnw:5324-5330
+### code chunk number 249: NMOFman.Rnw:5325-5331
 ###################################################
 require("rbenchmark")
 benchmark(lm(Data$y ~ -1 + Data$X[ ,x0]),
@@ -3508,7 +3508,7 @@ benchmark(lm(Data$y ~ -1 + Data$X[ ,x0]),
 
 
 ###################################################
-### code chunk number 250: NMOFman.Rnw:5343-5348
+### code chunk number 250: NMOFman.Rnw:5344-5349
 ###################################################
 OF <- function(x, Data) {
     q <- qr(Data$X[ ,x])
@@ -3518,13 +3518,13 @@ OF <- function(x, Data) {
 
 
 ###################################################
-### code chunk number 251: NMOFman.Rnw:5351-5352
+### code chunk number 251: NMOFman.Rnw:5352-5353
 ###################################################
 OF(x0, Data)
 
 
 ###################################################
-### code chunk number 252: NMOFman.Rnw:5358-5366
+### code chunk number 252: NMOFman.Rnw:5359-5367
 ###################################################
 neighbour <- function(xc, Data) {
     xn <- xc
@@ -3537,7 +3537,7 @@ neighbour <- function(xc, Data) {
 
 
 ###################################################
-### code chunk number 253: NMOFman.Rnw:5370-5373
+### code chunk number 253: NMOFman.Rnw:5371-5374
 ###################################################
 OF(neighbour(x0, Data), Data)
 OF(neighbour(x0, Data), Data)
@@ -3545,7 +3545,7 @@ OF(neighbour(x0, Data), Data)
 
 
 ###################################################
-### code chunk number 254: NMOFman.Rnw:5378-5385
+### code chunk number 254: NMOFman.Rnw:5379-5386
 ###################################################
 algo <- list(nT = 10L,    ## number of thresholds
              nS = 200L,   ## number of steps per threshold
@@ -3557,7 +3557,7 @@ system.time(sol1 <- TAopt(OF, algo = algo, Data = Data))
 
 
 ###################################################
-### code chunk number 255: NMOFman.Rnw:5391-5394
+### code chunk number 255: NMOFman.Rnw:5392-5395
 ###################################################
 sol1$OFvalue
 which(sol1$xbest)  ## the selected regressors
@@ -3565,7 +3565,7 @@ rD$K               ## the true regressors
 
 
 ###################################################
-### code chunk number 256: NMOFman.Rnw:5401-5405
+### code chunk number 256: NMOFman.Rnw:5402-5406
 ###################################################
 xtrue <- logical(Data$p)
 xtrue[rD$K] <- TRUE
@@ -3574,7 +3574,7 @@ OF(xtrue, Data)
 
 
 ###################################################
-### code chunk number 257: NMOFman.Rnw:5412-5421
+### code chunk number 257: NMOFman.Rnw:5413-5422
 ###################################################
 restarts <- 50L
 algo$printDetail <- FALSE
@@ -3588,7 +3588,7 @@ plot(ecdf(sapply(res, `[[`, "OFvalue")),  ## extract solution quality
 
 
 ###################################################
-### code chunk number 258: NMOFman.Rnw:5425-5433
+### code chunk number 258: NMOFman.Rnw:5426-5434
 ###################################################
 xbestAll <- sapply(res, `[[`, "xbest")    ## extract all solutions
 inclReg  <- which(rowSums(xbestAll) > 0L) ## get included regressors
@@ -3601,7 +3601,7 @@ data.frame(regressor   = inclReg,
 
 
 ###################################################
-### code chunk number 259: NMOFman.Rnw:5455-5492
+### code chunk number 259: NMOFman.Rnw:5456-5493
 ###################################################
 dim(rD$X)
 
@@ -3643,7 +3643,7 @@ OF <- function(x, Data) {
 
 
 ###################################################
-### code chunk number 260: NMOFman.Rnw:5514-5521
+### code chunk number 260: NMOFman.Rnw:5515-5522
 ###################################################
 bsm <- function(S, X, tau, r, q, vol, I = 1) {
     d1 <- (log(S/X) + (r - q + vol^2/2) * tau)/(vol * sqrt(tau))
@@ -3655,7 +3655,7 @@ bsm <- function(S, X, tau, r, q, vol, I = 1) {
 
 
 ###################################################
-### code chunk number 261: NMOFman.Rnw:5527-5535
+### code chunk number 261: NMOFman.Rnw:5528-5536
 ###################################################
 S <- 99   ## sport
 X <- 100  ## strike
@@ -3668,7 +3668,7 @@ unlist(bsm(S, X, tau, r, q, vol, I))
 
 
 ###################################################
-### code chunk number 262: NMOFman.Rnw:5543-5548
+### code chunk number 262: NMOFman.Rnw:5544-5549
 ###################################################
 tmp <- unlist(vanillaOptionEuropean(S = S, X = X, tau = tau,
                                     r = r, q = q, v = vol^2,
@@ -3678,7 +3678,7 @@ tmp[c("value","vega")]
 
 
 ###################################################
-### code chunk number 263: NMOFman.Rnw:5556-5564
+### code chunk number 263: NMOFman.Rnw:5557-5565
 ###################################################
 S <- 99
 X <- 100
@@ -3691,7 +3691,7 @@ vol <- 0.247
 
 
 ###################################################
-### code chunk number 264: NMOFman.Rnw:5572-5584
+### code chunk number 264: NMOFman.Rnw:5573-5585
 ###################################################
 impliedVol <- function(price, S, X, tau, r, q, vol0 = 0.15, I = 1,
                        tol = 1e-4, maxit = 10) {
@@ -3708,20 +3708,20 @@ impliedVol <- function(price, S, X, tau, r, q, vol0 = 0.15, I = 1,
 
 
 ###################################################
-### code chunk number 265: NMOFman.Rnw:5591-5592
+### code chunk number 265: NMOFman.Rnw:5592-5593
 ###################################################
 impliedVol(price, S, X, tau, r, q, vol, I)
 
 
 ###################################################
-### code chunk number 266: NMOFman.Rnw:5597-5599
+### code chunk number 266: NMOFman.Rnw:5598-5600
 ###################################################
 vanillaOptionImpliedVol(exercise = "european", price, S, X, tau, r,
                           q, type = "call")
 
 
 ###################################################
-### code chunk number 267: NMOFman.Rnw:5605-5612 (eval = FALSE)
+### code chunk number 267: NMOFman.Rnw:5606-5613 (eval = FALSE)
 ###################################################
 ## benchmark(iV = impliedVol(price, S, X, tau, r, q, runif(1L) + 0.01,I),
 ##           vanOptIV = vanillaOptionImpliedVol(exercise = "european",
@@ -3733,7 +3733,7 @@ vanillaOptionImpliedVol(exercise = "european", price, S, X, tau, r,
 
 
 ###################################################
-### code chunk number 268: NMOFman.Rnw:5622-5627
+### code chunk number 268: NMOFman.Rnw:5623-5628
 ###################################################
 S <- rep(99, 21)  ## spot
 X <- 90:110      ## strike
@@ -3743,7 +3743,7 @@ data.frame(S = S, X = X, bsm(S, X, tau, r, q, vol, I))
 
 
 ###################################################
-### code chunk number 269: NMOFman.Rnw:5633-5636
+### code chunk number 269: NMOFman.Rnw:5634-5637
 ###################################################
 Xvec <- 80:120
 tauvec <- c(c(3, 6, 9)/12,  ## 3, 6, 9 months
@@ -3751,7 +3751,7 @@ tauvec <- c(c(3, 6, 9)/12,  ## 3, 6, 9 months
 
 
 ###################################################
-### code chunk number 270: NMOFman.Rnw:5642-5649
+### code chunk number 270: NMOFman.Rnw:5643-5650
 ###################################################
 loop <- function() {
     callprices <- array(NA, dim = c(length(Xvec), length(tauvec)))
@@ -3763,7 +3763,7 @@ loop <- function() {
 
 
 ###################################################
-### code chunk number 271: NMOFman.Rnw:5654-5660
+### code chunk number 271: NMOFman.Rnw:5655-5661
 ###################################################
 vect <- function() {
     tmp <- expand.grid(Xvec,tauvec)
@@ -3774,7 +3774,7 @@ vect <- function() {
 
 
 ###################################################
-### code chunk number 272: NMOFman.Rnw:5665-5676
+### code chunk number 272: NMOFman.Rnw:5666-5677
 ###################################################
 S <- 101
 Xvec <- 80:120
@@ -3790,7 +3790,7 @@ tauvec <- c(c(3, 6, 9)/12,  ## 3, 6, 9 months
 
 
 ###################################################
-### code chunk number 273: NMOFman.Rnw:5682-5685 (eval = FALSE)
+### code chunk number 273: NMOFman.Rnw:5683-5686 (eval = FALSE)
 ###################################################
 ## benchmark(loop(), vect(),
 ##           columns = c("test", "elapsed", "relative"),
@@ -3798,7 +3798,7 @@ tauvec <- c(c(3, 6, 9)/12,  ## 3, 6, 9 months
 
 
 ###################################################
-### code chunk number 274: NMOFman.Rnw:5692-5703
+### code chunk number 274: NMOFman.Rnw:5693-5704
 ###################################################
 S <- rep(99,21)  ## spot
 X <- 90:110
@@ -3814,7 +3814,7 @@ data.frame(S = S, X = X, vol = vol, ivol = ivol, diff = abs(vol-ivol))
 
 
 ###################################################
-### code chunk number 275: NMOFman.Rnw:5710-5714 (eval = FALSE)
+### code chunk number 275: NMOFman.Rnw:5711-5715 (eval = FALSE)
 ###################################################
 ## benchmark(iv = impliedVol(bsm(S, X, tau, r, q, vol, I)$value,
 ##           S, X, tau, r, q, tol = 1e-5, maxit = 5),
@@ -3823,7 +3823,7 @@ data.frame(S = S, X = X, vol = vol, ivol = ivol, diff = abs(vol-ivol))
 
 
 ###################################################
-### code chunk number 276: NMOFman.Rnw:5810-5836 (eval = FALSE)
+### code chunk number 276: NMOFman.Rnw:5811-5837 (eval = FALSE)
 ###################################################
 ##   valDate <- as.Date("2012-02-10")
 ## 
@@ -3854,7 +3854,7 @@ data.frame(S = S, X = X, vol = vol, ivol = ivol, diff = abs(vol-ivol))
 
 
 ###################################################
-### code chunk number 277: NMOFman.Rnw:5840-5854 (eval = FALSE)
+### code chunk number 277: NMOFman.Rnw:5841-5855 (eval = FALSE)
 ###################################################
 ##   pricevec <- as.numeric(calls)
 ##   notNA <- !is.na(pricevec)
@@ -3873,7 +3873,7 @@ data.frame(S = S, X = X, vol = vol, ivol = ivol, diff = abs(vol-ivol))
 
 
 ###################################################
-### code chunk number 278: NMOFman.Rnw:5863-5882
+### code chunk number 278: NMOFman.Rnw:5864-5883
 ###################################################
 S <- 100    ## spot
 X <- 100    ## strike
@@ -3897,7 +3897,7 @@ callCF(cf = cfBSM, S = S, X = X, tau = tau, r = r, q = q,
 
 
 ###################################################
-### code chunk number 279: NMOFman.Rnw:5888-5891
+### code chunk number 279: NMOFman.Rnw:5889-5892
 ###################################################
 Xvec <- 80:120
 tauvec <- c(c(3, 6, 9)/12,  ## 3, 6, 9 months
@@ -3905,7 +3905,7 @@ tauvec <- c(c(3, 6, 9)/12,  ## 3, 6, 9 months
 
 
 ###################################################
-### code chunk number 280: NMOFman.Rnw:5895-5902
+### code chunk number 280: NMOFman.Rnw:5896-5903
 ###################################################
 fun1 <- function() {
     callprices <- array(NA, dim = c(length(Xvec), length(tauvec)))
@@ -3917,7 +3917,7 @@ fun1 <- function() {
 
 
 ###################################################
-### code chunk number 281: NMOFman.Rnw:5906-5912
+### code chunk number 281: NMOFman.Rnw:5907-5913
 ###################################################
 fun2 <- function() {
     tmp <- expand.grid(Xvec,tauvec)
@@ -3928,7 +3928,7 @@ fun2 <- function() {
 
 
 ###################################################
-### code chunk number 282: NMOFman.Rnw:5915-5919
+### code chunk number 282: NMOFman.Rnw:5916-5920
 ###################################################
 callprices1 <- fun1()
 callprices2 <- fun2()
@@ -3937,7 +3937,7 @@ all.equal(callprices1, callprices2)
 
 
 ###################################################
-### code chunk number 283: NMOFman.Rnw:5923-5929
+### code chunk number 283: NMOFman.Rnw:5924-5930
 ###################################################
 system.time(
     for (i in 1:100)
@@ -3948,7 +3948,7 @@ system.time(
 
 
 ###################################################
-### code chunk number 284: NMOFman.Rnw:5934-5982
+### code chunk number 284: NMOFman.Rnw:5935-5983
 ###################################################
 priceMatrix <- function(cf, S, Xvec, tauvec, r, q = 0, ...,
                         nodes = NULL, weights = NULL, n = 200) {
@@ -4001,7 +4001,7 @@ system.time(
 
 
 ###################################################
-### code chunk number 285: NMOFman.Rnw:5985-6015
+### code chunk number 285: NMOFman.Rnw:5986-6016
 ###################################################
 cfp <- priceMatrix(cf = cfBSM, S, Xvec, tauvec, r, q = q,
                    v = 0.2^2, n = 100)
@@ -4036,21 +4036,21 @@ system.time(
 
 
 ###################################################
-### code chunk number 286: NMOFman.Rnw:6103-6105 (eval = FALSE)
+### code chunk number 286: NMOFman.Rnw:6104-6106 (eval = FALSE)
 ###################################################
 ## install.packages("NMOF") ## CRAN
 ## install.packages("NMOF", repos = "http://enricoschumann.net/R")
 
 
 ###################################################
-### code chunk number 287: NMOFman.Rnw:6113-6115 (eval = FALSE)
+### code chunk number 287: NMOFman.Rnw:6114-6116 (eval = FALSE)
 ###################################################
 ## require("NMOF")
 ## showExample("exampleOF.R")
 
 
 ###################################################
-### code chunk number 288: NMOFman.Rnw:6146-6149 (eval = FALSE)
+### code chunk number 288: NMOFman.Rnw:6147-6150 (eval = FALSE)
 ###################################################
 ## require("utils")
 ## bug.report("[NMOF] Unexpected behaviour in function XXX", 
@@ -4058,7 +4058,7 @@ system.time(
 
 
 ###################################################
-### code chunk number 289: NMOFman.Rnw:6157-6158
+### code chunk number 289: NMOFman.Rnw:6158-6159
 ###################################################
 toLatex(sessionInfo())
 
