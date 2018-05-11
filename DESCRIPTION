@@ -13,7 +13,7 @@ Imports: grDevices, graphics, parallel, stats, utils
 Suggests: MASS, RUnit, quadprog
 Description: Functions, examples and data from the book
  "Numerical Methods and Optimization in Finance" by M.
- 'Gilli', D. 'Maringer' and E. Schumann (2011), ISBN
+ Gilli, D. Maringer and E. Schumann (2011), ISBN
  978-0123756626. The package provides implementations of
  several optimisation heuristics, such as Differential
  Evolution, Genetic Algorithms and Threshold Accepting.
