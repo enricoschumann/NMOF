@@ -8,7 +8,7 @@ if (tolower(Sys.getenv("ES_PACKAGE_TESTING")) == "true" &&
     ## if the package is installed and you want to run
     ## the tests, use this path:    
     ##
-    ##     path <- system.file("unitTests", package = "NMOF")
+    ##     path <- system.file("unitTests", package = pkg)
     ##
 
     myTestSuite <- defineTestSuite(pkg,

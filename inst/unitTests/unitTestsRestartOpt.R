@@ -57,7 +57,7 @@ test.restartOpt <- function() {
                                OF = OF, algo = algo, X = X,
                                method = "snow", cl = 2L)
         }
-        if (suppressWarnings(require("multicore", quietly = TRUE))) {
+        if (suppressWarnings(require("parallel", quietly = TRUE))) {
             ## up top version 0.23-1, an argument passed with '...'
             ## could not be called 'X': led to an error
             X <- list(xTRUE = runif(5L), step = 0.02)
