@@ -28,11 +28,14 @@ Shiller <- function(destfile = tempfile(fileext = ".xls"),
 .ftp <- "http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/"
 
 French <- function(dataset = "variance", weighting = "equal",
-                   frequency = "monthly", price.series = FALSE) {
+                   frequency = "monthly", price.series = FALSE,
+                   na.rm = TRUE) {
     file <- if (dataset == "variance")        
                 "Portfolios_Formed_on_VAR_CSV.zip"
-            else if (dataset == "industry49")
+            else if (dataset == "industry49" && frequency == "monthly")
                 "49_Industry_Portfolios_CSV.zip"
+            else if (dataset == "industry49" && frequency == "daily")
+                "49_Industry_Portfolios_daily_CSV.zip"
 
     file <- paste0(.ftp, file)
     
@@ -72,8 +75,9 @@ French <- function(dataset = "variance", weighting = "equal",
         timestamp <- c(end_of_previous_month(timestamp[1L]),
                        timestamp)
         for (cc in seq_len(ncol(ans))) {
-            ans[[cc]][ is.na(ans[[cc]]) ] <- 0
-            ans[[cc]] <- cumprod(1+ans[[cc]])
+            if (na.rm)
+                ans[[cc]][ is.na(ans[[cc]]) ] <- 0
+            ans[[cc]] <- cumprod(1 + ans[[cc]])
         }
         
     }

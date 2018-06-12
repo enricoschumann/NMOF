@@ -1,3 +1,9 @@
+2018-06-12  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/market_data.R (French): new argument
+	'na.rm'; support for "industry49" dataset,
+	monthly and daily
+
 2018-05-04  Enrico Schumann  <es@enricoschumann.net>
 
 	* R/market_data.R (French): add function
