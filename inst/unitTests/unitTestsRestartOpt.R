@@ -33,7 +33,7 @@ test.restartOpt <- function() {
             Sys.sleep(1e-3)
             max(abs(x - data$xTRUE))
         }
-        if (require("snow", quietly = TRUE)){
+        if (require("parallel", quietly = TRUE)){
             system.time({
                 sols <- restartOpt(fun = TAopt, n = 10L,
                                    OF = OF, algo = algo, data = data,

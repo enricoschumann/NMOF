@@ -1,7 +1,14 @@
+2018-06-14  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Suggests): remove 'snow', as
+	requested by CRAN
+	(Version): 1.4-3
+
 2018-05-18  Enrico Schumann  <es@enricoschumann.net>
 
-	* DESCRIPTION (Version): Version: 1.4-2
-	(Suggests): add package 'snow'
+	* DESCRIPTION (Version): 1.4-2
+	(Suggests): add package 'snow', as requested by
+	CRAN
 
 2018-05-08  Enrico Schumann  <es@enricoschumann.net>
 
