@@ -48,9 +48,9 @@ French <- function(dataset = "variance", weighting = "equal",
     
 
     i <- if (tolower(weighting) == "equal")
-             grep("Equal Weighted Returns -- Monthly", txt)
+             grep("Equal Weighted Returns", txt)
          else if (tolower(weighting) == "value")
-             grep("Value Weighted Returns -- Monthly", txt)
+             grep("Value Weighted Returns", txt)
          else
             stop("weighting must be 'equal' or 'value'")
     
