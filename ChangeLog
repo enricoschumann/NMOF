@@ -1,3 +1,7 @@
+2018-06-19  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Suggests): add 'readxl'
+
 2018-06-12  Enrico Schumann  <es@enricoschumann.net>
 
 	* R/market_data.R (French): new argument

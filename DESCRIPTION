@@ -9,7 +9,7 @@ Authors@R: person("Enrico", "Schumann",
                   email = "es@enricoschumann.net")
 Depends: R (>= 2.14)
 Imports: grDevices, graphics, parallel, stats, utils
-Suggests: MASS, RUnit, quadprog
+Suggests: MASS, RUnit, quadprog, readxl
 Description: Functions, examples and data from the book
  "Numerical Methods and Optimization in Finance" by M.
  'Gilli', D. 'Maringer' and E. Schumann (2011), ISBN
