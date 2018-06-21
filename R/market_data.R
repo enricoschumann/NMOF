@@ -71,13 +71,21 @@ French <- function(dataset = "variance", weighting = "equal",
     ans <- ans/100
     
     if (price.series) {
-        ans <- rbind(0, ans)
+        r0 <- numeric(ncol(ans))
+        r0[is.na(ans[1L, ])] <- NA
+        ans <- rbind(r0, ans)
         timestamp <- c(end_of_previous_month(timestamp[1L]),
                        timestamp)
         for (cc in seq_len(ncol(ans))) {
-            if (na.rm)
-                ans[[cc]][ is.na(ans[[cc]]) ] <- 0
-            ans[[cc]] <- cumprod(1 + ans[[cc]])
+            if (na.rmm && any(is.na(ans[[cc]]))) {
+                na <- is.na(ans[[cc]])
+                first_num <- min(which(!na))
+                ans[[cc]][ na ] <- 0
+                ans[[cc]] <- cumprod(1 + ans[[cc]])
+                if (first_num > 1)
+                    ans[[cc]][seq_len(first_num-1)] <- NA
+            } else                
+                ans[[cc]] <- cumprod(1 + ans[[cc]])
         }
         
     }
