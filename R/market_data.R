@@ -67,19 +67,28 @@ French <- function(dataset = "variance", weighting = "equal",
 
     if (!requireNamespace("datetimeutils"))
         stop("package ", sQuote("datetimeutils"), " is required")
+
+    if (frequency == "monthly")
+        timestamp <- datetimeutils::end_of_month(
+                                        as.Date(paste0(ans[[1]], "01"),
+                                                format = "%Y%m%d"))
+    else if (frequency == "daily")
+        timestamp <- as.Date(as.character(ans[[1L]]), format = "%Y%m%d")
     
-    timestamp <- datetimeutils::end_of_month(
-                                    as.Date(paste0(ans[[1]], "01"),
-                                            format = "%Y%m%d"))
-    ans <- ans[ ,-1] ## drop timestamp
+    ans <- ans[ , -1L] ## drop timestamp
     ans <- ans/100
     
     if (price.series) {
         r0 <- numeric(ncol(ans))
         r0[is.na(ans[1L, ])] <- NA
         ans <- rbind(r0, ans)
-        timestamp <- c(datetimeutils::end_of_previous_month(timestamp[1L]),
-                       timestamp)
+        timestamp <- if (frequency == "monthly")
+                         c(datetimeutils::end_of_previous_month(timestamp[1L]),
+                           timestamp)
+                     else if (frequency == "daily")
+                         c(datetimeutils::previous_businessday(timestamp[1L]),
+                           timestamp)
+                         
         for (cc in seq_len(ncol(ans))) {
             if (na.rm && any(is.na(ans[[cc]]))) {
                 na <- is.na(ans[[cc]])
