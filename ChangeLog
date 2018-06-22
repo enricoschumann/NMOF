@@ -1,8 +1,12 @@
-2018-06-14  Enrico Schumann  <es@enricoschumann.net>
+2018-06-23  Enrico Schumann  <es@enricoschumann.net>
 
 	* DESCRIPTION (Suggests): remove 'snow', as
 	requested by CRAN
 	(Version): 1.4-3
+
+	* inst/NMOFex/*: code examples have been
+	removed (but remain available from
+	http://enricoschumann.net)
 
 2018-05-18  Enrico Schumann  <es@enricoschumann.net>
 
