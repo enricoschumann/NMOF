@@ -30,6 +30,7 @@ Shiller <- function(destfile = tempfile(fileext = ".xls"),
 French <- function(dataset = "variance", weighting = "equal",
                    frequency = "monthly", price.series = FALSE,
                    na.rm = TRUE) {
+    dataset <- tolower(dataset)
     file <- if (dataset == "variance")        
                 "Portfolios_Formed_on_VAR_CSV.zip"
             else if (dataset == "industry49" && frequency == "monthly")
@@ -64,6 +65,9 @@ French <- function(dataset = "variance", weighting = "equal",
     for (cc in seq_len(ncol(ans)))
         ans[[cc]][ ans[[cc]] < -99 ] <- NA
 
+    if (!requireNamespace("datetimeutils"))
+        stop("package ", sQuote("datetimeutils"), " is required")
+    
     timestamp <- datetimeutils::end_of_month(
                                     as.Date(paste0(ans[[1]], "01"),
                                             format = "%Y%m%d"))
@@ -74,10 +78,10 @@ French <- function(dataset = "variance", weighting = "equal",
         r0 <- numeric(ncol(ans))
         r0[is.na(ans[1L, ])] <- NA
         ans <- rbind(r0, ans)
-        timestamp <- c(end_of_previous_month(timestamp[1L]),
+        timestamp <- c(datetimeutils::end_of_previous_month(timestamp[1L]),
                        timestamp)
         for (cc in seq_len(ncol(ans))) {
-            if (na.rmm && any(is.na(ans[[cc]]))) {
+            if (na.rm && any(is.na(ans[[cc]]))) {
                 na <- is.na(ans[[cc]])
                 first_num <- min(which(!na))
                 ans[[cc]][ na ] <- 0
