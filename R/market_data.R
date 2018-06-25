@@ -54,7 +54,7 @@ French <- function(dataset = "variance", weighting = "equal",
              grep("Value Weighted Returns", txt)
          else
             stop("weighting must be 'equal' or 'value'")
-    
+    i <- i[[1]]
     j <- grep("^$", txt)
     j <- j[min(which(j > i))]
     
