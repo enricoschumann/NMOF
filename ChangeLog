@@ -1,3 +1,7 @@
+2018-06-27  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/portfolio.R (mvPortfolio): add function
+
 2018-06-23  Enrico Schumann  <es@enricoschumann.net>
 
 	* DESCRIPTION (Suggests): remove 'snow', as
