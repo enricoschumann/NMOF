@@ -1,3 +1,17 @@
+2018-06-27  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/portfolio.R (mvPortfolio): add function
+
+2018-06-23  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Suggests): remove 'snow', as
+	requested by CRAN
+	(Version): 1.4-3
+
+	* inst/NMOFex/*: code examples have been
+	removed (but remain available from
+	http://enricoschumann.net)
+
 2018-06-19  Enrico Schumann  <es@enricoschumann.net>
 
 	* DESCRIPTION (Suggests): add 'readxl'
@@ -7,6 +21,18 @@
 	* R/market_data.R (French): new argument
 	'na.rm'; support for "industry49" dataset,
 	monthly and daily
+
+2018-05-18  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Version): 1.4-2
+	(Suggests): add package 'snow', as requested by
+	CRAN
+
+2018-05-08  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Version): 1.4-1
+	(ByteCompile): remove explicit setting
+	(Authors@R): add ORCID
 
 2018-05-04  Enrico Schumann  <es@enricoschumann.net>
 
@@ -25,6 +51,18 @@
 	* R/colSubset.R (colSubset): explicitly set
 	LAPACK=FALSE (the default already); see
 	https://stat.ethz.ch/pipermail/r-devel/2018-January/075398.html
+
+2017-12-06  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/TAopt.R (TAopt): new option 'nI', for
+	number of iterations. If specified, it will
+	override 'nS'. The option makes it easier to
+	switch between functions 'LSopt', 'TAopt' and
+	'SAopt'.
+
+	* R/SAopt.R (SAopt): new option nI
+
+	* R/LSopt.R (LSopt): new option nI
 
 2017-12-05  Enrico Schumann  <es@enricoschumann.net>
 

@@ -2,6 +2,7 @@ TAopt <- function(OF, algo = list(), ...) {
     algoD <- list(nD = 2000L, ## random steps for computing thresholds
                   nT = 10L,   ## number of thresholds
                   nS = 1000L, ## steps per threshold
+                  nI = NULL,  ## total number of iterations
                   q = 0.5,    ## starting quantile for thresholds
                   x0 = NULL,  ## initial solution
                   vT = NULL,  ## threshold sequence
@@ -17,10 +18,14 @@ TAopt <- function(OF, algo = list(), ...) {
 
     checkList(algo, algoD)
     algoD[names(algo)] <- algo
-    if (!exists(".Random.seed", envir = .GlobalEnv,
-                inherits = FALSE))
-        state <- NA else state <- .Random.seed
+    state <- if (!exists(".Random.seed", envir = .GlobalEnv,
+                         inherits = FALSE))
+                 NA
+             else
+                 .Random.seed
 
+    if (!is.null(algoD$nI))
+        algoD$nS <- ceiling(algoD$nI/algoD$nT)
 
     ## user *must* specify the following
     if (is.null(algoD$neighbour))

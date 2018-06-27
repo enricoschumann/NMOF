@@ -48,7 +48,7 @@ $N \times N$ in such a way that no queen is attacked. A
 queen may move vertically, horizontally and on a
 diagonal. So whenever there is more than one queen on
 any row, column or diagonal, the position is invalid. To
-solve the problem with a Local Search (LS), we need
+solve the problem with an Local Search (LS), we need
 three components:
 \begin{enumerate}
 \item a way to represent a solution (i.e. a position on
@@ -117,7 +117,7 @@ for (r in 1:N)
         mat[r,c] <- c - r
 mat
 
-mat <- array(NA, dim = c(N,N))  ## reverse diagonal
+mat <- array(NA, dim = c(N,N))  ## reverse diagonals
 for (r in 1:N)
     for (c in 1:N)
         mat[r,c] <- c + r - (N + 1)
