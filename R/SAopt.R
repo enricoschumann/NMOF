@@ -27,7 +27,7 @@ SAopt <- function(OF, algo = list(), ...) {
 
     if (!is.null(algoD$nI))
         algoD$nS <- ceiling(algoD$nI/algoD$nT)
-    
+
     ## user *must* specify the following
     if (is.null(algoD$neighbour))
         stop("specify a neighbourhood function ", sQuote("algo$neighbour"))

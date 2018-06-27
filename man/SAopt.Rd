@@ -45,6 +45,17 @@ SAopt(OF, algo = list(), \dots)
       1000; but this setting depends very much on the problem.}
     
     \item{\code{nT}}{The number of temperatures. Default is 10.}
+
+    \item{\code{nI}}{
+
+      Total number of iterations, with default
+      \code{NULL}. If specified, it will override
+      \code{nS} with \code{ceiling(nI/nT)}. Using this
+      option makes it easier to compare and switch
+      between functions \code{\link{LSopt}},
+      \code{\link{TAopt}} and \code{\link{SAopt}}.
+      
+    }
     
     \item{\code{nD}}{The number of random steps to calibrate the
       temperature. Defaults to 2000.}

@@ -40,6 +40,17 @@ LSopt(OF, algo = list(), ...)
     \item{\code{nS}}{The number of steps. The default is 1000; but this
       setting depends very much on the problem.}
 
+    \item{\code{nI}}{
+
+      Total number of iterations, with default
+      \code{NULL}. If specified, it will override
+      \code{nS}. The option is provided to makes it
+      easier to compare and switch between functions
+      \code{\link{LSopt}}, \code{\link{TAopt}} and
+      \code{\link{SAopt}}.
+      
+    }
+    
     \item{\code{x0}}{The initial solution. This can be a function; it
       will then be called once without arguments to compute an initial
       solution, ie, \code{x0 <- algo$x0()}. This can be useful when

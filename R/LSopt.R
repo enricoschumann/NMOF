@@ -1,5 +1,5 @@
 LSopt <- function(OF, algo = list(), ...) {
-    algoD <- list(nS = 1000L, nI = 1000L,
+    algoD <- list(nS = 1000L, nI = NULL,
                   neighbour = NULL, x0 = NULL,
                   printDetail = TRUE, printBar = TRUE,
                   storeF = TRUE, storeSolutions = FALSE,
@@ -19,6 +19,8 @@ LSopt <- function(OF, algo = list(), ...) {
     if (is.null(algoD$x0))
         stop("specify start solution ", sQuote("algo$x0"))
 
+    if (!is.null(algoD$nI))
+        algoD$nS <- algoD$nI
     nS <- makeInteger(algoD$nS, "algo$nS")
 
     OF1 <- function(x) OF(x, ...)
