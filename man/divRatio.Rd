@@ -18,8 +18,9 @@ divRatio(w, var)
 }
 }
 \details{
-  The function provides an efficient implemenation of
-  the diversification ratio that is suitable for optimisation.
+
+  The function provides an efficient implementation of
+  the diversification ratio, suitable for optimisation.
 
 }
 \value{

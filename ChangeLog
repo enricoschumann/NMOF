@@ -1,3 +1,29 @@
+2018-06-23  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Suggests): remove 'snow', as
+	requested by CRAN
+	(Version): 1.4-3
+
+	* inst/NMOFex/*: code examples have been
+	removed (but remain available from
+	http://enricoschumann.net)
+
+2018-05-18  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Version): 1.4-2
+	(Suggests): add package 'snow', as requested by
+	CRAN
+
+2018-05-08  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Version): 1.4-1
+	(ByteCompile): remove explicit setting
+	(Authors@R): add ORCID
+
+2018-04-24  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Version): 1.4-0
+
 2018-02-21  Enrico Schumann  <es@enricoschumann.net>
 
 	* R/colSubset.R (colSubset): explicitly set
