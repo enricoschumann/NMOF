@@ -24,8 +24,9 @@ ytm <- function(cf, times, y0 = 0.05,
     y0
 }
 
-duration <- function(cf, times, yield, modified = TRUE,
-                     raw = FALSE) {
+duration <- function(cf, times, yield,
+                     modified = TRUE, raw = FALSE) {
+
     y1 <- 1 + yield
     dcf <- cf/y1^times
     if (raw)
@@ -36,8 +37,14 @@ duration <- function(cf, times, yield, modified = TRUE,
         sum(times * dcf) / sum(dcf)
 }
 
-convexity <- function(cf, times, yield, modified = TRUE,
-                     raw = FALSE) {
+convexity <- function(cf, times, yield, raw = FALSE) {
 
-    stop("not implemented")
+    y1 <- 1 + yield
+    dcf <- cf/y1^times
+
+    if (raw)
+        sum( (times+1) * times * dcf) / y1 / y1
+    else
+        sum( (times+1) * times * dcf) / y1 / y1 / sum(dcf)
+
 }

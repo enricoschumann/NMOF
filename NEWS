@@ -1,3 +1,12 @@
+v1.4-0  (2017-12-06)
+
+  o new function 'convexity'
+
+v1.3-0  (2017-12-05)
+
+  o new vignette 'Solving the N-Queens Problem with
+    Local Search'
+
 v1.2-0  (2017-09-13)
 
   o new functions 'bundFuture' and

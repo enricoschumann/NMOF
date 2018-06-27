@@ -31,7 +31,8 @@ test.gridSearch <- function() {
 
     ## use 4 -- specify lower, upper and n (same result as 'use 3')
     lower <- c(1,1); upper <- c(3,3); n <- 4
-    res1 <- gridSearch(testFun, lower = lower, upper = upper, n = n)
+    res1 <- gridSearch(testFun, lower = lower, upper = upper, n = n,
+                       printDetail = FALSE)
     checkEquals(res, res1)
 
     ## use 5 -- specify lower, upper (auto-expanded) and n
@@ -113,7 +114,8 @@ test.gridSearch <- function() {
         sum(abs(y - NSS(c(coef(mm), x[1], x[2]), tm)))
     }
     res <- gridSearch(qfit, y = y, tm = tm,
-                      lower = 0.0, upper = 5, npar = 2L, n = 11L)
+                      lower = 0.0, upper = 5, npar = 2L, n = 11L,
+                      printDetail = FALSE)
     ll <-  res$minlevels
     X <- NSSf(ll[1L], ll[2L], tm)
     model <- lm(y ~ -1 + X)

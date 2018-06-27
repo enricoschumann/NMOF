@@ -2,6 +2,7 @@ SAopt <- function(OF, algo = list(), ...) {
     algoD <- list(nD = 2000L, ## random steps for computing acc. prob.
                   nT = 10L,   ## number of temperatures
                   nS = 1000L, ## steps per temperatures
+                  nI = NULL,
                   initT = NULL,    ## starting temperature
                   finalT = 0,      ## final temperature
                   initProb = 0.4,  ## initial acceptance probability
@@ -23,6 +24,9 @@ SAopt <- function(OF, algo = list(), ...) {
                  NA
              else
                  .Random.seed
+
+    if (!is.null(algoD$nI))
+        algoD$nS <- ceiling(algoD$nI/algoD$nT)
 
     ## user *must* specify the following
     if (is.null(algoD$neighbour))

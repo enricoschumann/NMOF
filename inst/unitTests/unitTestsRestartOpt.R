@@ -33,7 +33,7 @@ test.restartOpt <- function() {
             Sys.sleep(1e-3)
             max(abs(x - data$xTRUE))
         }
-        if (require("snow", quietly = TRUE)){
+        if (require("parallel", quietly = TRUE)){
             system.time({
                 sols <- restartOpt(fun = TAopt, n = 10L,
                                    OF = OF, algo = algo, data = data,
@@ -57,7 +57,7 @@ test.restartOpt <- function() {
                                OF = OF, algo = algo, X = X,
                                method = "snow", cl = 2L)
         }
-        if (suppressWarnings(require("multicore", quietly = TRUE))) {
+        if (suppressWarnings(require("parallel", quietly = TRUE))) {
             ## up top version 0.23-1, an argument passed with '...'
             ## could not be called 'X': led to an error
             X <- list(xTRUE = runif(5L), step = 0.02)

@@ -1,12 +1,13 @@
 \name{vanillaBond}
 \alias{vanillaBond}
 \alias{duration}
+\alias{convexity}
 \alias{ytm}
 \title{
   Pricing Plain-Vanilla Bonds
 }
 \description{
-  
+
   Calculate the theoretical price and yield-to-maturity of a list of
   cashflows.
 
@@ -16,6 +17,7 @@ vanillaBond(cf, times, df, yields)
 ytm(cf, times, y0 = 0.05, tol = 1e-05, maxit = 1000L, offset = 0)
 
 duration(cf, times, yield, modified = TRUE, raw = FALSE)
+convexity(cf, times, yield, raw = FALSE)
 }
 \arguments{
   \item{cf}{
@@ -23,17 +25,20 @@ duration(cf, times, yield, modified = TRUE, raw = FALSE)
     should be arranged in rows; times-to-payment correspond to columns.
   }
   \item{times}{
-    times-to-payment; a numeric vector.
+    times-to-payment; a numeric vector
   }
   \item{df}{
-    discount factors; a numeric vector.
+    discount factors; a numeric vector
   }
   \item{yields}{
     optional (instead of discount factors); zero yields to compute
     discount factor; if of length one, a flat zero curve is assumed
   }
   \item{yield}{
-    numeric
+
+    numeric vector of length one (both duration and
+    convexity assume a flat yield curve)
+
   }
   \item{y0}{
     starting value
@@ -49,11 +54,16 @@ duration(cf, times, yield, modified = TRUE, raw = FALSE)
     maturity.  See Details and Examples.
   }
   \item{modified}{
-    logical: return modified duration (default \code{TRUE})
+    logical: return modified duration? (default \code{TRUE})
   }
   \item{raw}{
-    logical: default \code{FALSE}. Compute duration as first derivative
-    of cashflows' present value?
+
+    logical: default \code{FALSE}. Compute
+    duration/convexity as derivative of cashflows'
+    present value? Use this if you want to approximate
+    the change in the bond price by a Taylor series
+    (see Examples).
+
   }
 }
 \details{
@@ -63,17 +73,17 @@ duration(cf, times, yield, modified = TRUE, raw = FALSE)
 
   \code{ytm} uses Newton's method to compute the yield-to-maturity of a
   bond (a.k.a. internal interest rate). When used with a bond, the initial
-  outlay (ie, the bonds dirty price) needs be included in the vector of
-  cashflows.  For coupon bond, a good starting value \code{y0} is
+  outlay (i.e. the bonds dirty price) needs be included in the vector of
+  cashflows.  For a coupon bond, a good starting value \code{y0} is
   the coupon divided by the dirty price of the bond.
 
   An \code{offset} can be specified either as a single number or as a
   vector of zero rates.  See Examples.
-  
+
   %% \deqn{\mathrm{upper\ partial\ moment} = \frac{1}{n} \sum_{x >
   %%     t}\left(x - t \right)^e}{%
   %%   upper partial moment = sum_{x > t}(x - t)^e / n}
-    
+
 }
 \value{
   Numeric.
@@ -103,14 +113,14 @@ cf <- c(5, 5, 5, 5, 5, 105)   ## cashflows
 times <- 1:6                  ## maturities
 y <- 0.02 + 0.01              ## risk-free 2\% + risk-premium 1\%
 b0 <- vanillaBond(cf, times, yields = y)
-cf <- c(-b0, cf); times <- c(0, times)    
+cf <- c(-b0, cf); times <- c(0, times)
 ytm(cf, times, offset = 0.02) ## ... only the risk-premium
 
 cf <- c(5, 5, 5, 5, 5, 105)   ## cashflows
 times <- 1:6                  ## maturities
 y <- NS(c(6,9,10,5)/100, times) ## risk-premium 1\%
 b0 <- vanillaBond(cf, times, yields = y + 0.01)
-cf <- c(-b0, cf); times <- c(0, times)    
+cf <- c(-b0, cf); times <- c(0, times)
 ytm(cf, times, offset = c(0,y)) ## ... only the risk-premium
 
 ## bonds
@@ -144,11 +154,17 @@ colnames(M) <- format(alltimes, nsmall = 1)
 
 vanillaBond(cf = M, times = alltimes, yields = 0.02)
 
-## duration
+## duration/convexity
 cf <- c(5, 5, 5, 5, 5, 105)   ## cashflows
 times <- 1:6                  ## maturities
-y <- 0.0127                   ## the "true" yield
+y <- 0.0527                   ## yield to maturity
 
-vanillaBond(cf, times, yields = y+0.001)-vanillaBond(cf, times, yields = y)
-duration(cf, times, yield = y, raw = TRUE)* 0.001
+d <- 0.001                   ## change in yield (+10 bp)
+vanillaBond(cf, times, yields = y + d) - vanillaBond(cf, times, yields = y)
+
+duration(cf, times, yield = y, raw = TRUE) * d
+
+duration(cf, times, yield = y, raw = TRUE) * d +
+    convexity(cf, times, yield = y, raw = TRUE)/2 * d^2
+
 }
