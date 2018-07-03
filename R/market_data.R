@@ -37,7 +37,11 @@ French <- function(dataset = "variance", weighting = "equal",
                 "49_Industry_Portfolios_CSV.zip"
             else if (dataset == "industry49" && frequency == "daily")
                 "49_Industry_Portfolios_daily_CSV.zip"
-
+            else if (dataset == "ff3" && frequency == "daily")
+                "F-F_Research_Data_Factors_daily_CSV.zip"
+            else
+                stop("unknown dataset/frequency combination")
+    
     file <- paste0(.ftp, file)
     
     tmp <- tempfile()
@@ -48,20 +52,28 @@ French <- function(dataset = "variance", weighting = "equal",
     file.remove(tmp2)
     
 
-    i <- if (tolower(weighting) == "equal")
-             grep("Equal Weighted Returns", txt)
-         else if (tolower(weighting) == "value")
-             grep("Value Weighted Returns", txt)
-         else
-            stop("weighting must be 'equal' or 'value'")
-    i <- i[[1]]
-    j <- grep("^$", txt)
-    j <- j[min(which(j > i))]
-    
-    ans <- txt[(i+1):(j-1)]
+    if (dataset != "ff3") {
+        i <- if (tolower(weighting) == "equal")
+                 grep("Equal Weighted Returns", txt)
+             else if (tolower(weighting) == "value")
+                 grep("Value Weighted Returns", txt)
+             else
+                 stop("weighting must be 'equal' or 'value'")
+        i <- i[[1]]
+        j <- grep("^$", txt)
+        j <- j[min(which(j > i))]
+        
+        ans <- txt[(i+1):(j-1)]
+    } else {
+        
+        i <- grep("Mkt-RF", txt)
+        j <- grep("^ *$", txt[-c(1:10)]) + 9
+        ans <- txt[i:j]
+    }
     ans <- read.table(text = ans, header = TRUE,
                       stringsAsFactors = FALSE, sep = ",",
-                      check.names = FALSE)
+                      check.names = FALSE,
+                      colClasses = "numeric")
     for (cc in seq_len(ncol(ans)))
         ans[[cc]][ ans[[cc]] < -99 ] <- NA
 
@@ -82,11 +94,11 @@ French <- function(dataset = "variance", weighting = "equal",
         r0 <- numeric(ncol(ans))
         r0[is.na(ans[1L, ])] <- NA
         ans <- rbind(r0, ans)
-        timestamp <- if (frequency == "monthly")
-                         c(datetimeutils::end_of_previous_month(timestamp[1L]),
+        if (frequency == "monthly")
+            timestamp <- c(datetimeutils::end_of_previous_month(timestamp[1L]),
                            timestamp)
-                     else if (frequency == "daily")
-                         c(datetimeutils::previous_businessday(timestamp[1L]),
+        else if (frequency == "daily")
+            timestamp <- c(datetimeutils::previous_businessday(timestamp[1L]),
                            timestamp)
                          
         for (cc in seq_len(ncol(ans))) {

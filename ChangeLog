@@ -1,3 +1,8 @@
+2018-07-03  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/market_data.R (French): support dataset
+	'ff3'
+
 2018-06-27  Enrico Schumann  <es@enricoschumann.net>
 
 	* R/portfolio.R (mvPortfolio): add function
