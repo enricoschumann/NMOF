@@ -14,14 +14,16 @@ Shiller <- function(destfile = tempfile(fileext = ".xls"),
     colnames(data) <- c("Date", "Price", "Dividend", "Earnings",
                         "CPI", "Long Rate", "Real Price", "Real Dividend",
                         "Real Earnings", "CAPE")
-    data[["Date"]] <- gsub("[.]1$", ".10", data[["Date"]])
-    data[["Date"]] <- datetimeutils::end_of_month(
-                                         as.Date(paste0(data[["Date"]], ".1"),
-                                                 "%Y.%m.%d"))
+
+    data <- data[!is.na(data[["Date"]]), ]
+    tmp <- strsplit(format(round(as.numeric(data[["Date"]]), 2), nsmall = 2), ".", fixed = TRUE)
+    data[["Date"]] <- as.Date(unlist(lapply(tmp, function(x) paste(x[1], x[2], "1", sep = "-"))))
+    class(data[["Date"]]) <- "Date"
+    
+    data[["Date"]] <- datetimeutils::end_of_month(data[["Date"]])
 
     for (i in 2:10) ## there will be NAs => warnings
         data[[i]] <- suppressWarnings(as.numeric(data[[i]])) 
-    data <- data[!is.na(data[["Date"]]), ]
     data
 }
 
