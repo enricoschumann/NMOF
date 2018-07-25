@@ -45,6 +45,8 @@ export(
     gbm,
     gridSearch,
     minvar,
+    mvFrontier,
+    mvPortfolio,
     pm,
     putCallParity,
     qTable,

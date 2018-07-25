@@ -1,10 +1,11 @@
-v1.5-0  (2018-07-01)
+v1.5-0  (2018-??-??; not yet released)
 
   o new function 'mvPortfolio'
 
   o new function 'mvFrontier'
 
-  o LSopt, SAopt and TAopt gain an option nI
+  o optimsation function 'LSopt', 'SAopt' and 'TAopt'
+    gain an option 'nI'
 
 v1.4-0  (2017-12-06)
 
