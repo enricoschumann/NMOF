@@ -1,10 +1,12 @@
 v1.5-0  (2018-??-??; not yet released)
 
-  o new function 'mvPortfolio'
+  o new function 'mvPortfolio', for computing efficient
+    frontiers, with or without cash
 
-  o new function 'mvFrontier'
+  o new function 'mvFrontier', for computing
+    mean--variance efficient portfolios
 
-  o optimsation function 'LSopt', 'SAopt' and 'TAopt'
+  o optimsation functions 'LSopt', 'SAopt' and 'TAopt'
     gain an option 'nI'
 
 v1.4-0  (2017-12-06)

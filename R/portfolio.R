@@ -1,4 +1,4 @@
-## -*- truncate-lines: t; fill-column: 65; comment-column: 50; -*-
+## -*- truncate-lines: t; -*-
 
 erc <- function(cov,  wmin = 0, wmax = 1, method = "ls") {
 
@@ -46,6 +46,7 @@ erc <- function(cov,  wmin = 0, wmax = 1, method = "ls") {
     w
 }
 
+
 ## function for computing the minimum-variance portfolio
 minvar <- function(var, wmin = 0, wmax = 1, method = "qp") {
 
@@ -78,7 +79,7 @@ minvar <- function(var, wmin = 0, wmax = 1, method = "qp") {
 
 
 ## function for computing n points of the efficient frontier
-mvFrontier <- function(m, var, wmin = 0, wmax = 1, n = 50) {
+mvFrontier <- function(m, var, wmin = 0, wmax = 1, n = 50, rf = NA) {
 
     if (!requireNamespace("quadprog"))
         stop("package ", sQuote("quadprog"), " is not available")
@@ -95,27 +96,45 @@ mvFrontier <- function(m, var, wmin = 0, wmax = 1, n = 50) {
     portfolios <- array(0, dim = c(na, n))
 
     dvec <- numeric(na)
-    A <- rbind(1, -diag(na), diag(na))
-
-    sq <- seq(0.0001, 0.9999, length.out = n)
-    for (i in seq_len(n)) {
-        lambda <- sq[i]
-        result <- quadprog::solve.QP(Dmat = 2*(1-lambda)*var,
-                                     dvec = lambda*m,
-                                     Amat = t(A),
-                                     bvec = c(1, -wmax, wmin),
-                                     meq  = 1L)
-        rets[i] <- sum(m*result$solution)
-        risk[i] <- sqrt(result$solution %*% var %*% result$solution)
-        portfolios[, i] <- result$solution
+    if (is.na(rf)) {
+        A <- rbind(1, -diag(na), diag(na))
+        sq <- seq(0.0001, 0.9999, length.out = n)
+        for (i in seq_len(n)) {
+            lambda <- sq[i]
+            result <- quadprog::solve.QP(Dmat = 2*(1 - lambda)*var,
+                                         dvec = lambda*m,
+                                         Amat = t(A),
+                                         bvec = c(1, -wmax, wmin),
+                                         meq  = 1L)
+            rets[i] <- sum(m*result$solution)
+            risk[i] <- sqrt(result$solution %*% var %*% result$solution)
+            portfolios[, i] <- result$solution
+        }
+    } else {
+        A <- rbind(m - rf, -diag(na), diag(na))
+        r.seq <- seq(rf, max(m), length.out = n)
+        cash <- numeric(n)
+        for (i in seq_len(n)) {
+            bvec  <- c(r.seq[i], -wmax, wmin)
+            result <- quadprog::solve.QP(Dmat = var,
+                                         dvec = rep.int(0, na),
+                                         Amat = t(A),
+                                         bvec = bvec)
+            cash[i] <- 1 - sum(result$solution)
+            rets[i] <- sum(m*result$solution) + cash[i]*rf
+            risk[i] <- sqrt(result$solution %*% var %*% result$solution)
+            portfolios[, i] <- result$solution
+        }
+        portfolios <- rbind(portfolios, cash)
+    
     }
-
     list(returns = rets,
          volatility = risk,
          portfolios = portfolios)
 }
 
 
+## compute mean-variance efficient portfolio
 mvPortfolio <- function(m, var, min.return, wmin = 0, wmax = 1) {
 
     if (!requireNamespace("quadprog"))
@@ -136,17 +155,12 @@ mvPortfolio <- function(m, var, min.return, wmin = 0, wmax = 1) {
     B <- rbind(B,-diag(na),diag(na))
     b <- rbind(min.return, array(-wmax, dim = c(na,1L)),
                array( wmin, dim = c(na,1L)))
-    result <- solve.QP(Dmat = Q,
-                       dvec = rep(0,na),
-                       Amat = t(rbind(A,B)),
-                       bvec = rbind(a,b),
-                       meq  = 1L)
+    result <- quadprog::solve.QP(Dmat = Q,
+                                 dvec = rep(0,na),
+                                 Amat = t(rbind(A,B)),
+                                 bvec = rbind(a,b),
+                                 meq  = 1L)$solution
 
     result
 }
 
-## m <- c(0.01,0.01)
-## vols <- c(0.05, 0.025)
-## rho <- array(c(1, 0.9, 0.9, 1), dim = c(2,2))
-## var <- diag(vols) %*% rho %*% diag(vols)
-## mvPortfolio(m, var, 0.01, -5, 5)

@@ -1,3 +1,10 @@
+2018-08-08  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/portfolio.R (mvFrontier): the function
+	gains a new argument 'rf', as in "risk-free
+	rate". When specified, the frontier will be
+	computed including a cash position.
+
 2018-06-27  Enrico Schumann  <es@enricoschumann.net>
 
 	* R/portfolio.R (mvPortfolio): add function
