@@ -42,21 +42,26 @@ mvPortfolio(m, var, min.return, wmin = 0, wmax = 1)
    \code{mvFrontier} computes returns, volatilities and 
    compositions for portfolios along an efficient frontier.
    If \code{rf} is not \code{NA}, cash is included as an asset.
-   
-  
+     
 }
 \value{
 
-  For mvPortfolio, a numeric vector of weights.
+  For \code{mvPortfolio}, a numeric vector of weights.
 
-  For mvFrontier, a list of
- \item{return}{returns of portfolios}
- \item{volatility}{volatilities of portfolios}
- \item{weights}{A matrix of portfolio weights.
-                Each column holds the weights for one portfolio on the
-		frontier. If \code{rf} is specified, an additional row
-                is added, providing the cash weight.
-	      }
+  For \code{mvFrontier}, a list of three components:
+
+  \item{return}{returns of portfolios}
+  \item{volatility}{volatilities of portfolios}
+  \item{weights}{A matrix of portfolio weights.
+    Each column holds the weights for one portfolio on the
+    frontier. If \code{rf} is specified, an additional row
+    is added, providing the cash weight.}
+
+  The \emph{i}-th portfolio on the frontier corresponds
+  to the \emph{i}-th elements of \code{return} and
+  \code{volatility}, and the \emph{i}-th column of
+  \code{portfolio}.
+
 }
 \references{
   
@@ -97,5 +102,4 @@ plot(p1$volatility, p1$return, pch = 19, cex = 0.5, type = "o",
      ylab = "Expected return")
 lines(p2$volatility, p2$return, col = grey(0.5))
 abline(v = 0, h = rf)
-
 }
