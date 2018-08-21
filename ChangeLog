@@ -5,6 +5,15 @@
 	rate". When specified, the frontier will be
 	computed including a cash position.
 
+2018-07-21  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/market_data.R (Shiller): fix date coersion
+
+2018-07-03  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/market_data.R (French): support dataset
+	'ff3'
+
 2018-06-27  Enrico Schumann  <es@enricoschumann.net>
 
 	* R/portfolio.R (mvPortfolio): add function
@@ -19,6 +28,16 @@
 	removed (but remain available from
 	http://enricoschumann.net)
 
+2018-06-19  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Suggests): add 'readxl'
+
+2018-06-12  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/market_data.R (French): new argument
+	'na.rm'; support for "industry49" dataset,
+	monthly and daily
+
 2018-05-18  Enrico Schumann  <es@enricoschumann.net>
 
 	* DESCRIPTION (Version): 1.4-2
@@ -30,6 +49,14 @@
 	* DESCRIPTION (Version): 1.4-1
 	(ByteCompile): remove explicit setting
 	(Authors@R): add ORCID
+
+2018-05-04  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/market_data.R (French): add function
+
+2018-05-01  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/market_data.R (Shiller): add function
 
 2018-04-24  Enrico Schumann  <es@enricoschumann.net>
 
