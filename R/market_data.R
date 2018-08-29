@@ -1,23 +1,35 @@
 ## -*- truncate-lines: t; -*-
 
-Shiller <- function(destfile = tempfile(fileext = ".xls"),
+Shiller <- function(dest.dir = "~/Desktop",
                     url = "http://www.econ.yale.edu/~shiller/data/ie_data.xls") {
 
-    download.file(url, destfile = destfile)
+    f.name <- paste0(format(Sys.Date(), "%Y%m%d_"), "ie_data.xls")
+    f.path <- file.path(normalizePath(dest.dir), f.name)
 
-    data <- read_xls(destfile, sheet = 3)
+    if (!file.exists(f.path))
+        download.file(url, destfile = f.path)
+
+    if (!requireNamespace("readxl"))
+        stop("package ", sQuote("readxl"), " is not available")
+    if (!requireNamespace("datetimeutils"))
+        stop("package ", sQuote("datetimeutils"), " is not available")
+    
+    data <- readxl::read_xls(destfile, sheet = 3)
     data <- as.data.frame(data)
     data <- data[-(1:6), ] 
-    data <- data[ , 1:11]
-    data <- data[ ,-6] ## drop column 'Date Fraction' 
+    data <- data[, 1:11]
+    data <- data[, -6] ## drop column 'Date Fraction' 
     
     colnames(data) <- c("Date", "Price", "Dividend", "Earnings",
-                        "CPI", "Long Rate", "Real Price", "Real Dividend",
-                        "Real Earnings", "CAPE")
+                        "CPI", "Long Rate", "Real Price",
+                        "Real Dividend", "Real Earnings", "CAPE")
 
     data <- data[!is.na(data[["Date"]]), ]
-    tmp <- strsplit(format(round(as.numeric(data[["Date"]]), 2), nsmall = 2), ".", fixed = TRUE)
-    data[["Date"]] <- as.Date(unlist(lapply(tmp, function(x) paste(x[1], x[2], "1", sep = "-"))))
+    tmp <- strsplit(format(round(as.numeric(data[["Date"]]), 2), nsmall = 2),
+                    ".", fixed = TRUE)
+    data[["Date"]] <- as.Date(
+        unlist(lapply(tmp,
+                      function(x) paste(x[1], x[2], "1", sep = "-"))))
     class(data[["Date"]]) <- "Date"
     
     data[["Date"]] <- datetimeutils::end_of_month(data[["Date"]])
@@ -29,27 +41,34 @@ Shiller <- function(destfile = tempfile(fileext = ".xls"),
 
 .ftp <- "http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/"
 
-French <- function(dataset = "variance", weighting = "equal",
+French <- function(dest.dir = "~/Desktop",
+                   dataset = "variance", weighting = "equal",
                    frequency = "monthly", price.series = FALSE,
                    na.rm = TRUE) {
     dataset <- tolower(dataset)
-    file <- if (dataset == "variance")        
-                "Portfolios_Formed_on_VAR_CSV.zip"
-            else if (dataset == "industry49" && frequency == "monthly")
-                "49_Industry_Portfolios_CSV.zip"
-            else if (dataset == "industry49" && frequency == "daily")
-                "49_Industry_Portfolios_daily_CSV.zip"
-            else if (dataset == "ff3" && frequency == "daily")
-                "F-F_Research_Data_Factors_daily_CSV.zip"
-            else
-                stop("unknown dataset/frequency combination")
+
     
-    file <- paste0(.ftp, file)
+    f.name <- if (dataset == "variance")        
+                  "Portfolios_Formed_on_VAR_CSV.zip"
+              else if (dataset == "industry49" && frequency == "monthly")
+                  "49_Industry_Portfolios_CSV.zip"
+              else if (dataset == "industry49" && frequency == "daily")
+                  "49_Industry_Portfolios_daily_CSV.zip"
+              else if (dataset == "ff3" && frequency == "daily")
+                  "F-F_Research_Data_Factors_daily_CSV.zip"
+              else
+                  stop("unknown dataset/frequency combination")
+
+
+    f.name <- paste0(format(Sys.Date(), "%Y%m%d_"), f.name)
+    f.path <- file.path(normalizePath(dest.dir), f.name)
+
+    if (!file.exists(f.path)) {
+        f.name <- paste0(.ftp, f.name)
+        download.file(file, f.path, quiet = TRUE)
+    }
     
-    tmp <- tempfile()
-    download.file(file, tmp, quiet = TRUE)
-    
-    tmp2 <- unzip(tmp)
+    tmp2 <- unzip(f.name)
     txt <- readLines(tmp2)
     file.remove(tmp2)
     

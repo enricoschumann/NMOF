@@ -1,3 +1,8 @@
+2018-08-29  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/market_data.R (Shiller, French): add
+	'dest.dir' argument
+
 2018-08-08  Enrico Schumann  <es@enricoschumann.net>
 
 	* R/portfolio.R (mvFrontier): the function
