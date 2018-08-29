@@ -1,7 +1,9 @@
 2018-08-29  Enrico Schumann  <es@enricoschumann.net>
 
 	* R/market_data.R (Shiller, French): add
-	'dest.dir' argument
+	'dest.dir' argument: downloaded files are
+	stored in this directory and reused when a
+	download is done on the same day
 
 2018-08-08  Enrico Schumann  <es@enricoschumann.net>
 
