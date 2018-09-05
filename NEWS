@@ -6,6 +6,9 @@ v1.5-0  (2018-??-??; not yet released)
   o new function 'mvFrontier', for computing
     mean--variance efficient portfolios
 
+  o new functions 'French' and 'Shiller', for
+    downloading research datasets
+
   o optimsation functions 'LSopt', 'SAopt' and 'TAopt'
     gain an option 'nI'
 
