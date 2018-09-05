@@ -4,7 +4,8 @@ importFrom("grDevices", "dev.new", "grey")
 importFrom("graphics", "plot", "legend", "lines")
 importFrom("stats", "dnorm", "integrate", "median", "pnorm",
            "quantile", "rnorm", "runif", "sd", "uniroot")
-importFrom("utils", "flush.console", "setTxtProgressBar",
+importFrom("utils", "flush.console", "setTxtProgressBar",           
+           "download.file", "read.table", "unzip",
            "txtProgressBar")
 export(
     DEopt,

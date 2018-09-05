@@ -1,3 +1,8 @@
+2018-09-04  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/market_data.R (French): support datasets
+	"me_breakpoints", "industry49_defs"
+
 2018-08-29  Enrico Schumann  <es@enricoschumann.net>
 
 	* R/market_data.R (Shiller, French): add
