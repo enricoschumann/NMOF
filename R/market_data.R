@@ -103,9 +103,10 @@ French <- function(dest.dir,
                                   as.Date(paste0(data[[1]], "01"), "%Y%m%d"))
         data <- data[!is.na(tmp), , drop = FALSE]
         data <- data[, -1L]
-        colnames(data) <- paste0("Q", seq(0,100, by = 5))
+        colnames(data) <- c("companies", paste0("Q", seq(5,100, by = 5)))
         row.names(data) <- as.character( tmp[!is.na(tmp)] )
-        return(data*1000000)
+        data[, -1] <- data[, -1]*1000000
+        return(data)
     } else if (dataset != "ff3") {
         i <- if (tolower(weighting) == "equal")
                  grep("Equal Weighted Returns", txt)

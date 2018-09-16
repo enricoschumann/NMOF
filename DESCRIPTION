@@ -24,4 +24,5 @@ License: GPL-3
 URL: http://nmof.net, http://enricoschumann.net/NMOF
 LazyLoad: yes
 LazyData: yes
+ByteCompile: no
 Classification/JEL: C61, C63

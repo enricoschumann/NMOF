@@ -1,3 +1,8 @@
+2018-09-16  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/market_data.R (French): fix data
+	interpretation for "me_breakpoints"
+
 2018-09-04  Enrico Schumann  <es@enricoschumann.net>
 
 	* R/market_data.R (French): support datasets
