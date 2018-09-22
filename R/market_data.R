@@ -44,6 +44,7 @@ French <- function(dest.dir,
                    dataset = "variance", weighting = "equal",
                    frequency = "monthly", price.series = FALSE,
                    na.rm = TRUE) {
+
     dataset <- tolower(dataset)
 
     url <- if (dataset == "variance")
@@ -52,7 +53,9 @@ French <- function(dest.dir,
                "49_Industry_Portfolios_CSV.zip"
            else if (dataset == "industry49" && frequency == "daily")
                "49_Industry_Portfolios_daily_CSV.zip"
-           else if (dataset == "industry49_defs")
+           else if (dataset == "industry12_defs" || dataset == "siccodes12")
+               "Siccodes12.zip"
+           else if (dataset == "industry49_defs" || dataset == "siccodes49")
                "Siccodes49.zip"
            else if (dataset == "ff3" && frequency == "daily")
                "F-F_Research_Data_Factors_daily_CSV.zip"
@@ -73,7 +76,7 @@ French <- function(dest.dir,
     tmp2 <- unzip(f.path)
     txt <- readLines(tmp2)
     file.remove(tmp2)
-    if (dataset == "industry49_defs") {
+    if (dataset == "industry49_defs" || grepl("siccodes", dataset)) {
         ans <- NULL
         for (i in seq_along(txt)) {
             if (grepl("^ ?[0-9]", txt[i])) {
@@ -86,11 +89,18 @@ French <- function(dest.dir,
             }
         }
         ans$Industry <- trimws(ans$Industry)
+        num <- gsub(" *([0-9]+) .*", "\\1", ans$Industry)
+        abbr <- gsub(" *[0-9]+ ([^ ]+) .*", "\\1", ans$Industry)
+        industry <- gsub(" *[0-9]+ [^ ]+ (.*)", "\\1", ans$Industry)
+        
         ans$Codes <- trimws(ans$Codes)
-        ans <- cbind(ans,
-                     start = substr(ans$Codes, 1, 4),
-                     end   = substr(ans$Codes, 6, 9))
-        ans$Codes <- substr(ans$Codes, 10, 100000)
+        ans <- data.frame(num = trimws(num),
+                          abbr = trimws(abbr),
+                          industry = trimws(industry),
+                          industry_group = substr(ans$Codes, 10, 100000),
+                          start = substr(ans$Codes, 1, 4),
+                          end   = substr(ans$Codes, 6, 9),
+                          stringsAsFactors = FALSE)
         return(ans)
     } else if (dataset == "me_breakpoints") {
         data <- read.table(text = txt, skip = 1,
