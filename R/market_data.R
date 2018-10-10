@@ -35,7 +35,7 @@ Shiller <- function(dest.dir,
     data[["Date"]] <- datetimeutils::end_of_month(tmp)
 
     for (i in 2:10) ## there will be NAs => warnings
-        data[[i]] <- suppressWarnings(as.numeric(data[[i]])) 
+        data[[i]] <- suppressWarnings(as.numeric(data[[i]]))
     data
 }
 
@@ -46,6 +46,7 @@ French <- function(dest.dir,
                    na.rm = TRUE) {
 
     dataset <- tolower(dataset)
+    cnames <- NULL
 
     url <- if (dataset == "variance")
                "Portfolios_Formed_on_VAR_CSV.zip"
@@ -62,7 +63,7 @@ French <- function(dest.dir,
            else if (dataset == "me_breakpoints")
                "ME_Breakpoints_CSV.zip"
            else
-               stop("unknown dataset/frequency combination")
+               dataset
 
     .ftp <- "http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/"
 
@@ -92,7 +93,7 @@ French <- function(dest.dir,
         num <- gsub(" *([0-9]+) .*", "\\1", ans$Industry)
         abbr <- gsub(" *[0-9]+ ([^ ]+) .*", "\\1", ans$Industry)
         industry <- gsub(" *[0-9]+ [^ ]+ (.*)", "\\1", ans$Industry)
-        
+
         ans$Codes <- trimws(ans$Codes)
         ans <- data.frame(num = trimws(num),
                           abbr = trimws(abbr),
@@ -117,6 +118,23 @@ French <- function(dest.dir,
         row.names(data) <- as.character( tmp[!is.na(tmp)] )
         data[, -1] <- data[, -1]*1000000
         return(data)
+    } else if (dataset == "6_portfolios_2x3_csv.zip") {
+        if (tolower(weighting) == "value")
+            i <- grep("Average Value Weighted Returns -- Monthly", txt)
+        else if (tolower(weighting) == "equal")
+            i <- grep("Average Equal Weighted Returns -- Monthly", txt)
+
+        j <- grep("^ *$", txt)
+        j <- min( j[j > i] )-1
+        i <- i+1
+        ans <- txt[i:j]
+        cnames <- c("small.low",
+                    "small.neutral",
+                    "small.high",
+                    "big.low",
+                    "big.neutral",
+                    "big.high")
+
     } else if (dataset != "ff3") {
         i <- if (tolower(weighting) == "equal")
                  grep("Equal Weighted Returns", txt)
@@ -147,12 +165,12 @@ French <- function(dest.dir,
 
     if (frequency == "monthly")
         timestamp <- datetimeutils::end_of_month(
-                                        as.Date(paste0(ans[[1]], "01"),
-                                                format = "%Y%m%d"))
+            as.Date(paste0(ans[[1]], "01"),
+                    format = "%Y%m%d"))
     else if (frequency == "daily")
         timestamp <- as.Date(as.character(ans[[1L]]), format = "%Y%m%d")
 
-    ans <- ans[ , -1L] ## drop timestamp
+    ans <- ans[, -1L] ## drop timestamp
     ans <- ans/100
 
     if (price.series) {
@@ -178,6 +196,8 @@ French <- function(dest.dir,
                 ans[[cc]] <- cumprod(1 + ans[[cc]])
         }
     }
+    if (!is.null(cnames))
+        colnames(ans) <- cnames
     row.names(ans) <- as.character(timestamp)
     ans
 }
