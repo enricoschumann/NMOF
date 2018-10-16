@@ -121,6 +121,10 @@ edit(nss)
 browseURL("http://nmof.net")
 browseURL("http://enricoschumann.net/NMOF/")
 
+## package websites
+browseURL("http://enricoschumann.net/R/packages/NMOF/")
+browseURL("https://cran.r-project.org/package=NMOF")
+
 ## more examples
 file.show(system.file("NMOFex/README",   package = "NMOF"))
 file.show(system.file("NMOFex/NMOFman.R", package = "NMOF"))
