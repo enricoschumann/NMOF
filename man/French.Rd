@@ -5,36 +5,41 @@
 }
 \description{
 
-  Download data provided by Kenneth French.
+  Download datasets from Kenneth French's Data Library.
 
 }
 \usage{
-French(dest.dir, dataset = "variance",
-       weighting = "equal", frequency = "monthly",
-       price.series = FALSE, na.rm = TRUE)
+French(dest.dir, dataset = "F-F_Research_Data_Factors_CSV.zip",
+       weighting = "value", frequency = "monthly",
+       price.series = FALSE, na.rm = FALSE)
 }
 \arguments{
   \item{dest.dir}{
     character: a path to a directory
 }
   \item{dataset}{
-    a character string
+    a character string: the file name
 }
   \item{weighting}{
-    a character string: equal or value
+    a character string: \code{"equal"} or \code{"value"}
 }
   \item{frequency}{
-    a character string: daily or monthly
+
+    a character string: \code{daily}, \code{monthly} or
+    \code{annual}. Whether it is used or ignored
+    depends on the particular dataset.
+    
 }
   \item{price.series}{
-    logical
+    logical: convert the returns series into prices series?
 }
   \item{na.rm}{
-    logical
-}
+    logical: remove missing values in the calculation
+    of price series?
+  }
 }
 \details{
-
+  
   The function downloads data provided by Kenneth
   French at
   \url{http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html}.
@@ -44,7 +49,12 @@ French(dest.dir, dataset = "variance",
   \code{dest.dir}. Before any download is attempted,
   the function checks whether a file with today's
   prefix exist in \code{dest.dir}; if yes, the file
-  used.      
+  used.
+  
+  Missing values are usually coded as \code{-99} or
+  similar values in the original data files. These
+  numeric values are replaced by \code{\link{NA}}.
+
   
 }
 \value{
@@ -79,6 +89,6 @@ a \code{\link{data.frame}}
 archive.dir <- "~/Downloads/French"
 if (!dir.exists(archive.dir))
     dir.create(archive.dir)
-French(archive.dir)
+French(archive.dir, "F-F_Research_Data_Factors_CSV.zip")
 }
 }

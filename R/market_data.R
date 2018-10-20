@@ -41,11 +41,12 @@ Shiller <- function(dest.dir,
 
 
 French <- function(dest.dir,
-                   dataset = "variance", weighting = "equal",
-                   frequency = "monthly", price.series = FALSE,
-                   na.rm = TRUE) {
+                   dataset = "F-F_Research_Data_Factors_CSV.zip",
+                   weighting = "value",
+                   frequency = "monthly",
+                   price.series = FALSE,
+                   na.rm = FALSE) {
 
-    dataset <- tolower(dataset)
     cnames <- NULL
 
     url <- if (dataset == "variance")
@@ -54,16 +55,14 @@ French <- function(dest.dir,
                "49_Industry_Portfolios_CSV.zip"
            else if (dataset == "industry49" && frequency == "daily")
                "49_Industry_Portfolios_daily_CSV.zip"
-           else if (dataset == "industry12_defs" || dataset == "siccodes12")
-               "Siccodes12.zip"
-           else if (dataset == "industry49_defs" || dataset == "siccodes49")
-               "Siccodes49.zip"
            else if (dataset == "ff3" && frequency == "daily")
                "F-F_Research_Data_Factors_daily_CSV.zip"
            else if (dataset == "me_breakpoints")
                "ME_Breakpoints_CSV.zip"
            else
                dataset
+
+    dataset <- url <- "Portfolios_Formed_on_BE-ME_CSV.zip"
 
     .ftp <- "http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/"
 
@@ -77,7 +76,8 @@ French <- function(dest.dir,
     tmp2 <- unzip(f.path)
     txt <- readLines(tmp2)
     file.remove(tmp2)
-    if (dataset == "industry49_defs" || grepl("siccodes", dataset)) {
+
+    if (grepl("siccodes", tolower(dataset))) {
         ans <- NULL
         for (i in seq_along(txt)) {
             if (grepl("^ ?[0-9]", txt[i])) {
@@ -134,8 +134,48 @@ French <- function(dest.dir,
                     "big.low",
                     "big.neutral",
                     "big.high")
+    } else if (tolower(dataset) == "f-f_research_data_factors_csv.zip") {
 
-    } else if (dataset != "ff3") {
+        i <- grep("Mkt-RF", txt)
+        j <- grep("^ *$", txt[-c(1:10)]) + 9
+        if (frequency == "monthly") {
+            ans <- txt[i[1]:j[1]]
+        } else if (frequency == "annual")
+            ans <- txt[i[2]:j[2]]
+        else
+            stop("frequency not supported")
+        
+    } else if (tolower(dataset) == "f-f_research_data_factors_daily_csv.zip") {
+
+        frequency <- "daily"
+        i <- grep("Mkt-RF", txt)
+        j <- grep("^ *$", txt[-c(1:10)]) + 9
+        ans <- txt[i:j]
+        
+    } else if (tolower(dataset) == "portfolios_formed_on_be-me_csv.zip") {
+        if (frequency == "monthly") {
+            i <- if (tolower(weighting) == "equal")
+                     grep("Equal Weight Returns -- Monthly", txt)
+                 else if (tolower(weighting) == "value")
+                     grep("Value Weight Returns -- Monthly", txt)
+                 else
+                     stop("weighting must be 'equal' or 'value'")
+        } else if (frequency == "annual") {
+            i <- if (tolower(weighting) == "equal")
+                     grep("Equal Weight Returns -- Annual", txt)
+                 else if (tolower(weighting) == "value")
+                     grep("Value Weight Returns -- Annual", txt)
+                 else
+                     stop("weighting must be 'equal' or 'value'")            
+        } else
+            stop("frequency not supported")
+        j <- grep("^ *$", txt)
+        j <- j[min(which(j > i))]
+
+        ans <- txt[(i+1):(j-1)]
+
+        
+    } else if (tolower(dataset) != "f-f_research_data_factors_csv.zip") {
         i <- if (tolower(weighting) == "equal")
                  grep("Equal Weighted Returns", txt)
              else if (tolower(weighting) == "value")
@@ -148,11 +188,13 @@ French <- function(dest.dir,
 
         ans <- txt[(i+1):(j-1)]
     } else {
-
+        warning("dataset not supported")
+        
         i <- grep("Mkt-RF", txt)
         j <- grep("^ *$", txt[-c(1:10)]) + 9
         ans <- txt[i:j]
     }
+
     ans <- read.table(text = ans, header = TRUE,
                       stringsAsFactors = FALSE, sep = ",",
                       check.names = FALSE,
@@ -165,11 +207,12 @@ French <- function(dest.dir,
 
     if (frequency == "monthly")
         timestamp <- datetimeutils::end_of_month(
-            as.Date(paste0(ans[[1]], "01"),
-                    format = "%Y%m%d"))
+                     as.Date(paste0(ans[[1]], "01"), format = "%Y%m%d"))
     else if (frequency == "daily")
         timestamp <- as.Date(as.character(ans[[1L]]), format = "%Y%m%d")
-
+    else if (frequency == "annual")
+        timestamp <- ans[[1]]
+        
     ans <- ans[, -1L] ## drop timestamp
     ans <- ans/100
 
