@@ -62,16 +62,13 @@ French <- function(dest.dir,
            else
                dataset
 
-    dataset <- url <- "Portfolios_Formed_on_BE-ME_CSV.zip"
-
     .ftp <- "http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/"
 
     f.name <- paste0(format(Sys.Date(), "%Y%m%d_"), url)
     f.path <- file.path(normalizePath(dest.dir), f.name)
 
-    if (!file.exists(f.path)) {
+    if (!file.exists(f.path))
         download.file(paste0(.ftp, url), f.path)
-    }
 
     tmp2 <- unzip(f.path)
     txt <- readLines(tmp2)
