@@ -62,6 +62,11 @@ French <- function(dest.dir,
            else
                dataset
 
+    if (grepl("TXT.zip$", dataset)) {
+        warning("expected file ending in 'CSV.zip'")
+        dataset <- sub("TXT.zip$", "CSV.zip", dataset)
+    }
+            
     .ftp <- "http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/"
 
     f.name <- paste0(format(Sys.Date(), "%Y%m%d_"), url)
@@ -73,6 +78,7 @@ French <- function(dest.dir,
     tmp2 <- unzip(f.path)
     txt <- readLines(tmp2)
     file.remove(tmp2)
+    dataset <- tolower(dataset)
 
     if (grepl("siccodes", tolower(dataset))) {
         ans <- NULL
