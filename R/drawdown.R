@@ -1,18 +1,18 @@
 ## -*- truncate-lines: t; -*-
 
 drawdown <- function(v, relative = TRUE, summary = TRUE) {
-    cv  <- cummax(v)
-    rd  <- cv - v
+    cv <- cummax(v)
+    d <- cv - v
     if (relative)
-        rd  <- rd/cv
+        d <- d/cv
     if (summary) {
-        troughTime <- which.max(rd)
+        troughTime <- which.max(d)
         peakTime <- which.max(v[seq_len(troughTime)])
-        list(maximum       = max(rd),
+        list(maximum       = max(d),
              high          = v[peakTime],
              high.position = peakTime,
              low           = v[troughTime],
              low.position  = troughTime)
     } else
-        rd
+        d
 }
