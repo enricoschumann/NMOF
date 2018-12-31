@@ -1,4 +1,4 @@
-v1.5-0  (2018-??-??; not yet released)
+v1.5-0  (2018-12-31)
 
   o new function 'mvPortfolio', for computing efficient
     frontiers, with or without cash
@@ -9,8 +9,12 @@ v1.5-0  (2018-??-??; not yet released)
   o new functions 'French' and 'Shiller', for
     downloading research datasets
 
-  o optimsation functions 'LSopt', 'SAopt' and 'TAopt'
-    gain an option 'nI'
+  o 'TAopt' gains an option 'thresholds.only': if TRUE,
+    'TAopt' only computes the threshold sequence and
+    then exits
+
+  o optimisation functions 'LSopt', 'SAopt' and 'TAopt'
+    gain an option 'nI' (total number of iterations)
 
 v1.4-0  (2017-12-06)
 

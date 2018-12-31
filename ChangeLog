@@ -1,5 +1,7 @@
 2018-12-31  Enrico Schumann  <es@enricoschumann.net>
 
+	* DESCRIPTION (Version): 1.5-0
+
 	* R/TAopt.R (TAopt): new option
 	'thresholds.only'. If TRUE, TAopt computes only
 	threshold sequence and then exits.
