@@ -3,7 +3,8 @@ LSopt <- function(OF, algo = list(), ...) {
                   neighbour = NULL, x0 = NULL,
                   printDetail = TRUE, printBar = TRUE,
                   storeF = TRUE, storeSolutions = FALSE,
-                  OF.target = NULL)
+                  OF.target = NULL,
+                  classify = FALSE)
 
     checkList(algo, algoD)
     algoD[names(algo)] <- algo
@@ -106,9 +107,11 @@ LSopt <- function(OF, algo = list(), ...) {
         cat("Finished.\nBest solution overall: ", prettyNum(xcF), "\n",
             sep = "")
 
-    ## return best solution
-    list(xbest = xc, OFvalue = xcF, Fmat = Fmat, xlist = xlist,
-         initial.state = state)
+    ans <- list(xbest = xc, OFvalue = xcF, Fmat = Fmat, xlist = xlist,
+                initial.state = state)
+    if (algoD$classify)
+        class(ans) <- "LSopt"
+    ans
 }
 
 LS.info <- function(n = 0L) {
@@ -125,4 +128,11 @@ LS.info <- function(n = 0L) {
     ##     iteration <- get("counter", envir = e, inherits = FALSE)
     list(iteration = iteration,
          step = step)
+}
+
+print.LSopt <- function(x, ...) {
+    cat("Local Search\n\n")
+    cat("Number of iterations: ", nrow(x$Fmat), ".    ", sep = "")
+    cat("Best solution overall: ", prettyNum(x$OFvalue), "\n", sep = "")
+    invisible(x)
 }

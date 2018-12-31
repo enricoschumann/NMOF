@@ -16,7 +16,8 @@ DEopt <- function(OF, algo = list(), ...) {
                   initP = NULL,
                   storeF = TRUE,
                   storeSolutions = FALSE,
-                  minmaxConstr = FALSE)
+                  minmaxConstr = FALSE,
+                  classify = FALSE)
 
     checkList(algo, algoD)
     algoD[names(algo)] <- algo
@@ -206,7 +207,18 @@ DEopt <- function(OF, algo = list(), ...) {
             prettyNum(sd(vF)), " .\n\n", sep = "")
 
 
-    list(xbest = mP[ ,sgbest], OFvalue = sGbest,
-         popF = vF, Fmat = Fmat, xlist = xlist,
-         initial.state = state)
+    ans <- list(xbest = mP[ ,sgbest], OFvalue = sGbest,
+                popF = vF, Fmat = Fmat, xlist = xlist,
+                initial.state = state)
+    if (algoD$classify)
+        class(ans) <- "DEopt"
+    ans
+}
+
+print.DEopt <- function(x, ...) {
+    cat("Differential Evolution\n\n")
+    cat("Population size: ", length(x$popF), ".    ",
+        "Generations: ", dim(x$Fmat)[1L], ".\n", sep = "")
+    cat("Best solution overall: ", prettyNum(x$OFvalue), "\n", sep = "")
+    invisible(x)
 }

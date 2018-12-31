@@ -76,4 +76,6 @@ export(
 )
 
 S3method(plot, TAopt)
+S3method(print, LSopt)
 S3method(print, TAopt)
+S3method(print, DEopt)
