@@ -14,7 +14,8 @@ TAopt <- function(OF, algo = list(), ...) {
                   storeF = TRUE,
                   storeSolutions = FALSE,
                   classify = FALSE,
-                  OF.target = NULL)
+                  OF.target = NULL,
+                  thresholds.only = FALSE)
 
     checkList(algo, algoD)
     algoD[names(algo)] <- algo
@@ -121,6 +122,19 @@ TAopt <- function(OF, algo = list(), ...) {
     nT <- length(vT)
     niter <- nS * nT
 
+    if (algoD$thresholds.only) {
+        ans <- list(xbest = NA,
+                    OFvalue = NA,
+                    Fmat = NA,
+                    xlist = NA,
+                    vT = vT,
+                    initial.state = state,
+                    x0 = x0)
+        if (algoD$classify)
+            class(ans) <- "TAopt"
+        return(ans)
+    }
+    
     ## evaluate initial solution
     xc <- x0
     xcF <- OF1(xc)
@@ -242,7 +256,7 @@ TA.info <- function(n = 0L) {
 }
 
 
-                                        # METHODS
+        # METHODS
 
 print.TAopt <- function(x, ...) {
     nt <- length(x$vT)

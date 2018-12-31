@@ -115,6 +115,11 @@ TAopt(OF, algo = list(), \dots)
       as restarting from a returned solution. (In Simulated Annealing,
       this strategy goes by the name of \sQuote{reheating}.)}
 
+    \item{\code{thresholds.only}}{Defaults to
+      \code{FALSE}. If \code{TRUE}, compute only
+      threshold sequence, but do not actually run
+      \acronym{TA}.}
+ 
     \item{\code{storeF}}{if \code{TRUE} (the default), the objective
       function values for every solution in every generation are stored
       and returned as matrix \code{Fmat}.}
