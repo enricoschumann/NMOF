@@ -48,7 +48,7 @@ $N \times N$ in such a way that no queen is attacked. A
 queen may move vertically, horizontally and on a
 diagonal. So whenever there is more than one queen on
 any row, column or diagonal, the position is invalid. To
-solve the problem with an Local Search (LS), we need
+solve the problem with a Local Search (LS), we need
 three components:
 \begin{enumerate}
 \item a way to represent a solution (i.e. a position on
@@ -85,8 +85,8 @@ data.frame(row = 1:N, column = p)
 @ 
 
 
-\noindent We may also want to visualise a position, for which
-may use the function \texttt{print\_board}.
+\noindent We will also want to visualise a position, for which
+we write the function \texttt{print\_board}.
 <<>>=
 print_board <- function(p, q.char = "Q", sep = " ") {
     n <- length(p)
