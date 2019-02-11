@@ -45,9 +45,13 @@ minvar(var, wmin = 0, wmax = 1, method = "qp")
     Methods and Optimization in Finance}. Elsevier.
     \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-375662-6}
 
-    Schumann, E. (2017) Financial Optimisation with R (\pkg{NMOF} Manual).
+    Schumann, E. (2012) Computing the global minimum-variance
+    portfolio. \url{http://enricoschumann.net/R/minvar.htm}
+
+    Schumann, E. (2012--2018) Financial Optimisation with R (\pkg{NMOF} Manual).
     \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 
+    
 }
 \author{
   Enrico Schumann
