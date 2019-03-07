@@ -28,7 +28,7 @@ French(dest.dir, dataset = "F-F_Research_Data_Factors_CSV.zip",
     a character string: \code{daily}, \code{monthly} or
     \code{annual}. Whether it is used or ignored
     depends on the particular dataset.
-    
+
 }
   \item{price.series}{
     logical: convert the returns series into prices series?
@@ -39,7 +39,7 @@ French(dest.dir, dataset = "F-F_Research_Data_Factors_CSV.zip",
   }
 }
 \details{
-  
+
   The function downloads data provided by Kenneth
   French at
   \url{http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html}.
@@ -50,12 +50,11 @@ French(dest.dir, dataset = "F-F_Research_Data_Factors_CSV.zip",
   the function checks whether a file with today's
   prefix exist in \code{dest.dir}; if yes, the file
   used.
-  
+
   Missing values are usually coded as \code{-99} or
   similar values in the original data files. These
   numeric values are replaced by \code{\link{NA}}.
 
-  
 }
 \value{
 a \code{\link{data.frame}}
@@ -76,7 +75,6 @@ a \code{\link{data.frame}}
 %%   Shiller, R.J. (2015) \emph{Irrational
 %%   Exhuberance}. Princeton University Press. 3rd
 %%   edition.
-  
 %% }
 \author{
   Enrico Schumann
