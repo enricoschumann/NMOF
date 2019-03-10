@@ -47,6 +47,16 @@ French <- function(dest.dir,
                    price.series = FALSE,
                    na.rm = FALSE) {
 
+    if (match.call() == "French()") {
+        
+        files <- c(
+            "Portfolios_Formed_on_BE-ME_CSV.zip",
+            "Portfolios_Formed_on_VAR_CSV.zip",
+            "siccodes"
+        )
+        cat(sort(files), sep = "\n")
+        return(invisible(files))
+    }
     cnames <- NULL
 
     url <- if (dataset == "variance")
