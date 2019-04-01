@@ -50,9 +50,23 @@ French <- function(dest.dir,
     if (match.call() == "French()") {
         
         files <- c(
+            "49_Industry_Portfolios_CSV.zip",
+            "49_Industry_Portfolios_daily_CSV.zip",
+            "6_portfolios_2x3_CSV.zip",
+            "F-F_Research_Data_Factors_daily_CSV.zip",
+            "ME_Breakpoints_CSV.zip",
             "Portfolios_Formed_on_BE-ME_CSV.zip",
             "Portfolios_Formed_on_VAR_CSV.zip",
-            "siccodes"
+            "Portfolios_Formed_on_VAR_CSV.zip",
+
+            "Siccodes5.zip",
+            "Siccodes10.zip",
+            "Siccodes12.zip",
+            "Siccodes17.zip",
+            "Siccodes30.zip",
+            "Siccodes38.zip",
+            "Siccodes48.zip",
+            "Siccodes49.zip"
         )
         cat(sort(files), sep = "\n")
         return(invisible(files))
@@ -90,6 +104,9 @@ French <- function(dest.dir,
     file.remove(tmp2)
     dataset <- tolower(dataset)
 
+    if (grepl("daily", dataset) && frequency != "daily")
+        warning("daily dataset but frequency not set to daily")
+    
     if (grepl("siccodes", tolower(dataset))) {
         ans <- NULL
         for (i in seq_along(txt)) {
@@ -157,6 +174,7 @@ French <- function(dest.dir,
             ans <- txt[i[2]:j[2]]
         else
             stop("frequency not supported")
+
         
     } else if (tolower(dataset) == "f-f_research_data_factors_daily_csv.zip") {
 
@@ -200,6 +218,29 @@ French <- function(dest.dir,
         j <- j[min(which(j > i))]
 
         ans <- txt[(i+1):(j-1)]
+
+        if (grepl("industry_portfolios", dataset, ignore.case = TRUE) &&
+            frequency != "daily") {
+            i <- grep("number of firms", txt, ignore.case = TRUE) + 1
+            j <- grep("^$", txt)
+            j <- j[min(which(j > i))] - 1
+            info1 <- read.table(text = txt[i:j], header = TRUE,
+                                stringsAsFactors = FALSE, sep = ",",
+                                check.names = FALSE,
+                                colClasses = "numeric")
+            
+            i <- grep("average firm size", txt, ignore.case = TRUE) + 1
+            j <- grep("^$", txt)
+            j <- j[min(which(j > i))] - 1
+            info2 <- read.table(text = txt[i:j], header = TRUE,
+                                stringsAsFactors = FALSE, sep = ",",
+                                check.names = FALSE,
+                                colClasses = "numeric")
+
+        }
+        
+
+        
     } else {
         warning("dataset not supported")
         
@@ -255,5 +296,11 @@ French <- function(dest.dir,
     if (!is.null(cnames))
         colnames(ans) <- cnames
     row.names(ans) <- as.character(timestamp)
+
+    if (grepl("industry_portfolios", dataset, ignore.case = TRUE) &&
+        frequency != "daily") {
+        attr(ans, "number.of.firms") <- info1
+        attr(ans, "average.firm.size") <- info2
+    }
     ans
 }

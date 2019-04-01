@@ -9,7 +9,8 @@
 
 }
 \usage{
-French(dest.dir, dataset = "F-F_Research_Data_Factors_CSV.zip",
+French(dest.dir,
+       dataset = "F-F_Research_Data_Factors_CSV.zip",
        weighting = "value", frequency = "monthly",
        price.series = FALSE, na.rm = FALSE)
 }
@@ -18,7 +19,7 @@ French(dest.dir, dataset = "F-F_Research_Data_Factors_CSV.zip",
     character: a path to a directory
 }
   \item{dataset}{
-    a character string: the file name
+    a character string: the CSV file name
 }
   \item{weighting}{
     a character string: \code{"equal"} or \code{"value"}
@@ -30,13 +31,18 @@ French(dest.dir, dataset = "F-F_Research_Data_Factors_CSV.zip",
     depends on the particular dataset.
 
 }
-  \item{price.series}{
-    logical: convert the returns series into prices series?
+\item{price.series}{
+  
+  logical: convert the returns series into prices
+  series?
+  
 }
-  \item{na.rm}{
-    logical: remove missing values in the calculation
-    of price series?
-  }
+\item{na.rm}{
+
+  logical: remove missing values in the calculation of
+  price series?
+
+}
 }
 \details{
 
@@ -44,38 +50,27 @@ French(dest.dir, dataset = "F-F_Research_Data_Factors_CSV.zip",
   French at
   \url{http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html}.
 
-  The download file gets a date prefix (today in
+  The download file gets a date prefix (current date in
   format \code{YYYYMMDD}) and is stored in directory
   \code{dest.dir}. Before any download is attempted,
   the function checks whether a file with today's
   prefix exist in \code{dest.dir}; if yes, the file
   used.
 
-  Missing values are usually coded as \code{-99} or
-  similar values in the original data files. These
+  In the original data files, missing values are
+  coded as \code{-99} or similar. These
   numeric values are replaced by \code{\link{NA}}.
 
+  Calling the function without any arguments will print
+  the names of the supported datasets (and return them insivibly).
+  
 }
 \value{
-a \code{\link{data.frame}}
-%% a \code{\link{data.frame}}:
-%% \item{Date}{end of month}
-%% \item{Price}{numeric}
-%% \item{Dividend}{numeric}
-%% \item{Earnings}{numeric}
-%% \item{CPI}{numeric}
-%% \item{Long Rate}{numeric}
-%% \item{Real Price}{numeric}
-%% \item{Real Dividend}{numeric}
-%% \item{Real Earnings}{numeric}
-%% \item{CAPE}{numeric}
-}
-%% \references{
 
-%%   Shiller, R.J. (2015) \emph{Irrational
-%%   Exhuberance}. Princeton University Press. 3rd
-%%   edition.
-%% }
+  a \code{\link{data.frame}}, with contents
+  depending on the particular dataset
+
+}
 \author{
   Enrico Schumann
 }
@@ -83,6 +78,9 @@ a \code{\link{data.frame}}
   \code{\link{Shiller}}
 }
 \examples{
+## list all supported files
+French()
+
 \dontrun{
 archive.dir <- "~/Downloads/French"
 if (!dir.exists(archive.dir))

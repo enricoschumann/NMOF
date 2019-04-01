@@ -1,13 +1,13 @@
 Package: NMOF
 Type: Package
 Title: Numerical Methods and Optimization in Finance
-Version: 1.5-0
-Date: 2018-12-31
+Version: 1.6-0
+Date: 2019-04-01
 Maintainer: Enrico Schumann <es@enricoschumann.net>
 Authors@R: person("Enrico", "Schumann",
                   role  = c("aut", "cre"),
                   email = "es@enricoschumann.net",
-		  comment = c(ORCID = "0000-0001-7601-6576"))
+                  comment = c(ORCID = "0000-0001-7601-6576"))
 Depends: R (>= 2.14)
 Imports: grDevices, graphics, parallel, stats, utils
 Suggests: MASS, RUnit, datetimeutils, quadprog, readxl

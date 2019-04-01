@@ -126,7 +126,7 @@ mvFrontier <- function(m, var, wmin = 0, wmax = 1, n = 50, rf = NA) {
             portfolios[, i] <- result$solution
         }
         portfolios <- rbind(portfolios, cash)
-    
+
     }
     list(returns = rets,
          volatility = risk,
@@ -163,4 +163,3 @@ mvPortfolio <- function(m, var, min.return, wmin = 0, wmax = 1) {
 
     result
 }
-
