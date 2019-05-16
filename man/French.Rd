@@ -54,7 +54,7 @@ French(dest.dir,
   format \code{YYYYMMDD}) and is stored in directory
   \code{dest.dir}. Before any download is attempted,
   the function checks whether a file with today's
-  prefix exist in \code{dest.dir}; if yes, the file
+  prefix exist in \code{dest.dir}; if yes, the file is
   used.
 
   In the original data files, missing values are
