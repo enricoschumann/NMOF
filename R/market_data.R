@@ -68,13 +68,14 @@ French <- function(dest.dir,
             "49_Industry_Portfolios_daily_CSV.zip",
             "6_portfolios_2x3_CSV.zip",
             "6_portfolios_2x3_daily_CSV.zip",
+            "F-F_Momentum_Factor_CSV.zip",
             "F-F_Momentum_Factor_daily_CSV.zip",
             "F-F_Research_Data_Factors_daily_CSV.zip",
             "ME_Breakpoints_CSV.zip",
             "Portfolios_Formed_on_BE-ME_CSV.zip",
             "Portfolios_Formed_on_VAR_CSV.zip",
             "Portfolios_Formed_on_VAR_CSV.zip",
-            
+
             "Siccodes5.zip",
             "Siccodes10.zip",
             "Siccodes12.zip",
@@ -92,7 +93,7 @@ French <- function(dest.dir,
     if (!weighting %in% c("equal", "value"))
         stop("weighting must be ", sQuote("equal"),
              " or ",               sQuote("value"))
-    
+
     cnames <- character()
     attr.list <- list()
     read.ans <- TRUE
@@ -111,7 +112,7 @@ French <- function(dest.dir,
                     frequency == "daily")
                "F-F_Research_Data_Factors_daily_CSV.zip"
            else if (dataset %in% c("market", "rf"))
-               "F-F_Research_Data_Factors_CSV.zip"    
+               "F-F_Research_Data_Factors_CSV.zip"
            else
                dataset
 
@@ -141,7 +142,7 @@ French <- function(dest.dir,
     ##               headers should be included
     ##      cnames - column names to use
     ##   attr.list - named list of information to attach
-    
+
     if (grepl("siccodes", tolower(dataset))) {
         ans <- NULL
         for (i in seq_along(txt)) {
@@ -175,11 +176,11 @@ French <- function(dest.dir,
         read.ans <- FALSE
 
         if (frequency == "daily") {
-            
+
             i <- grep("Mkt-RF", txt)
             j <- grep("^ *$", txt)[2L] - 1
             ans <- txt[i:j]
-            
+
         } else {
 
             i <- grep("Mkt-RF", txt)
@@ -197,28 +198,28 @@ French <- function(dest.dir,
                           sep = ",",
                           check.names = FALSE,
                           colClasses = "numeric")
-        
+
         for (cc in seq_len(ncol(ans)))
             ans[[cc]][ ans[[cc]] < -99 ] <- NA
 
         timestamp <- .prepare_timestamp(ans[[1]], frequency)
-        
+
         ans <- ans[, -1L, drop = FALSE] ## drop timestamp
         ans <- ans/100
         ans <- ans[, "Mkt-RF", drop = FALSE] +
-               ans[, "RF",     drop = FALSE]            
-                
+               ans[, "RF",     drop = FALSE]
+
     } else if (tolower(dataset) == "rf") {
 
         cnames <- "rf"
         read.ans <- FALSE
 
         if (frequency == "daily") {
-            
+
             i <- grep("Mkt-RF", txt)
             j <- grep("^ *$", txt)[2L] - 1
             ans <- txt[i:j]
-            
+
         } else {
 
             i <- grep("Mkt-RF", txt)
@@ -236,16 +237,16 @@ French <- function(dest.dir,
                           sep = ",",
                           check.names = FALSE,
                           colClasses = "numeric")
-        
+
         for (cc in seq_len(ncol(ans)))
             ans[[cc]][ ans[[cc]] < -99 ] <- NA
 
         timestamp <- .prepare_timestamp(ans[[1]], frequency)
-        
+
         ans <- ans[, -1L, drop = FALSE] ## drop timestamp
         ans <- ans/100
-        ans <- ans[, "RF", drop = FALSE]            
-                
+        ans <- ans[, "RF", drop = FALSE]
+
     } else if (dataset == "me_breakpoints") {
 
         data <- read.table(text = txt, skip = 1,
@@ -262,7 +263,7 @@ French <- function(dest.dir,
         row.names(data) <- as.character( tmp[!is.na(tmp)] )
         data[, -1L] <- data[, -1L]*1000000
         return(data)
-        
+
     } else if (dataset == "6_portfolios_2x3_csv.zip") {
 
         if (weighting == "value")
@@ -310,7 +311,15 @@ French <- function(dest.dir,
         j <- grep("^ *$", txt)
         j <- min( j[j > i] )-1
         ans <- txt[i:j]
-        
+
+    } else if (tolower(dataset) == "f-f_momentum_factor_csv.zip") {
+        i <- grep(",Mom", txt)
+        i <- i[ c("monthly" = 1, "annual" = 2)[frequency] ]
+        j <- grep("^ *$", txt)
+        j <- min( j[j > i] ) - 1
+        ans <- txt[i:j]
+        cnames <- "Mom"
+
     } else if (tolower(dataset) == "f-f_research_data_factors_csv.zip") {
 
         i <- grep("Mkt-RF", txt)
@@ -354,7 +363,7 @@ French <- function(dest.dir,
     } else if (tolower(dataset) != "f-f_research_data_factors_csv.zip") {
 
         ## default
-        
+
         if (grepl("daily", dataset) && frequency != "daily")
             warning("daily dataset but frequency not set to daily")
 
@@ -369,7 +378,7 @@ French <- function(dest.dir,
         j <- j[min(which(j > i))]
 
         ans <- txt[(i+1):(j-1)]
-        
+
         if (grepl("industry_portfolios", dataset, ignore.case = TRUE) &&
             frequency != "daily") {
             i <- grep("number of firms", txt, ignore.case = TRUE) + 1
@@ -391,7 +400,7 @@ French <- function(dest.dir,
             attr.list <- list(
                 number.of.firms   = info1,
                 average.firm.size = info2)
-                
+
         }
 
     } else {
@@ -408,16 +417,16 @@ French <- function(dest.dir,
                           colClasses = "numeric")
         for (cc in seq_len(ncol(ans)))
             ans[[cc]][ ans[[cc]] < -99 ] <- NA
-        
+
         if (!requireNamespace("datetimeutils"))
             stop("package ", sQuote("datetimeutils"), " is required")
-        
+
         timestamp <- .prepare_timestamp(ans[[1L]], frequency)
-        
+
         ans <- ans[, -1L, drop = FALSE] ## drop timestamp
         ans <- ans/100
     }
-    
+
     if (price.series) {
         r0 <- numeric(ncol(ans))
         r0[is.na(ans[1L, ])] <- NA
@@ -453,11 +462,6 @@ French <- function(dest.dir,
     if (length(attr.list))
         for (i in seq_along(attr.list))
             attr(ans, names(attr.list)[i]) <- attr.list[[i]]
-    
-    ## if (grepl("industry_portfolios", dataset, ignore.case = TRUE) &&
-    ##     frequency != "daily") {
-    ##     attr(ans, "number.of.firms") <- info1
-    ##     attr(ans, "average.firm.size") <- info2
-    ## }
+
     ans
 }
