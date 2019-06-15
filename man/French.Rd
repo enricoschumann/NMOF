@@ -17,10 +17,14 @@ French(dest.dir,
 \arguments{
   \item{dest.dir}{
     character: a path to a directory
-}
+  }
   \item{dataset}{
-    a character string: the CSV file name
-}
+
+    a character string: the CSV file name. Also
+    supported are the keywords \sQuote{\code{market}}
+    and \sQuote{\code{rf}}.
+    
+  }
   \item{weighting}{
     a character string: \code{"equal"} or \code{"value"}
 }
