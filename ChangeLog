@@ -1,3 +1,10 @@
+2019-06-20  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/resampleC.R (resampleC): if cormat is a
+	single number, it is expanded into a constant
+	correlation matrix (this has worked before, but
+	only for the case of two series)
+
 2019-05-16  Enrico Schumann  <es@enricoschumann.net>
 
         * R/market_data.R (French): support
