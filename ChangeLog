@@ -1,3 +1,9 @@
+2019-06-25  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/market_data.R (French): support
+	"10_Portfolios_Prior_12_2_CSV.zip" and
+	"10_Portfolios_Prior_12_2_Daily_CSV.zip"
+
 2019-06-20  Enrico Schumann  <es@enricoschumann.net>
 
 	* R/resampleC.R (resampleC): if cormat is a

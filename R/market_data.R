@@ -64,6 +64,8 @@ French <- function(dest.dir,
     if (match.call() == "French()") {
 
         files <- c(
+            "10_Portfolios_Prior_12_2_CSV.zip",
+            "10_Portfolios_Prior_12_2_Daily_CSV.zip",
             "49_Industry_Portfolios_CSV.zip",
             "49_Industry_Portfolios_daily_CSV.zip",
             "6_portfolios_2x3_CSV.zip",
@@ -304,8 +306,35 @@ French <- function(dest.dir,
                     "big.high")
         attr.list <- list(
             original.headers = strsplit(txt[i], ",")[[1L]][-1L])
+    } else if (dataset == "10_portfolios_prior_12_2_csv.zip") {
+
+        if (weighting == "value")
+            i <- grep("Average Value Weighted Returns -- Monthly", txt)
+        else if (weighting == "equal")
+            i <- grep("Average Equal Weighted Returns -- Monthly", txt)
+
+        j <- grep("^ *$", txt)
+        j <- min( j[j > i] )-1
+        i <- i+1
+        ans <- txt[i:j]
+
+    } else if (dataset == "10_portfolios_prior_12_2_daily_csv.zip") {
+
+        frequency <- "daily"
+        i <- if (tolower(weighting) == "equal")
+                 grep("Equal Weighted Returns", txt)
+             else if (tolower(weighting) == "value")
+                 grep("Value Weighted Returns", txt)
+
+        j <- grep("^ *$", txt)
+        j <- suppressWarnings(min( j[j > i] )-1)
+        if (is.infinite(j))
+            j <- length(txt)
+        i <- i+1
+        ans <- txt[i:j]
 
     } else if (dataset == "f-f_momentum_factor_daily_csv.zip") {
+
         frequency <- "daily"
         i <- grep(",Mom", txt)
         j <- grep("^ *$", txt)
@@ -313,6 +342,7 @@ French <- function(dest.dir,
         ans <- txt[i:j]
 
     } else if (tolower(dataset) == "f-f_momentum_factor_csv.zip") {
+
         i <- grep(",Mom", txt)
         i <- i[ c("monthly" = 1, "annual" = 2)[frequency] ]
         j <- grep("^ *$", txt)

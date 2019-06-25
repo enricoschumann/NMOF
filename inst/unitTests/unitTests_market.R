@@ -1,40 +1,65 @@
 test.French <- function() {
 
-    library("NMOF")
-    library("RUnit")
+    ## library("NMOF")
+    ## library("RUnit")
 
     archive.dir <- "~/Downloads/French"
     if (!dir.exists(archive.dir))
         dir.create(archive.dir)
 
 
-    French("~/Downloads/French", "market",
-           frequency = "daily",
-           price.series = TRUE)
+    ## market
+    data <- French(archive.dir,
+                   "market",
+                   frequency = "daily",
+                   price.series = FALSE)
+    checkEquals(row.names(data)[1], "1926-07-01")
+    checkEquals(row.names(data)[2], "1926-07-02")
+
+    data <- French(archive.dir,
+                   "market",
+                   frequency = "daily",
+                   price.series = TRUE)
+    checkEquals(row.names(data)[1], "1926-06-30")
+
     
-    French("~/Downloads/French", "market",
-           frequency = "monthly",
-           price.series = TRUE)
+    data <- French(archive.dir, "market",
+                   frequency = "monthly",
+                   price.series = FALSE)
+    checkEquals(row.names(data)[1], "1926-07-31")
     
-    French("~/Downloads/French", "market",
-           frequency = "annual",
-           price.series = TRUE)
+    data <- French(archive.dir, "market",
+                   frequency = "monthly",
+                   price.series = TRUE)
+    checkEquals(row.names(data)[1], "1926-06-30")
+
+    data <- French(archive.dir, "market",
+                   frequency = "annual",
+                   price.series = FALSE)
+    checkEquals(row.names(data)[1], "1927")
+
+    data <- French(archive.dir, "market",
+                   frequency = "annual",
+                   price.series = TRUE)
+    checkEquals(row.names(data)[1], "1926")
+
     
-    French("~/Downloads/French", "rf",
-           frequency = "daily",
-           price.series = TRUE)
-    
-    French("~/Downloads/French", "rf",
-           frequency = "monthly",
-           price.series = TRUE)
-    
-    French("~/Downloads/French", "rf",
-           frequency = "annual",
-           price.series = TRUE)
+    ## rf
+    data <- French(archive.dir, "rf",
+                   frequency = "daily",
+                   price.series = TRUE)
+
+    data <- French(archive.dir, "rf",
+                   frequency = "monthly",
+                   price.series = TRUE)
+
+    data <- French(archive.dir, "rf",
+                   frequency = "annual",
+                   price.series = TRUE)
 
 
 
-    
+
     dataset <- "6_Portfolios_2x3_CSV.zip"
 
     data <- French(archive.dir, dataset, price.series = TRUE)
@@ -59,20 +84,21 @@ test.French <- function() {
 
 
 
-
-
-
     data <- French(archive.dir, "F-F_Momentum_Factor_daily_CSV.zip",
-                   price.series = TRUE, frequency = "daily")
-    data <- French(archive.dir, "F-F_Momentum_Factor_CSV.zip",
-                   price.series = TRUE)
+                   price.series = FALSE, frequency = "daily")
+    checkEquals(row.names(data)[1], "1926-11-03")
+    checkEquals(row.names(data)[2], "1926-11-04")
 
+    data <- French(archive.dir, "F-F_Momentum_Factor_CSV.zip",
+                   price.series = FALSE)
+    checkEquals(row.names(data)[1], "1927-01-31")
+
+    ## Size and momentum
     data <- French(archive.dir, "6_Portfolios_ME_Prior_12_2_CSV.zip",
                    price.series = TRUE)
-    plot(data[,1])
+
     data <- French(archive.dir, "6_Portfolios_ME_Prior_12_2_Daily_CSV.zip",
                    price.series = TRUE, frequency = "daily")
-    plot(as.Date(row.names(data)), data[,1])
 
 
 
@@ -83,7 +109,7 @@ test.French <- function() {
     data <- French(archive.dir, "49_Industry_Portfolios_daily_CSV.zip",
                    frequency = "daily", weighting = "value")
 
-    P <- French("~/Downloads/French",  ## path where to store raw file
+    P <- French(archive.dir,  ## path where to store raw file
                 dataset = "48_Industry_Portfolios_daily_CSV.zip",
                 weighting = "value",
                 frequency = "daily",
@@ -92,6 +118,18 @@ test.French <- function() {
 
 
 
+    ## Momentum
+    data <- French(archive.dir,
+                   "10_Portfolios_Prior_12_2_CSV.zip",
+                   frequency = "monthly", weighting = "value")
+    data <- French(archive.dir,
+                   "10_Portfolios_Prior_12_2_CSV.zip",
+                   frequency = "monthly", weighting = "equal")
 
-
+    data <- French(archive.dir,
+                   "10_Portfolios_Prior_12_2_Daily_CSV.zip",
+                   frequency = "daily", weighting = "value")
+    data <- French(archive.dir,
+                   "10_Portfolios_Prior_12_2_Daily_CSV.zip",
+                   frequency = "daily", weighting = "equal")
 }

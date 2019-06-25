@@ -1,5 +1,9 @@
 v1.7-0  (2019-??-??; not yet released)
 
+  o 'French' supports more datasets, e.g. for
+    momentum. Invoking 'French()' lists the
+    supported files.
+
   o 'resampleC': 'cormat' can be a single
     number (the correlation), which is then
     expanded into a correlation matrix (this
