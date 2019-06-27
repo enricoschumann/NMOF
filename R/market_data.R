@@ -15,7 +15,8 @@ Shiller <- function(dest.dir,
     if (!requireNamespace("datetimeutils", quietly = TRUE))
         stop("package ", sQuote("datetimeutils"), " is not available")
 
-    data <- readxl::read_xls(f.path, sheet = 3)
+    data <- suppressMessages(suppressWarnings(
+        readxl::read_xls(f.path, sheet = 3)))
     data <- as.data.frame(data)
     data <- data[-(1:6), ]
     data <- data[, 1:11]

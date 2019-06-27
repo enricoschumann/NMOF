@@ -1,25 +1,41 @@
+2019-06-27  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R (Shiller): suppress warnings
+        that are issued with new version of 'readxl'
+
+2019-06-26  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/DEopt.R, PSopt.R (DEopt, PSopt): DEopt and
+        PSopt gain a 'drop' option. If FALSE, the
+        dimension attribute of a solution is kept when
+        the population is evaluated via a loop,
+        i.e. functions receive a one-column
+        matrix. Note that the defaults differ for both
+        functions, so that the functions behave as
+        before.
+
 2019-06-25  Enrico Schumann  <es@enricoschumann.net>
 
-	* R/market_data.R (French): support
-	"10_Portfolios_Prior_12_2_CSV.zip" and
-	"10_Portfolios_Prior_12_2_Daily_CSV.zip"
+        * R/market_data.R (French): support
+        "10_Portfolios_Prior_12_2_CSV.zip" and
+        "10_Portfolios_Prior_12_2_Daily_CSV.zip"
 
 2019-06-20  Enrico Schumann  <es@enricoschumann.net>
 
-	* R/resampleC.R (resampleC): if cormat is a
-	single number, it is expanded into a constant
-	correlation matrix (this has worked before, but
-	only for the case of two series)
+        * R/resampleC.R (resampleC): if cormat is a
+        single number, it is expanded into a constant
+        correlation matrix (this has worked before, but
+        only for the case of two series)
 
 2019-05-16  Enrico Schumann  <es@enricoschumann.net>
 
         * R/market_data.R (French): support
-	"F-F_Momentum_Factor_CSV.zip"
+        "F-F_Momentum_Factor_CSV.zip"
 
 2019-04-16  Enrico Schumann  <es@enricoschumann.net>
 
-	* R/market_data.R (French): support datasets
-	"market" and "rf"
+        * R/market_data.R (French): support datasets
+        "market" and "rf"
 
 2019-04-01  Enrico Schumann  <es@enricoschumann.net>
 
