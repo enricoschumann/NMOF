@@ -12,8 +12,9 @@ PSopt <- function(OF, algo = list(), ...) {
                   initP = NULL,
                   storeF = TRUE,
                   storeSolutions = FALSE,
-                  minmaxConstr = FALSE
-                  )
+                  minmaxConstr = FALSE,
+                  classify = FALSE,
+                  drop = TRUE)
 
     checkList(algo, algoD)
     algoD[names(algo)] <- algo
@@ -86,7 +87,7 @@ PSopt <- function(OF, algo = list(), ...) {
     if (!is.null(algoD$repair)) {
         if (algoD$loopRepair) {
             for(s in seq_len(nP))
-                mP[ ,s] <- Re1(mP[ ,s])
+                mP[, s] <- Re1(mP[, s, drop = algoD$drop])
         } else {
             mP <- Re1(mP)
             if (!all(dim(mP) == c(d, nP)))
@@ -94,7 +95,8 @@ PSopt <- function(OF, algo = list(), ...) {
         }
     }
     if (algoD$loopOF) {
-        for(s in seq_len(nP)) vF[s] <- OF1(mP[,s])
+        for(s in seq_len(nP))
+            vF[s] <- OF1(mP[, s, drop = algoD$drop])
     } else {
         vF <- OF1(mP)
         if (length(vF) != nP)
@@ -103,7 +105,8 @@ PSopt <- function(OF, algo = list(), ...) {
     }
     if (!is.null(algoD$pen)) {
         if(algoD$loopPen){
-            for(s in seq_len(nP)) vPv[s] <- Pe1(mP[,s])
+            for(s in seq_len(nP))
+                vPv[s] <- Pe1(mP[, s, drop = algoD$drop])
         } else {
             vPv <- Pe1(mP)
             if (length(vPv) != nP)
@@ -128,14 +131,14 @@ PSopt <- function(OF, algo = list(), ...) {
             setTxtProgressBar(whatGen, value = g)
         ## update population
         mDV <- algoD$c1 * runif(d*nP) * (mPbest - mP) +
-               algoD$c2 * runif(d*nP) * (mPbest[ ,sgbest] - mP)
+               algoD$c2 * runif(d*nP) * (mPbest[, sgbest] - mP)
         mV <- algoD$iner * mV + mDV
         mV <- pmin2(mV,  algoD$maxV)
         mV <- pmax2(mV, -algoD$maxV)
         if (!is.null(algoD$changeV)) {
             if (algoD$loopChangeV){
                 for (s in seq_len(nP))
-                    mV[ ,s] <- cV1(mV[ ,s])
+                    mV[, s] <- cV1(mV[, s, drop = algoD$drop])
             } else
             mV <- cV1(mV)
         }
@@ -147,19 +150,21 @@ PSopt <- function(OF, algo = list(), ...) {
         if (!is.null(algoD$repair)) {
             if (algoD$loopRepair){
                 for (s in seq_len(nP))
-                    mP[ ,s] <- Re1(mP[ ,s])
+                    mP[, s] <- Re1(mP[, s, drop = algoD$drop])
             } else
             mP <- Re1(mP)
         }
 
         if (algoD$loopOF) {
-            for (s in seq_len(nP)) vF[s] <- OF1(mP[ ,s])
+            for (s in seq_len(nP))
+                vF[s] <- OF1(mP[ ,s, drop = algoD$drop])
         } else
         vF <- OF1(mP)
 
         if(!is.null(algoD$pen)) {
             if (algoD$loopPen){
-                for (s in seq_len(nP)) vPv[s] <- Pe1(mP[ ,s])
+                for (s in seq_len(nP))
+                    vPv[s] <- Pe1(mP[ ,s, drop = algoD$drop])
             } else
             vPv <- Pe1(mP)
             vF <- vF + vPv
@@ -201,8 +206,21 @@ PSopt <- function(OF, algo = list(), ...) {
             "\nstandard deviation of OF in final population is ",
             prettyNum(sd(vF)), " .\n\n", sep = "")
 
-    ## return best solution
-    list(xbest = mPbest[,sgbest], OFvalue = sGbest,
-         popF = vFbest, Fmat = Fmat, xlist = xlist,
-         initial.state = state)
+    ans <- list(xbest = mPbest[, sgbest],
+                OFvalue = sGbest,
+                popF = vFbest,
+                Fmat = Fmat,
+                xlist = xlist,
+                initial.state = state)
+    if (algoD$classify)
+        class(ans) <- "PSopt"
+    ans
+}
+
+print.PSopt <- function(x, ...) {
+    cat("Particle Swarm Optimisation\n\n")
+    cat("Population size: ", length(x$popF), ".    ",
+        "Generations: ", dim(x$Fmat)[1L], ".\n", sep = "")
+    cat("Best solution overall: ", prettyNum(x$OFvalue), "\n", sep = "")
+    invisible(x)
 }

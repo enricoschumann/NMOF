@@ -16,7 +16,8 @@ GAopt <- function (OF, algo = list(), ...) {
                   initP = NULL,
                   storeF = TRUE,
                   storeSolutions = FALSE,
-                  crossover = c("onePoint", "uniform")
+                  crossover = c("onePoint", "uniform"),
+                  classify = FALSE
                   )
 
     checkList(algo, algoD)

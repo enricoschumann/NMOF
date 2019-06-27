@@ -129,7 +129,21 @@ DEopt(OF, algo = list(), ...)
       with other functions, \code{xlist} is itself a list. In the case
       of \code{DEopt}, it contains just one element.)}
 
-  } % end describe  
+    \item{\code{classify}}{Logical; default is \code{FALSE}. If
+      \code{TRUE}, the result will have a class attribute \code{TAopt}
+      attached. This feature is \strong{experimental}: the supported
+      methods may change without warning.}
+    
+    \item{\code{drop}}{
+
+      If \code{FALSE} (the default), the dimension is
+      not dropped from a single solution when it is
+      passed to a function. (That is, the function will
+      receive a single-column matrix.)
+
+    }
+
+  } % end describe
 } % end Details
 \value{
   A list:
@@ -146,7 +160,7 @@ DEopt(OF, algo = list(), ...)
   \item{\code{initial.state}}{the value of \code{\link{.Random.seed}}
     when the function was called.}
 
-  
+
 } % end value
 \references{
   Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods
@@ -161,13 +175,13 @@ DEopt(OF, algo = list(), ...)
   heuristic optimization methods'.
   \url{http://enricoschumann.net/R/remarks.htm}
 
-  Schumann, E. (2017) Financial Optimisation with R (\pkg{NMOF} Manual).
+  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
-  
+
   Storn, R., and Price, K. (1997) Differential Evolution -- a Simple and
   Efficient Heuristic for Global Optimization over Continuous Spaces.
   \emph{Journal of Global Optimization}, \bold{11}(4), pp. 341--359.
-  
+
 } % end references
 \author{
   Enrico Schumann

@@ -144,6 +144,14 @@ GAopt (OF, algo = list(), ...)
       check, for instance, the solutions at the end of the \code{i}th
       generation, retrieve \code{xlist[[c(1L, i)]]}. This will be a
       matrix of size \code{algo$nB} times \code{algo$nP}.}
+
+    \item{\code{classify}}{Logical; default is
+      \code{FALSE}. If \code{TRUE}, the result will
+      have a class attribute \code{TAopt}
+      attached. This feature is \strong{experimental}:
+      the supported methods may change without
+      warning.}
+
   }
 }
 \value{
@@ -168,7 +176,7 @@ GAopt (OF, algo = list(), ...)
     Methods and Optimization in Finance}. Elsevier.
   \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
 
-  Schumann, E. (2017) Financial Optimisation with R (\pkg{NMOF} Manual).
+  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 
 }

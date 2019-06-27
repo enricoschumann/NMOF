@@ -163,6 +163,21 @@ PSopt(OF, algo = list(), ...)
       i)]]}. \code{P[[i]]} and \code{Pbest[[i]]} will be matrices of size
       \code{length(algo$min)} times \code{algo$nP}.}
 
+    \item{\code{classify}}{Logical; default is \code{FALSE}. If
+      \code{TRUE}, the result will have a class attribute \code{TAopt}
+      attached. This feature is \strong{experimental}: the supported
+      methods may change without warning.}
+
+    \item{\code{drop}}{
+
+      Default is \code{TRUE}. If \code{FALSE}, the dimension is
+      not dropped from a single solution when it is
+      passed to a function. (That is, the function will
+      receive a single-column matrix.)
+
+    }
+
+    
   } % end describe
 } % end details
 \value{

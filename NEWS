@@ -1,14 +1,33 @@
-v1.7-0  (2019-??-??; not yet released)
+v2.0-0  (2019-??-??; not yet released)
 
   o 'French' supports more datasets, e.g. for
     momentum. Invoking 'French()' lists the
-    supported files.
+    supported files. Also supported are
+    datasets "market" and "rf", which provide
+    the market return and the (so-called)
+    risk-free rate.
 
   o 'resampleC': 'cormat' can be a single
     number (the correlation), which is then
     expanded into a correlation matrix (this
     has worked before, but only for the case
     of two series)
+
+  o 'DEopt' and 'PSopt' gain a 'drop'
+    option. If FALSE, the dimension attribute
+    of a solution is kept when the population
+    is evaluated via a loop, i.e. functions
+    receive a one-column matrix. Note that
+    the defaults differ for both functions,
+    so as to keep both functions' behaviour
+    unchanged.
+
+  o a tutorial on heuristic optimisation is
+    available at https://ssrn.com/abstract=3391756
+
+  o a tutorial on backtesting which makes
+    much use of the NMOF package is available
+    at https://ssrn.com/abstract=3374195
 
 v1.6-0  (2019-04-01)
 

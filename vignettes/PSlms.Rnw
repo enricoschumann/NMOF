@@ -43,18 +43,18 @@ We start by attaching the \texttt{NMOF} package and fixing a seed.  We
 will use the function \texttt{lqs} from the \texttt{MASS} package
 \citep{Venables2002}, so we attach that package as well.
 <<>>=
-require("NMOF")
-require("MASS")
+library("NMOF")
+library("MASS")
 set.seed(11223344)
-@ 
+@
 We will use an artificial data set with \texttt{n}~observations and
 \texttt{p}~regressors, created with the function \texttt{createData}.
 <<>>=
 createData <- function(n, p, constant = TRUE,
                        sigma = 2, oFrac = 0.1) {
     X <- array(rnorm(n * p), dim = c(n, p))
-    if (constant) 
-        X[ ,1L] <- 1L
+    if (constant)
+        X[, 1L] <- 1L
     b <- rnorm(p)
     y <- X %*% b + rnorm(n)*0.5
     nO <- ceiling(oFrac*n)
@@ -62,7 +62,7 @@ createData <- function(n, p, constant = TRUE,
     X[when, -1L] <- X[when, -1L] + rnorm(nO, sd = sigma)
     list(X = X, y = y, outliers = when)
 }
-@ 
+@
 The function also takes arguments \texttt{constant} (logical: should
 the data-generating model contain a constant?); \texttt{sigma}
 (standard deviation of the outliers); and \texttt{oFrac} (fraction of
@@ -89,7 +89,7 @@ The outliers, added in blue, are often visible.
 <<fig = TRUE, height = 3.8>>=
 par(bty = "n", las = 1, tck = 0.01, mar = c(4,4,1,1))
 plot(X[ ,2L], type = "h", ylab = "X values", xlab = "observation")
-lines(aux$outliers, X[aux$outliers ,2L], type = "p", pch = 21, 
+lines(aux$outliers, X[aux$outliers ,2L], type = "p", pch = 21,
       col = "blue", bg = "blue")
 @
 
@@ -151,7 +151,7 @@ if (require("MASS", quietly = TRUE)) {
                              nsamp = 100000L, method = "lqs",
                              quantile = h))
     res1 <- sort((y - X %*% as.matrix(coef(test1)))^2)[h]
-} else 
+} else
     res1 <- NA
 res2 <- sort((y - X %*% as.matrix(solPS$xbest))^2)[h]
 res3 <- sort((y - X %*% as.matrix(solDE$xbest))^2)[h]

@@ -17,7 +17,8 @@ DEopt <- function(OF, algo = list(), ...) {
                   storeF = TRUE,
                   storeSolutions = FALSE,
                   minmaxConstr = FALSE,
-                  classify = FALSE)
+                  classify = FALSE,
+                  drop = FALSE)
 
     checkList(algo, algoD)
     algoD[names(algo)] <- algo
@@ -50,8 +51,8 @@ DEopt <- function(OF, algo = list(), ...) {
     if ( length(algoD$F) > 1L && length(algoD$F) != d ) {
         warning("only first element of 'F' will be used")
         F <- algoD$F[1L]
-    }
-    F <- algoD$F[1L]
+    } else
+        F <- algoD$F
 
     printDetail <- algoD$printDetail
     printBar <- algoD$printBar
@@ -99,7 +100,7 @@ DEopt <- function(OF, algo = list(), ...) {
     if (!is.null(algoD$repair)) {
         if (algoD$loopRepair){
             for (s in snP)
-                mP[ ,s] <- Re1(mP[ , s, drop=FALSE])
+                mP[ ,s] <- Re1(mP[, s, drop = algoD$drop])
         } else {
             mP <- Re1(mP)
             if (!all(dim(mP) == c(d, nP)))
@@ -109,7 +110,7 @@ DEopt <- function(OF, algo = list(), ...) {
     ## 2) evaluate
     if (algoD$loopOF){
         for (s in snP)
-            vF[s] <- OF1(mP[ , s, drop=FALSE])
+            vF[s] <- OF1(mP[, s, drop = algoD$drop])
     } else {
         vF <- OF1(mP)
         if (length(vF) != nP)
@@ -118,7 +119,7 @@ DEopt <- function(OF, algo = list(), ...) {
     ## 3) penalise
     if (!is.null(algoD$pen)) {
         if (algoD$loopPen) {
-            for (s in snP) vPv[s] <- Pe1(mP[ ,s , drop=FALSE])
+            for (s in snP) vPv[s] <- Pe1(mP[ ,s , drop = algoD$drop])
         } else {
             vPv <- Pe1(mP)
             if (length(vPv) != nP)
@@ -154,21 +155,21 @@ DEopt <- function(OF, algo = list(), ...) {
         if (!is.null(algoD$repair)) {
             if (algoD$loopRepair) {
                 for (s in snP)
-                    mPv[ ,s] <- Re1(mPv[ , s, drop=FALSE])
+                    mPv[, s] <- Re1(mPv[, s, drop=algoD$drop])
             } else {
                 mPv <- Re1(mPv)
             }
         }
         if (algoD$loopOF) {
             for (s in snP)
-                vFv[s] <- OF1(mPv[ , s, drop=FALSE])
+                vFv[s] <- OF1(mPv[, s, drop=algoD$drop])
         } else {
             vFv <- OF1(mPv)
         }
         if (!is.null(algoD$pen)) {
             if (algoD$loopPen){
                 for (s in snP)
-                    vPv[s] <- Pe1(mPv[ , s, drop=FALSE])
+                    vPv[s] <- Pe1(mPv[ , s, drop=algoD$drop])
             } else {
                 vPv <- Pe1(mPv)
             }
@@ -176,7 +177,7 @@ DEopt <- function(OF, algo = list(), ...) {
         }
         ## find improvements
         logik <- vFv < vF
-        mP[ ,logik] <- mPv[ ,logik, drop=FALSE]
+        mP[, logik] <- mPv[, logik, drop=FALSE]
         vF[logik] <- vFv[logik]
         if (algoD$storeF)
             Fmat[g, ] <- vF
@@ -206,9 +207,11 @@ DEopt <- function(OF, algo = list(), ...) {
             "\nstandard deviation of OF in final population is ",
             prettyNum(sd(vF)), " .\n\n", sep = "")
 
-
-    ans <- list(xbest = mP[ ,sgbest], OFvalue = sGbest,
-                popF = vF, Fmat = Fmat, xlist = xlist,
+    ans <- list(xbest = mP[, sgbest],
+                OFvalue = sGbest,
+                popF = vF,
+                Fmat = Fmat,
+                xlist = xlist,
                 initial.state = state)
     if (algoD$classify)
         class(ans) <- "DEopt"
