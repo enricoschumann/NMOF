@@ -22,12 +22,12 @@ test.French <- function() {
                    price.series = TRUE)
     checkEquals(row.names(data)[1], "1926-06-30")
 
-    
+
     data <- French(archive.dir, "market",
                    frequency = "monthly",
                    price.series = FALSE)
     checkEquals(row.names(data)[1], "1926-07-31")
-    
+
     data <- French(archive.dir, "market",
                    frequency = "monthly",
                    price.series = TRUE)
@@ -43,7 +43,7 @@ test.French <- function() {
                    price.series = TRUE)
     checkEquals(row.names(data)[1], "1926")
 
-    
+
     ## rf
     data <- French(archive.dir, "rf",
                    frequency = "daily",
@@ -106,17 +106,17 @@ test.French <- function() {
     checkTrue(is.character(files))
     checkTrue(length(files) > 1)
 
-    data <- French(archive.dir, "49_Industry_Portfolios_daily_CSV.zip",
-                   frequency = "daily", weighting = "value")
+    data <- French(archive.dir,
+                   dataset = "49_Industry_Portfolios_daily_CSV.zip",
+                   frequency = "daily",
+                   weighting = "value")
 
-    P <- French(archive.dir,  ## path where to store raw file
-                dataset = "48_Industry_Portfolios_daily_CSV.zip",
-                weighting = "value",
-                frequency = "daily",
-                price.series = TRUE,
-                na.rm = TRUE)
-
-
+    data <- French(archive.dir,
+                   dataset = "48_Industry_Portfolios_daily_CSV.zip",
+                   frequency = "daily",
+                   weighting = "value",
+                   price.series = TRUE,
+                   na.rm = TRUE)
 
     ## Momentum
     data <- French(archive.dir,
