@@ -12,7 +12,8 @@
 French(dest.dir,
        dataset = "F-F_Research_Data_Factors_CSV.zip",
        weighting = "value", frequency = "monthly",
-       price.series = FALSE, na.rm = FALSE)
+       price.series = FALSE, na.rm = FALSE,
+       adjust.frequency = TRUE)
 }
 \arguments{
   \item{dest.dir}{
@@ -23,7 +24,7 @@ French(dest.dir,
     a character string: the CSV file name. Also
     supported are the keywords \sQuote{\code{market}}
     and \sQuote{\code{rf}}.
-    
+
   }
   \item{weighting}{
     a character string: \code{"equal"} or \code{"value"}
@@ -36,15 +37,22 @@ French(dest.dir,
 
 }
 \item{price.series}{
-  
+
   logical: convert the returns series into prices
   series?
-  
+
 }
 \item{na.rm}{
 
   logical: remove missing values in the calculation of
   price series?
+
+}
+\item{adjust.frequency}{
+
+  logical: if \code{TRUE}, frequency is switched to
+  \sQuote{\code{"daily"}} when the word
+  \sQuote{\code{"daily"}} appears in the dataset's name
 
 }
 }
@@ -67,7 +75,7 @@ French(dest.dir,
 
   Calling the function without any arguments will print
   the names of the supported datasets (and return them insivibly).
-  
+
 }
 \value{
 

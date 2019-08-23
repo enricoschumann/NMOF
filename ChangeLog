@@ -1,3 +1,10 @@
+2019-08-23  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R (French): new argument
+        'adjust.frequency': if TRUE (the default),
+        frequency is set to TRUE if the dataset looks
+        like a daily file
+
 2019-06-27  Enrico Schumann  <es@enricoschumann.net>
 
         * R/market_data.R (Shiller): suppress warnings

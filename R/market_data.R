@@ -46,7 +46,8 @@ French <- function(dest.dir,
                    weighting = "value",
                    frequency = "monthly",
                    price.series = FALSE,
-                   na.rm = FALSE) {
+                   na.rm = FALSE,
+                   adjust.frequency = TRUE) {
 
     .prepare_timestamp <- function(x, freq) {
         if (freq == "monthly")
@@ -61,6 +62,7 @@ French <- function(dest.dir,
             stop("unknown frequency")
         timestamp
     }
+
 
     if (match.call() == "French()") {
 
@@ -101,7 +103,7 @@ French <- function(dest.dir,
     attr.list <- list()
     read.ans <- TRUE
 
-    url <- if (dataset == "variance")
+    dataset <- if (dataset == "variance")
                "Portfolios_Formed_on_VAR_CSV.zip"
            else if (dataset == "industry49" && frequency == "monthly")
                "49_Industry_Portfolios_CSV.zip"
@@ -119,6 +121,15 @@ French <- function(dest.dir,
            else
                dataset
 
+    if (adjust.frequency        &&
+        grepl("daily", dataset) &&
+        frequency != "daily") {
+        message("frequency set to daily (use ",
+                sQuote("adjust.frequency = FALSE"),
+                " to prevent this)")
+        frequency <- "daily"
+    }
+
     if (grepl("TXT.zip$", dataset)) {
         warning("expected file ending in 'CSV.zip'")
         dataset <- sub("TXT.zip$", "CSV.zip", dataset)
@@ -126,11 +137,11 @@ French <- function(dest.dir,
 
     .ftp <- "http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/"
 
-    f.name <- paste0(format(Sys.Date(), "%Y%m%d_"), url)
+    f.name <- paste0(format(Sys.Date(), "%Y%m%d_"), dataset)
     f.path <- file.path(normalizePath(dest.dir), f.name)
 
     if (!file.exists(f.path))
-        download.file(paste0(.ftp, url), f.path)
+        download.file(paste0(.ftp, dataset), f.path)
 
     tmp2 <- unzip(f.path)
     txt <- readLines(tmp2)
