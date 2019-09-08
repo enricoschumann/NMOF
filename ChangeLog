@@ -1,3 +1,10 @@
+2019-09-08  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/showExample.R, internals.R: replace the
+        vector 'Chapters' (which is not exported) with
+        'Chapters1' and 'Chapters2' (the chapter names of
+        the first and second edition)
+
 2019-08-23  Enrico Schumann  <es@enricoschumann.net>
 
         * R/market_data.R (French): new argument

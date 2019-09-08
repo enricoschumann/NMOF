@@ -1,9 +1,59 @@
-showChapterNames <- function()
-    Chapters
+Chapters1 <- c("Introduction",
+               "Numerical analysis in a nutshell",
+               "Linear equations and Least Squares problems",
+               "Finite difference methods",
+               "Binomial trees",
+               "Generating random numbers",
+               "Modeling dependencies",
+               "A gentle introduction to financial simulation",
+               "Financial simulation at work: some case studies",
+               "Optimization problems in finance",
+               "Basic methods",
+               "Heuristic methods in a nutshell",
+               "Portfolio optimization",
+               "Econometric models",
+               "Calibrating option pricing models")
 
-showExample <- function(file = "", chapter = NULL,
-                        showfile = TRUE, includepaths= FALSE, ...) {
+Chapters2 <- c("Introduction",
+               "Numerical analysis in a nutshell",
+               "Linear equations and Least Squares problems",
+               "Finite difference methods",
+               "Binomial trees",
+               "Generating random numbers",
+               "Modeling dependencies",
+               "A gentle introduction to financial simulation",
+               "Financial simulation at work: some case studies",
+               "Optimization problems in finance",
+               "Basic methods",
+               "Heuristic methods in a nutshell",
+               "Heuristics: a tutorial",
+               "Portfolio optimization",
+               "Backtesting",
+               "Econometric models",
+               "Calibrating option pricing models")
 
+showChapterNames <- function(edition) {
+    if (edition == 1)
+        Chapters1
+    else if (edition == 2)
+        Chapter2
+    else
+        stop("unknown edition")
+}
+
+showExample <- function(file = "",
+                        chapter = NULL,
+                        showfile = TRUE,
+                        includepaths= FALSE,
+                        edition = 2,
+                        search, ...) {
+
+    if (edition == 1)
+        Chapters <- Chapters1
+    else if (edition == 2)
+        Chapters <- Chapters2
+    else
+        stop("unknown edition")
     ChapterDirs <- c("Introduction",
                      "NumAnNutshell",
                      "LinEqsLSP",
