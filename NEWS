@@ -1,4 +1,4 @@
-v2.0-0  (2019-??-??; not yet released)
+v2.0-0  (2019-10-20; not yet released)
 
   o 'French' supports more datasets, e.g. for
     momentum. Invoking 'French()' lists the
@@ -13,6 +13,8 @@ v2.0-0  (2019-??-??; not yet released)
     has worked before, but only for the case
     of two series)
 
+  o new functions 'greedySearch' and 'randomReturns'
+
   o 'DEopt' and 'PSopt' gain a 'drop'
     option. If FALSE, the dimension attribute
     of a solution is kept when the population
@@ -22,7 +24,7 @@ v2.0-0  (2019-??-??; not yet released)
     so as to keep both functions' behaviour
     unchanged.
 
-  o a tutorial on heuristic optimisation is
+  o a tutorial on optimisation heuristics is
     available at https://ssrn.com/abstract=3391756
 
   o a tutorial on backtesting which makes
