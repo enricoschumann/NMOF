@@ -103,7 +103,7 @@ French <- function(dest.dir,
     attr.list <- list()
     read.ans <- TRUE
 
-    dataset <- if (dataset == "variance")
+    url <- if (dataset == "variance")
                "Portfolios_Formed_on_VAR_CSV.zip"
            else if (dataset == "industry49" && frequency == "monthly")
                "49_Industry_Portfolios_CSV.zip"
@@ -137,11 +137,11 @@ French <- function(dest.dir,
 
     .ftp <- "http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/"
 
-    f.name <- paste0(format(Sys.Date(), "%Y%m%d_"), dataset)
+    f.name <- paste0(format(Sys.Date(), "%Y%m%d_"), url)
     f.path <- file.path(normalizePath(dest.dir), f.name)
 
     if (!file.exists(f.path))
-        download.file(paste0(.ftp, dataset), f.path)
+        download.file(paste0(.ftp, url), f.path)
 
     tmp2 <- unzip(f.path)
     txt <- readLines(tmp2)

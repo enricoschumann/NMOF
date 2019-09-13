@@ -27,6 +27,8 @@ test.French <- function() {
                    frequency = "monthly",
                    price.series = FALSE)
     checkEquals(row.names(data)[1], "1926-07-31")
+    checkTrue(min(data) > -1)
+    checkTrue(max(data) < 2)
 
     data <- French(archive.dir, "market",
                    frequency = "monthly",
@@ -47,16 +49,33 @@ test.French <- function() {
     ## rf
     data <- French(archive.dir, "rf",
                    frequency = "daily",
+                   price.series = FALSE)
+    checkTrue(min(data) > -0.05/250)
+    checkTrue(max(data) < 0.25/250)
+
+
+    data <- French(archive.dir, "rf",
+                   frequency = "daily",
                    price.series = TRUE)
 
     data <- French(archive.dir, "rf",
                    frequency = "monthly",
                    price.series = TRUE)
+    data <- French(archive.dir, "rf",
+                   frequency = "monthly",
+                   price.series = FALSE)
+    checkTrue(min(data) > -0.05/12)
+    checkTrue(max(data) < 0.25/12)
 
     data <- French(archive.dir, "rf",
                    frequency = "annual",
                    price.series = TRUE)
 
+    data <- French(archive.dir, "rf",
+                   frequency = "annual",
+                   price.series = FALSE)
+    checkTrue(min(data) > -0.05)
+    checkTrue(max(data) < 0.25)
 
 
 
