@@ -151,4 +151,9 @@ test.French <- function() {
     data <- French(archive.dir,
                    "10_Portfolios_Prior_12_2_Daily_CSV.zip",
                    frequency = "daily", weighting = "equal")
+
+
+    for (d in French())
+        data <- French(archive.dir, d)
+
 }
