@@ -1,3 +1,7 @@
+2019-09-26  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (ByteCompile): remove explicit setting
+
 2019-09-13  Enrico Schumann  <es@enricoschumann.net>
 
 	* R/market_data.R (French): fix special
