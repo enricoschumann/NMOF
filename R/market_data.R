@@ -103,23 +103,24 @@ French <- function(dest.dir,
     attr.list <- list()
     read.ans <- TRUE
 
-    url <- if (dataset == "variance")
-               "Portfolios_Formed_on_VAR_CSV.zip"
-           else if (dataset == "industry49" && frequency == "monthly")
-               "49_Industry_Portfolios_CSV.zip"
-           else if (dataset == "industry49" && frequency == "daily")
-               "49_Industry_Portfolios_daily_CSV.zip"
-           else if (dataset == "ff3" && frequency == "daily")
-               "F-F_Research_Data_Factors_daily_CSV.zip"
-           else if (dataset == "me_breakpoints")
-               "ME_Breakpoints_CSV.zip"
-           else if (dataset %in% c("market", "rf") &&
-                    frequency == "daily")
-               "F-F_Research_Data_Factors_daily_CSV.zip"
-           else if (dataset %in% c("market", "rf"))
-               "F-F_Research_Data_Factors_CSV.zip"
-           else
-               dataset
+    if (dataset == "variance")
+        url <- "Portfolios_Formed_on_VAR_CSV.zip"
+    else if (dataset == "industry49" && frequency == "monthly")
+        url <- "49_Industry_Portfolios_CSV.zip"
+    else if (dataset == "industry49" && frequency == "daily")
+        url <- "49_Industry_Portfolios_daily_CSV.zip"
+    else if (dataset == "ff3" && frequency == "daily")
+        url <- "F-F_Research_Data_Factors_daily_CSV.zip"
+    else if (dataset == "me_breakpoints") {
+        url <- "ME_Breakpoints_CSV.zip"
+        dataset <- "me_breakpoints_csv.zip"
+    } else if (dataset %in% c("market", "rf") &&
+             frequency == "daily")
+        url <- "F-F_Research_Data_Factors_daily_CSV.zip"
+    else if (dataset %in% c("market", "rf"))
+        url <- "F-F_Research_Data_Factors_CSV.zip"
+    else
+        url <- dataset
 
     if (adjust.frequency        &&
         grepl("daily", dataset) &&
@@ -149,7 +150,7 @@ French <- function(dest.dir,
     dataset <- tolower(dataset)
 
 
-    ## file-specific handling: either directly return,
+    ## file-specific handling: either directly return(),
     ## or prepare
     ##         ans - subset (lines) of txt to parse,
     ##               with first column the dates;
@@ -261,7 +262,7 @@ French <- function(dest.dir,
         ans <- ans/100
         ans <- ans[, "RF", drop = FALSE]
 
-    } else if (dataset == "me_breakpoints") {
+    } else if (dataset == "me_breakpoints_csv.zip") {
 
         data <- read.table(text = txt, skip = 1,
                            sep = ",",
