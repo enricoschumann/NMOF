@@ -1,0 +1,5 @@
+* Numerical Methods and Optimisation in Finance
+
+  Code examples for "Numerical Methods and Optimization
+  in Finance (2nd edition)" by [[http://www.unige.ch/ses/dsec/static/gilli/][M. Gilli]], [[https://wwz.unibas.ch/de/personen/dietmar-maringer/][D. Maringer]]
+  and [[http://enricoschumann.net/][E. Schumann]] (2019), ISBN 978-0-12-815065-8.
