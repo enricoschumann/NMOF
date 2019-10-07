@@ -134,7 +134,7 @@ TAopt <- function(OF, algo = list(), ...) {
             class(ans) <- "TAopt"
         return(ans)
     }
-    
+
     ## evaluate initial solution
     xc <- x0
     xcF <- OF1(xc)
