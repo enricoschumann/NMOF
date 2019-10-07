@@ -86,10 +86,10 @@ greedySearch(OF, algo, ...)
 \examples{
 na <- 100
 inc <- 5
-R <- NMOF:::randomReturns(na = na,
+R <- randomReturns(na = na,
                    ns = 1000,
                    sd = seq(0.01, 0.02, length.out = 100),
-                   rho = 0.5)        
+                   rho = 0.5)
 S <- cov(R)
 OF <- function(x, S, ...) {
     w <- 1/sum(x)
