@@ -17,7 +17,7 @@
 \fvset{listparameters={\setlength{\topsep}{0pt}}}
 \renewenvironment{Schunk}{\vspace{\topsep}}{\vspace{\topsep}}
 <<echo=false>>=
-options(continue = "  ", digits = 5)
+options(continue = "  ", digits = 5, width = 65)
 @
 \begin{document}
 {\raggedright{\LARGE Style Analysis with Differential Evolution}}\medskip
@@ -27,25 +27,28 @@ options(continue = "  ", digits = 5)
 \bigskip
 
 
-\nocite{Gilli2011b}
+\nocite{Gilli2019}
 
 
-Style analysis, described in \cite{sharpe1992}, uses a
-linear factor model to describe the returns of a
-portfolio, with a few constraints added: the factors
-should be actual asset classes; the factor loadings,
-which are interpreted as weights, should sum to 100\%,
-and should take on reasonable values.  For a typical
-mutual fund, for instance, the weights should be
-nonnegative.
+\noindent Style analysis, described in
+\cite{sharpe1992}, uses a linear factor model to
+describe the returns of a portfolio, with a few
+constraints added: the factors should be actual asset
+classes, typically represented by indices; the factor
+loadings, which are interpreted as weights, should sum
+to 100\%, and should take on reasonable values.  For a
+typical mutual fund, for instance, the weights should
+be nonnegative.
 
 
 \section{Data}
 
 We generate random $X$ and $y$.  $X$ is a matrix that
-would hold the observations on indices: rows are
-observations; columns are indices.  All information is
-collected in a list \texttt{Data}.
+holds the return observations of the asset classes
+(indices): rows are observations; columns are
+indices. The vector~$y$ holds the returns of the
+portfolio.  All information is collected in a list
+\texttt{Data}.
 
 <<Data>>=
 library("NMOF")
@@ -58,44 +61,46 @@ Data$X <- array(rnorm(Data$no * Data$ni),
                 dim = c(Data$no, Data$ni))
 Data$y <- rnorm(Data$no)
 str(Data)
-@ 
+@
 
 
 \section{Least Squares}
 
-We will use Differential Evolution to solve the model.
+We solve the model with Differential Evolution (DE).
 As a test, we compute the Least-Squares solution to
 $y = X w + \epsilon$.  To minimise the variance of the
 residuals, we just need to compute the variance of the
-columns. Or, perhaps simpler, we just add a column of
-ones to $X$ that is always included as a regressor. In
-this way, the residuals will have a zero mean and Least
-Squares is equivalent to minimising variance.
+columns. Or simpler, we might add a column of ones to~$X$,
+which is always included as a regressor. In this way,
+the residuals will have a zero mean and Least Squares
+is equivalent to minimising variance. (But DE does not
+depend on any specific model.)
 
 <<objective-fn>>=
 ofun <- function(p, Data) {
   tmp <- Data$X %*% p - Data$y
-  ##colSums(tmp * tmp)  ## for Least Squares
+  ## colSums(tmp * tmp)  ## for Least Squares
   apply(tmp, 2, var)
 }
 
 settings <- list(min = rep(0, Data$ni),
                  max = rep(1, Data$ni),
                  nG = 2000,  ## number of generations
-                 loopOF = FALSE, printBar = FALSE)
+                 loopOF = FALSE,
+                 printBar = FALSE)
 sol <- DEopt(ofun, algo = settings, Data = Data)
 @
 
 To see whether we succeeded, we also compute the
 solution with \texttt{lm}.  The differences between the
 results are negligible (and could be made as small as
-machine precision allows us to by increasing
+machine precision allows by increasing
 \texttt{settings\$nG}).
 
 <<>>=
 ## for Least Squares, fit 'Data$y ~ -1 + Data$X' instead
-summary(abs(coef(lm(Data$y ~ Data$X))[-1] - sol$xbest))
-@ 
+summary(abs(coef(lm(Data$y ~ Data$X))[-1L] - sol$xbest))
+@
 
 
 \section{Constraints}
@@ -105,32 +110,35 @@ summary(abs(coef(lm(Data$y ~ Data$X))[-1] - sol$xbest))
 We constrain the model as follows: all weights must be
 nonnegative; the sum of the weights must equal one; and
 there must be no more than \texttt{maxi} regressors
-included in the model.
-
-We handle these constraints with a repair function.
+included in the model. We handle these constraints with
+a repair function.
 <<repair>>=
 repair <- function(p, Data) {
-  
+
   ## remove negative values
   p <- p + abs(p)
-  
-  ## reduce cardinality of solutions (if required)
-  tmp <- p > 0
+
+  ## reduce cardinality of solutions (if necessary)
+  tmp <- p > 1e-8
   cs <- colSums(tmp)
+
   for (i in which(cs > Data$maxi)) {
-    nneg <- which(tmp[ ,i])
+    nneg <- which(tmp[, i])
     p[sample(nneg, length(nneg) - Data$maxi), i] <- 0
   }
-  
-  ## sum = 1
-  if (Data$sum2one) 
+
+  ## remove zero cardinality (if necessary)
+  for (i in which(cs == 0))
+    p[sample(Data$ni, 1), i] <- 1
+
+  ## sum == 1
+  if (Data$sum2one)
     for (i in seq_len(ncol(p)))
-      p[ ,i] <- p[ ,i]/sum(p[ ,i])
-  
+      p[, i] <- p[, i]/sum(p[, i])
+
   p
 }
-@ 
-
+@
 A test: we create a random population of \texttt{nP}
 solutions and repair it.  The first three columns are
 displayed.
@@ -138,69 +146,74 @@ displayed.
 <<test>>=
 nP <- 200
 pop <- array(rnorm(Data$ni * nP), dim = c(Data$ni, nP))
-
-repair(pop, Data)[ ,1:3]
+##
+repair(pop, Data)[, 1:3]
+colSums(repair(pop, Data)[, 1:3])
+##
 Data$sum2one <- TRUE
-repair(pop, Data)[ ,1:3]
-@ 
-
+repair(pop, Data)[, 1:3]
+colSums(repair(pop, Data)[, 1:3])
+@
+Let us run DE.
 <<test-results>>=
 settings <- list(min = rep(0, Data$ni),
                  max = rep(1, Data$ni),
                  nG = 2000,
                  nP = Data$ni * 5,
                  repair = repair,
-                 loopOF = FALSE, loopRepair = FALSE, 
+                 loopOF = FALSE,
+                 loopRepair = FALSE,
                  printBar = FALSE)
 sol <- DEopt(ofun, algo = settings, Data = Data)
 data.frame(row.names = which(sol$xbest > 0),
            weights = round(sol$xbest[sol$xbest > 0], 2))
-@ 
-
+@
 We change the cardinality constraint.
 <<>>=
 Data$maxi <- 4
 sol <- DEopt(ofun, algo = settings, Data = Data)
 data.frame(row.names = which(sol$xbest > 0),
            weights = round(sol$xbest[sol$xbest > 0], 2))
-
-@ 
+@
 
 \appendix
 
 \section{QP solution}
 
-See also \cite[p. 391]{Gilli2011b}.  
+See also \citet[p.~391]{Gilli2011b}.
 <<qp>>=
-library("quadprog")
-settings <- list(min = rep(0, Data$ni),
-                 max = rep(1, Data$ni),
-                 nG = 2000,
-                 nP = Data$ni * 5,
-                 repair = repair,
-                 loopOF = FALSE, loopRepair = FALSE, 
-                 printBar = FALSE)
-Data$maxi <- Data$ni
-sol <- DEopt(ofun, algo = settings, Data = Data)
+if (!require("quadprog")) {
+  stop("package ", sQuote("quadprog"), " is not available")
+} else {
+  settings <- list(min = rep(0, Data$ni),
+                   max = rep(1, Data$ni),
+                   nG = 2000,
+                   nP = Data$ni * 5,
+                   repair = repair,
+                   loopOF = FALSE, loopRepair = FALSE,
+                   printBar = FALSE)
+  Data$maxi <- Data$ni   ## no cardinality constraint
+  sol <- DEopt(ofun, algo = settings, Data = Data)
 
-D <- var(Data$X)
-d <- cov(Data$y, Data$X)
+  D <- var(Data$X)
+  d <- cov(Data$y, Data$X)
 
-min.w <- 0
-AT <- rbind(1, diag(Data$ni))
-b0 <- c(1, rep(min.w, Data$ni))
-cbind(qp = round(solve.QP(D, d, t(AT), b0, meq = 1)$solution, 4),
-      de = round(sol$xbest, 4))  
-@ 
+  min.w <- 0
+  AT <- rbind(1, diag(Data$ni))
+  b0 <- c(1, rep(min.w, Data$ni))
+  cbind(qp = round(solve.QP(D, d, t(AT), b0, meq = 1)$solution, 4),
+        de = round(sol$xbest, 4))
+}
+@
 
 
 \section{More on variances and squared residuals}
 
 Two examples for quadratic problems that do not require
-a QP-solver.
+a QP solver.
 
 \subsection{No QP needed, example 1: minimising a sum of squares}
-  
+
 In the linear regression model
 \begin{align}
       y = X \beta + \epsilon
@@ -216,7 +229,7 @@ column, the residuals will have zero mean, and hence
 minimising the sum of squares is equivalent to
 minimizing the variance of the residuals (see the next
 example).
-  
+
 The sum of squares for a sample $X$ and $y$ can be written as:
 \begin{align*}
      (y-X\beta)'(y-X\beta) & = y'y - y'X\beta - (X\beta)'y + (Xb)'X\beta \\
@@ -226,17 +239,17 @@ The sum of squares for a sample $X$ and $y$ can be written as:
 $\beta'X'y$.)  We drop $y'y$ since it does not depend
 on $\beta$ and divide by 2 to obtain
 \begin{align}
-     - \underbrace{y'X}_{c}\beta + 
+     - \underbrace{y'X}_{c}\beta +
        \frac{1}{2}\beta'\underbrace{\vphantom{y}X'X}_{Q}\beta\,,
 \end{align}
 to be minimised. This looks exactly like the type of
-model that a QP solver could handle.
-  
-  
-\subsection{No QP needed, example 1: minimizing variance}
-  
+model that a QP solver can handle.
+
+
+\subsection{No QP needed, example 1: minimising variance}
+
 We stay with the regression model, but now we wish to
-minimize the variance of the residuals. We regard every
+minimise the variance of the residuals. We regard every
 row of $X$ as the realization of a random
 variable. Hence, let $x$ be a random vector, then we
 want to minimize
@@ -263,32 +276,40 @@ instance, we can handle such problems with the function
 
 
 <<quadprog>>=
-library("quadprog")
+if (!require("quadprog")) {
+  stop("package ", sQuote("quadprog"), " is not available")
+} else {
+  ## create data
+  na <- 10
+  ns <- 100
+  X  <- array(rnorm(ns*na), dim = c(ns, na))
+  y  <- rnorm(ns)
 
-## create data
-na <- 10
-ns <- 100
-X  <- array(rnorm(ns*na), dim = c(ns,na))
-y  <- rnorm(ns)
+  ## minimise squares
+  ## variant 1 -- linear regression
+  message("linear regression")
+  print(unname(coef(lm(y ~ 0 + X))))
+  ## variant 2 -- quadprog
+  Dmat <- crossprod(X)
+  dvec <- y %*% X
+  Amat <- as.matrix(rep(0, na))
+  message("QP")
+  print(solve.QP(Dmat = Dmat, dvec = dvec, Amat = Amat)$solution)
 
-## minimise squares
-### variant 1 -- linear regression
-coef(lm(y ~ 0 + X))
-#### variant 2 -- quadprog
-Dmat <- crossprod(X) 
-dvec <- y %*% X
-Amat <- as.matrix(rep(0,na))
-solve.QP(Dmat = Dmat, dvec = dvec, Amat = Amat)
-
-## minimise variance
-### variant 1 -- linear regression
-coef(lm(y ~ X))[-1]
-### variant 2 -- quadprog
-Dmat <- cov(X) 
-dvec <- cov(X,y)
-Amat <- as.matrix(rep(0,na))
-solve.QP(Dmat = Dmat, dvec = dvec,Amat = Amat)  
-@ 
+  message("")
+  message("")
+  ## minimise variance
+  ## variant 1 -- linear regression
+  message("linear regression")
+  print(unname(coef(lm(y ~ X))[-1L]))
+  ## variant 2 -- quadprog
+  Dmat <- cov(X)
+  dvec <- cov(X,y)
+  Amat <- as.matrix(rep(0, na))
+  message("QP")
+  print(solve.QP(Dmat = Dmat, dvec = dvec,Amat = Amat)$solution)
+}
+@
 
 
 \bibliographystyle{plainnat}
