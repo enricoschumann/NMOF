@@ -1,6 +1,6 @@
 v2.0-0  (2019-10-20; not yet released)
 
-  o The package now includes the codes examples from the
+  o The package now includes the code examples from the
     second edtion of 'Numerical Methods and Optimization
     in Finance". 'showExample' has been updated as well:
     it gains an argument 'edition', which defaults to
@@ -35,6 +35,10 @@ v2.0-0  (2019-10-20; not yet released)
   o a tutorial on backtesting, which makes
     much use of the NMOF package, is available
     at https://ssrn.com/abstract=3374195
+
+  o various documentation updates; new features are
+    now described at
+      http://enricoschumann.net/notes/NMOF/
 
 v1.6-0  (2019-04-01)
 

@@ -11,9 +11,11 @@ Shiller <- function(dest.dir,
         download.file(url, destfile = f.path)
 
     if (!requireNamespace("readxl", quietly = TRUE))
-        stop("package ", sQuote("readxl"), " is not available")
+        stop("file downloaded, but package ",
+             sQuote("readxl"), " is not available")
     if (!requireNamespace("datetimeutils", quietly = TRUE))
-        stop("package ", sQuote("datetimeutils"), " is not available")
+        stop("file downloaded, but package ",
+             sQuote("datetimeutils"), " is not available")
 
     data <- suppressMessages(suppressWarnings(
         readxl::read_xls(f.path, sheet = 3)))
@@ -264,6 +266,10 @@ French <- function(dest.dir,
 
     } else if (dataset == "me_breakpoints_csv.zip") {
 
+        if (!requireNamespace("datetimeutils", quietly = TRUE))
+            stop("file downloaded, but package ",
+                 sQuote("datetimeutils"), " is not available")
+
         data <- read.table(text = txt, skip = 1,
                            sep = ",",
                            header = FALSE,
@@ -453,6 +459,10 @@ French <- function(dest.dir,
         ans <- txt[i:j]
     }
 
+    if (!requireNamespace("datetimeutils", quietly = TRUE))
+        stop("file downloaded, but package ",
+             sQuote("datetimeutils"), " is not available")
+
     if (read.ans) {
         ans <- read.table(text = ans, header = TRUE,
                           stringsAsFactors = FALSE, sep = ",",
@@ -460,9 +470,6 @@ French <- function(dest.dir,
                           colClasses = "numeric")
         for (cc in seq_len(ncol(ans)))
             ans[[cc]][ ans[[cc]] < -99 ] <- NA
-
-        if (!requireNamespace("datetimeutils"))
-            stop("package ", sQuote("datetimeutils"), " is required")
 
         timestamp <- .prepare_timestamp(ans[[1L]], frequency)
 
