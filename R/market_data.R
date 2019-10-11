@@ -79,8 +79,10 @@ French <- function(dest.dir,
             "F-F_Momentum_Factor_daily_CSV.zip",
             "F-F_Research_Data_Factors_daily_CSV.zip",
             "ME_Breakpoints_CSV.zip",
+
             "Portfolios_Formed_on_BE-ME_CSV.zip",
-            "Portfolios_Formed_on_VAR_CSV.zip",
+            "Portfolios_Formed_on_NI_CSV.zip",
+            "Portfolios_Formed_on_RESVAR.csv",
             "Portfolios_Formed_on_VAR_CSV.zip",
 
             "Siccodes5.zip",
@@ -387,19 +389,47 @@ French <- function(dest.dir,
         j <- grep("^ *$", txt[-c(1:10)]) + 9
         ans <- txt[i:j]
 
-    } else if (tolower(dataset) == "portfolios_formed_on_be-me_csv.zip") {
+    ## } else if (tolower(dataset) == "portfolios_formed_on_be-me_csv.zip") {
+    ##     if (frequency == "monthly") {
+    ##         i <- if (tolower(weighting) == "equal")
+    ##                  grep("Equal Weight Returns -- Monthly", txt)
+    ##              else if (tolower(weighting) == "value")
+    ##                  grep("Value Weight Returns -- Monthly", txt)
+    ##              else
+    ##                  stop("weighting must be 'equal' or 'value'")
+    ##     } else if (frequency == "annual") {
+    ##         i <- if (tolower(weighting) == "equal")
+    ##                  grep("Equal Weight Returns -- Annual", txt)
+    ##              else if (tolower(weighting) == "value")
+    ##                  grep("Value Weight Returns -- Annual", txt)
+    ##              else
+    ##                  stop("weighting must be 'equal' or 'value'")
+    ##     } else
+    ##         stop("frequency not supported")
+    ##     j <- grep("^ *$", txt)
+    ##     j <- j[min(which(j > i))]
+
+    ##     ans <- txt[(i+1):(j-1)]
+
+
+    } else if (tolower(dataset) %in%
+               c("portfolios_formed_on_be-me_csv.zip",
+                 "portfolios_formed_on_ni_csv.zip",
+                 "portfolios_formed_on_resvar.csv",
+                 "portfolios_formed_on_var_csv.zip")) {
+
         if (frequency == "monthly") {
             i <- if (tolower(weighting) == "equal")
-                     grep("Equal Weight Returns -- Monthly", txt)
+                     grep("Equal Weight.?.? Returns -- Monthly", txt)
                  else if (tolower(weighting) == "value")
-                     grep("Value Weight Returns -- Monthly", txt)
+                     grep("Value Weight.?.? Returns -- Monthly", txt)
                  else
                      stop("weighting must be 'equal' or 'value'")
         } else if (frequency == "annual") {
             i <- if (tolower(weighting) == "equal")
-                     grep("Equal Weight Returns -- Annual", txt)
+                     grep("Equal Weight.?.? Returns -- Annual", txt)
                  else if (tolower(weighting) == "value")
-                     grep("Value Weight Returns -- Annual", txt)
+                     grep("Value Weight.?.? Returns -- Annual", txt)
                  else
                      stop("weighting must be 'equal' or 'value'")
         } else

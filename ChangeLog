@@ -1,5 +1,9 @@
 2019-10-11  Enrico Schumann  <es@enricoschumann.net>
 
+	* R/market_data.R (French): support
+	"Portfolios_Formed_on_NI_CSV.zip",
+	"Portfolios_Formed_on_RESVAR_CSV.zip"
+
 	* DESCRIPTION (ByteCompile): set to 'yes' again
 
 2019-10-07  Enrico Schumann  <es@enricoschumann.net>
