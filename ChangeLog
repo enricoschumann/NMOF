@@ -5,16 +5,33 @@
 	solution, 'OF.xbest', to the data that
 	'TA.info' provides
 
+2019-10-11  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/market_data.R (French): support
+	"Portfolios_Formed_on_NI_CSV.zip",
+	"Portfolios_Formed_on_RESVAR_CSV.zip"
+
+	* DESCRIPTION (ByteCompile): set to 'yes' again
+
+2019-10-07  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/portfolio.R (minvar): require 'quadprog'
+        only for method "qp"
+
+2019-09-26  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (ByteCompile): remove explicit setting
+
 2019-09-13  Enrico Schumann  <es@enricoschumann.net>
 
-	* R/market_data.R (French): fix special
-	datasets 'market' and 'rf'
+        * R/market_data.R (French): fix special
+        datasets 'market' and 'rf'
 
 2019-09-08  Enrico Schumann  <es@enricoschumann.net>
 
-	* R/randomReturns.R (randomReturns): add function
+        * R/randomReturns.R (randomReturns): add function
 
-	* R/greedySearch.R (greedySearch): add function
+        * R/greedySearch.R (greedySearch): add function
 
         * R/showExample.R, internals.R: replace the
         vector 'Chapters' (which is not exported) with
@@ -52,7 +69,7 @@
 
 2019-06-20  Enrico Schumann  <es@enricoschumann.net>
 
-        * R/resampleC.R (resampleC): if cormat is a
+        * R/resampleC.R (resampleC): if 'cormat' is a
         single number, it is expanded into a constant
         correlation matrix (this has worked before, but
         only for the case of two series)

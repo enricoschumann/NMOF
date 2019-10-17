@@ -16,42 +16,59 @@
   The package contains implementations of several optimisation
   heuristics: Differential Evolution (\code{\link{DEopt}}), Genetic
   Algorithms (\code{\link{GAopt}}), (Stochastic) Local Search
-  (\code{\link{LSopt}}), Particle Swarm (\code{\link{PSopt}}) and
+  (\code{\link{LSopt}}), Particle Swarm (\code{\link{PSopt}}),
+  Simuleated Annealing (\code{\link{SAopt}}) and
   Threshold Accepting (\code{\link{TAopt}}). The term heuristic is meant
-  in the sense of general purpose optimisation method.
+  in the sense of general-purpose optimisation method.
 
-  Dependencies: The package is completely written in \R. A number of
-  packages are \emph{suggested}, but they are not necessary to use the
-  \pkg{NMOF} package.  More specifically, package \pkg{MASS} is needed
-  to run the complete example for \code{\link{PSopt}} and also in one of
-  the vignettes (\code{PSlms}).  Package \pkg{parallel} is optional for
-  functions \code{\link{bracketing}}, \code{\link{GAopt}},
-  \code{\link{gridSearch}} and \code{\link{restartOpt}}, and may become
-  an option for other functions.  Package \pkg{quadprog} is needed for a
-  vignette (\code{TAportfolio}) and some tests.  Finally, \pkg{RUnit} is
-  needed to run the tests in subdirectory \sQuote{\code{unitTests}}.
+  Dependencies: The package is completely written in \R. A
+  number of packages are \emph{suggested}, but they are not
+  strictly required when using the \pkg{NMOF} package, and
+  most of the package's functionality is available without
+  them.  Specifically, package \pkg{MASS} is needed to run
+  the complete example for \code{\link{PSopt}} and also in
+  one of the vignettes (\code{PSlms}).  Package
+  \pkg{parallel} is optional for functions
+  \code{\link{bracketing}}, \code{\link{GAopt}},
+  \code{\link{gridSearch}} and \code{\link{restartOpt}}, and
+  may become an option for other functions.  Package
+  \pkg{quadprog} is needed for a vignette
+  (\code{TAportfolio}), some tests, and it may be used for
+  computing mean-variance efficient portfolios.  Package
+  \pkg{readxl} is needed to process the raw data in function
+  \code{\link{Shiller}}; package \pkg{datetimeutils} is
+  used by \code{\link{French}} and \code{\link{Shiller}}.
+  Finally, \pkg{RUnit} is needed to
+  run the tests in subdirectory \sQuote{\code{unitTests}}.
 
-  Version numbering: package versions are numbered in the form
-  \code{major-minor-patch}.
-  The \emph{patch} level is incremented with any published change, which
-  means that a new version has been pushed to
-  \url{http://enricoschumann.net/R/packages/NMOF/}.
-  \emph{Minor} version numbers are incremented when a feature is added or an
-  existing feature is substantially revised. (Such changes will be
-  reported in the NEWS file.)
-  The \emph{major} version number will only be increased if there were a
-  new edition of the book.
+  Version numbering: package versions are numbered in the
+  form \code{major-minor-patch}.  The \emph{patch} level is
+  incremented with any published change in a version.
+  \emph{Minor} version numbers are incremented when a
+  feature is added or an existing feature is substantially
+  revised. (Such changes will be reported in the NEWS file.)
+  The \emph{major} version number will only be increased if
+  there were a new edition of the book.
 
   The source code of the \pkg{NMOF} package is also hosted at
   \url{https://github.com/enricoschumann/NMOF/}.
-
+  Updates to the package and new features are described at
+  \url{http://enricoschumann.net/notes/NMOF/}.
 
   \subsection{Optimisation}{
 
-    There are functions for Differential Evolution (\code{\link{DEopt}}),
-    Genetic Algorithms (\code{\link{GAopt}}), (Stochastic) Local Search
-    (\code{\link{LSopt}}), Particle Swarm (\code{\link{PSopt}}) and
-    Threshold Accepting (\code{\link{TAopt}}).
+    There are functions for
+    Differential Evolution (\code{\link{DEopt}}),
+    Genetic Algorithms (\code{\link{GAopt}}),
+    (Stochastic) Local Search (\code{\link{LSopt}}),
+    Simuleated Annealing (\code{\link{SAopt}}),
+    Particle Swarm (\code{\link{SAopt}}),
+    and Threshold Accepting (\code{\link{TAopt}}).
+    The function \code{\link{restartOpt}} helps with
+    running restarts of these methods;
+    also available are functions for
+    grid search (\code{\link{gridSearch}}) and
+    greedy search (\code{\link{greedySearch}}).
 
   }
 
@@ -91,7 +108,7 @@
   Methods and Optimization in Finance}. Elsevier.
   \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-375662-6}
 
-  Schumann, E. (2018) Financial Optimisation with R (\pkg{NMOF} Manual).
+  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 
 }
@@ -117,25 +134,22 @@ nss <- vignette("DEnss", package = "NMOF")
 print(nss)
 edit(nss)
 
-## book websites
+## book website
 browseURL("http://nmof.net")
 browseURL("http://enricoschumann.net/NMOF/")
 
 ## package websites
 browseURL("http://enricoschumann.net/R/packages/NMOF/")
 browseURL("https://cran.r-project.org/package=NMOF")
-
-## more examples
-file.show(system.file("NMOFex/README",   package = "NMOF"))
-file.show(system.file("NMOFex/NMOFman.R", package = "NMOF"))
+browseURL("https://github.com/enricoschumann/NMOF")
 
 ## unit tests
-file.show(system.file("unitTests/test_results.txt",   package = "NMOF"))
+file.show(system.file("unitTests/test_results.txt", package = "NMOF"))
 }
+
 test.rep <- readLines(system.file("unitTests/test_results.txt",
                                   package = "NMOF"))
 nt <- gsub(".*\\\\(([0-9]+) checks?\\\\).*", "\\\\1",
            test.rep[grep("\\\\(\\\\d+ checks?\\\\)", test.rep)])
 message("Number of unit tests: ", sum(as.numeric(nt)))
-
 }

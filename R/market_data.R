@@ -11,9 +11,11 @@ Shiller <- function(dest.dir,
         download.file(url, destfile = f.path)
 
     if (!requireNamespace("readxl", quietly = TRUE))
-        stop("package ", sQuote("readxl"), " is not available")
+        stop("file downloaded, but package ",
+             sQuote("readxl"), " is not available")
     if (!requireNamespace("datetimeutils", quietly = TRUE))
-        stop("package ", sQuote("datetimeutils"), " is not available")
+        stop("file downloaded, but package ",
+             sQuote("datetimeutils"), " is not available")
 
     data <- suppressMessages(suppressWarnings(
         readxl::read_xls(f.path, sheet = 3)))
@@ -77,8 +79,10 @@ French <- function(dest.dir,
             "F-F_Momentum_Factor_daily_CSV.zip",
             "F-F_Research_Data_Factors_daily_CSV.zip",
             "ME_Breakpoints_CSV.zip",
+
             "Portfolios_Formed_on_BE-ME_CSV.zip",
-            "Portfolios_Formed_on_VAR_CSV.zip",
+            "Portfolios_Formed_on_NI_CSV.zip",
+            "Portfolios_Formed_on_RESVAR.csv",
             "Portfolios_Formed_on_VAR_CSV.zip",
 
             "Siccodes5.zip",
@@ -103,23 +107,24 @@ French <- function(dest.dir,
     attr.list <- list()
     read.ans <- TRUE
 
-    url <- if (dataset == "variance")
-               "Portfolios_Formed_on_VAR_CSV.zip"
-           else if (dataset == "industry49" && frequency == "monthly")
-               "49_Industry_Portfolios_CSV.zip"
-           else if (dataset == "industry49" && frequency == "daily")
-               "49_Industry_Portfolios_daily_CSV.zip"
-           else if (dataset == "ff3" && frequency == "daily")
-               "F-F_Research_Data_Factors_daily_CSV.zip"
-           else if (dataset == "me_breakpoints")
-               "ME_Breakpoints_CSV.zip"
-           else if (dataset %in% c("market", "rf") &&
-                    frequency == "daily")
-               "F-F_Research_Data_Factors_daily_CSV.zip"
-           else if (dataset %in% c("market", "rf"))
-               "F-F_Research_Data_Factors_CSV.zip"
-           else
-               dataset
+    if (dataset == "variance")
+        url <- "Portfolios_Formed_on_VAR_CSV.zip"
+    else if (dataset == "industry49" && frequency == "monthly")
+        url <- "49_Industry_Portfolios_CSV.zip"
+    else if (dataset == "industry49" && frequency == "daily")
+        url <- "49_Industry_Portfolios_daily_CSV.zip"
+    else if (dataset == "ff3" && frequency == "daily")
+        url <- "F-F_Research_Data_Factors_daily_CSV.zip"
+    else if (dataset == "me_breakpoints") {
+        url <- "ME_Breakpoints_CSV.zip"
+        dataset <- "me_breakpoints_csv.zip"
+    } else if (dataset %in% c("market", "rf") &&
+             frequency == "daily")
+        url <- "F-F_Research_Data_Factors_daily_CSV.zip"
+    else if (dataset %in% c("market", "rf"))
+        url <- "F-F_Research_Data_Factors_CSV.zip"
+    else
+        url <- dataset
 
     if (adjust.frequency        &&
         grepl("daily", dataset) &&
@@ -149,7 +154,7 @@ French <- function(dest.dir,
     dataset <- tolower(dataset)
 
 
-    ## file-specific handling: either directly return,
+    ## file-specific handling: either directly return(),
     ## or prepare
     ##         ans - subset (lines) of txt to parse,
     ##               with first column the dates;
@@ -261,7 +266,11 @@ French <- function(dest.dir,
         ans <- ans/100
         ans <- ans[, "RF", drop = FALSE]
 
-    } else if (dataset == "me_breakpoints") {
+    } else if (dataset == "me_breakpoints_csv.zip") {
+
+        if (!requireNamespace("datetimeutils", quietly = TRUE))
+            stop("file downloaded, but package ",
+                 sQuote("datetimeutils"), " is not available")
 
         data <- read.table(text = txt, skip = 1,
                            sep = ",",
@@ -380,19 +389,47 @@ French <- function(dest.dir,
         j <- grep("^ *$", txt[-c(1:10)]) + 9
         ans <- txt[i:j]
 
-    } else if (tolower(dataset) == "portfolios_formed_on_be-me_csv.zip") {
+    ## } else if (tolower(dataset) == "portfolios_formed_on_be-me_csv.zip") {
+    ##     if (frequency == "monthly") {
+    ##         i <- if (tolower(weighting) == "equal")
+    ##                  grep("Equal Weight Returns -- Monthly", txt)
+    ##              else if (tolower(weighting) == "value")
+    ##                  grep("Value Weight Returns -- Monthly", txt)
+    ##              else
+    ##                  stop("weighting must be 'equal' or 'value'")
+    ##     } else if (frequency == "annual") {
+    ##         i <- if (tolower(weighting) == "equal")
+    ##                  grep("Equal Weight Returns -- Annual", txt)
+    ##              else if (tolower(weighting) == "value")
+    ##                  grep("Value Weight Returns -- Annual", txt)
+    ##              else
+    ##                  stop("weighting must be 'equal' or 'value'")
+    ##     } else
+    ##         stop("frequency not supported")
+    ##     j <- grep("^ *$", txt)
+    ##     j <- j[min(which(j > i))]
+
+    ##     ans <- txt[(i+1):(j-1)]
+
+
+    } else if (tolower(dataset) %in%
+               c("portfolios_formed_on_be-me_csv.zip",
+                 "portfolios_formed_on_ni_csv.zip",
+                 "portfolios_formed_on_resvar.csv",
+                 "portfolios_formed_on_var_csv.zip")) {
+
         if (frequency == "monthly") {
             i <- if (tolower(weighting) == "equal")
-                     grep("Equal Weight Returns -- Monthly", txt)
+                     grep("Equal Weight.?.? Returns -- Monthly", txt)
                  else if (tolower(weighting) == "value")
-                     grep("Value Weight Returns -- Monthly", txt)
+                     grep("Value Weight.?.? Returns -- Monthly", txt)
                  else
                      stop("weighting must be 'equal' or 'value'")
         } else if (frequency == "annual") {
             i <- if (tolower(weighting) == "equal")
-                     grep("Equal Weight Returns -- Annual", txt)
+                     grep("Equal Weight.?.? Returns -- Annual", txt)
                  else if (tolower(weighting) == "value")
-                     grep("Value Weight Returns -- Annual", txt)
+                     grep("Value Weight.?.? Returns -- Annual", txt)
                  else
                      stop("weighting must be 'equal' or 'value'")
         } else
@@ -452,6 +489,10 @@ French <- function(dest.dir,
         ans <- txt[i:j]
     }
 
+    if (!requireNamespace("datetimeutils", quietly = TRUE))
+        stop("file downloaded, but package ",
+             sQuote("datetimeutils"), " is not available")
+
     if (read.ans) {
         ans <- read.table(text = ans, header = TRUE,
                           stringsAsFactors = FALSE, sep = ",",
@@ -459,9 +500,6 @@ French <- function(dest.dir,
                           colClasses = "numeric")
         for (cc in seq_len(ncol(ans)))
             ans[[cc]][ ans[[cc]] < -99 ] <- NA
-
-        if (!requireNamespace("datetimeutils"))
-            stop("package ", sQuote("datetimeutils"), " is required")
 
         timestamp <- .prepare_timestamp(ans[[1L]], frequency)
 

@@ -50,7 +50,7 @@ erc <- function(cov,  wmin = 0, wmax = 1, method = "ls") {
 ## function for computing the minimum-variance portfolio
 minvar <- function(var, wmin = 0, wmax = 1, method = "qp") {
 
-    if (!requireNamespace("quadprog"))
+    if (method == "qp" && !requireNamespace("quadprog"))
         stop("package ", sQuote("quadprog"), " is not available")
     na <- dim(var)[1L]
 

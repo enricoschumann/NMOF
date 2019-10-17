@@ -151,4 +151,41 @@ test.French <- function() {
     data <- French(archive.dir,
                    "10_Portfolios_Prior_12_2_Daily_CSV.zip",
                    frequency = "daily", weighting = "equal")
+
+
+    ## NI and more
+    data <- French(archive.dir,
+                   "Portfolios_Formed_on_NI_CSV.zip",
+                   frequency = "monthly", weighting = "value",
+                   price.series = TRUE)
+
+    data <- French(archive.dir,
+                   "Portfolios_Formed_on_RESVAR_CSV.zip",
+                   frequency = "monthly", weighting = "value")
+
+    data <- French(archive.dir,
+                   "Portfolios_Formed_on_VAR_CSV.zip",
+                   frequency = "monthly", weighting = "value")
+
+    data <- French(archive.dir,
+                   "Portfolios_Formed_on_VAR_CSV.zip",
+                   frequency = "annual", weighting = "value")
+
+    data <- French(archive.dir,
+                   "Portfolios_Formed_on_BE-ME_CSV.zip",
+                   frequency = "annual", weighting = "value")
+
+    data <- French(archive.dir,
+                   "Portfolios_Formed_on_BE-ME_CSV.zip",
+                   frequency = "annual", weighting = "value",
+                   price.series = TRUE)
+
+
+
+    for (d in French())
+        data <- French(archive.dir, d)
+
+
+
+
 }
