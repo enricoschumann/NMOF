@@ -1,3 +1,10 @@
+2019-10-17  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/TAopt.R (TA.info): add the
+	objective-function value of currently best
+	solution, 'OF.xbest', to the data that
+	'TA.info' provides
+
 2019-09-13  Enrico Schumann  <es@enricoschumann.net>
 
 	* R/market_data.R (French): fix special

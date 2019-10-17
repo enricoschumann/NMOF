@@ -134,7 +134,7 @@ TAopt <- function(OF, algo = list(), ...) {
             class(ans) <- "TAopt"
         return(ans)
     }
-    
+
     ## evaluate initial solution
     xc <- x0
     xcF <- OF1(xc)
@@ -238,6 +238,7 @@ TA.info <- function(n = 0L) {
     iteration <- NA
     OF.sampling <- NA
     xbest <- NA
+    xbestF <- NA
     if (exists("i", envir = e, inherits = FALSE))
         step <- get("i", envir = e, inherits = FALSE)
     if (exists("s", envir = e, inherits = FALSE))
@@ -248,11 +249,14 @@ TA.info <- function(n = 0L) {
         iteration <- get("counter", envir = e, inherits = FALSE)
     if (exists("xbest", envir = e, inherits = FALSE))
         xbest <- get("xbest", envir = e, inherits = FALSE)
+    if (exists("xbestF", envir = e, inherits = FALSE))
+        xbestF <- get("xbestF", envir = e, inherits = FALSE)
     list(OF.sampling = is.na(iteration),
          iteration = iteration,
          step = step,
          threshold = threshold,
-         xbest = if (is.list(xbest)) list(xbest) else xbest)
+         xbest = if (is.list(xbest)) list(xbest) else xbest,
+         OF.xbest = xbestF)
 }
 
 
