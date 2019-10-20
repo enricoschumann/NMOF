@@ -19,7 +19,7 @@
   \item{r}{interest rate}
   \item{q}{dividend rate}
   \item{tauD}{numeric vector: time to dividend}
-  \item{D}{numeric vector: dividends}    
+  \item{D}{numeric vector: dividends}
 }
 \details{
   Put--call parity only works for European options. The function is
@@ -30,21 +30,19 @@
   Numeric vector.
 }
 \references{
+  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
+  Methods and Optimization in Finance}. 2nd edition. Elsevier.
+  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
 
-  Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical
-  Methods and Optimization in Finance}. Elsevier.
-  \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
-
-  Schumann, E. (2016) Financial Optimisation with R (\pkg{NMOF} Manual).
+  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
-
 }
 \author{
   Enrico Schumann
 }
 \examples{
 S <- 100; X <- 100; tau <- 1; r <- 0.02; q <- 0.0;
-vol <- 0.3; D <- 20; tauD <- 0.5 
+vol <- 0.3; D <- 20; tauD <- 0.5
 call <- vanillaOptionEuropean(S, X, tau, r, q, vol^2,
                               tauD = tauD, D = D, type = "call")$value
 put  <- vanillaOptionEuropean(S, X, tau, r, q, vol^2,
@@ -63,7 +61,7 @@ v <- 0.2^2  ## variance, not volatility
 
 (ccf <- callCF(cf = cfBSM, S = S, X = X, tau = tau, r = r, q = q,
                  v = v, implVol = TRUE))
-all.equal(ccf$value, 
+all.equal(ccf$value,
           vanillaOptionEuropean(S, X, tau, r, q, v, type = "call")$value)
 all.equal(
   putCallParity("put", call=ccf$value, S=S, X=X, tau=tau, r=r, q=q),

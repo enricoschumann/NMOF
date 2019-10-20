@@ -13,8 +13,8 @@ NSS(param, tm)
 }
 \arguments{
   \item{param}{
-    a vector. For \acronym{NS}: \eqn{\beta_1}{beta1}, \eqn{\beta_2}{beta2}, \eqn{\beta_3}{beta3}, \eqn{\lambda}{lambda}. 
-    For \acronym{NSS}: a vector: \eqn{\beta_1}{beta1}, \eqn{\beta_2}{beta2}, \eqn{\beta_3}{beta3}, 
+    a vector. For \acronym{NS}: \eqn{\beta_1}{beta1}, \eqn{\beta_2}{beta2}, \eqn{\beta_3}{beta3}, \eqn{\lambda}{lambda}.
+    For \acronym{NSS}: a vector: \eqn{\beta_1}{beta1}, \eqn{\beta_2}{beta2}, \eqn{\beta_3}{beta3},
     \eqn{\beta_4}{beta4}, \eqn{\lambda_1}{lambda1}, \eqn{\lambda_2}{lambda2}.
   }
   \item{tm}{
@@ -30,22 +30,23 @@ NSS(param, tm)
   The function returns a vector of length \code{length(tm)}.
 }
 \references{
-  Gilli, M. and Grosse, S. and Schumann, E. (2010) Calibrating the Nelson-Siegel-Svensson model, \acronym{COMISEF} Working Paper Series No. 031. 
+  Gilli, M. and Grosse, S. and Schumann, E. (2010) Calibrating the Nelson-Siegel-Svensson model, \acronym{COMISEF} Working Paper Series No. 031.
   \url{http://comisef.eu/files/wps031.pdf}
 
-  Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Optimization in Finance}. Elsevier. 
-  \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
+  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
+  Methods and Optimization in Finance}. 2nd edition. Elsevier.
+  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
 
-  Gilli, M. and Schumann, E. (2010) A Note on \sQuote{Good} Starting Values in Numerical Optimisation, 
+  Gilli, M. and Schumann, E. (2010) A Note on \sQuote{Good} Starting Values in Numerical Optimisation,
   \acronym{COMISEF} Working Paper Series No. 044. \url{http://comisef.eu/files/wps044.pdf}
 
   Nelson, C.R. and Siegel, A.F. (1987) Parsimonious Modeling of Yield Curves. \emph{Journal of Business}, \strong{60}(4), pp. 473--489.
 
-  Schumann, E. (2017) Financial Optimisation with R (\pkg{NMOF} Manual).
+  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 
   Svensson, L.E. (1994) Estimating and Interpreting Forward Interest Rates: Sweden 1992--1994. \acronym{IMF} Working Paper 94/114.
-  
+
 }
 \author{
   Enrico Schumann
@@ -58,12 +59,12 @@ NSS(param, tm)
 tm <- c(c(1, 3, 6, 9) / 12, 1:10)  ## in years
 param <- c(6, 3, 8, 1)
 yM <- NS(param, tm)
-plot(tm, yM, xlab = "maturity in years", 
+plot(tm, yM, xlab = "maturity in years",
              ylab = "yield in percent")
 
-param <- c(6, 3, 5, -5, 1, 3)  
-yM <- NSS(param, tm) 
-plot(tm, yM, xlab = "maturity in years", 
+param <- c(6, 3, 5, -5, 1, 3)
+yM <- NSS(param, tm)
+plot(tm, yM, xlab = "maturity in years",
              ylab = "yield in percent")
 
 
@@ -72,7 +73,7 @@ plot(tm, yM, xlab = "maturity in years",
 u <- url("http://www.ssc.upenn.edu/~fdiebold/papers/paper49/FBFITTED.txt")
 open(u); BliDiLi <- scan(u, skip = 14); close(u)
 mat <- NULL
-for (i in 1:372) 
+for (i in 1:372)
     mat <- rbind(mat,BliDiLi[(19*(i-1)+1):(19*(i-1)+19)])
 mats  <- c(1,3,6,9,12,15,18,21,24,30,36,48,60,72,84,96,108,120)/12
 

@@ -12,7 +12,7 @@
 TAopt(OF, algo = list(), \dots)
 }
 \arguments{
-  
+
   \item{OF}{The objective function, to be minimised. Its first argument
   needs to be a solution \code{x}; it will be called as \code{OF(x,
   \dots)}.} \item{algo}{A list of settings for the algorithm. See
@@ -61,7 +61,7 @@ TAopt(OF, algo = list(), \dots)
       option makes it easier to compare and switch
       between functions \code{\link{LSopt}},
       \code{\link{TAopt}} and \code{\link{SAopt}}.
-      
+
     }
 
     \item{\code{nD}}{The number of random steps to compute the threshold
@@ -119,7 +119,7 @@ TAopt(OF, algo = list(), \dots)
       \code{FALSE}. If \code{TRUE}, compute only
       threshold sequence, but do not actually run
       \acronym{TA}.}
- 
+
     \item{\code{storeF}}{if \code{TRUE} (the default), the objective
       function values for every solution in every generation are stored
       and returned as matrix \code{Fmat}.}
@@ -141,7 +141,7 @@ TAopt(OF, algo = list(), \dots)
     lower) is achieved. This is useful when an optimal
     objective-function value is known: the algorithm will then stop and
     not waste time searching for a better solution.}
-  
+
     } % end describe
 
       At the minimum, \code{algo} needs to contain an initial solution
@@ -179,7 +179,7 @@ TAopt(OF, algo = list(), \dots)
 
     If \code{algo$classify} was set to \code{TRUE}, the resulting list
     will have a class attribute \code{TAopt}.
-    
+
   }
   \note{If the \code{\dots} argument is used, then all the objects passed
     with \code{\dots} need to go into the objective function and the
@@ -194,7 +194,7 @@ TAopt(OF, algo = list(), \dots)
     overhead.
   }
   \references{
-    
+
     Dueck, G. and Scheuer, T. (1990) Threshold Accepting. A General
     Purpose Optimization Algorithm Superior to Simulated Annealing.
     \emph{Journal of Computational Physics}. \strong{90} (1), 161--175.
@@ -207,9 +207,9 @@ TAopt(OF, algo = list(), \dots)
     Optimization Heuristic for Downside Risk Minimization. \emph{Journal
     of Risk}. \strong{8} (3), 1--18.
 
-    Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical
-    Methods and Optimization in Finance}. Elsevier.
-    \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
+  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
+  Methods and Optimization in Finance}. 2nd edition. Elsevier.
+  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
 
     Moscato, P. and Fontanari, J.F. (1990). Stochastic Versus
     Deterministic Update in Simulated Annealing. Physics Letters A.
@@ -219,7 +219,7 @@ TAopt(OF, algo = list(), \dots)
     heuristic optimization methods'.
     \url{http://enricoschumann.net/R/remarks.htm}
 
-    Schumann, E. (2017) Financial Optimisation with R (\pkg{NMOF} Manual).
+    Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
     \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 
     Winker, P. (2001). \emph{Optimization Heuristics in Econometrics:

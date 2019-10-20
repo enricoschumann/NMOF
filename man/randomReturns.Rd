@@ -20,13 +20,13 @@ randomReturns(na, ns, sd, mean = 0, rho = 0)
 
     the standard deviation: either a single number or a vector
     of length \code{na}
-    
+
 }
   \item{mean}{
 
     the mean return: either a single number or a vector
     of length \code{na}
-    
+
 }
   \item{rho}{
     correlation
@@ -36,7 +36,7 @@ randomReturns(na, ns, sd, mean = 0, rho = 0)
 
   The function corresponds to the function \code{random_returns},
   described in the second edition of \acronym{NMOF} (the book).
-  
+
 }
 \value{
 
@@ -61,7 +61,7 @@ randomReturns(na, ns, sd, mean = 0, rho = 0)
 
   The function corresponds to the function \code{random_returns},
   described in the second edition of \acronym{NMOF} (the book).
-  
+
 }
 \seealso{
   \code{\link{mc}}
@@ -75,7 +75,7 @@ for (i in seq_along(n)) {
     R <- NMOF:::randomReturns(na = na,
                               ns = 1000,
                               sd = seq(.2/.16, .5/.16, length.out = 100),
-                              rho = 0.5)        
+                              rho = 0.5)
     n[i] <- sum(minvar(cov(R), wmax = 1/inc)> 0.01)
 }
 summary(n)

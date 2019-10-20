@@ -177,7 +177,7 @@ PSopt(OF, algo = list(), ...)
 
     }
 
-    
+
   } % end describe
 } % end details
 \value{
@@ -201,11 +201,11 @@ PSopt(OF, algo = list(), ...)
   Swarm theory.  \emph{Proceedings of the Sixth International Symposium
   on Micromachine and Human Science}, pp. 39--43.
 
-  Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical
-  Methods and Optimization in Finance}. Elsevier.
-  \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
+  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
+  Methods and Optimization in Finance}. 2nd edition. Elsevier.
+  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
 
-  Schumann, E. (2017) Financial Optimisation with R (\pkg{NMOF} Manual).
+  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 
 }
@@ -220,7 +220,7 @@ PSopt(OF, algo = list(), ...)
 genData <- function(nP, nO, ol, dy) {
     ## create dataset as in Salibian-Barrera & Yohai 2006
     ## nP = regressors, nO  = number of obs
-    ## ol = number of outliers, dy  = outlier size 
+    ## ol = number of outliers, dy  = outlier size
     mRN <- function(m, n) array(rnorm(m * n), dim = c(m, n))
     y <- mRN(nO, 1)
     X <- cbind(as.matrix(numeric(nO) + 1), mRN(nO, nP - 1L))
@@ -228,7 +228,7 @@ genData <- function(nP, nO, ol, dy) {
     z  <- cbind(1, 100, array(0, dim = c(1L, nP - 2L)))
     for (i in seq_len(ol)) {
         X[zz[i], ] <- z
-        y[zz[i]] <- dy 
+        y[zz[i]] <- dy
     }
     list(X = X, y = y)
 }
@@ -247,21 +247,21 @@ nP <- 2L; nO <- 100L; ol <- 10L; dy <- 150
 aux <- genData(nP,nO,ol,dy); X <- aux$X; y <- aux$y
 
 h <- (nO + nP + 1L) \%/\% 2
-data <- list(y = y,X = X, h = h)
+data <- list(y = y, X = X, h = h)
 
 algo <- list(min = rep(-10, nP), max = rep( 10, nP),
     c1 = 1.0, c2 = 2.0,
-    iner = 0.7, initV = 1, maxV = 3, 
+    iner = 0.7, initV = 1, maxV = 3,
     nP = 100L, nG = 300L, loopOF = FALSE)
 
 system.time(sol <- PSopt(OF = OF, algo = algo, data = data))
 if (require("MASS", quietly = TRUE)) {
-    ## for nsamp = "best", in this case, complete enumeration 
+    ## for nsamp = "best", in this case, complete enumeration
     ## will be tried. See ?lqs
-    system.time(test1 <- lqs(data$y ~ data$X[ ,-1L], 
-            adjust = TRUE, 
-            nsamp = "best", 
-            method = "lqs", 
+    system.time(test1 <- lqs(data$y ~ data$X[, -1L],
+            adjust = TRUE,
+            nsamp = "best",
+            method = "lqs",
             quantile = data$h))
 }
 ## check
@@ -270,7 +270,7 @@ cat("Particle Swarm\n",x1,"\n\n")
 
 if (require("MASS", quietly = TRUE)) {
     x2 <- sort((y - X \%*\% as.matrix(coef(test1)))^2)[h]
-    cat("lqs\n",x2,"\n\n")
+    cat("lqs\n", x2, "\n\n")
 }
 }
 \keyword{optimize}

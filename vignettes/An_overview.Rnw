@@ -22,7 +22,7 @@
 \renewenvironment{Schunk}{\vspace{\topsep}}{\vspace{\topsep}}
 <<echo=false>>=
 require("NMOF")
-options(continue = "  ", digits = 5, max.print = 10, width = 85)
+options(continue = "  ", digits = 5, max.print = 20, width = 85)
 @
 \begin{document}
 {\raggedright{\LARGE An Overview of the NMOF Package}}\medskip
@@ -36,7 +36,7 @@ options(continue = "  ", digits = 5, max.print = 10, width = 85)
 \subsection{The book}
 
 `Numerical Methods and Optimization in Finance' (\textsc{nmof},
-\citealp{Gilli2011b}) is about tools for computational finance,
+\citealp{Gilli2019}) is about tools for computational finance,
 with emphasis on simulation and optimisation.  Many chapters are
 organised as case studies, covering topics such as portfolio insurance
 or the valuation of financial derivatives.  In particular, several
@@ -60,6 +60,12 @@ pricing models.  Some highlights:
   (eg, cardinality constraints). Sample programs for classical
   mean-variance analysis are also included.
 
+\item Backtesting: testing trading and investment
+  strategies: overfitting, data preparation, and the
+  effects of randomness.  Software for backtesting;
+  running backtests in parallel; sensitivity and
+  robustness checks.
+
 \item Yield-curve calibration: various strategies how to calibrate a
   yield-curve model: through fitting to bootstrapped yields, to bond
   prices or to yields-to-maturity.
@@ -68,17 +74,19 @@ pricing models.  Some highlights:
 \subsection{The package}
 
 \noindent The \textsc{nmof} package provides many of the code examples
-and data sets used in \cite{Gilli2011b}; it also contains several
+and data sets used in \cite{Gilli2019}; it also contains several
 functions that have not been described in the book.  Notably, the
 package provides implementations of a number of optimisation
 heuristics, among them Differential Evolution and Genetic Algorithms.
 There are also functions for valuing financial instruments, such as
 bonds and options, and helper functions for stochastic simulations.
 
+
+
 \section{What's in the package}
 
 \subsection{Optimisation}
-  
+
 There are functions for Differential Evolution
 (\texttt{DEopt}), Genetic Algorithms (\texttt{GAopt}),
 (Stochastic) Local Search (\texttt{LSopt}), Particle
@@ -91,13 +99,13 @@ and grid search~(\texttt{gridSearch}).
 For options, see \texttt{{vanillaOptionEuropean}},
 \texttt{{vanillaOptionAmerican}}, \texttt{{putCallParity}}.  For
 pricing methods that use the characteristic function, see
-\texttt{{callCF}}.  For bond/bond-futures pricing, see \texttt{vanillaBond}, 
+\texttt{{callCF}}.  For bond/bond-futures pricing, see \texttt{vanillaBond},
 \texttt{bundFuture} and \texttt{xtContractValue}.
 
 \subsection{Simulation}
-  
+
 See \texttt{{resampleC}}, \texttt{{mc}} and \texttt{repairMatrix}.
-  
+
 \subsection{Datasets}
 
 See \texttt{{bundData}}, \texttt{{fundData}} and
@@ -110,7 +118,7 @@ via the function \texttt{showExample}.  Call it without any argument
 to see all examples.
 <<>>=
 showExample()
-@ 
+@
 
 \subsection{Vignettes}
 
@@ -119,11 +127,13 @@ See \texttt{?vignette} for how to extract the code from these
 documents.
 <<eval=false>>=
 vignette(package = "NMOF")  ## display vignette titles
-@ 
+@
 <<echo=false>>=
 x <- vignette(package = "NMOF")
 cat(paste(strwrap(x$results[,"Title"], exdent = 2), collapse = "\n"))
-@ 
+@
+
+
 
 \section{Other resources}
 
@@ -141,33 +151,33 @@ development version is available from
 
 \noindent To install the development version from an R session, type:
 <<eval=false>>=
-install.packages("NMOF", type = "source",
-                 repos = c("http://enricoschumann.net/R", 
+install.packages("NMOF",
+                 repos = c("http://enricoschumann.net/R",
                            getOption("repos")))
-@ 
+@
 
-\noindent The source code is also available in the GitHub repository
+\noindent The package source code is also available in
+the GitHub repository
 
-\url{https://github.com/enricoschumann/NMOF}.
+\url{https://github.com/enricoschumann/NMOF}.\smallskip
+
+The book's source code examples are available from GitLab:
+
+\url{https://gitlab.com/NMOF}.\smallskip
 
 \subsection{Manual}
 
 A manual is available from
 \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}\,, though it is
 still work in process.  The code examples from the manual are also
-included in the package; they can be directly accessed from within
-\textsf{R}.
-
-<<eval = false>>=
-file.show(system.file("NMOFex/NMOFman.R", package = "NMOF"))
-@
+available from that site.
 
 \subsection{Tests}
 
 A goal for the \textsc{nmof} package is to provide reliable code.
 Thus, a large number of test cases is included.
 <<echo=false>>=
-test.rep <- readLines(system.file("unitTests/test_results.txt", 
+test.rep <- readLines(system.file("unitTests/test_results.txt",
                                   package = "NMOF"))
 nt <- gsub(".*\\(([0-9]+) checks?\\).*", "\\1",
            test.rep[grep("\\(\\d+ checks?\\)", test.rep)])
@@ -176,10 +186,6 @@ cat("Package version  ", gsub("(.*)[.]([0-9]+)$", "\\1-\\2",
     "Number of tests: ", sum(as.numeric(nt)), sep = "")
 @
 These tests are stored in subdirectory \texttt{unitTests}.
-
-
-
-
 
 \subsection{News, feedback and discussion}
 
@@ -197,7 +203,7 @@ available at\smallskip
 \medskip
 
 \noindent Applications, as long as they are finance-related, should be
-discussed on the \texttt{R-SIG-Finance} mailing list:\smallskip 
+discussed on the \texttt{R-SIG-Finance} mailing list:\smallskip
 
 \url{https://stat.ethz.ch/mailman/listinfo/r-sig-finance}
 
@@ -206,13 +212,13 @@ discussed on the \texttt{R-SIG-Finance} mailing list:\smallskip
 \noindent Please send bug reports or suggestions directly to the
 package maintainer, for instance by using \texttt{bug.report}.
 <<eval=false>>=
-require("utils")
-bug.report("[NMOF] Unexpected behaviour in function XXX", 
+library("utils")
+bug.report("[NMOF] Unexpected behaviour in function XXX",
             maintainer("NMOF"), package = "NMOF")
-@ 
+@
 
 
-\nocite{Gilli2011b}
+\nocite{Gilli2019}
 \bibliographystyle{plainnat}
 \bibliography{NMOF}
 \end{document}

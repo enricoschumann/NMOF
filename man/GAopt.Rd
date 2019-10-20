@@ -160,7 +160,7 @@ GAopt (OF, algo = list(), ...)
   \item{OFvalue}{objective function value of best solution}
   \item{popF}{a vector. The objective function values in the final population.}
   \item{Fmat}{if \code{algo$storeF} is \code{TRUE}, a matrix of size
-    \code{algo$nG} times \code{algo$nP} containing 
+    \code{algo$nG} times \code{algo$nP} containing
     the objective function values of all solutions over the generations;
     else \code{NA}}
   \item{xlist}{if \code{algo$storeSolutions} is \code{TRUE}, a list that
@@ -171,14 +171,12 @@ GAopt (OF, algo = list(), ...)
 
 }
 \references{
-
-  Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical
-    Methods and Optimization in Finance}. Elsevier.
-  \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
+  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
+  Methods and Optimization in Finance}. 2nd edition. Elsevier.
+  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
 
   Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
-
 }
 \author{
   Enrico Schumann

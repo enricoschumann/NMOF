@@ -38,8 +38,11 @@
   \pkg{readxl} is needed to process the raw data in function
   \code{\link{Shiller}}; package \pkg{datetimeutils} is
   used by \code{\link{French}} and \code{\link{Shiller}}.
+  \pkg{PMwR} would be needed to run the examples
+  of the backtesting examples in the NMOF book.
   Finally, \pkg{RUnit} is needed to
   run the tests in subdirectory \sQuote{\code{unitTests}}.
+
 
   Version numbering: package versions are numbered in the
   form \code{major-minor-patch}.  The \emph{patch} level is
@@ -104,9 +107,9 @@
 }
 \references{
 
-  Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical
-  Methods and Optimization in Finance}. Elsevier.
-  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-375662-6}
+  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
+  Methods and Optimization in Finance}. 2nd edition. Elsevier.
+  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
 
   Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}

@@ -181,11 +181,18 @@ test.French <- function() {
                    price.series = TRUE)
 
 
-
     for (d in French())
         data <- French(archive.dir, d)
+}
 
+test.Shiller <- function() {
 
+    ## library("NMOF")
+    ## library("RUnit")
 
+    archive.dir <- "~/Downloads/Shiller"
+    if (!dir.exists(archive.dir))
+        dir.create(archive.dir)
 
+    Shiller(archive.dir)
 }

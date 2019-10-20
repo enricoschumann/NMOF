@@ -40,15 +40,15 @@ A list
 \item{step}{current step (i.e. for a given threshold)}
 \item{threshold}{current threshold (the number, not the value)}
 \item{xbest}{the best solution found so far}
+\item{OF.xbest}{objective function value of best solution}
 }
 \references{
-    Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical
-    Methods and Optimization in Finance}. Elsevier.
-    \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
+  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
+  Methods and Optimization in Finance}. 2nd edition. Elsevier.
+  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
 
-    Schumann, E. (2016) Financial Optimisation with R (\pkg{NMOF} Manual).
-    \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
-
+  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
+  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 }
 \author{
     Enrico Schumann
@@ -84,18 +84,18 @@ algo <- list(nS = 5,
 ignore <- TAopt(fun, algo)
 
 ## printed output:
-##    current threshold  NA | current step  1 | current iteration  NA 
-##    current threshold  NA | current step  2 | current iteration  NA 
-##    current threshold  NA | current step  3 | current iteration  NA 
-##    current threshold   1 | current step  1 | current iteration  1 
-##    current threshold   1 | current step  2 | current iteration  2 
-##    current threshold   1 | current step  3 | current iteration  3 
-##    current threshold   1 | current step  4 | current iteration  4 
-##    current threshold   1 | current step  5 | current iteration  5 
-##    current threshold   2 | current step  1 | current iteration  6 
-##    current threshold   2 | current step  2 | current iteration  7 
-##    current threshold   2 | current step  3 | current iteration  8 
-##    current threshold   2 | current step  4 | current iteration  9 
-##    current threshold   2 | current step  5 | current iteration  10 
+##    current threshold  NA | current step  1 | current iteration  NA
+##    current threshold  NA | current step  2 | current iteration  NA
+##    current threshold  NA | current step  3 | current iteration  NA
+##    current threshold   1 | current step  1 | current iteration  1
+##    current threshold   1 | current step  2 | current iteration  2
+##    current threshold   1 | current step  3 | current iteration  3
+##    current threshold   1 | current step  4 | current iteration  4
+##    current threshold   1 | current step  5 | current iteration  5
+##    current threshold   2 | current step  1 | current iteration  6
+##    current threshold   2 | current step  2 | current iteration  7
+##    current threshold   2 | current step  3 | current iteration  8
+##    current threshold   2 | current step  4 | current iteration  9
+##    current threshold   2 | current step  5 | current iteration  10
 
 }

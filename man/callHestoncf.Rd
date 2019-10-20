@@ -45,15 +45,15 @@ Note that the function takes variances as inputs (not volatilities).
   0.26-3, the first element was named \code{callPrice}.
 }
 \references{
-Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods
-  and Optimization in Finance}. Elsevier.
-\url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
+  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
+  Methods and Optimization in Finance}. 2nd edition. Elsevier.
+  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
 
-Heston, S.L. (1993) A Closed-Form Solution for Options with Stochastic
-Volatility with Applications to Bonds and Currency options.
-\emph{Review of Financial Studies} \strong{6}(2), 327--343.
+  Heston, S.L. (1993) A Closed-Form Solution for Options with Stochastic
+  Volatility with Applications to Bonds and Currency options.
+  \emph{Review of Financial Studies} \strong{6}(2), 327--343.
 
-  Schumann, E. (2016) Financial Optimisation with R (\pkg{NMOF} Manual).
+  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 
 }

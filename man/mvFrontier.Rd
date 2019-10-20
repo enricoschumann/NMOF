@@ -38,11 +38,11 @@ mvPortfolio(m, var, min.return, wmin = 0, wmax = 1)
 
    \code{mvPortfolio} computes a single mean--variance efficient
    portfolio, using package \pkg{quadprog}.
-   
-   \code{mvFrontier} computes returns, volatilities and 
+
+   \code{mvFrontier} computes returns, volatilities and
    compositions for portfolios along an efficient frontier.
    If \code{rf} is not \code{NA}, cash is included as an asset.
-     
+
 }
 \value{
 
@@ -64,15 +64,12 @@ mvPortfolio(m, var, min.return, wmin = 0, wmax = 1)
 
 }
 \references{
-  
-    Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical
-    Methods and Optimization in Finance}. Elsevier.
-    \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
+  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
+  Methods and Optimization in Finance}. 2nd edition. Elsevier.
+  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
 
-    Schumann, E. (2018) Financial Optimisation with R (\pkg{NMOF} Manual).
-    \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
-
-
+  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
+  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 }
 \author{
     Enrico Schumann

@@ -3,7 +3,8 @@
 \alias{makeInteger}
 \alias{anyNA}
 \alias{checkList}
-\alias{Chapters}
+\alias{Chapters1}
+\alias{Chapters2}
 \alias{due}
 \title{Internal NMOF functions}
 \description{
@@ -17,7 +18,8 @@ mRU(m,n)
 mRN(m,n)
 mcList(mc.control)
 repair1c(x, up, lo)
-Chapters
+Chapters1
+Chapters2
 due(D, tauD, tau, q)
 }
 \details{
@@ -42,7 +44,7 @@ due(D, tauD, tau, q)
   \code{repair1c} is described in the vignette on \sQuote{Repairing
     Solutions}.
 
-  \code{Chapters} is a vector of length 15, giving the chapter names as
+  \code{Chapters[12]} is a vector of length 15, giving the chapter names as
   printed in the book. (Can be accessed with \code{\link{showChapterNames}}.)
 
   \code{due} (dividends until expiry) returns a list with named
@@ -51,14 +53,12 @@ due(D, tauD, tau, q)
   time-to-expiry.
 }
 \references{
+  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
+  Methods and Optimization in Finance}. 2nd edition. Elsevier.
+  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
 
-  Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical
-  Methods and Optimization in Finance}. Elsevier.
-  \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
-
-  Schumann, E. (2016) Financial Optimisation with R (\pkg{NMOF} Manual).
+  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
-
 }
 \author{
   Enrico Schumann

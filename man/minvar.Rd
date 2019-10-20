@@ -40,18 +40,15 @@ minvar(var, wmin = 0, wmax = 1, method = "qp")
   \code{variance} (the portfolio's variance)
 }
 \references{
+  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
+  Methods and Optimization in Finance}. 2nd edition. Elsevier.
+  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
 
-    Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical
-    Methods and Optimization in Finance}. Elsevier.
-    \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-375662-6}
+  Schumann, E. (2012) Computing the global minimum-variance
+  portfolio. \url{http://enricoschumann.net/R/minvar.htm}
 
-    Schumann, E. (2012) Computing the global minimum-variance
-    portfolio. \url{http://enricoschumann.net/R/minvar.htm}
-
-    Schumann, E. (2012--2018) Financial Optimisation with R (\pkg{NMOF} Manual).
-    \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
-
-    
+  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
+  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 }
 \author{
   Enrico Schumann
@@ -65,19 +62,19 @@ minvar(var, wmin = 0, wmax = 1, method = "qp")
 
 if (requireNamespace("quadprog")) {
 
-    var <- structure(c(0.000988087100677907, -0.0000179669410403153, 0.000368923882626859, 
-                       0.000208303611101873, 0.000262742052359594, -0.0000179669410403153, 
-                       0.00171852167358765, 0.0000857467457561209, 0.0000215059246610556, 
-                       0.0000283532159921211, 0.000368923882626859, 0.0000857467457561209, 
-                       0.00075871953281751, 0.000194002299424151, 0.000188824454515841, 
-                       0.000208303611101873, 0.0000215059246610556, 0.000194002299424151, 
-                       0.000265780633005374, 0.000132611196599808, 0.000262742052359594, 
-                       0.0000283532159921211, 0.000188824454515841, 0.000132611196599808, 
+    var <- structure(c(0.000988087100677907, -0.0000179669410403153, 0.000368923882626859,
+                       0.000208303611101873, 0.000262742052359594, -0.0000179669410403153,
+                       0.00171852167358765, 0.0000857467457561209, 0.0000215059246610556,
+                       0.0000283532159921211, 0.000368923882626859, 0.0000857467457561209,
+                       0.00075871953281751, 0.000194002299424151, 0.000188824454515841,
+                       0.000208303611101873, 0.0000215059246610556, 0.000194002299424151,
+                       0.000265780633005374, 0.000132611196599808, 0.000262742052359594,
+                       0.0000283532159921211, 0.000188824454515841, 0.000132611196599808,
                        0.00025948420130626),
                      .Dim = c(5L, 5L),
                      .Dimnames = list(c("CBK.DE", "VOW.DE", "CON.DE", "LIN.DE", "MUV2.DE"),
                                       c("CBK.DE", "VOW.DE", "CON.DE", "LIN.DE", "MUV2.DE")))
-    
+
     ##            CBK.DE     VOW.DE    CON.DE    LIN.DE   MUV2.DE
     ## CBK.DE   0.000988 -0.0000180 0.0003689 0.0002083 0.0002627
     ## VOW.DE  -0.000018  0.0017185 0.0000857 0.0000215 0.0000284
@@ -87,11 +84,11 @@ if (requireNamespace("quadprog")) {
     ##
 
     minvar(var, wmin = 0, wmax = 0.5)
-    
+
     minvar(var,
-           wmin = c(0.1,0,0,0,0), ## enforce at least 10\% weight in CBK.DE 
+           wmin = c(0.1,0,0,0,0), ## enforce at least 10\% weight in CBK.DE
            wmax = 0.5)
-    
+
     minvar(var, wmin = -Inf, wmax = Inf)   ## no bounds
     ## [1] -0.0467  0.0900  0.0117  0.4534  0.4916
 
@@ -100,6 +97,6 @@ if (requireNamespace("quadprog")) {
 
     minvar(var, wmin =  0.1, wmax = Inf)   ## no upper bounds
     ## [1] 0.100 0.100 0.100 0.363 0.337
-    
+
 }
 }

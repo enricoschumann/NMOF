@@ -1,10 +1,10 @@
-v2.0-0  (2019-10-20; not yet released)
+v2.0-1  (2019-10-20)
 
   o The package now includes the code examples from the
     second edtion of 'Numerical Methods and Optimization
     in Finance". 'showExample' has been updated as well:
-    it gains an argument 'edition', which defaults to
-    2. Also, the default for 'ignore.case' was changed
+    it gains an argument 'edition', which defaults to 2.
+    Also, the default for 'ignore.case' was changed
     to TRUE.  (To get back the old behaviour of the
     function, set 'edition' to 1 and 'ignore.case' to
     FALSE.)
@@ -39,6 +39,9 @@ v2.0-0  (2019-10-20; not yet released)
   o various documentation updates; new features are
     now described at
       http://enricoschumann.net/notes/NMOF/
+
+  o manual has been updated:
+    http://enricoschumann.net/NMOF.htm#NMOFmanual
 
 v1.6-0  (2019-04-01)
 

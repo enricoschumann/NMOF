@@ -1,21 +1,23 @@
 2019-10-20  Enrico Schumann  <es@enricoschumann.net>
 
-	* DESCRIPTION (Suggests): add 'PMwR'
+        * DESCRIPTION (Version): 2.0-1
+
+        * DESCRIPTION (Suggests): add 'PMwR'
 
 2019-10-17  Enrico Schumann  <es@enricoschumann.net>
 
         * R/TAopt.R (TA.info): add the
-	objective-function value of currently best
-	solution, 'OF.xbest', to the data that
-	'TA.info' provides
+        objective-function value of currently best
+        solution, 'OF.xbest', to the data that
+        'TA.info' provides
 
 2019-10-11  Enrico Schumann  <es@enricoschumann.net>
 
-	* R/market_data.R (French): support
-	"Portfolios_Formed_on_NI_CSV.zip",
-	"Portfolios_Formed_on_RESVAR_CSV.zip"
+        * R/market_data.R (French): support
+        "Portfolios_Formed_on_NI_CSV.zip",
+        "Portfolios_Formed_on_RESVAR_CSV.zip"
 
-	* DESCRIPTION (ByteCompile): set to 'yes' again
+        * DESCRIPTION (ByteCompile): set to 'yes' again
 
 2019-10-07  Enrico Schumann  <es@enricoschumann.net>
 

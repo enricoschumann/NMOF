@@ -54,15 +54,15 @@ changeInterval(nodes, weights, oldmin, oldmax, newmin, newmax)
   \item{nodes}{a numeric vector}
 }
 \references{
-  Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical Methods and Optimization in Finance}. Elsevier.
-  \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
+  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
+  Methods and Optimization in Finance}. 2nd edition. Elsevier.
+  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
 
   Golub, G.H. and Welsch, J.H. (1969). Calculation of Gauss Quadrature Rules. \emph{Mathematics of Computation},
   \bold{23}(106), pp. 221--230+s1--s10.
 
-  Schumann, E. (2016) Financial Optimisation with R (\pkg{NMOF} Manual).
+  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
-
 }
 \author{
   Enrico Schumann

@@ -7,15 +7,16 @@ citEntry(entry  = "book",
                     person("Dietmar", "Maringer", role = "aut"),
                     person("Enrico", "Schumann", role = c("aut", "cre"))),
 
-         year   = "2011",
-         publisher = "Academic Press",
+         year   = "2019",
+         publisher = "Elsevier/Academic Press",
          address = "Waltham, MA, USA",
-         url     = "http://nmof.net",
-         note    = "ISBN 0123756626",
+         url     = "http://www.enricoschumann.net/NMOF",
+         note    = "ISBN 978-0128150658",
+         edition = "Second",
          textVersion = 
          paste("Manfred Gilli, Dietmar Maringer and Enrico Schumann. ", 
-               "Numerical Methods and Optimization in Finance. ",
-               "Academic Press, 2011.", sep = ""))
+               "Numerical Methods and Optimization in Finance. 2nd edition. ",
+               "Elsevier/Academic Press, 2019.", sep = ""))
 
 citEntry(entry  = "manual",
          title  = paste0("Numerical Methods and Optimization in Finance (NMOF) ",

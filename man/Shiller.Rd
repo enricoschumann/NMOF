@@ -34,8 +34,8 @@ Shiller(dest.dir,
   \code{dest.dir}. Before any download is attempted,
   the function checks whether a file with today's
   prefix exist in \code{dest.dir}; if yes, the file is
-  used.      
-  
+  used.
+
 }
 \value{
 a \code{\link{data.frame}}:
@@ -52,10 +52,14 @@ a \code{\link{data.frame}}:
 }
 \references{
 
-  Shiller, R.J. (2015) \emph{Irrational
-  Exhuberance}. Princeton University Press. 3rd
-  edition.
-  
+  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
+  Methods and Optimization in Finance}. 2nd edition. Elsevier.
+  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
+
+  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
+  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+
+  Shiller, R.J. (2015) \emph{Irrational Exhuberance}. Princeton University Press. 3rd edition.
 }
 \author{
   Enrico Schumann

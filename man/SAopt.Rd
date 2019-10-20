@@ -12,7 +12,7 @@
 SAopt(OF, algo = list(), \dots)
 }
 \arguments{
-  
+
   \item{OF}{The objective function, to be minimised. Its first argument
     needs to be a solution \code{x}; it will be called as \code{OF(x,
       \dots)}.}
@@ -40,10 +40,10 @@ SAopt(OF, algo = list(), \dots)
 
   The list \code{algo} contains the following items.
   \describe{
-    
+
     \item{\code{nS}}{The number of steps per temperature. The default is
       1000; but this setting depends very much on the problem.}
-    
+
     \item{\code{nT}}{The number of temperatures. Default is 10.}
 
     \item{\code{nI}}{
@@ -54,9 +54,9 @@ SAopt(OF, algo = list(), \dots)
       option makes it easier to compare and switch
       between functions \code{\link{LSopt}},
       \code{\link{TAopt}} and \code{\link{SAopt}}.
-      
+
     }
-    
+
     \item{\code{nD}}{The number of random steps to calibrate the
       temperature. Defaults to 2000.}
 
@@ -78,7 +78,7 @@ SAopt(OF, algo = list(), \dots)
       \code{x0 <- algo$x0()}. This can be useful when the routine is
       called in a loop of restarts, and each restart is to have its own
       starting value.}
-    
+
     \item{\code{neighbour}}{The neighbourhood function, called as
       \code{neighbour(x, \dots)}. Its first argument must be a solution
       \code{x}; it must return a changed solution.}
@@ -112,7 +112,7 @@ SAopt(OF, algo = list(), \dots)
       lower) is achieved. This is useful when an optimal
       objective-function value is known: the algorithm will then stop and
       not waste time searching for a better solution.}
-    
+
   } % end describe
 
   At the minimum, \code{algo} needs to contain an initial solution
@@ -149,7 +149,7 @@ SAopt(OF, algo = list(), \dots)
 
     If \code{algo$classify} was set to \code{TRUE}, the resulting list
     will have a class attribute \code{TAopt}.
-    
+
   }
   \note{If the \code{\dots} argument is used, then all the objects passed
     with \code{\dots} need to go into the objective function and the
@@ -163,29 +163,26 @@ SAopt(OF, algo = list(), \dots)
     \acronym{SA} will be equivalent to a Local Search. The function
     \code{\link{LSopt}} may be preferred then because of smaller
     overhead.
-    
-  }
-  \references{
-    
-    Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical
-    Methods and Optimization in Finance}. Elsevier.
-    \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
 
-    Kirkpatrick, S., Gelatt, C.D. and Vecchi, M.P. (1983). Optimization
-    with Simulated Annealing. Science. \strong{220} (4598), 671--680.
+  }
+\references{
+  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
+  Methods and Optimization in Finance}. 2nd edition. Elsevier.
+  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
 
-    Schumann, E. (2017) Financial Optimisation with R (\pkg{NMOF} Manual).
-    \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
-        
-  }
-  \author{
-    Enrico Schumann
-  }
+  Kirkpatrick, S., Gelatt, C.D. and Vecchi, M.P. (1983). Optimization
+  with Simulated Annealing. Science. \strong{220} (4598), 671--680.
 
-  \seealso{
-    \code{\link{LSopt}}, \code{\link{TAopt}}, \code{\link{restartOpt}}
-  }
-  \examples{
+  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
+  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+}
+\author{
+  Enrico Schumann
+}
+\seealso{
+  \code{\link{LSopt}}, \code{\link{TAopt}}, \code{\link{restartOpt}}
+}
+\examples{
 ## Aim: given a matrix x with n rows and 2 columns,
 ##      divide the rows of x into two subsets such that
 ##      in one subset the columns are highly correlated,

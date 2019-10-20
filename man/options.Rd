@@ -55,11 +55,11 @@ vanillaOptionImpliedVol(exercise = "european", price, S, X, tau, r,
   }
   \item{model}{
     what model to use to value the option. Default is \code{NULL} which
-    is equivalent to \code{bsm}. 
+    is equivalent to \code{bsm}.
   }
   \item{...}{
     parameters passed to pricing model
-  }  
+  }
   \item{M}{
     number of time steps in the tree
   }
@@ -122,13 +122,12 @@ Dividends (\code{D}) are modelled via the escrowed-dividend model.
   0.26-3, the first element of this list was named \code{price}.
 }
 \references{
-  Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical
-    Methods and Optimization in Finance}. Elsevier.
-  \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
+  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
+  Methods and Optimization in Finance}. 2nd edition. Elsevier.
+  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
 
-  Schumann, E. (2016) Financial Optimisation with R (\pkg{NMOF} Manual).
+  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
-  
 }
 \author{
 Enrico Schumann
@@ -213,7 +212,7 @@ v <- 0.22^2  ## variance, not volatility
 vol <- 0.22
 
 vanillaOptionEuropean(S=S, X = X, tau=tau, r=r, q=q, v=v,     ## with variance
-                      type = "call", greeks = FALSE) 
+                      type = "call", greeks = FALSE)
 vanillaOptionEuropean(S=S, X = X, tau=tau, r=r, q=q, vol=vol, ## with vol
                       type = "call", greeks = FALSE)
 vanillaOptionEuropean(S=S, X = X, tau=tau, r=r, q=q, vol=vol, ## with vol

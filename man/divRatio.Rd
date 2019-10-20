@@ -27,8 +27,12 @@ divRatio(w, var)
   a numeric vector of length one
 }
 \references{
+  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
+  Methods and Optimization in Finance}. 2nd edition. Elsevier.
+  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
+
   Yves Choueifaty and Yves Coignard (2008) Toward Maximum
-  Diversification. 
+  Diversification.
   \emph{Journal of Portfolio Management} \strong{35}(1), 40--51.
 }
 \author{

@@ -42,12 +42,12 @@ tfTrefethen(x)
   The minimum function value is zero; reached at \eqn{x=0}{x = 0}.
 
   The \emph{Eggholder} takes a two-dimensional \code{x},
-  here written as \eqn{x}{x} and \eqn{y}{y}. It is defined as  
+  here written as \eqn{x}{x} and \eqn{y}{y}. It is defined as
   \deqn{-(y + 47) \sin\left(\sqrt{|y + \frac{x}{2} + 47|}\right) -
     x \sin\left(\sqrt{|x - (y + 47)|}\right)\,.}{-(y + 47) * sin(sqrt(abs(y + x/2 + 47))) -
     x * sin(sqrt(abs(x - (y + 47))))}
   The minimum function value is -959.6407; reached at \code{c(512, 404.2319)}.
-      
+
   The \emph{Griewank} function is given by
   \deqn{1+\frac{1}{4000} \sum^n_{i=1} x_i^2 - \prod_{i=1}^n \cos \left(\frac{x_i}{\sqrt{i}}\right)\,.}{sum(x^2)/4000 - prod(cos(x/sqrt(1:n))) + 1}
   The function is minimised at \eqn{x=0}{x = 0}; its minimum value is zero.
@@ -70,15 +70,12 @@ tfTrefethen(x)
   length one).
 }
 \references{
+  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
+  Methods and Optimization in Finance}. 2nd edition. Elsevier.
+  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
 
-  Gilli, M., Maringer, D. and Schumann, E. (2011) \emph{Numerical
-  Methods and Optimization in Finance}. Elsevier.
-  \url{http://www.elsevierdirect.com/product.jsp?isbn=9780123756626}
-  (Chapter 10)
-
-  Schumann, E. (2016) Financial Optimisation with R (\pkg{NMOF} Manual).
+  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
-
 }
 \author{
   Enrico Schumann

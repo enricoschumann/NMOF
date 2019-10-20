@@ -56,9 +56,16 @@ bundFutureImpliedRate(future, clean, coupon,
 \author{
   Enrico Schumann
 }
-%% \seealso{
-%% %% ~~objects to See Also as \code{\link{help}}, ~~~
-%% }
+\references{
+
+  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
+  Methods and Optimization in Finance}. 2nd edition. Elsevier.
+  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
+
+  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
+  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+
+}
 \examples{
 ## Bund-Future with expiry Sep 2017
 ## CTD: DE0001102408 -- 0%, 15 Aug 2026
