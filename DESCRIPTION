@@ -10,7 +10,7 @@ Authors@R: person("Enrico", "Schumann",
                   comment = c(ORCID = "0000-0001-7601-6576"))
 Depends: R (>= 2.14)
 Imports: grDevices, graphics, parallel, stats, utils
-Suggests: MASS, RUnit, datetimeutils, quadprog, readxl
+Suggests: MASS, PMwR, RUnit, datetimeutils, quadprog, readxl
 Description: Functions, examples and data from the book
   "Numerical Methods and Optimization in Finance" by
   M. Gilli, D. Maringer and E. Schumann (2nd edition, 2019,
