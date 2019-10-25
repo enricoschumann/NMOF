@@ -1,7 +1,7 @@
 v2.0-1  (2019-10-20)
 
   o The package now includes the code examples from the
-    second edtion of 'Numerical Methods and Optimization
+    second edition of 'Numerical Methods and Optimization
     in Finance". 'showExample' has been updated as well:
     it gains an argument 'edition', which defaults to 2.
     Also, the default for 'ignore.case' was changed
