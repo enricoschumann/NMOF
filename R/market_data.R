@@ -439,19 +439,29 @@ French <- function(dest.dir,
 
         ans <- txt[(i+1):(j-1)]
 
-    } else if (tolower(dataset) != "f-f_research_data_factors_csv.zip") {
+    } else  {
 
         ## default
+        message("dataset not supported: trying default => check data carefully")
 
         if (grepl("daily", dataset) && frequency != "daily")
             warning("daily dataset but frequency not set to daily")
 
-        i <- if (tolower(weighting) == "equal")
-                 grep("Equal Weighted Returns", txt)
-             else if (tolower(weighting) == "value")
-                 grep("Value Weighted Returns", txt)
-             else
-                 stop("weighting must be 'equal' or 'value'")
+        if (frequency == "annual") {
+            i <- if (tolower(weighting) == "equal")
+                     grep("Equal Weight(ed)? Returns.*Annual", txt)
+                 else if (tolower(weighting) == "value")
+                     grep("Value Weight(ed)? Returns.*Annual", txt)
+                 else
+                     stop("weighting must be 'equal' or 'value'")
+        } else if (frequency == "monthly") {
+            i <- if (tolower(weighting) == "equal")
+                     grep("Equal Weight(ed)? Returns.*Month", txt)
+                 else if (tolower(weighting) == "value")
+                     grep("Value Weight(ed)? Returns.*Month", txt)
+                 else
+                     stop("weighting must be 'equal' or 'value'")
+        }
         i <- i[[1]]
         j <- grep("^$", txt)
         j <- j[min(which(j > i))]
@@ -482,11 +492,9 @@ French <- function(dest.dir,
 
         }
 
-    } else {
-        warning("dataset not supported")
-        i <- grep("Mkt-RF", txt)
-        j <- grep("^ *$", txt[-c(1:10)]) + 9
-        ans <- txt[i:j]
+        ## i <- grep("Mkt-RF", txt)
+        ## j <- grep("^ *$", txt[-c(1:10)]) + 9
+        ## ans <- txt[i:j]
     }
 
     if (!requireNamespace("datetimeutils", quietly = TRUE))

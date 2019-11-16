@@ -1,3 +1,8 @@
+2019-11-16  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R (French): improve parsing of
+        not-explicitly-supported datasets
+
 2019-10-20  Enrico Schumann  <es@enricoschumann.net>
 
         * DESCRIPTION (Version): 2.0-1
