@@ -1,4 +1,4 @@
-* Numerical Methods and Optimisation in Finance 
+* Numerical Methods and Optimisation in Finance [[https://cran.r-project.org/package=NMOF][@@html:<img alt="CRAN/METACRAN" src="https://img.shields.io/cran/v/NMOF">@@]]
 
   Functions, examples and data from the first and the
   second edition of "Numerical Methods and Optimization
