@@ -183,6 +183,10 @@ test.French <- function() {
 
     for (d in French())
         data <- French(archive.dir, d)
+
+    ignore <- French("~/Downloads/French",
+                     dataset = "ME_Breakpoints_CSV.zip")
+
 }
 
 test.Shiller <- function() {

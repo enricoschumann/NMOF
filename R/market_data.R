@@ -18,15 +18,20 @@ Shiller <- function(dest.dir,
              sQuote("datetimeutils"), " is not available")
 
     data <- suppressMessages(suppressWarnings(
-        readxl::read_xls(f.path, sheet = 3)))
+        readxl::read_xls(f.path, sheet = 4)))
     data <- as.data.frame(data)
     data <- data[-(1:6), ]
-    data <- data[, 1:11]
-    data <- data[, -6] ## drop column 'Date Fraction'
+    data <- data[, 1:15]
+    data <- data[, -c(6, 14)] ## drop column 'Date Fraction' and empty column
 
     colnames(data) <- c("Date", "Price", "Dividend", "Earnings",
                         "CPI", "Long Rate", "Real Price",
-                        "Real Dividend", "Real Earnings", "CAPE")
+                        "Real Dividend",
+                        "Real Total Return Price",
+                        "Real Earnings",
+                        "Real TR Scaled Earnings",
+                        "CAPE",
+                        "TR CAPE")
 
     data <- data[!is.na(data[["Date"]]), ]
     tmp <- data[["Date"]]
@@ -37,7 +42,7 @@ Shiller <- function(dest.dir,
         sapply(tmp, function(x) paste(x[1], x[2], "1", sep = "-")))
     data[["Date"]] <- datetimeutils::end_of_month(tmp)
 
-    for (i in 2:10) ## there will be NAs => warnings
+    for (i in 2:ncol(data)) ## there will be NAs => warnings
         data[[i]] <- suppressWarnings(as.numeric(data[[i]]))
     data
 }
