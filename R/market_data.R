@@ -454,16 +454,23 @@ French <- function(dest.dir,
 
         if (frequency == "annual") {
             i <- if (tolower(weighting) == "equal")
-                     grep("Equal Weight(ed)? Returns.*Annual", txt)
+                     grep("Equal Weight(ed)? Returns.*Annual", txt, ignore.case = TRUE)
                  else if (tolower(weighting) == "value")
-                     grep("Value Weight(ed)? Returns.*Annual", txt)
+                     grep("Value Weight(ed)? Returns.*Annual", txt, ignore.case = TRUE)
                  else
                      stop("weighting must be 'equal' or 'value'")
         } else if (frequency == "monthly") {
             i <- if (tolower(weighting) == "equal")
-                     grep("Equal Weight(ed)? Returns.*Month", txt)
+                     grep("Equal Weight(ed)? Returns.*Month", txt, ignore.case = TRUE)
                  else if (tolower(weighting) == "value")
-                     grep("Value Weight(ed)? Returns.*Month", txt)
+                     grep("Value Weight(ed)? Returns.*Month", txt, ignore.case = TRUE)
+                 else
+                     stop("weighting must be 'equal' or 'value'")
+        } else if (frequency == "daily") {
+            i <- if (tolower(weighting) == "equal")
+                     grep("Equal Weight(ed)? Returns.*Daily", txt, ignore.case = TRUE)
+                 else if (tolower(weighting) == "value")
+                     grep("Value Weight(ed)? Returns.*Daily", txt, ignore.case = TRUE)
                  else
                      stop("weighting must be 'equal' or 'value'")
         }

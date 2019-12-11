@@ -1,7 +1,12 @@
+2019-12-11  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R (French): improve parsing of
+        not-explicitly-supported _daily_ datasets
+
 2019-11-24  Enrico Schumann  <es@enricoschumann.net>
 
-	* R/market_data.R (Shiller): adapt function to
-	new file format
+        * R/market_data.R (Shiller): adapt function to
+        new file format
 
 2019-11-16  Enrico Schumann  <es@enricoschumann.net>
 
