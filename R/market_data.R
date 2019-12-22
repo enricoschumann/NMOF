@@ -87,7 +87,7 @@ French <- function(dest.dir,
 
             "Portfolios_Formed_on_BE-ME_CSV.zip",
             "Portfolios_Formed_on_NI_CSV.zip",
-            "Portfolios_Formed_on_RESVAR.csv",
+            "Portfolios_Formed_on_RESVAR_CSV.zip",
             "Portfolios_Formed_on_VAR_CSV.zip",
 
             "Siccodes5.zip",
