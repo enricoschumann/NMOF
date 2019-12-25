@@ -25,3 +25,26 @@ test.minvar <- function() {
     
 }
 
+test.mvPortfolio <- function() {
+
+    na <- 4
+    vols <- c(0.10, 0.15, 0.20,0.22)
+    m <- c(0.06, 0.12, 0.09, 0.07)
+    const_cor <- function(rho, na) {
+        C <- array(rho, dim = c(na, na))
+        diag(C) <- 1
+        C
+    }
+    var <- diag(vols) %*% const_cor(0.5, na) %*% diag(vols)
+    
+
+    ## minimum variance
+    x1 <- mvPortfolio(m, var, lambda = 1e-10)
+    x2 <- minvar(var)
+    checkEqualsNumeric(x1, x2)
+
+    ## maximum return
+    x1 <- mvPortfolio(m, var, lambda = 0.99999999)
+    checkEqualsNumeric(x1, c(0,1,0,0))
+        
+}

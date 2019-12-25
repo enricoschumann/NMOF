@@ -135,7 +135,8 @@ mvFrontier <- function(m, var, wmin = 0, wmax = 1, n = 50, rf = NA) {
 
 
 ## compute mean-variance efficient portfolio
-mvPortfolio <- function(m, var, min.return, wmin = 0, wmax = 1) {
+mvPortfolio <- function(m, var, min.return, wmin = 0, wmax = 1,
+                        lambda = NULL) {
 
     if (!requireNamespace("quadprog"))
         stop("package ", sQuote("quadprog"), " is not available")
@@ -148,18 +149,34 @@ mvPortfolio <- function(m, var, min.return, wmin = 0, wmax = 1) {
     if (length(m) == 1L)
         m <- rep(m, na)
 
-    Q <- 2 * var
+    if (is.null(lambda)) {
+        lambda1 <- 1
+        lambda2 <- 1
+    } else if (length(lambda) == 1L) {
+        if (lambda <= 0 || lambda >= 1)
+            stop("lambda must lie in the range (0,1)")
+        lambda1 <- lambda
+        lambda2 <- 1 - lambda
+    } else {
+        lambda1 <- lambda[1L]
+        lambda2 <- lambda[2L]
+    }
+    Q <- lambda2 * 2 * var
     A <- array( 1, dim = c(1L, na))
     a <- 1
-    B <- array(m, dim = c(1L, na))
-    B <- rbind(B,-diag(na),diag(na))
-    b <- rbind(min.return, array(-wmax, dim = c(na,1L)),
-               array( wmin, dim = c(na,1L)))
+    B <- rbind(if (is.null(lambda))
+                   m,
+               -diag(na),
+                diag(na))
+    b <- as.matrix(c(if (is.null(lambda))
+                         min.return,
+                     -wmax,
+                      wmin))
     result <- quadprog::solve.QP(Dmat = Q,
-                                 dvec = rep(0,na),
-                                 Amat = t(rbind(A,B)),
-                                 bvec = rbind(a,b),
+                                 dvec = if (is.null(lambda)) rep(0, na)
+                                        else lambda1 * m,
+                                 Amat = t(rbind(A, B)),
+                                 bvec = rbind(a, b),
                                  meq  = 1L)$solution
-
     result
 }

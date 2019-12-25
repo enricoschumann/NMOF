@@ -9,7 +9,7 @@
 }
 \usage{
 mvFrontier(m, var, wmin = 0, wmax = 1, n = 50, rf = NA)
-mvPortfolio(m, var, min.return, wmin = 0, wmax = 1)
+mvPortfolio(m, var, min.return, wmin = 0, wmax = 1, lambda = NULL)
 }
 \arguments{
   \item{m}{
@@ -33,11 +33,31 @@ mvPortfolio(m, var, min.return, wmin = 0, wmax = 1)
   \item{rf}{
     risk-free rate
 }
+  \item{lambda}{
+    risk--reward trade-off
+}
 }
 \details{
 
-   \code{mvPortfolio} computes a single mean--variance efficient
-   portfolio, using package \pkg{quadprog}.
+   \code{mvPortfolio} computes a single mean--variance
+   efficient portfolio, using package \pkg{quadprog}.
+   It does so by minimising portfolio variance, subject
+   to constraints on minimum return and budget (weights
+   need to sum to one), and min/max constraints on the
+   weights.
+
+   If \eqn{\lambda}{\code{lambda}}
+   is specified, the function ignores the \code{min.return}
+   constraint and instead solves the model
+   \deqn{\min_w\ \ -\lambda \mbox{\code{m}}'w + \frac{1}{2}(1-\lambda)
+     w'\mbox{\code{var}\,}w}{min -lambda m'w - (1 - lambda)/2 w'var w}
+   in which \eqn{w}{\code{w}} are the weights. If
+   \eqn{\lambda}{\code{lambda}}
+   is a vector of length 2, then the model becomes
+   \deqn{\min\ -\lambda_1 \mbox{\code{m}\,}'w + \frac{1}{2}\lambda_2
+     w'\mbox{\code{var}\,}w}{min -lambda_1 m'w - lambda_2/2 w'var w}
+   which may be more convenient
+   (e.g. for setting \eqn{\lambda_1}{\code{lambda_1}} to 1).
 
    \code{mvFrontier} computes returns, volatilities and
    compositions for portfolios along an efficient frontier.
@@ -75,7 +95,7 @@ mvPortfolio(m, var, min.return, wmin = 0, wmax = 1)
     Enrico Schumann
 }
 \seealso{
-  \code{\link{minvar}}
+  \code{\link{minvar}} for computing the minimum-variance portfolio
 }
 \examples{
 na <- 4
@@ -86,9 +106,9 @@ const_cor <- function(rho, na) {
     diag(C) <- 1
     C
 }
-var <- diag(vols) %*% const_cor(0.5, na) %*% diag(vols)
+var <- diag(vols) \%*\% const_cor(0.5, na) %*% diag(vols)
 
-wmax <- 2.5           # maximum holding size
+wmax <- 2.5          # maximum holding size
 wmin <- 0.0          # minimum holding size
 rf <- 0.02
 
