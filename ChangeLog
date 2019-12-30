@@ -1,3 +1,8 @@
+2019-12-30  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R (Shiller): adapt function to
+        new file format (reordered sheets)
+
 2019-12-25  Enrico Schumann  <es@enricoschumann.net>
 
         * R/portfolio.R (mvPortfolio): new argument

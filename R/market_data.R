@@ -18,7 +18,7 @@ Shiller <- function(dest.dir,
              sQuote("datetimeutils"), " is not available")
 
     data <- suppressMessages(suppressWarnings(
-        readxl::read_xls(f.path, sheet = 4)))
+        readxl::read_xls(f.path, sheet = "Data")))
     data <- as.data.frame(data)
     data <- data[-(1:6), ]
     data <- data[, 1:15]
