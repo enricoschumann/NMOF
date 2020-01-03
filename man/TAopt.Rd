@@ -1,3 +1,4 @@
+\encoding{UTF-8}
 \name{TAopt}
 \alias{TAopt}
 \concept{heuristics}
@@ -203,7 +204,7 @@ TAopt(OF, algo = list(), \dots)
     Portfolio Choice. \emph{Applied Stochastic Models and Data
     Analysis}. \strong{8} (3), 159--178.
 
-    Gilli, M., Kellezi, E. and Hysi, H. (2006) A Data-Driven
+    Gilli, M., K\enc{ë}{e}llezi, E. and Hysi, H. (2006) A Data-Driven
     Optimization Heuristic for Downside Risk Minimization. \emph{Journal
     of Risk}. \strong{8} (3), 1--18.
 
