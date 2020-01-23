@@ -1,0 +1,112 @@
+% \VignetteIndexEntry{Volatility surfaces under the Heston and Bates model}
+% \VignetteKeyword{Heston model}
+% \VignetteKeyword{Bates model}
+% \VignetteKeyword{implied volatility}
+\documentclass[a4paper]{article}
+\usepackage[left=2.5cm,top=2cm, bottom=3cm, right=3.5cm]{geometry}
+\usepackage[noae]{Sweave}
+\usepackage{mathptmx}
+\usepackage{amsmath,amstext}
+\usepackage{hyperref}
+\usepackage{natbib}
+\usepackage{units}
+\usepackage{color}
+\definecolor{grau2}{rgb}{.2,.2,.2}
+\definecolor{grau7}{rgb}{.7,.7,.7}
+% define *Sweave* layout
+\DefineVerbatimEnvironment{Sinput}{Verbatim}{}
+\DefineVerbatimEnvironment{Soutput}{Verbatim}{frame=single,xleftmargin=0em,%
+  formatcom=\color{grau2},rulecolor=\color{grau7}}
+\DefineVerbatimEnvironment{Scode}{Verbatim}{xleftmargin=2em}
+\fvset{listparameters={\setlength{\topsep}{0pt}}}
+\renewenvironment{Schunk}{\vspace{\topsep}}{\vspace{\topsep}}
+<<echo=false>>=
+options(continue = "  ", digits = 5, max.print = 1000)
+@
+
+\begin{document}
+{\raggedright{\LARGE Volatility surfaces under the Heston and Bates model}}\medskip
+
+\noindent Enrico Schumann\\
+\noindent \texttt{es@enricoschumann.net}\\
+\bigskip
+
+\nocite{Gilli2019}
+
+<<>>=
+library("NMOF")
+@
+
+<<base-case>>=
+S <- 100
+X <- seq(70, 130, by = 5)
+tau <- 1
+r <- 0.00
+q <- 0.00
+v0  <- 0.2^2  ## variance, not volatility
+vT  <- 0.2^2  ## variance, not volatility
+rho <- 0
+k <- 0.5
+sigma <- 0.2
+
+impl.vols <- numeric(length(X))
+
+for (i in seq_along(impl.vols)) {
+    result <- callHestoncf(S = S,
+                           X = X[i],
+                           tau = tau,
+                           r = r, q = q,
+                           v0 = v0, vT = vT, rho = rho, k = k,
+                           sigma = sigma, implVol = TRUE)
+    
+    impl.vols[i] <- result$impliedVol
+}     
+plot(X, impl.vols, ylim = c(0.18, 0.3), type = "b",
+     xlab = "Strike (spot is 100)",
+     ylab = "Implied vol")
+abline (v = 100)
+@
+
+<<negative-correlation>>=
+rho <- 0
+
+impl.vols <- numeric(length(X))
+for (i in seq_along(impl.vols)) {
+    result <- callHestoncf(S = S,
+                           X = X[i],
+                           tau = tau,
+                           r = r, q = q,
+                           v0 = v0, vT = vT, rho = rho, k = k,
+                           sigma = sigma, implVol = TRUE)
+    
+    impl.vols[i] <- result$impliedVol
+}     
+plot(X, impl.vols, ylim = c(0.18, 0.3), type = "b",
+     xlab = "Spot (strike is 100)",
+     ylab = "Implied vol")
+abline (v = 100)
+
+rho <- -0.3
+for (i in seq_along(impl.vols)) {
+    result <- callHestoncf(S = S,
+                           X = X[i],
+                           tau = tau,
+                           r = r, q = q,
+                           v0 = v0, vT = vT, rho = rho, k = k,
+                           sigma = sigma, implVol = TRUE)
+    
+    impl.vols[i] <- result$impliedVol
+}     
+lines(X, impl.vols, type = "b")
+
+
+@
+
+Some notes and code sketches on computing the Heston
+and Bates models for a matrix of options (different
+strikes, different expiry dates) are in NMOF manual
+(\url{http://enricoschumann.net/NMOF.htm#NMOFmanual}\,)
+
+\bibliographystyle{plainnat}
+\bibliography{NMOF}
+\end{document}
