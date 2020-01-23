@@ -8,7 +8,12 @@ Shiller <- function(dest.dir,
     f.path <- file.path(normalizePath(dest.dir), f.name)
 
     if (!file.exists(f.path))
-        download.file(url, destfile = f.path)
+        dl.result <- download.file(url, destfile = f.path)
+
+    if (dl.result != 0L) {
+        warning("download failed with code ", dl.result, "; see ?download.file")
+        return(invisible(NULL))
+    }
 
     if (!requireNamespace("readxl", quietly = TRUE))
         stop("file downloaded, but package ",
@@ -151,7 +156,12 @@ French <- function(dest.dir,
     f.path <- file.path(normalizePath(dest.dir), f.name)
 
     if (!file.exists(f.path))
-        download.file(paste0(.ftp, url), f.path)
+        dl.result <- download.file(paste0(.ftp, url), f.path)
+
+    if (dl.result != 0L) {
+        warning("download failed with code ", dl.result, "; see ?download.file")
+        return(invisible(NULL))
+    }
 
     tmp2 <- unzip(f.path)
     txt <- readLines(tmp2)

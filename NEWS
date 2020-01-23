@@ -1,6 +1,12 @@
-v2.1-0  (2019-XX-XX; not yet released)
+v2.1-0  (2020-02-02; not yet released)
 
-  o ....
+  o Shiller: adapt function to new file format
+
+  o French/Shiller: if download fails, the functions
+    now return NULL (invisibly)
+
+  o ......
+
 
 v2.0-1  (2019-10-20)
 
