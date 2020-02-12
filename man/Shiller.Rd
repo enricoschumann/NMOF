@@ -29,7 +29,7 @@ Shiller(dest.dir,
   provided in Excel format, package \pkg{readxl} is
   required.
 
-  The download Excel gets a date prefix (today in
+  The downloaded Excel gets a date prefix (today in
   format \code{YYYYMMDD}) and is stored in directory
   \code{dest.dir}. Before any download is attempted,
   the function checks whether a file with today's

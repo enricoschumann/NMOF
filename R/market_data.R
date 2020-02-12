@@ -9,6 +9,8 @@ Shiller <- function(dest.dir,
 
     if (!file.exists(f.path))
         dl.result <- download.file(url, destfile = f.path)
+    else
+        dl.result <- 0
 
     if (dl.result != 0L) {
         warning("download failed with code ", dl.result, "; see ?download.file")
@@ -157,6 +159,8 @@ French <- function(dest.dir,
 
     if (!file.exists(f.path))
         dl.result <- download.file(paste0(.ftp, url), f.path)
+    else
+        dl.result <- 0
 
     if (dl.result != 0L) {
         warning("download failed with code ", dl.result, "; see ?download.file")
