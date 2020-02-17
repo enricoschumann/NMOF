@@ -1,3 +1,10 @@
+2020-02-17  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/portfolio.R (minvar,mvFrontier,mvPortfolio):
+        the functions gain arguments 'groups',
+        'groups.wmin' and 'groups.wmax', which allow to
+        specify group constraints
+
 2020-01-23  Enrico Schumann  <es@enricoschumann.net>
 
         * R/market_data.R (French,Shiller): if download

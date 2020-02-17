@@ -48,7 +48,10 @@ erc <- function(cov,  wmin = 0, wmax = 1, method = "ls") {
 
 
 ## function for computing the minimum-variance portfolio
-minvar <- function(var, wmin = 0, wmax = 1, method = "qp") {
+minvar <- function(var, wmin = 0, wmax = 1, method = "qp",
+                   groups = NULL,
+                   groups.wmin = NULL,
+                   groups.wmax = NULL) {
 
     if (method == "qp" && !requireNamespace("quadprog"))
         stop("package ", sQuote("quadprog"), " is not available")
@@ -67,8 +70,19 @@ minvar <- function(var, wmin = 0, wmax = 1, method = "qp") {
     bvec <- c(1,
               if (!finite.max) NULL else -wmax,
               if (!finite.min) NULL else  wmin)
+
+    if (!is.null(groups)) {
+        Groups <-
+            group_constraints_matrices(na,
+                                       groups,
+                                       groups.wmin,
+                                       groups.wmax)
+        A <- rbind(A, Groups$A.ineq)
+        bvec <- c(bvec, Groups$b.ineq)
+    }
+
     qp_res <- quadprog::solve.QP(Dmat = Q,
-                                 dvec = rep(0, na),
+                                 dvec = rep.int(0, na),
                                  Amat = t(A),
                                  bvec = bvec,
                                  meq  = 1L)
@@ -79,7 +93,10 @@ minvar <- function(var, wmin = 0, wmax = 1, method = "qp") {
 
 
 ## function for computing n points of the efficient frontier
-mvFrontier <- function(m, var, wmin = 0, wmax = 1, n = 50, rf = NA) {
+mvFrontier <- function(m, var, wmin = 0, wmax = 1, n = 50, rf = NA,
+                       groups = NULL,
+                       groups.wmin = NULL,
+                       groups.wmax = NULL) {
 
     if (!requireNamespace("quadprog"))
         stop("package ", sQuote("quadprog"), " is not available")
@@ -98,13 +115,25 @@ mvFrontier <- function(m, var, wmin = 0, wmax = 1, n = 50, rf = NA) {
     dvec <- numeric(na)
     if (is.na(rf)) {
         A <- rbind(1, -diag(na), diag(na))
+        bvec <- c(1, -wmax, wmin)
+
+        if (!is.null(groups)) {
+            Groups <-
+                group_constraints_matrices(na,
+                                           groups,
+                                           groups.wmin,
+                                           groups.wmax)
+            A <- rbind(A, Groups$A.ineq)
+            bvec <- c(bvec, Groups$b.ineq)
+        }
+
         sq <- seq(0.0001, 0.9999, length.out = n)
         for (i in seq_len(n)) {
             lambda <- sq[i]
             result <- quadprog::solve.QP(Dmat = 2*(1 - lambda)*var,
                                          dvec = lambda*m,
                                          Amat = t(A),
-                                         bvec = c(1, -wmax, wmin),
+                                         bvec = bvec,
                                          meq  = 1L)
             rets[i] <- sum(m*result$solution)
             risk[i] <- sqrt(result$solution %*% var %*% result$solution)
@@ -114,8 +143,19 @@ mvFrontier <- function(m, var, wmin = 0, wmax = 1, n = 50, rf = NA) {
         A <- rbind(m - rf, -diag(na), diag(na))
         r.seq <- seq(rf, max(m), length.out = n)
         cash <- numeric(n)
+        bvec.gr <- NULL
+        if (!is.null(groups)) {
+            Groups <-
+                group_constraints_matrices(na,
+                                           groups,
+                                           groups.wmin,
+                                           groups.wmax)
+            A <- rbind(A, Groups$A.ineq)
+            bvec.gr <- Groups$b.ineq
+        }
+
         for (i in seq_len(n)) {
-            bvec  <- c(r.seq[i], -wmax, wmin)
+            bvec  <- c(r.seq[i], -wmax, wmin, bvec.gr)
             result <- quadprog::solve.QP(Dmat = var,
                                          dvec = rep.int(0, na),
                                          Amat = t(A),
@@ -136,7 +176,10 @@ mvFrontier <- function(m, var, wmin = 0, wmax = 1, n = 50, rf = NA) {
 
 ## compute mean-variance efficient portfolio
 mvPortfolio <- function(m, var, min.return, wmin = 0, wmax = 1,
-                        lambda = NULL) {
+                        lambda = NULL,
+                        groups = NULL,
+                        groups.wmin = NULL,
+                        groups.wmax = NULL) {
 
     if (!requireNamespace("quadprog"))
         stop("package ", sQuote("quadprog"), " is not available")
@@ -171,12 +214,63 @@ mvPortfolio <- function(m, var, min.return, wmin = 0, wmax = 1,
     b <- as.matrix(c(if (is.null(lambda))
                          min.return,
                      -wmax,
-                      wmin))
+                     wmin))
+
+    A <- rbind(A, B)
+    bvec <- rbind(a, b)
+    if (!is.null(groups)) {
+        Groups <-
+            group_constraints_matrices(na,
+                                       groups,
+                                       groups.wmin,
+                                       groups.wmax)
+        A <- rbind(A, Groups$A.ineq)
+        bvec <- rbind(bvec, Groups$b.ineq)
+    }
+
     result <- quadprog::solve.QP(Dmat = Q,
                                  dvec = if (is.null(lambda)) rep(0, na)
                                         else lambda1 * m,
-                                 Amat = t(rbind(A, B)),
-                                 bvec = rbind(a, b),
+                                 Amat = t(A),
+                                 bvec = bvec,
                                  meq  = 1L)$solution
     result
+}
+
+group_constraints_matrices <- function(na, groups,
+                              groups.wmin,
+                              groups.wmax) {
+
+    if (is.factor(groups))
+        groups <- as.character(groups)
+
+    if (is.list(groups)) {
+        G <- array(0, dim = c(length(groups), na))
+        for (g in seq_along(groups))
+            G[g, groups[[g]]] <- 1
+    } else if (is.character(groups)) {
+        sug <- sort(unique(groups))
+        G <- array(0, dim = c(length(sug), na))
+        rownames(G) <- sug
+        for (g in sug)
+            G[g, groups == g] <- 1
+    } else
+        stop("invalid", sQuote("groups"))
+
+    A.ineq <- NULL
+    b.ineq <- NULL
+    if (!is.null(groups.wmax)) {
+        G.max <- G[is.finite(groups.wmax), ]
+        groups.wmax <- groups.wmax[is.finite(groups.wmax)]
+        A.ineq <- rbind(A.ineq, -G.max)
+        b.ineq <- c(b.ineq, -groups.wmax)
+    }
+    if (!is.null(groups.wmin)) {
+        G.min <- G[is.finite(groups.wmin), ]
+        groups.wmin <- groups.wmin[is.finite(groups.wmin)]
+        A.ineq <- rbind(A.ineq, G.min)
+        b.ineq <- c(b.ineq, groups.wmin)
+    }
+    list(A.ineq = A.ineq,
+         b.ineq = b.ineq)
 }

@@ -8,7 +8,8 @@
   on weights.
 }
 \usage{
-minvar(var, wmin = 0, wmax = 1, method = "qp")
+minvar(var, wmin = 0, wmax = 1, method = "qp",
+       groups = NULL, groups.wmin = NULL, groups.wmax = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -25,7 +26,16 @@ minvar(var, wmin = 0, wmax = 1, method = "qp")
 }
   \item{method}{
     character. Currently, only \code{"qp"} is supported.
-}
+  }
+  \item{groups}{
+    a list of group definitions
+  }
+  \item{groups.wmin}{
+    a numeric vector
+  }
+  \item{groups.wmax}{
+    a numeric vector
+  }
 }
 \details{
 
@@ -98,5 +108,19 @@ if (requireNamespace("quadprog")) {
     minvar(var, wmin =  0.1, wmax = Inf)   ## no upper bounds
     ## [1] 0.100 0.100 0.100 0.363 0.337
 
+    ## group constraints:
+    ##   group 1 consists of asset 1 only,   and must have weight [0.25,0.30]
+    ##   group 2 consists of assets 4 and 5, and must have weight [0.10,0.20]
+
+    ##   => unconstrainted
+    minvar(var, wmin = 0, wmax = 0.40)
+    ## [1] 0.0097 0.1149 0.0754 0.4000 0.4000
+
+    ##   => with group constraints
+    minvar(var, wmin = 0, wmax = 0.40,
+           groups = list(1, 4:5),
+           groups.wmin = c(0.25, 0.1),
+           groups.wmax = c(0.30, 0.2))
+    ## [1] 0.250 0.217 0.333 0.149 0.051
 }
 }

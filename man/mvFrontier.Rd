@@ -8,8 +8,10 @@
   Compute mean--variance efficient portfolios and efficient frontiers.
 }
 \usage{
-mvFrontier(m, var, wmin = 0, wmax = 1, n = 50, rf = NA)
-mvPortfolio(m, var, min.return, wmin = 0, wmax = 1, lambda = NULL)
+mvFrontier(m, var, wmin = 0, wmax = 1, n = 50, rf = NA,
+           groups = NULL, groups.wmin = NULL, groups.wmax = NULL)
+mvPortfolio(m, var, min.return, wmin = 0, wmax = 1, lambda = NULL,
+            groups = NULL, groups.wmin = NULL, groups.wmax = NULL)
 }
 \arguments{
   \item{m}{
@@ -36,6 +38,15 @@ mvPortfolio(m, var, min.return, wmin = 0, wmax = 1, lambda = NULL)
   \item{lambda}{
     risk--reward trade-off
 }
+  \item{groups}{
+    a list of group definitions
+  }
+  \item{groups.wmin}{
+    a numeric vector
+  }
+  \item{groups.wmax}{
+    a numeric vector
+  }
 }
 \details{
 
@@ -54,7 +65,7 @@ mvPortfolio(m, var, min.return, wmin = 0, wmax = 1, lambda = NULL)
    in which \eqn{w}{\code{w}} are the weights. If
    \eqn{\lambda}{\code{lambda}}
    is a vector of length 2, then the model becomes
-   \deqn{\min\ -\lambda_1 \mbox{\code{m}\,}'w + \frac{1}{2}\lambda_2
+   \deqn{\min_w\ \ -\lambda_1 \mbox{\code{m}\,}'w + \frac{1}{2}\lambda_2
      w'\mbox{\code{var}\,}w}{min -lambda_1 m'w - lambda_2/2 w'var w}
    which may be more convenient
    (e.g. for setting \eqn{\lambda_1}{\code{lambda_1}} to 1).
