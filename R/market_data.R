@@ -385,7 +385,7 @@ French <- function(dest.dir,
 
         i <- grep(",Mom", txt)
         i <- i[ c("monthly" = 1, "annual" = 2)[frequency] ]
-        j <- grep("^ *$", txt)
+        j <- grep("^[, ]*$", txt)
         j <- min( j[j > i] ) - 1
         ans <- txt[i:j]
         cnames <- "Mom"

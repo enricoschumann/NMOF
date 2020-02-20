@@ -1,3 +1,8 @@
+2020-02-20  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R (French): adapt function to
+        changed format (momentum monthly/yearly)
+
 2020-02-17  Enrico Schumann  <es@enricoschumann.net>
 
         * R/portfolio.R (minvar,mvFrontier,mvPortfolio):
