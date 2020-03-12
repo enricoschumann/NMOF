@@ -1,12 +1,18 @@
 v2.1-0  (2020-04-01; not yet released)
 
-  o Shiller: adapt function to new file format
+  o 'Shiller': adapt function to new file format
 
-  o French/Shiller: if download fails, the functions
-    now return NULL (invisibly)
+  o 'French'/'Shiller': if download fails, the
+    functions now return NULL (invisibly). Also,
+    'French' supports additional datasets.
 
-  o ......
+  o 'minvar', 'mvFrontier', 'mvPortfolio': the
+    functions gain arguments 'groups', 'groups.wmin'
+    and 'groups.wmax', which allow to specify group
+    constraints
 
+  o 'mvPortfolio': new argument 'lambda' for specifying
+    a risk--reward trade-off
 
 v2.0-1  (2019-10-20)
 
