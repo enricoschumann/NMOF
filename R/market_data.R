@@ -458,6 +458,42 @@ French <- function(dest.dir,
 
         ans <- txt[(i+1):(j-1)]
 
+        if (tolower(dataset) == "portfolios_formed_on_ni_csv.zip") {
+            i <- grep("number of firms", txt, ignore.case = TRUE) + 1
+            j <- grep("^$", txt)
+            j <- j[min(which(j > i))] - 1
+            info1 <- read.table(text = txt[i:j], header = TRUE,
+                                stringsAsFactors = FALSE, sep = ",",
+                                check.names = FALSE,
+                                colClasses = "numeric")
+            row.names(info1) <- as.character(info1[[1L]])
+            info1 <- info1[, -1L]
+
+            i <- grep("average firm size", txt, ignore.case = TRUE) + 1
+            j <- grep("^$", txt)
+            j <- j[min(which(j > i))] - 1
+            info2 <- read.table(text = txt[i:j], header = TRUE,
+                                stringsAsFactors = FALSE, sep = ",",
+                                check.names = FALSE,
+                                colClasses = "numeric")
+            row.names(info2) <- as.character(info2[[1L]])
+            info2 <- info2[, -1L]
+
+            i <- grep("Average of NI", txt, ignore.case = TRUE) + 1
+            j <- grep("^$", txt)
+            j <- j[min(which(j > i))] - 1
+            info3 <- read.table(text = txt[i:j], header = TRUE,
+                                stringsAsFactors = FALSE, sep = ",",
+                                check.names = FALSE,
+                                colClasses = "numeric")
+            row.names(info3) <- as.character(info3[[1L]])
+            info3 <- info3[, -1L]/100
+
+            attr.list <- list(
+                number.of.firms   = info1,
+                average.firm.size = info2,
+                value.weighted.average.ni = info3)
+        }
     } else  {
 
         ## default
