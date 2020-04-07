@@ -67,15 +67,18 @@ randomReturns(na, ns, sd, mean = 0, rho = 0)
   \code{\link{mc}}
 }
 \examples{
-na <- 100  ## number of assets
-inc <- 5   ## number of assets to include
+## a small experiment: when computing minimum-variance portfolios
+## for correlated assets, how many large positions are in the portfolio?
 
-n <- numeric(20)
+na <- 100  ## number of assets
+inc <-  5  ## minimum of assets to include
+
+n <- numeric(10)
 for (i in seq_along(n)) {
-    R <- NMOF:::randomReturns(na = na,
-                              ns = 1000,
-                              sd = seq(.2/.16, .5/.16, length.out = 100),
-                              rho = 0.5)
+    R <- randomReturns(na = na,
+                       ns = 500,
+                       sd = seq(.2/.16, .5/.16, length.out = 100),
+                       rho = 0.5)
     n[i] <- sum(minvar(cov(R), wmax = 1/inc)> 0.01)
 }
 summary(n)

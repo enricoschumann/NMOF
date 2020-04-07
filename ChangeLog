@@ -1,7 +1,11 @@
+2020-04-01  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.1-0
+
 2020-03-17  Enrico Schumann  <es@enricoschumann.net>
 
-	* R/market_data.R (French): provide more
-	information for share issuance dataset
+        * R/market_data.R (French): provide more
+        information for share issuance dataset
 
 2020-02-20  Enrico Schumann  <es@enricoschumann.net>
 
