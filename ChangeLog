@@ -1,3 +1,8 @@
+2020-04-11  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/portfolio.R (minCVaR): add function; see
+	http://enricoschumann.net/notes/minimising-conditional-var.html
+
 2020-04-01  Enrico Schumann  <es@enricoschumann.net>
 
         * DESCRIPTION (Version): 2.1-0

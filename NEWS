@@ -1,3 +1,12 @@
+v2.2-0  (2020-10-20; not yet released)
+
+  o new function 'minCVaR' for computing minimum CVaR
+    portfolios. For details, see
+    http://enricoschumann.net/notes/minimising-conditional-var.html
+
+  o .....
+
+
 v2.1-0  (2020-04-01)
 
   o 'Shiller': adapt function to new file format

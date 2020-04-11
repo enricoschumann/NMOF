@@ -274,3 +274,56 @@ group_constraints_matrices <- function(na, groups,
     list(A.ineq = A.ineq,
          b.ineq = b.ineq)
 }
+
+minCVaR <- function(R,
+                    q = 0.1,
+                    wmin = 0,
+                    wmax = 1,
+                    method = "Rglpk",
+                    groups = NULL,
+                    groups.wmin = NULL,
+                    groups.wmax = NULL,
+                    Rglpk.control = list()
+                    ) {
+
+
+    if (tolower(method) == "rglpk") {
+        if (!requireNamespace("Rglpk"))
+            stop("package ", sQuote("Rglpk"))
+
+        control <- list(verbose = FALSE,
+                        presolve = FALSE)
+
+        control[names(Rglpk.control)] <- Rglpk.control
+
+        b <- 1 - q
+        ns <- nrow(R)
+        na <- ncol(R)
+
+
+        f.obj <- c(alpha = 1,
+                   x = rep(0, na),
+                   u = 1/rep(( 1 - b)*ns, ns))
+
+        C <- cbind(1, R, diag(nrow(R)))
+        C <- rbind(c(alpha = 0, x = rep(1, na), u = rep(0, nrow(R))), C)
+
+        const.dir <- c("==", rep(">=", nrow(C) - 1))
+        const.rhs <- c(1, rep(0, nrow(C) - 1))
+
+        sol.lp <- Rglpk::Rglpk_solve_LP(f.obj,
+                                        C,
+                                        const.dir,
+                                        rhs = const.rhs,
+                                        control = control)
+
+        ans <- sol.lp$solution[2:(1+na)]
+        attr(ans, "LP") <- sol.lp
+    } else if (tolower(method) == "ls") {
+
+
+    } else {
+        stop("method ", sQuote(method), " not supported")
+    }
+    ans
+}

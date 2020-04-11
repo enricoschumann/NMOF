@@ -48,6 +48,7 @@ export(
     gbm,
     greedySearch,
     gridSearch,
+    minCVaR,
     minvar,
     mvFrontier,
     mvPortfolio,
