@@ -11,7 +11,6 @@
 minvar(var, wmin = 0, wmax = 1, method = "qp",
        groups = NULL, groups.wmin = NULL, groups.wmax = NULL)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{var}{
     the covariance matrix: a numeric (real), symmetric matrix
@@ -40,7 +39,7 @@ minvar(var, wmin = 0, wmax = 1, method = "qp",
 \details{
 
   The function uses \code{\link[quadprog]{solve.QP}} from package
-  \pkg{quadprog} package. Because of the algorithm that
+  \pkg{quadprog}. Because of the algorithm that
   \code{\link[quadprog]{solve.QP}} uses, \code{var} has to be positive
   definit (i.e. must be of full rank).
 
