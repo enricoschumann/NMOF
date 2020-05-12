@@ -1,3 +1,11 @@
+2020-05-12  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/market_data.R (French): for industry portfolios,
+	also export "Sum of BE/Sum of ME". The data are
+	attached as an attribute "sumBE.sumME". All
+	data-frames attached as attributes now have the
+	timestamps as rownames.
+
 2020-04-27  Enrico Schumann  <es@enricoschumann.net>
 
         * R/market_data.R: support further datasets, such as
