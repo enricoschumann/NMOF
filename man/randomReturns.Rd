@@ -29,7 +29,7 @@ randomReturns(na, ns, sd, mean = 0, rho = 0)
 
 }
   \item{rho}{
-    correlation
+    correlation: a scalar
 }
 }
 \details{
