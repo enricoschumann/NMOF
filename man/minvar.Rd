@@ -1,5 +1,6 @@
 \name{minvar}
 \alias{minvar}
+\concept{portfolio selection}
 \title{
   Minimum-Variance Portfolios
 }

@@ -4,6 +4,8 @@ v2.2-0  (2020-10-20; not yet released)
     portfolios. For details, see
     http://enricoschumann.net/notes/minimising-conditional-var.html
 
+  o new function 'trackingPortfolio'
+
   o 'French' supports more datasets.
 
   o ...

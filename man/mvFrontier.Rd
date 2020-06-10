@@ -1,6 +1,7 @@
 \name{mvFrontier}
 \alias{mvFrontier}
 \alias{mvPortfolio}
+\concept{portfolio selection}
 \title{
   Computing Mean--Variance Efficient Portfolios
 }

@@ -327,3 +327,65 @@ minCVaR <- function(R,
     }
     ans
 }
+
+trackingPortfolio <- function(var, wmin = 0, wmax = 1,
+                              method = "qp", objective = "variance",
+                              R) {
+
+    if (method == "qp") {
+
+        na <- ncol(var) - 1L
+        if (length(wmin) == 1L)
+            wmin <- rep(wmin, na)
+        if (length(wmax) == 1L)
+            wmax <- rep(wmax, na)
+
+        A <- rbind(numeric(na) + 1,
+                   -diag(na),
+                   diag(na))
+        b <- c(1, -wmax, wmin)
+
+        if (!requireNamespace("quadprog"))
+            stop("package ", sQuote("quadprog"), " is not available")
+
+        if (objective == "variance" ) {
+            Dmat <- var[-1, -1]
+            dvec <- var[1, -1]
+        } else if (objective == "sum.of.squares") {
+            Dmat <- crossprod(R[, -1])
+            dvec <- c(crossprod(R[, 1], R[, -1]))
+        }
+        qp_res <- quadprog::solve.QP(Dmat = Dmat,
+                                     dvec = dvec,
+                                     Amat = t(A),
+                                     bvec = b,
+                                     meq  = 1L)
+
+        ans <- qp_res$solution
+    } else if (method == "ls") {
+
+        if (objective == "variance" ) {
+            te <- function(w, R)
+                var(R[, -1] %*% w - R[, 1])
+
+        } else if (objective == "sum.of.squares") {
+            te <- function(w, R)
+                crossprod(R[, -1] %*% w - R[, 1])
+        }
+
+        if (!requireNamespace("neighbours"))
+            stop("package ", sQuote("quadprog"), " is not available")
+        nb <- neighbours::neighbourfun(type = "numeric",
+                                       max = wmax,
+                                       length = ncol(R) - 1,
+                                       stepsize = 0.01)
+
+        sol.ls <- LSopt(te, list(neighbour = nb, nI = 2000,
+                                 x0 = rep(1/(ncol(R) - 1), ncol(R) - 1)),
+                        R = R)
+        ans <- sol.ls$xbest
+
+    }
+    ans
+
+}

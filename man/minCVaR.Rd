@@ -1,5 +1,6 @@
 \name{minCVaR}
 \alias{minCVaR}
+\concept{portfolio selection}
 \title{
   Minimum Conditional-Value-at-Risk (CVaR) Portfolios
 }
