@@ -1,3 +1,10 @@
+2020-06-23  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/portfolio.R (group_constraints_matrices):
+        fix how constraints matrices are set up (thanks
+        to 'clcsar' for reporting on GitHub); allow
+        group labels
+
 2020-06-10  Enrico Schumann  <es@enricoschumann.net>
 
         * R/portfolio.R (trackingPortfolio): add function (not

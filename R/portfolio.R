@@ -211,13 +211,13 @@ mvPortfolio <- function(m, var, min.return, wmin = 0, wmax = 1,
                    m,
                -diag(na),
                 diag(na))
-    b <- as.matrix(c(if (is.null(lambda))
+    b <- c(if (is.null(lambda))
                          min.return,
                      -wmax,
-                     wmin))
+                     wmin)
 
     A <- rbind(A, B)
-    bvec <- rbind(a, b)
+    bvec <- c(a, b)
     if (!is.null(groups)) {
         Groups <-
             group_constraints_matrices(na,
@@ -225,7 +225,7 @@ mvPortfolio <- function(m, var, min.return, wmin = 0, wmax = 1,
                                        groups.wmin,
                                        groups.wmax)
         A <- rbind(A, Groups$A.ineq)
-        bvec <- rbind(bvec, Groups$b.ineq)
+        bvec <- c(bvec, Groups$b.ineq)
     }
 
     result <- quadprog::solve.QP(Dmat = Q,
@@ -260,13 +260,17 @@ group_constraints_matrices <- function(na, groups,
     A.ineq <- NULL
     b.ineq <- NULL
     if (!is.null(groups.wmax)) {
-        G.max <- G[is.finite(groups.wmax), ]
+        G.max <- if (is.character(groups))
+                     G[names(groups.wmax), ] else G
+        G.max <- G.max[is.finite(groups.wmax), ]
         groups.wmax <- groups.wmax[is.finite(groups.wmax)]
         A.ineq <- rbind(A.ineq, -G.max)
         b.ineq <- c(b.ineq, -groups.wmax)
     }
     if (!is.null(groups.wmin)) {
-        G.min <- G[is.finite(groups.wmin), ]
+        G.min <- if (is.character(groups))
+                     G[names(groups.wmin), ] else G
+        G.min <- G.min[is.finite(groups.wmin), ]
         groups.wmin <- groups.wmin[is.finite(groups.wmin)]
         A.ineq <- rbind(A.ineq, G.min)
         b.ineq <- c(b.ineq, groups.wmin)

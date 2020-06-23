@@ -37,6 +37,24 @@ test.minvar <- function() {
     checkTrue(sum(res[4:5]) <= 0.2 + 1e-10)
     checkEqualsNumeric(sum(res), 1)
 
+
+    ## group constraints: names
+    res2 <- minvar(var, wmin = 0, wmax = 0.40,
+                  groups = c("A", "none", "none", "B", "B"),
+                  groups.wmin = c(A = 0.29, B = 0.1),
+                  groups.wmax = c(A = 0.30, B = 0.2))
+
+
+    checkTrue(res2[1] >= 0.29 - 1e-10)
+    checkTrue(res2[1] <= 0.30 + 1e-10)
+    checkEqualsNumeric(sum(res2), 1)
+
+    checkTrue(sum(res2[4:5]) >= 0.1 - 1e-10)
+    checkTrue(sum(res2[4:5]) <= 0.2 + 1e-10)
+    checkEqualsNumeric(sum(res2), 1)
+
+    checkEqualsNumeric(res, res2)
+
 }
 
 test.mvPortfolio <- function() {
@@ -61,4 +79,36 @@ test.mvPortfolio <- function() {
     x1 <- mvPortfolio(m, var, lambda = 0.99999999)
     checkEqualsNumeric(x1, c(0,1,0,0))
 
+
+    ## group constraints
+    na <- 7
+    ns <- 50
+    R <- randomReturns(na = na, ns = ns, sd = 0.02, mean = 0)
+
+    sol1 <- mvPortfolio(m = colMeans(R), var = cov(R),
+                       min.return = 0,
+                       groups = list(1, 4:5),
+                       groups.wmin = c(0.25, 0.1),
+                       groups.wmax = c(0.30, 0.2))
+
+    checkTrue(sol[1] >= 0.25)
+    checkTrue(sol[1] <= 0.3)
+
+    checkTrue(sum(sol[4:5]) >= 0.1)
+    checkTrue(sum(sol[4:5]) <= 0.2)
+
+
+    sol2 <- mvPortfolio(m = colMeans(R), var = cov(R),
+                       min.return = 0,
+                       groups = c("A", "none", "none", "B", "B", "none", "none"),
+                       groups.wmin = c(A = 0.25, B = 0.1),
+                       groups.wmax = c(A = 0.30, B = 0.2))
+
+    checkTrue(sol[1] >= 0.25)
+    checkTrue(sol[1] <= 0.3)
+
+    checkTrue(sum(sol[4:5]) >= 0.1)
+    checkTrue(sum(sol[4:5]) <= 0.2)
+
+    checkEqualsNumeric(sol1, sol2)
 }
