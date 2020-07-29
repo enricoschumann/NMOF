@@ -118,9 +118,9 @@ const_cor <- function(rho, na) {
     diag(C) <- 1
     C
 }
-var <- diag(vols) \%*\% const_cor(0.5, na) %*% diag(vols)
+var <- diag(vols) \%*\% const_cor(0.5, na) \%*\% diag(vols)
 
-wmax <- 2.5          # maximum holding size
+wmax <- 1          # maximum holding size
 wmin <- 0.0          # minimum holding size
 rf <- 0.02
 

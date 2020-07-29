@@ -385,6 +385,8 @@ trackingPortfolio <- function(var, wmin = 0, wmax = 1,
                                        stepsize = 0.01)
 
         sol.ls <- LSopt(te, list(neighbour = nb, nI = 2000,
+                                 printBar = FALSE,
+                                 printDetail = FALSE,
                                  x0 = rep(1/(ncol(R) - 1), ncol(R) - 1)),
                         R = R)
         ans <- sol.ls$xbest

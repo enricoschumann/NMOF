@@ -112,7 +112,7 @@ if (requireNamespace("quadprog")) {
     ##   group 1 consists of asset 1 only,   and must have weight [0.25,0.30]
     ##   group 2 consists of assets 4 and 5, and must have weight [0.10,0.20]
 
-    ##   => unconstrainted
+    ##   => unconstrained
     minvar(var, wmin = 0, wmax = 0.40)
     ## [1] 0.0097 0.1149 0.0754 0.4000 0.4000
 
