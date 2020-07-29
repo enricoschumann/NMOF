@@ -80,7 +80,6 @@ R <- randomReturns(na = 1 + 20,
 
 var <- cov(R)
 
-
 sol.qp <- trackingPortfolio(var, wmax = 0.4)
 sol.ls <- trackingPortfolio(var = var, R = R, wmax = 0.4, method = "ls")
 data.frame(QP = round(100*sol.qp, 1),
@@ -92,7 +91,4 @@ sol.ls <- trackingPortfolio(var = var, R = R, wmax = 0.4, method = "ls",
                             objective = "sum.of.squares")
 data.frame(QP = round(100*sol.qp, 1),
            LS = round(100*sol.ls, 1))
-
-
-
 }
