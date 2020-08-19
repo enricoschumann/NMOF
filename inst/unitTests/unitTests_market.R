@@ -186,6 +186,16 @@ test.French <- function() {
 
     ignore <- French("~/Downloads/French",
                      dataset = "ME_Breakpoints_CSV.zip")
+    ignore <- French("~/Downloads/French",
+                     dataset = "6_Portfolios_2x3_CSV.zip")
+    ignore <- French("~/Downloads/French",
+                     dataset = "6_Portfolios_ME_OP_2x3_CSV.zip")
+    ignore <- French("~/Downloads/French",
+                     dataset = "6_Portfolios_ME_INV_2x3_CSV.zip")
+    ignore <- French("~/Downloads/French",
+                     dataset = "6_Portfolios_ME_CFP_2x3_CSV.zip")
+    ignore <- French("~/Downloads/French",
+                     dataset = "6_Portfolios_ME_DP_2x3_CSV.zip")
 
 }
 
