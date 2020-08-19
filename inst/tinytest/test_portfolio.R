@@ -94,8 +94,8 @@ sol1 <- mvPortfolio(m = colMeans(R), var = cov(R),
 expect_true(sol1[1] >= 0.25)
 expect_true(sol1[1] <= 0.3)
 
-expect_true(sum(sol1[4:5]) >= 0.1)
-expect_true(sum(sol1[4:5]) <= 0.2)
+expect_true(sum(sol1[4:5]) >= 0.1 - 1e-12)
+expect_true(sum(sol1[4:5]) <= 0.2 + 1e-12)
 
 
 sol2 <- mvPortfolio(m = colMeans(R), var = cov(R),
@@ -107,7 +107,7 @@ sol2 <- mvPortfolio(m = colMeans(R), var = cov(R),
 expect_true(sol2[1] >= 0.25)
 expect_true(sol2[1] <= 0.3)
 
-expect_true(sum(sol2[4:5]) >= 0.1)
-expect_true(sum(sol2[4:5]) <= 0.2)
+expect_true(sum(sol2[4:5]) >= 0.1 - 1e-12)
+expect_true(sum(sol2[4:5]) <= 0.2 + 1e-12)
 
 expect_equivalent(sol1, sol2)
