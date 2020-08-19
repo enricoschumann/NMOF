@@ -11,6 +11,7 @@ TAopt <- function(OF, algo = list(), ...) {
                   printBar = TRUE,
                   stepUp = 0L,
                   scale = 1,
+                  drop0 = FALSE,
                   storeF = TRUE,
                   storeSolutions = FALSE,
                   classify = FALSE,
@@ -92,6 +93,8 @@ TAopt <- function(OF, algo = list(), ...) {
             vT <- algoD$q * ((nT - 1L):0)/nT
             if (any(is.na(diffF)))
                 stop("objective function evaluated to NA")
+            if (algoD$drop0)
+                diffF <- diffF[diffF != 0]
             vT <- quantile(diffF, vT, na.rm = FALSE)
             vT[nT] <- 0  ## set last threshold to zero
             if (printBar)

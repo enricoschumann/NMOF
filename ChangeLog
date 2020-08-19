@@ -1,3 +1,8 @@
+2020-08-19  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/TAopt.R (TAopt): new option 'drop0',to be
+	passed via 'algo'
+
 2020-07-29  Enrico Schumann  <es@enricoschumann.net>
 
 	* vignettes/portfolio.Rnw: add vignette on
