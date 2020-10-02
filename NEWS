@@ -1,18 +1,21 @@
 v2.2-0  (2020-10-20; not yet released)
 
-  o new function 'minCVaR' for computing minimum CVaR
+  o New function 'minCVaR' for computing minimum CVaR
     portfolios. For details, see
     http://enricoschumann.net/notes/minimising-conditional-var.html
 
-  o new function 'trackingPortfolio'
+  o New function 'trackingPortfolio'. For details, see
+    http://enricoschumann.net/notes/return-based-tracking-portfolios.html
 
-  o 'French' supports more datasets.
+  o New vignette 'Functions for portfolio selection'.
 
   o 'TAopt' gains a new option 'drop0' (to be passed
     via 'algo): if TRUE, zero values are dropped from
     the sample of objective-function values during the
     computation of the threshold sequence. See
     https://stackoverflow.com/questions/63377180/finding-ideal-filter-setting-to-maximize-target-function
+
+  o 'French' supports more datasets.
 
   o ...
 

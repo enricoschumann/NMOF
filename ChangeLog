@@ -1,12 +1,12 @@
 2020-08-19  Enrico Schumann  <es@enricoschumann.net>
 
-	* R/TAopt.R (TAopt): new option 'drop0',to be
-	passed via 'algo'
+        * R/TAopt.R (TAopt): new option 'drop0',to be
+        passed via 'algo'
 
 2020-07-29  Enrico Schumann  <es@enricoschumann.net>
 
-	* vignettes/portfolio.Rnw: add vignette on
-	portfolio-selection functions
+        * vignettes/portfolio.Rnw: add vignette on
+        portfolio-selection functions
 
 2020-06-23  Enrico Schumann  <es@enricoschumann.net>
 
@@ -14,6 +14,10 @@
         fix how constraints matrices are set up (thanks
         to 'clcsar' for reporting on GitHub); allow
         group labels
+
+2020-06-10  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/portfolio.R (trackingPortfolio): export function
 
 2020-06-10  Enrico Schumann  <es@enricoschumann.net>
 
