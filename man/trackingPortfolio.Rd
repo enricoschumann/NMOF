@@ -17,11 +17,11 @@ trackingPortfolio(var, wmin = 0, wmax = 1,
 \arguments{
 
   \item{var}{the covariance matrix: a numeric (real),
-  symmetric matrix}
+  symmetric matrix. The first asset is the benchmark.}
 
   \item{R}{a matrix of returns: each colums holds the
     returns of one asset; each rows holds the returns
-    for one observation}
+    for one observation. The first asset is the benchmark.}
 
   \item{wmin}{numeric: a lower bound on weights. May
     also be a vector that holds specific bounds for each
