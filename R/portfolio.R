@@ -377,12 +377,24 @@ trackingPortfolio <- function(var, wmin = 0, wmax = 1,
                 crossprod(R[, -1] %*% w - R[, 1])
         }
 
-        if (!requireNamespace("neighbours"))
-            stop("package ", sQuote("quadprog"), " is not available")
-        nb <- neighbours::neighbourfun(type = "numeric",
-                                       max = wmax,
-                                       length = ncol(R) - 1,
-                                       stepsize = 0.01)
+        ## if (!requireNamespace("neighbours"))
+        ##     stop("package ", sQuote("quadprog"), " is not available")
+        ## nb <- neighbours::neighbourfun(type = "numeric",
+        ##                                max = wmax,
+        ##                                length = ncol(R) - 1,
+        ##                                stepsize = 0.01)
+        stepsize <- 0.01
+        nb <- function (x, ...)  {
+            decrease <- which(x > wmin)
+            increase <- which(x < wmax)
+            i <- decrease[sample.int(length(decrease), size = 1L)]
+            j <- increase[sample.int(length(increase), size = 1L)]
+            stepsize <- stepsize * runif(1L)
+            stepsize <- min(x[i] - wmin, wmax - x[j], stepsize)
+            x[i] <- x[i] - stepsize
+            x[j] <- x[j] + stepsize
+            x
+        }
 
         sol.ls <- LSopt(te, list(neighbour = nb, nI = 2000,
                                  printBar = FALSE,
@@ -393,5 +405,4 @@ trackingPortfolio <- function(var, wmin = 0, wmax = 1,
 
     }
     ans
-
 }
