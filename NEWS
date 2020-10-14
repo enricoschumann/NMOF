@@ -15,9 +15,18 @@ v2.2-0  (2020-10-20; not yet released)
     computation of the threshold sequence. See
     https://stackoverflow.com/questions/63377180/finding-ideal-filter-setting-to-maximize-target-function
 
-  o 'French' supports more datasets.
+  o 'French' supports more datasets. For industry
+    portfolios, the function now also provides "Sum of
+    BE/Sum of ME". The data are attached as an
+    attribute "sumBE.sumME". All data-frames attached
+    as attributes now have the timestamps as rownames.
 
-  o ...
+  o The setting-up of constraints matrices in
+    portfolio-selection functions such as 'minvar' is
+    now fixed; thanks to 'clcsar' for reporting on
+    GitHub. Also, the functions now allow group labels
+    for specifying constraints.
+    See https://github.com/enricoschumann/NMOF/issues/2 .
 
 v2.1-0  (2020-04-01)
 
