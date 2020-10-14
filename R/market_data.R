@@ -138,12 +138,13 @@ French <- function(dest.dir,
     else
         url <- dataset
 
+    url <- basename(url)
     if (adjust.frequency        &&
         grepl("daily", dataset) &&
         frequency != "daily") {
-        message("frequency set to daily (use ",
+        message("Frequency set to daily.\n(Use ",
                 sQuote("adjust.frequency = FALSE"),
-                " to prevent this)")
+                " to prevent this.)")
         frequency <- "daily"
     }
 
@@ -497,7 +498,7 @@ French <- function(dest.dir,
     } else  {
 
         ## default
-        message("dataset not explicitly supported: trying default => check data carefully")
+        message("Dataset not explicitly supported: trying default => check data carefully.")
 
         if (grepl("daily", dataset) && frequency != "daily")
             warning("daily dataset but frequency not set to daily")

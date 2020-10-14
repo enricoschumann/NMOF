@@ -1,3 +1,9 @@
+2020-10-14  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R (French): use 'basename' on
+        the dataset, so that the complete ftp-link to a
+        dataset can be used
+
 2020-08-19  Enrico Schumann  <es@enricoschumann.net>
 
         * R/TAopt.R (TAopt): new option 'drop0',to be

@@ -12,20 +12,20 @@ Depends: R (>= 2.14)
 Imports: grDevices, graphics, parallel, stats, utils
 Suggests: MASS, PMwR, RUnit, Rglpk, datetimeutils,
   quadprog, readxl, tinytest
-Description: Functions, examples and data from the first and the
-  second edition of "Numerical Methods and Optimization in Finance"
-  by M. Gilli, D. Maringer and E. Schumann
+Description: Functions, examples and data from the first and
+  the second edition of "Numerical Methods and Optimization
+  in Finance" by M. Gilli, D. Maringer and E. Schumann
   (2019, ISBN:978-0128150658).  The package provides
-  implementations of optimisation heuristics
-  (Differential Evolution, Genetic Algorithms,
-  Particle Swarm Optimisation, Simulated Annealing and
-  Threshold Accepting), and other optimisation tools,
-  such as grid search and greedy search.
-  There are also functions for the valuation of
-  financial instruments, such as bonds and options, and
-  functions that help with stochastic simulations.
+  implementations of optimisation heuristics (Differential
+  Evolution, Genetic Algorithms, Particle Swarm
+  Optimisation, Simulated Annealing and Threshold
+  Accepting), and other optimisation tools, such as grid
+  search and greedy search.  There are also functions for
+  the valuation of financial instruments such as bonds and
+  options, for portfolio selection and functions that help
+  with stochastic simulations.
 License: GPL-3
-URL: http://enricoschumann.net/NMOF,
+URL: http://enricoschumann.net/NMOF.htm,
      https://github.com/enricoschumann/NMOF,
      https://gitlab.com/NMOF
 LazyLoad: yes
