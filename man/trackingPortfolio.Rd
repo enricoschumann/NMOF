@@ -53,7 +53,7 @@ trackingPortfolio(var, wmin = 0, wmax = 1,
 }
 \references{
   Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
-  Methods and Optimization in Finance}. 2nd edition. Elsevier.
+    Methods and Optimization in Finance}, 2nd edition. Elsevier.
   \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
 
   Schumann, E. (2020) Financial Optimisation with R (\pkg{NMOF} Manual).
@@ -62,7 +62,7 @@ trackingPortfolio(var, wmin = 0, wmax = 1,
   Sharpe, W. F. (1992) Asset Allocation: Management Style and
   Performance Measurement. Journal of Portfolio Management.
   \strong{18} (2), 7--19.
-  \url{http://www.stanford.edu/~wfsharpe/art/sa/sa.htm}
+  \url{https://web.stanford.edu/~wfsharpe/art/sa/sa.htm}
 }
 \author{
   Enrico Schumann

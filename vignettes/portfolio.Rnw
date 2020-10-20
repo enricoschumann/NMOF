@@ -75,7 +75,7 @@ constraints.  As example data, the variable
 matrix, computed from daily returns of five German
 stocks.  The data are taken from
 \url{http://enricoschumann.net/data/gilli_accuracy.html}\,;
-the code to build the matrix is in the source files of
+the code to build the matrix is in the source file of
 this vignette.
 
 <<var>>=
@@ -127,7 +127,7 @@ minvar(var, wmin = 0, wmax = 0.40,
 \section{Mean--variance efficient portfolios and frontiers}
 
 \noindent The function
-\texttt{mvPortfolio}\marginpar{\texttt{mvPortfolio}}
+\texttt{mvPortfolio}\marginpar{\footnotesize\texttt{mvPortfolio}}
 computes a mean--variance-efficient portfolio for a
 given variance--covariance matrix and mean-return
 assumption, subject to holding-size constraints.  We
@@ -218,8 +218,7 @@ The function
 portfolio that minimises conditional Value-at-Risk; its
 default method is the LP approach described in
 \citet{rockafellar2000}.  See \emph{Minimising
-  Conditional Value-at-Risk (CVaR)} (\url{Minimising
-  Conditional Value-at-Risk}) for more details
+  Conditional Value-at-Risk (CVaR)} (\url{http://enricoschumann.net/notes/minimising-conditional-var.html}) for more details
 
 <<>>=
 ns <- 5000  ## number of scenarios

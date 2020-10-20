@@ -21,9 +21,9 @@
   All prices are as of 31 May 2010. See chapter 14 in Gilli et al. (2011).
 }
 \source{
-  The data was obtained from \url{http://www.deutsche-finanzagentur.de}
+  The data was obtained from \url{https://www.deutsche-finanzagentur.de/en/}
   . The data is also freely available from the website of the Bundesbank
-  \url{http://www.bundesbank.de} .
+  \url{https://www.bundesbank.de/en/} .
 }
 \references{
 

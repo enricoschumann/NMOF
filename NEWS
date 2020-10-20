@@ -1,4 +1,4 @@
-v2.2-0  (2020-10-20; not yet released)
+v2.2-0  (2020-10-20)
 
   o New function 'minCVaR' for computing minimum CVaR
     portfolios. For details, see

@@ -1,3 +1,21 @@
+2020-10-20  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.2-2
+
+        * inst/tinytest: exclude tests after spurious
+        error on CRAN machine
+
+2020-10-20  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.2-1
+
+        * man/optionData.Rd: update URLs, as
+        requested by CRAN
+
+2020-10-20  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.2-0
+
 2020-10-14  Enrico Schumann  <es@enricoschumann.net>
 
         * R/market_data.R (French): use 'basename' on
