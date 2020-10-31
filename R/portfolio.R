@@ -283,6 +283,8 @@ minCVaR <- function(R,
                     q = 0.1,
                     wmin = 0,
                     wmax = 1,
+                    min.return = NULL,
+                    m = NULL,
                     method = "Rglpk",
                     groups = NULL,
                     groups.wmin = NULL,
@@ -311,9 +313,19 @@ minCVaR <- function(R,
 
         C <- cbind(1, R, diag(nrow(R)))
         C <- rbind(c(alpha = 0, x = rep(1, na), u = rep(0, nrow(R))), C)
+        if (!is.null(min.return)) {
+            if (is.null(m))
+                m <- colMeans(R)
+            C <- rbind(c(alpha = 0, x = m, u = rep(0, nrow(R))), C)
+        }
 
-        const.dir <- c("==", rep(">=", nrow(C) - 1))
-        const.rhs <- c(1, rep(0, nrow(C) - 1))
+        const.dir <- c(if (!is.null(min.return)) ">=", ## min return
+                       "==")                           ## budget
+        const.dir <- c(const.dir,
+                       rep(">=", nrow(C) - length(const.dir)))
+
+        const.rhs <- c(if (!is.null(min.return)) min.return, 1)
+        const.rhs <- c(const.rhs, rep(0, nrow(C) - length(const.rhs)))
 
         sol.lp <- Rglpk::Rglpk_solve_LP(f.obj,
                                         C,

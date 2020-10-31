@@ -1,3 +1,9 @@
+v2.3-0  (2020-??-??; not yet released)
+
+  o 'minCVaR' gains an argument 'min.return' for
+    specifying a minimum required return (and another
+    argument 'm' for specifying expected returns)
+
 v2.2-0  (2020-10-20)
 
   o New function 'minCVaR' for computing minimum CVaR

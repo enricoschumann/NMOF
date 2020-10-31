@@ -26,88 +26,88 @@ expect_equivalent(attr(res, "variance"),
                   c(res %*% var %*% res))
 
 
-## ###      ---------------- group constraints
-## res <- minvar(var, wmin = 0, wmax = 0.40, groups = list(1, 4:5),
-##               groups.wmin = c(0.29, 0.1),
-##               groups.wmax = c(0.30, 0.2))
+###      ---------------- group constraints
+res <- minvar(var, wmin = 0, wmax = 0.40, groups = list(1, 4:5),
+              groups.wmin = c(0.29, 0.1),
+              groups.wmax = c(0.30, 0.2))
 
-## expect_true(res[1] >= 0.29 - 1e-10)
-## expect_true(res[1] <= 0.30 + 1e-10)
-## expect_equivalent(sum(res), 1)
+expect_true(res[1] >= 0.29 - 1e-10)
+expect_true(res[1] <= 0.30 + 1e-10)
+expect_equivalent(sum(res), 1)
 
-## expect_true(sum(res[4:5]) >= 0.1 - 1e-10)
-## expect_true(sum(res[4:5]) <= 0.2 + 1e-10)
-## expect_equivalent(sum(res), 1)
-
-
-## ## group constraints: names
-## res2 <- minvar(var, wmin = 0, wmax = 0.40,
-##                groups = c("A", "none", "none", "B", "B"),
-##                groups.wmin = c(A = 0.29, B = 0.1),
-##                groups.wmax = c(A = 0.30, B = 0.2))
+expect_true(sum(res[4:5]) >= 0.1 - 1e-10)
+expect_true(sum(res[4:5]) <= 0.2 + 1e-10)
+expect_equivalent(sum(res), 1)
 
 
-## expect_true(res2[1] >= 0.29 - 1e-10)
-## expect_true(res2[1] <= 0.30 + 1e-10)
-## expect_equivalent(sum(res2), 1)
-
-## expect_true(sum(res2[4:5]) >= 0.1 - 1e-10)
-## expect_true(sum(res2[4:5]) <= 0.2 + 1e-10)
-## expect_equivalent(sum(res2), 1)
-
-## expect_equivalent(res, res2)
+## group constraints: names
+res2 <- minvar(var, wmin = 0, wmax = 0.40,
+               groups = c("A", "none", "none", "B", "B"),
+               groups.wmin = c(A = 0.29, B = 0.1),
+               groups.wmax = c(A = 0.30, B = 0.2))
 
 
-## ## mvPortfolio
-## na <- 4
-## vols <- c(0.10, 0.15, 0.20,0.22)
-## m <- c(0.06, 0.12, 0.09, 0.07)
-## const_cor <- function(rho, na) {
-##     C <- array(rho, dim = c(na, na))
-##     diag(C) <- 1
-##     C
-## }
-## var <- diag(vols) %*% const_cor(0.5, na) %*% diag(vols)
+expect_true(res2[1] >= 0.29 - 1e-10)
+expect_true(res2[1] <= 0.30 + 1e-10)
+expect_equivalent(sum(res2), 1)
+
+expect_true(sum(res2[4:5]) >= 0.1 - 1e-10)
+expect_true(sum(res2[4:5]) <= 0.2 + 1e-10)
+expect_equivalent(sum(res2), 1)
+
+expect_equivalent(res, res2)
 
 
-## ## minimum variance
-## x1 <- mvPortfolio(m, var, lambda = 1e-10)
-## x2 <- minvar(var)
-## expect_equivalent(x1, x2)
-
-## ## maximum return
-## x1 <- mvPortfolio(m, var, lambda = 0.99999999)
-## expect_equivalent(x1, c(0,1,0,0))
-
-
-## ## group constraints
-## na <- 7
-## ns <- 50
-## R <- randomReturns(na = na, ns = ns, sd = 0.02, mean = 0)
-
-## sol1 <- mvPortfolio(m = colMeans(R), var = cov(R),
-##                     min.return = 0,
-##                     groups = list(1, 4:5),
-##                     groups.wmin = c(0.25, 0.1),
-##                     groups.wmax = c(0.30, 0.2))
-
-## expect_true(sol1[1] >= 0.25)
-## expect_true(sol1[1] <= 0.3)
-
-## expect_true(sum(sol1[4:5]) >= 0.1 - 1e-12)
-## expect_true(sum(sol1[4:5]) <= 0.2 + 1e-12)
+## mvPortfolio
+na <- 4
+vols <- c(0.10, 0.15, 0.20,0.22)
+m <- c(0.06, 0.12, 0.09, 0.07)
+const_cor <- function(rho, na) {
+    C <- array(rho, dim = c(na, na))
+    diag(C) <- 1
+    C
+}
+var <- diag(vols) %*% const_cor(0.5, na) %*% diag(vols)
 
 
-## sol2 <- mvPortfolio(m = colMeans(R), var = cov(R),
-##                     min.return = 0,
-##                     groups = c("A", "none", "none", "B", "B", "none", "none"),
-##                     groups.wmin = c(A = 0.25, B = 0.1),
-##                     groups.wmax = c(A = 0.30, B = 0.2))
+## minimum variance
+x1 <- mvPortfolio(m, var, lambda = 1e-10)
+x2 <- minvar(var)
+expect_equivalent(x1, x2)
 
-## expect_true(sol2[1] >= 0.25)
-## expect_true(sol2[1] <= 0.3)
+## maximum return
+x1 <- mvPortfolio(m, var, lambda = 0.99999999)
+expect_equivalent(x1, c(0,1,0,0))
 
-## expect_true(sum(sol2[4:5]) >= 0.1 - 1e-12)
-## expect_true(sum(sol2[4:5]) <= 0.2 + 1e-12)
 
-## expect_equivalent(sol1, sol2)
+## group constraints
+na <- 7
+ns <- 50
+R <- randomReturns(na = na, ns = ns, sd = 0.02, mean = 0)
+
+sol1 <- mvPortfolio(m = colMeans(R), var = cov(R),
+                    min.return = 0,
+                    groups = list(1, 4:5),
+                    groups.wmin = c(0.25, 0.1),
+                    groups.wmax = c(0.30, 0.2))
+
+expect_true(sol1[1] >= 0.25)
+expect_true(sol1[1] <= 0.3)
+
+expect_true(sum(sol1[4:5]) >= 0.1 - 1e-12)
+expect_true(sum(sol1[4:5]) <= 0.2 + 1e-12)
+
+
+sol2 <- mvPortfolio(m = colMeans(R), var = cov(R),
+                    min.return = 0,
+                    groups = c("A", "none", "none", "B", "B", "none", "none"),
+                    groups.wmin = c(A = 0.25, B = 0.1),
+                    groups.wmax = c(A = 0.30, B = 0.2))
+
+expect_true(sol2[1] >= 0.25)
+expect_true(sol2[1] <= 0.3)
+
+expect_true(sum(sol2[4:5]) >= 0.1 - 1e-12)
+expect_true(sum(sol2[4:5]) <= 0.2 + 1e-12)
+
+expect_equivalent(sol1, sol2)

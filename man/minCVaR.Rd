@@ -9,7 +9,9 @@
   on weights.
 }
 \usage{
-minCVaR(R, q = 0.1, wmin = 0, wmax = 1, method = "Rglpk",
+minCVaR(R, q = 0.1, wmin = 0, wmax = 1,
+        min.return = NULL, m = NULL, 
+        method = "Rglpk",
         groups = NULL, groups.wmin = NULL, groups.wmax = NULL,
         Rglpk.control = list())
 }
@@ -26,7 +28,15 @@ minCVaR(R, q = 0.1, wmin = 0, wmax = 1, method = "Rglpk",
       numeric: an upper bound on weights. May also be a vector that holds
     specific bounds for each asset.
 }
-  \item{method}{
+
+\item{m}{vector of expected returns. Only used if \code{min.return} is
+  specified.}
+
+\item{min.return}{
+    minimal required return. If \code{m} is not specified, the column
+    means of \code{R} are used.
+}
+\item{method}{
     character. Currently, only \code{"Rglpk"} is supported.
   }
   \item{groups}{

@@ -1,3 +1,9 @@
+2020-10-31  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/portfolio.R (minCVaR): new arguments
+        'min.return' and 'm' for specifying a
+        minimum-return restriction
+
 2020-10-20  Enrico Schumann  <es@enricoschumann.net>
 
         * DESCRIPTION (Version): 2.2-2
