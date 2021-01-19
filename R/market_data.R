@@ -28,25 +28,33 @@ Shiller <- function(dest.dir,
         readxl::read_xls(f.path, sheet = "Data")))
     data <- as.data.frame(data)
     data <- data[-(1:6), ]
-    data <- data[, 1:15]
-    data <- data[, -c(6, 14)] ## drop column 'Date Fraction' and empty column
+    data <- data[, 1:22]
+    data <- data[, -c(6, 14, 16)] ## drop column 'Date Fraction' and empty column
 
-    colnames(data) <- c("Date", "Price", "Dividend", "Earnings",
-                        "CPI", "Long Rate", "Real Price",
+    colnames(data) <- c("Date",
+                        "Price",
+                        "Dividend",
+                        "Earnings",
+                        "CPI",
+                        "Long Rate",
+                        "Real Price",
                         "Real Dividend",
                         "Real Total Return Price",
                         "Real Earnings",
                         "Real TR Scaled Earnings",
                         "CAPE",
-                        "TR CAPE")
+                        "TR CAPE",
+                        "Excess CAPE Yield",
+                        "Monthly Total Bond Returns",
+                        "Real Total Bond Returns",
+                        "Ten Year Annualized Stock Real Return",
+                        "Ten Year Annualized Bonds Real Return",
+                        "Real 10 Year Excess Annualized Returns"
+                        )
 
     data <- data[!is.na(data[["Date"]]), ]
-    tmp <- data[["Date"]]
-    tmp <- strsplit(format(round(as.numeric(tmp), 2), nsmall = 2), ".",
-                    fixed = TRUE)
-
-    tmp <- as.Date(
-        sapply(tmp, function(x) paste(x[1], x[2], "1", sep = "-")))
+    tmp <- seq(as.Date("1871-01-01"), by = "1 month",
+               length.out = nrow(data))
     data[["Date"]] <- datetimeutils::end_of_month(tmp)
 
     for (i in 2:ncol(data)) ## there will be NAs => warnings
