@@ -61,7 +61,6 @@ French(dest.dir,
   The function downloads data provided by Kenneth
   French at
   \url{http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html}.
-
   The download file gets a date prefix (current date in
   format \code{YYYYMMDD}) and is stored in directory
   \code{dest.dir}. Before any download is attempted,

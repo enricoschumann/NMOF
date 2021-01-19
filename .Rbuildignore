@@ -10,3 +10,4 @@ dev/
 reports
 reports/
 vignettes/auto/
+pull.sh

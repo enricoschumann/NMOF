@@ -31,20 +31,21 @@ Higham, 2002, and Chapter 5 in Gilli/Maringer/Schumann, 2011).
 Returns the value of the call (\code{numeric}).
 }
 \references{
+
   Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
     Methods and Optimization in Finance}, 2nd edition. Elsevier.
-    \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
+  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
 
-M. Gilli and Schumann, E. (2009) Implementing Binomial
-Trees. \acronym{COMISEF} Working Paper Series No. 008.
-\url{http://comisef.eu/?q=working_papers}
+  M. Gilli and Schumann, E. (2009) Implementing Binomial
+  Trees. \acronym{COMISEF} Working Paper Series No. 008.
+  \url{http://enricoschumann.net/COMISEF/wps008.pdf}
 
-Higham, D. (2002) Nine Ways to Implement the Binomial Method for Option
-Valuation in MATLAB. \emph{SIAM Review}, \bold{44}(4), pp. 661--677.
-\url{http://personal.strath.ac.uk/d.j.higham/papers/binom.pdf} .
+  Higham, D. (2002) Nine Ways to Implement the Binomial Method for Option
+  Valuation in MATLAB. \emph{SIAM Review}, \bold{44}(4), pp. 661--677.
+  \doi{10.1137/S0036144501393266} .
 
-Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
-\url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
+  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 
 }
 \author{

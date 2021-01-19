@@ -1,3 +1,11 @@
+2021-01-19  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.3-1
+
+        * R/market_data.R (Shiller): support additional
+        columns; construct dates as monthly sequence
+        instead of parsing the dates in the file
+
 2020-10-31  Enrico Schumann  <es@enricoschumann.net>
 
         * R/portfolio.R (minCVaR): new arguments

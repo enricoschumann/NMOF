@@ -1,8 +1,11 @@
-v2.3-0  (2020-??-??; not yet released)
+v2.3-1  (2021-01-19)
 
   o 'minCVaR' gains an argument 'min.return' for
     specifying a minimum required return (and another
     argument 'm' for specifying expected returns)
+
+  o 'Shiller' includes additional columns, such as bond
+    returns
 
 v2.2-0  (2020-10-20)
 
