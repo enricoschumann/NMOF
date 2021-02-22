@@ -1,3 +1,12 @@
+2021-02-22  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/market_data.R (French): the function no
+	longer fails when a column is are NA; more
+	tweaks to process files
+
+	* R/callHestoncf.R (callHestoncf): new \dots
+	argument for passing arguments to 'integrate'
+
 2021-01-19  Enrico Schumann  <es@enricoschumann.net>
 
         * DESCRIPTION (Version): 2.3-1
