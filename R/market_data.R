@@ -535,8 +535,11 @@ French <- function(dest.dir,
         }
         i <- i[[1]]
         j <- grep("^$", txt)
-        j <- j[min(which(j > i))]
-
+        if (i > max(j)) {
+            j <- length(txt) + 1
+        } else 
+            j <- j[min(which(j > i))]
+        
         ans <- txt[(i+1):(j-1)]
 
         if (grepl("industry_portfolios", dataset, ignore.case = TRUE) &&
@@ -614,6 +617,8 @@ French <- function(dest.dir,
             if (na.rm && any(is.na(ans[[cc]]))) {
                 na <- is.na(ans[[cc]])
                 first_num <- min(which(!na))
+                if (!is.finite(first_num))  ## only NA values
+                    next
                 ans[[cc]][ na ] <- 0
                 ans[[cc]] <- cumprod(1 + ans[[cc]])
                 if (first_num > 1)

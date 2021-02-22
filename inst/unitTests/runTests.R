@@ -1,5 +1,5 @@
 pkg <- "NMOF"
-if (tolower(Sys.getenv("ES_PACKAGE_TESTING")) == "true" &&
+if (tolower(Sys.getenv("ES_R_PACKAGE_TESTING_73179826243954")) == "true" &&
     require("RUnit", quietly = TRUE) &&
     require(pkg, quietly = TRUE, character.only = TRUE)) {
 
