@@ -111,3 +111,53 @@ expect_true(sum(sol2[4:5]) >= 0.1 - 1e-12)
 expect_true(sum(sol2[4:5]) <= 0.2 + 1e-12)
 
 expect_equivalent(sol1, sol2)
+
+
+
+
+
+
+## --- minCVaR
+
+runs <- ifelse(
+    Sys.getenv("ES_PACKAGE_TESTING_73179826243954") == "true",
+    1e4, 20)
+for (i in seq_len(runs)) {
+    R <- randomReturns(na = 15, ns = 500, sd = 0.01, rho = 0.5)
+
+    opt <- minCVaR(R = R,
+                   q = 0.05,
+                   wmin = 0.05,
+                   wmax = 0.2,
+                   m = rep(0.01, dim(R)[2L]),
+                   min.return = 0.01)
+    expect_true(all(opt >= 0.05))
+    expect_true(all(opt <= 0.2))
+}
+
+runs <- ifelse(
+    Sys.getenv("ES_PACKAGE_TESTING_73179826243954") == "true",
+    1e4, 20)
+for (i in seq_len(runs)) {
+    R <- randomReturns(na = 15, ns = 500, sd = 0.01, rho = 0.5)
+
+    opt <- minCVaR(R = R,
+                   q = 0.05,
+                   wmin = 0.05,
+                   wmax = 0.2,
+                   groups = list(1:3, 5:8),
+                   groups.wmin = c(0.18, 0.4),
+                   groups.wmax = c(0.3, 0.55),
+                   m = rep(0.01, dim(R)[2L]),
+                   min.return = 0.01)
+    expect_true(all(opt >= 0.05))
+    expect_true(all(opt <= 0.2))
+
+    expect_true(sum(opt[1:3]) >= 0.18)
+    expect_true(sum(opt[5:8]) >= 0.4 )
+
+    expect_true(sum(opt[1:3]) <= 0.3)
+    expect_true(sum(opt[5:8]) <= 0.55)
+
+}
+

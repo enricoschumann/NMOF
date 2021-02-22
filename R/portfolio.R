@@ -327,8 +327,37 @@ minCVaR <- function(R,
         const.rhs <- c(if (!is.null(min.return)) min.return, 1)
         const.rhs <- c(const.rhs, rep(0, nrow(C) - length(const.rhs)))
 
+        default.bounds <- identical(wmin, 0) && identical(wmax, 1)
+
+        na <- dim(R)[2L]
+        if (!default.bounds) {
+            if (length(wmin) == 1L)
+                wmin <- rep.int(wmin, na)
+            if (length(wmax) == 1L)
+                wmax <- rep.int(wmax, na)
+            bounds <- list(lower = list(ind = seq_len(na) + 1L, val = wmin),
+                           upper = list(ind = seq_len(na) + 1L, val = wmax))
+        }
+        if (!is.null(groups)) {
+            Groups <-
+                group_constraints_matrices(na,
+                                           groups,
+                                           groups.wmin,
+                                           groups.wmax)
+            grp.lhs <- Groups$A.ineq
+            grp.lhs <- cbind(0,
+                             grp.lhs,
+                             array(0, dim = c(nrow(grp.lhs), nrow(R))))
+            grp.rhs <- Groups$b.ineq
+
+            C <- rbind(C, grp.lhs)
+            const.dir <- c(const.dir, rep.int(">=", nrow(grp.lhs)))
+            const.rhs <- c(const.rhs, grp.rhs)
+        }
+
         sol.lp <- Rglpk::Rglpk_solve_LP(f.obj,
                                         C,
+                                        bounds = if (!default.bounds) bounds,
                                         const.dir,
                                         rhs = const.rhs,
                                         control = control)

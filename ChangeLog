@@ -1,5 +1,10 @@
 2021-02-22  Enrico Schumann  <es@enricoschumann.net>
 
+	* R/portfolio.R (minCVaR): support wmin/wmax
+	other than the defaults (thanks to Peter Garnry
+	for reporting on GitHub)
+	(minCVaR): support group constraints
+
 	* R/market_data.R (French): the function no
 	longer fails when a column is are NA; more
 	tweaks to process files
