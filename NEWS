@@ -1,10 +1,15 @@
 v2.4-0  (2021-??-??)
-
+  
   o fixed: 'minCVaR' no longer ignores minimum and
     maximum holding constraints; thanks to Peter Garnry
     for reporting on GitHub. Group constraints are
     supported, too. See
     https://github.com/enricoschumann/NMOF/issues/3 .
+
+  o 'randomReturns': argument 'rho' may now be a
+    correlation matrix
+
+  o ....
 
 v2.3-1  (2021-01-19)
 

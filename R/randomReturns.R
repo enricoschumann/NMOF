@@ -6,9 +6,12 @@ randomReturns <- function(na, ns, sd, mean = 0, rho = 0) {
     ans <- rnorm(ns*na)
     dim(ans) <- c(na, ns)
 
-    if (rho != 0) {
-        C <- array(rho, dim = c(na, na))
-        diag(C) <- 1
+    if (!identical(rho, 0)) {
+        if (length(rho == 1L)) {
+            C <- array(rho, dim = c(na, na))
+            diag(C) <- 1
+        } else
+            C <- rho
         ans <- t(chol(C)) %*% ans
     }
     ans <- ans*sd

@@ -1,16 +1,21 @@
+2021-03-12  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/randomReturns.R (randomReturns): 'rho' may
+        now be a correlation matrix
+
 2021-02-22  Enrico Schumann  <es@enricoschumann.net>
 
-	* R/portfolio.R (minCVaR): support wmin/wmax
-	other than the defaults (thanks to Peter Garnry
-	for reporting on GitHub)
-	(minCVaR): support group constraints
+        * R/portfolio.R (minCVaR): support wmin/wmax
+        other than the defaults (thanks to Peter Garnry
+        for reporting on GitHub)
+        (minCVaR): support group constraints
 
-	* R/market_data.R (French): the function no
-	longer fails when a column is are NA; more
-	tweaks to process files
+        * R/market_data.R (French): the function no
+        longer fails when a column is are NA; more
+        tweaks to process files
 
-	* R/callHestoncf.R (callHestoncf): new \dots
-	argument for passing arguments to 'integrate'
+        * R/callHestoncf.R (callHestoncf): new \dots
+        argument for passing arguments to 'integrate'
 
 2021-01-19  Enrico Schumann  <es@enricoschumann.net>
 

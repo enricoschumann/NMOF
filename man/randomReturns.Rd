@@ -29,7 +29,8 @@ randomReturns(na, ns, sd, mean = 0, rho = 0)
 
 }
   \item{rho}{
-    correlation: a scalar
+    correlation: either a scalar (i.e. a constant pairwise correlation)
+    or a correlation matrix
 }
 }
 \details{
@@ -50,7 +51,7 @@ randomReturns(na, ns, sd, mean = 0, rho = 0)
     Methods and Optimization in Finance}, 2nd edition. Elsevier.
     \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
 
-  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
+  Schumann, E. (2021) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 
 }
