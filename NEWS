@@ -1,5 +1,5 @@
-v2.4-0  (2021-??-??)
-  
+v2.4-0  (2021-04-??; not yet released)
+
   o fixed: 'minCVaR' no longer ignores minimum and
     maximum holding constraints; thanks to Peter Garnry
     for reporting on GitHub. Group constraints are
@@ -8,6 +8,11 @@ v2.4-0  (2021-??-??)
 
   o 'randomReturns': argument 'rho' may now be a
     correlation matrix
+
+  o 'callHestoncf' gains a '...' argument, for passing
+    settings to integrate
+
+  o 'French' supports more datasets
 
   o ....
 

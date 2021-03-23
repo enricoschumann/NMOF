@@ -100,6 +100,10 @@ French <- function(dest.dir,
             "F-F_Research_Data_Factors_daily_CSV.zip",
             "ME_Breakpoints_CSV.zip",
 
+            ## univariate sorts
+            "Portfolios_Formed_on_ME_CSV.zip",
+
+            ## bivariate sorts
             "Portfolios_Formed_on_BE-ME_CSV.zip",
             "Portfolios_Formed_on_NI_CSV.zip",
             "Portfolios_Formed_on_RESVAR_CSV.zip",
@@ -127,6 +131,7 @@ French <- function(dest.dir,
     attr.list <- list()
     read.ans <- TRUE
 
+    dataset <- basename(dataset)
     if (dataset == "variance")
         url <- "Portfolios_Formed_on_VAR_CSV.zip"
     else if (dataset == "industry49" && frequency == "monthly")
@@ -146,7 +151,6 @@ French <- function(dest.dir,
     else
         url <- dataset
 
-    url <- basename(url)
     if (adjust.frequency        &&
         grepl("daily", dataset) &&
         frequency != "daily") {
@@ -190,7 +194,7 @@ French <- function(dest.dir,
     ##      cnames - column names to use
     ##   attr.list - named list of information to attach
 
-    if (grepl("siccodes", tolower(dataset))) {
+    if (grepl("siccodes", dataset)) {
         ans <- NULL
         for (i in seq_along(txt)) {
             if (grepl("^ ?[0-9]", txt[i])) {
@@ -338,9 +342,9 @@ French <- function(dest.dir,
     } else if (dataset == "6_portfolios_2x3_daily_csv.zip") {
 
         frequency <- "daily"
-        i <- if (tolower(weighting) == "equal")
+        i <- if (weighting == "equal")
                  grep("Equal Weighted Returns", txt)
-             else if (tolower(weighting) == "value")
+             else if (weighting == "value")
                  grep("Value Weighted Returns", txt)
 
         j <- grep("^ *$", txt)
@@ -355,6 +359,52 @@ French <- function(dest.dir,
                     "big.high")
         attr.list <- list(
             original.headers = strsplit(txt[i], ",")[[1L]][-1L])
+
+    } else if (dataset == "portfolios_formed_on_me_csv.zip") {
+
+        browser()
+        i <- if (weighting == "equal")
+                 grep(paste0("Equal Weight(ed)? Returns.*", frequency),
+                      txt, ignore.case = TRUE)
+             else if (weighting == "value")
+                 grep(paste0("Value Weight(ed)? Returns.*", frequency),
+                      txt, ignore.case = TRUE)
+        j <- grep("^ *$", txt)
+        j <- min( j[j > i] )-1
+        i <- i+1
+        ans <- txt[i:j]
+        ## cnames <- c("small.low",
+        ##             "small.neutral",
+        ##             "small.high",
+        ##             "big.low",
+        ##             "big.neutral",
+        ##             "big.high")
+
+        i <- grep("number of firms", txt, ignore.case = TRUE) + 1
+        j <- grep("^$", txt)
+        j <- j[min(which(j > i))] - 1
+        info1 <- read.table(text = txt[i:j], header = TRUE,
+                            stringsAsFactors = FALSE, sep = ",",
+                            check.names = FALSE,
+                            colClasses = "numeric")
+        row.names(info1) <- as.character(info1[[1L]])
+        info1 <- info1[, -1L]
+
+        i <- grep("average firm size", txt, ignore.case = TRUE) + 1
+        j <- grep("^$", txt)
+        j <- j[min(which(j > i))] - 1
+        info2 <- read.table(text = txt[i:j], header = TRUE,
+                            stringsAsFactors = FALSE, sep = ",",
+                            check.names = FALSE,
+                            colClasses = "numeric")
+        row.names(info2) <- as.character(info2[[1L]])
+        info2 <- info2[, -1L]
+
+        attr.list <- list(
+            number.of.firms   = info1,
+            average.firm.size = info2)
+
+
     } else if (dataset == "10_portfolios_prior_12_2_csv.zip") {
 
         if (weighting == "value")
@@ -370,9 +420,9 @@ French <- function(dest.dir,
     } else if (dataset == "10_portfolios_prior_12_2_daily_csv.zip") {
 
         frequency <- "daily"
-        i <- if (tolower(weighting) == "equal")
+        i <- if (weighting == "equal")
                  grep("Equal Weighted Returns", txt)
-             else if (tolower(weighting) == "value")
+             else if (weighting == "value")
                  grep("Value Weighted Returns", txt)
 
         j <- grep("^ *$", txt)
@@ -419,16 +469,16 @@ French <- function(dest.dir,
 
     ## } else if (tolower(dataset) == "portfolios_formed_on_be-me_csv.zip") {
     ##     if (frequency == "monthly") {
-    ##         i <- if (tolower(weighting) == "equal")
+    ##         i <- if (weighting == "equal")
     ##                  grep("Equal Weight Returns -- Monthly", txt)
-    ##              else if (tolower(weighting) == "value")
+    ##              else if (weighting == "value")
     ##                  grep("Value Weight Returns -- Monthly", txt)
     ##              else
     ##                  stop("weighting must be 'equal' or 'value'")
     ##     } else if (frequency == "annual") {
-    ##         i <- if (tolower(weighting) == "equal")
+    ##         i <- if (weighting == "equal")
     ##                  grep("Equal Weight Returns -- Annual", txt)
-    ##              else if (tolower(weighting) == "value")
+    ##              else if (weighting == "value")
     ##                  grep("Value Weight Returns -- Annual", txt)
     ##              else
     ##                  stop("weighting must be 'equal' or 'value'")
@@ -447,16 +497,16 @@ French <- function(dest.dir,
                  "portfolios_formed_on_var_csv.zip")) {
 
         if (frequency == "monthly") {
-            i <- if (tolower(weighting) == "equal")
+            i <- if (weighting == "equal")
                      grep("Equal Weight.?.? Returns -- Monthly", txt)
-                 else if (tolower(weighting) == "value")
+                 else if (weighting == "value")
                      grep("Value Weight.?.? Returns -- Monthly", txt)
                  else
                      stop("weighting must be 'equal' or 'value'")
         } else if (frequency == "annual") {
-            i <- if (tolower(weighting) == "equal")
+            i <- if (weighting == "equal")
                      grep("Equal Weight.?.? Returns -- Annual", txt)
-                 else if (tolower(weighting) == "value")
+                 else if (weighting == "value")
                      grep("Value Weight.?.? Returns -- Annual", txt)
                  else
                      stop("weighting must be 'equal' or 'value'")
@@ -512,23 +562,23 @@ French <- function(dest.dir,
             warning("daily dataset but frequency not set to daily")
 
         if (frequency == "annual") {
-            i <- if (tolower(weighting) == "equal")
+            i <- if (weighting == "equal")
                      grep("Equal Weight(ed)? Returns.*Annual", txt, ignore.case = TRUE)
-                 else if (tolower(weighting) == "value")
+                 else if (weighting == "value")
                      grep("Value Weight(ed)? Returns.*Annual", txt, ignore.case = TRUE)
                  else
                      stop("weighting must be 'equal' or 'value'")
         } else if (frequency == "monthly") {
-            i <- if (tolower(weighting) == "equal")
+            i <- if (weighting == "equal")
                      grep("Equal Weight(ed)? (Average)? *Returns.*Month", txt, ignore.case = TRUE)
-                 else if (tolower(weighting) == "value")
+                 else if (weighting == "value")
                      grep("Value Weight(ed)? (Average)? *Returns.*Month", txt, ignore.case = TRUE)
                  else
                      stop("weighting must be 'equal' or 'value'")
         } else if (frequency == "daily") {
-            i <- if (tolower(weighting) == "equal")
+            i <- if (weighting == "equal")
                      grep("Equal Weight(ed)? Returns.*Daily", txt, ignore.case = TRUE)
-                 else if (tolower(weighting) == "value")
+                 else if (weighting == "value")
                      grep("Value Weight(ed)? Returns.*Daily", txt, ignore.case = TRUE)
                  else
                      stop("weighting must be 'equal' or 'value'")
@@ -537,9 +587,9 @@ French <- function(dest.dir,
         j <- grep("^$", txt)
         if (i > max(j)) {
             j <- length(txt) + 1
-        } else 
+        } else
             j <- j[min(which(j > i))]
-        
+
         ans <- txt[(i+1):(j-1)]
 
         if (grepl("industry_portfolios", dataset, ignore.case = TRUE) &&
