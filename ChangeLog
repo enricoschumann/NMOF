@@ -1,3 +1,12 @@
+2021-04-01  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.4-0
+
+2021-03-30  Enrico Schumann  <es@enricoschumann.net>
+
+        * inst/tinytest/test_portfolio.R: use more
+        tolerance in tests
+
 2021-03-23  Enrico Schumann  <es@enricoschumann.net>
 
         * R/market_data.R (French): support univariate

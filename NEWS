@@ -1,4 +1,4 @@
-v2.4-0  (2021-04-??; not yet released)
+v2.4-0  (2021-04-01)
 
   o fixed: 'minCVaR' no longer ignores minimum and
     maximum holding constraints; thanks to Peter Garnry
@@ -13,8 +13,6 @@ v2.4-0  (2021-04-??; not yet released)
     settings to integrate
 
   o 'French' supports more datasets
-
-  o ....
 
 v2.3-1  (2021-01-19)
 

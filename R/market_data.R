@@ -362,7 +362,6 @@ French <- function(dest.dir,
 
     } else if (dataset == "portfolios_formed_on_me_csv.zip") {
 
-        browser()
         i <- if (weighting == "equal")
                  grep(paste0("Equal Weight(ed)? Returns.*", frequency),
                       txt, ignore.case = TRUE)

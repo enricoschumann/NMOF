@@ -40,7 +40,7 @@ xtTickValue(quoted.price, coupon, do.round = TRUE)
   A numeric vector.
 }
 \references{
-  \url{http://www.rba.gov.au/mkt-operations/resources/tech-notes/pricing-formulae.html}
+  \url{https://www.rba.gov.au/mkt-operations/resources/tech-notes/pricing-formulae.html}
 
   Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
   Methods and Optimization in Finance}. 2nd edition. Elsevier.
