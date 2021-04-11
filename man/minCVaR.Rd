@@ -10,7 +10,7 @@
 }
 \usage{
 minCVaR(R, q = 0.1, wmin = 0, wmax = 1,
-        min.return = NULL, m = NULL, 
+        min.return = NULL, m = NULL,
         method = "Rglpk",
         groups = NULL, groups.wmin = NULL, groups.wmax = NULL,
         Rglpk.control = list())
@@ -90,7 +90,7 @@ if (requireNamespace("Rglpk")) {
   na <- 20    ## nunber of assets
   R <- randomReturns(na, ns, sd = 0.01, rho = 0.5)
 
-  minCVaR(R, 0.25)
-
+  res <- minCVaR(R, 0.25)
+  c(res)  ## portfolio weights
 }
 }

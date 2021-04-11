@@ -1,3 +1,13 @@
+2021-04-09  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.4-1
+
+        * R/*opt.R: set default value of 'printBar' to
+        'interactive()' in optimisation functions
+
+        * inst/tinytest/test_portfolio.R: run several
+        tests only locally
+
 2021-04-01  Enrico Schumann  <es@enricoschumann.net>
 
         * DESCRIPTION (Version): 2.4-0

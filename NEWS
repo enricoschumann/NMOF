@@ -1,3 +1,11 @@
+v2.4-1  (2021-04-09)
+
+  o the default value for option 'printBar' in all
+    optimisation routines is now 'interactive()', so
+    progress bars remain shown in interactive sessions,
+    but are suppressed otherwise. (For the old
+    behaviour, set 'printBar' to TRUE.)
+
 v2.4-0  (2021-04-01)
 
   o fixed: 'minCVaR' no longer ignores minimum and

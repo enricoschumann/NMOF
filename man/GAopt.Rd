@@ -196,8 +196,7 @@ y <- runif(size) > 0.5
 x <- runif(size) > 0.5
 OF(y, y)     ### the optimum value is zero
 OF(x, y)
-algo <- list(nB = size, nP = 20L, nG = 100L, prob = 0.002,
-             printBar = TRUE)
+algo <- list(nB = size, nP = 20L, nG = 100L, prob = 0.002)
 sol <- GAopt(OF, algo = algo, y = y)
 
 ## show differences (if any: marked by a '^')
