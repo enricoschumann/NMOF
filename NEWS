@@ -1,5 +1,8 @@
 v2.4-2  (2021-10-20; not yet released)
 
+  o new function 'Ritter', which downloads IPO data
+    provided by Jay Ritter
+
   o 'French': improve formatting of data
 
   o ....

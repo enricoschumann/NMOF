@@ -1,5 +1,57 @@
 ## -*- truncate-lines: t; -*-
 
+Ritter <- function(dest.dir,
+                   url = "https://site.warrington.ufl.edu/ritter/files/IPO-age.xlsx") {
+
+    f.name <- paste0(format(Sys.Date(), "%Y%m%d_"),
+                     "IPO-age.xlsx")
+    f.path <- file.path(normalizePath(dest.dir), f.name)
+
+    if (!file.exists(f.path))
+        dl.result <- download.file(url, destfile = f.path)
+    else
+        dl.result <- 0
+
+    if (dl.result != 0L) {
+        warning("download failed with code ", dl.result, "; see ?download.file")
+        return(invisible(NULL))
+    }
+
+    if (!requireNamespace("openxlsx", quietly = TRUE))
+        stop("file downloaded, but package ",
+             sQuote("openxlsx"), " is not available")
+
+    data <- openxlsx::read.xlsx(f.path)
+    data <- data[, 1:11]
+    colnames(data) <- c("CUSIP","Offer date","Company name",
+                        "Ticker","Founding","PERM","VC dummy",
+                        "Rollup","Dual","Post-issue shares","Internet")
+
+    data[["Offer date"]] <- as.Date(as.character(data[["Offer date"]]),
+                                    format = "%Y%m%d")
+
+    data[["Rollup"]][data[["Rollup"]] %in% c(".")] <- NA
+    data[["Rollup"]] <- as.logical(as.numeric(data[["Rollup"]]))
+
+    data[["Internet"]][data[["Internet"]] %in% c(".")] <- NA
+    data[["Internet"]] <- as.logical(as.numeric(data[["Internet"]]))
+
+    data[["Dual"]][data[["Dual"]] %in% c(".")] <- NA
+    data[["Dual"]] <- as.numeric(data[["Dual"]])
+
+    data[["VC dummy"]][data[["VC dummy"]] %in% c(".")] <- NA
+    data[["VC dummy"]] <- as.numeric(data[["VC dummy"]])
+
+    data[["Post-issue shares"]][data[["Post-issue shares"]] %in% c(".", "-9")] <- NA
+    data[["Post-issue shares"]] <- as.numeric(data[["Post-issue shares"]])
+
+    data[["Founding"]][data[["Founding"]] %in% c(".", "-99", "-9")] <- NA
+    data[["Founding"]] <- as.numeric(data[["Founding"]])
+
+
+    data
+}
+
 Shiller <- function(dest.dir,
                     url = "http://www.econ.yale.edu/~shiller/data/ie_data.xls") {
 
@@ -61,7 +113,6 @@ Shiller <- function(dest.dir,
         data[[i]] <- suppressWarnings(as.numeric(data[[i]]))
     data
 }
-
 
 French <- function(dest.dir,
                    dataset = "F-F_Research_Data_Factors_CSV.zip",

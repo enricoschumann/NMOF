@@ -8,8 +8,8 @@ importFrom("utils", "flush.console", "setTxtProgressBar",
            "download.file", "read.table", "unzip",
            "txtProgressBar")
 export(
-    DEopt,
     CPPI,
+    DEopt,
     EuropeanCall,
     EuropeanCallBE,
     French,
@@ -22,6 +22,7 @@ export(
     NSSf,
     NSf,
     PSopt,
+    Ritter,
     SA.info,
     SAopt,
     Shiller,
