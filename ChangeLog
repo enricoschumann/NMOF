@@ -1,3 +1,8 @@
+2021-05-30  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R (French): trim whitespace
+        from "industry_group"
+
 2021-04-09  Enrico Schumann  <es@enricoschumann.net>
 
         * DESCRIPTION (Version): 2.4-1

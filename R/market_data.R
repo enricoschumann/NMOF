@@ -198,7 +198,11 @@ French <- function(dest.dir,
         ans <- NULL
         for (i in seq_along(txt)) {
             if (grepl("^ ?[0-9]", txt[i])) {
-                ind <- txt[i]
+                ind <- trimws(txt[i])
+                ans <- rbind(ans,
+                             data.frame(Industry = ind,
+                                        Codes = NA,
+                                        stringsAsFactors = FALSE))
             } else if (!grepl("^ *$", txt[i])) {
                 ans <- rbind(ans,
                              data.frame(Industry = ind,
@@ -206,7 +210,8 @@ French <- function(dest.dir,
                                         stringsAsFactors = FALSE))
             }
         }
-        ans$Industry <- trimws(ans$Industry)
+
+        ans$Industry <- ans$Industry
         num <- gsub(" *([0-9]+) .*", "\\1", ans$Industry)
         abbr <- gsub(" *[0-9]+ ([^ ]+) .*", "\\1", ans$Industry)
         industry <- gsub(" *[0-9]+ [^ ]+ (.*)", "\\1", ans$Industry)
@@ -215,7 +220,7 @@ French <- function(dest.dir,
         ans <- data.frame(num = trimws(num),
                           abbr = trimws(abbr),
                           industry = trimws(industry),
-                          industry_group = substr(ans$Codes, 10, 100000),
+                          industry_group = trimws(substr(ans$Codes, 10, 100000)),
                           start = substr(ans$Codes, 1, 4),
                           end   = substr(ans$Codes, 6, 9),
                           stringsAsFactors = FALSE)
