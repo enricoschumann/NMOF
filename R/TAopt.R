@@ -204,7 +204,8 @@ TAopt <- function(OF, algo = list(), ...) {
             ## check stopif value
             if (!is.null(algoD$OF.target) && xbestF <= algoD$OF.target) {
                 if (printDetail) {
-                    cat("Target value (", prettyNum(algoD$OF.target), ") ",
+                    cat(if (printBar) "\n",
+                        "  Target value (", prettyNum(algoD$OF.target), ") ",
                         "for objective function reached: ",
                         prettyNum(xbestF), "\n", sep = "")
                     flush.console()
