@@ -365,8 +365,8 @@ minCVaR <- function(R,
         ans <- sol.lp$solution[2:(1+na)]
         attr(ans, "LP") <- sol.lp
     } else if (tolower(method) == "ls") {
-
-
+        message("Not implemented. See http://enricoschumann.net/notes/minimising-conditional-var.html")
+        ans <- invisible(NULL)
     } else {
         stop("method ", sQuote(method), " not supported")
     }

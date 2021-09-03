@@ -34,15 +34,15 @@
   may become an option for other functions.  Package
   \pkg{quadprog} is needed for a vignette
   (\code{TAportfolio}), some tests, and it may be used for
-  computing mean-variance efficient portfolios.  Package
-  \pkg{readxl} is needed to process the raw data in function
+  computing mean-variance efficient portfolios.
+  Package \pkg{Rglpk} is needed for function \code{\link{minCVaR}}.
+  Package \pkg{readxl} is needed to process the raw data in function
   \code{\link{Shiller}}; package \pkg{datetimeutils} is
   used by \code{\link{French}} and \code{\link{Shiller}}.
   \pkg{PMwR} would be needed to run the examples
   of the backtesting examples in the NMOF book.
-  Finally, \pkg{RUnit} is needed to
+  Finally, packages \pkg{RUnit} and \pkg{tinytest} are needed to
   run the tests in subdirectory \sQuote{\code{unitTests}}.
-
 
   Version numbering: package versions are numbered in the
   form \code{major-minor-patch}.  The \emph{patch} level is
