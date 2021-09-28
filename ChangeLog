@@ -1,3 +1,11 @@
+2021-09-28  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/gridSearch.R (gridSearch): allow
+        non-numeric input arguments, e.g. factors or
+        character vectors, specified in argument
+        "levels". Used only if argument 'asList' is
+        TRUE.
+
 2021-07-22  Enrico Schumann  <es@enricoschumann.net>
 
         * R/market_data.R (Ritter): add function, which

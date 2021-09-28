@@ -1,9 +1,12 @@
-v2.4-2  (2021-10-20; not yet released)
+v2.5-0  (2021-10-20; not yet released)
 
   o new function 'Ritter', which downloads IPO data
     provided by Jay Ritter
 
   o 'French': improve formatting of data
+
+  o 'gridSearch' now can handle arbitrary lists (before,
+    only lists of numeric vectors were supported)
 
   o ....
 
