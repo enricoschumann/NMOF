@@ -36,7 +36,7 @@ test.callCF <- function() {
                    sigma = sigma, implVol = FALSE)
     checkEquals(round(temp,3), 10.586)
 
-    
+
                                         # BSM
 
     S <- 100; X <- 100; tau <- 1; r <- 0.02; q <- 0.08; v <- 0.2^2
@@ -110,7 +110,7 @@ test.callCF <- function() {
     checkTrue(length(temp) == 2L)
     checkTrue(all(sapply(temp, is.finite)))
 
-    
+
                                         # MERTON
 
     temp <- callCF(cf = cfMerton, S = S, X = X, tau = tau,

@@ -148,7 +148,7 @@ test.DEopt <- function() {
 
     ## box constraints (see ChangeLog entry 2015-05-05)
     n <- 10; solution <- rep(-5, n)
-        
+
     algo <- list(min = rep(0, n),
                  max = rep(5, n),
                  printDetail = FALSE,
@@ -158,7 +158,7 @@ test.DEopt <- function() {
 
     OF <- function(x, solution)
         sum(abs(x - solution))
-    
+
     for (i in 1:100) {
         sol <- DEopt(OF = OF, algo = algo, solution = solution)
         checkTrue(all(sol$xbest >= 0))
@@ -167,7 +167,7 @@ test.DEopt <- function() {
 
     ## univariate model
     n <- 1; solution <- rep(0, n)
-        
+
     algo <- list(min = rep(-5, n),
                  max = rep(5, n),
                  printDetail = FALSE,
@@ -177,10 +177,10 @@ test.DEopt <- function() {
 
     OF <- function(x, solution)
         sum(abs(x - solution))
-    
+
     for (i in 1:10) {
         sol <- DEopt(OF = OF, algo = algo, solution = solution)
         checkTrue(abs(sol$xbest - 0) < 1e-10)
     }
-        
+
 }

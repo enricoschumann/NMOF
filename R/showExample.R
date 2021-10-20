@@ -58,7 +58,7 @@ showExample <- function(file = "",
 
     path <- system.file(package = "NMOF")
     if (edition == 1) {
-        
+
         ChapterDirs <- c("Introduction",
                          "NumAnNutshell",
                          "LinEqsLSP",
@@ -99,17 +99,17 @@ showExample <- function(file = "",
                          "15_Backtesting",
                          "16_Econometric_models",
                          "17_Calibrating_option_pricing_models")
-        
+
         fpaths <- list.files(paste(path, "/book/2ed", sep = ""),
                              recursive = TRUE, full.names = TRUE)
         chnames <- gsub(".*/(.*)/R/[^/]+", "\\1",
-                        fpaths, ignore.case = TRUE)               
-    } 
-    
-    fnames <- basename(fpaths)    
+                        fpaths, ignore.case = TRUE)
+    }
+
+    fnames <- basename(fpaths)
     filematch <- grepl(file, fnames, ...,
                        ignore.case = ignore.case)
-    
+
     if (is.null(chapter))
         chapmatch <- rep.int(TRUE, length(fnames))
     else {
@@ -123,7 +123,7 @@ showExample <- function(file = "",
         chapmatch <- logical(length(fnames))
         for (i in seq_along(tmp))
             chapmatch <- (chapmatch | tmp[i] == chnames)
-        
+
     }
     results <- chapmatch & filematch
     if (!length(which(results))) {

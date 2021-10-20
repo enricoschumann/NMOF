@@ -168,10 +168,10 @@ ans <- gridSearch(test_fun,
 ans$minlevels
 ## $S
 ## [1] "a" "b" "c"
-## 
+##
 ## $N1
 ## [1] 5
-## 
+##
 ## $N2
 ## [1] 105
 

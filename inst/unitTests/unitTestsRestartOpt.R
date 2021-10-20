@@ -26,7 +26,7 @@ test.restartOpt <- function() {
     ## options(warn = w)
 
 
-    
+
     ## tests for snow/multicore: slow!
     if (testParallel) {
         OF <- function(x, data) {

@@ -1,3 +1,7 @@
+2021-10-20  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.5-0
+
 2021-09-28  Enrico Schumann  <es@enricoschumann.net>
 
         * R/gridSearch.R (gridSearch): allow

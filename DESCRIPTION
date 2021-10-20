@@ -2,7 +2,7 @@ Package: NMOF
 Type: Package
 Title: Numerical Methods and Optimization in Finance
 Version: 2.5-0
-Date: 2021-07-22
+Date: 2021-10-20
 Maintainer: Enrico Schumann <es@enricoschumann.net>
 Authors@R: person("Enrico", "Schumann",
                   role  = c("aut", "cre"),
@@ -26,8 +26,8 @@ Description: Functions, examples and data from the first and
   with stochastic simulations.
 License: GPL-3
 URL: http://enricoschumann.net/NMOF.htm,
-     https://github.com/enricoschumann/NMOF,
-     https://gitlab.com/NMOF
+     https://gitlab.com/NMOF,
+     https://github.com/enricoschumann/NMOF
 LazyLoad: yes
 LazyData: yes
 ByteCompile: yes

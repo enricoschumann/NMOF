@@ -21,8 +21,8 @@ a numeric vector
     returned moving average with position smaller than \code{order} are
     replaced by the value of \code{pad}. Sensible values may be
     \code{NA} or 0.}
-} 
-\value{Returns a vector of length \code{length(y)}.} 
+}
+\value{Returns a vector of length \code{length(y)}.}
 \references{
   Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
   Methods and Optimization in Finance}. 2nd edition. Elsevier.
@@ -31,7 +31,7 @@ a numeric vector
   Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 }
-\author{ Enrico Schumann } 
+\author{ Enrico Schumann }
 \examples{
 MA(1:10, 3)
 MA(1:10, 3, pad = NA)

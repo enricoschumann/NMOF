@@ -155,7 +155,7 @@ test.vanillaOptionEuropean <- function() {
     checkEquals(x1,x2)
     checkEquals(x2,x3)
     checkEquals(x1,x3)
-    
+
     ## ERRORS IN INPUTS
     ## ... q and D specified
     S <- 30; X <- 30; tau <- 0.5; r <- 0.03; q <- 0.06; vol <- 0.1;
@@ -164,13 +164,13 @@ test.vanillaOptionEuropean <- function() {
             tauD = tauD, D = D, type = "put")$value, silent = TRUE)
 
 
-    
+
     ## passing VOL instead of VARIANCE
     S <- 100; X <- 100; tau <- 1; r <- 0.05; q <- 0.072
     v <- 0.22^2  ## variance, not volatility
     vol <- 0.22
     p1 <- vanillaOptionEuropean(S=S, X = X, tau=tau, r=r, q=q, v=v,     ## with variance
-                          type = "call", greeks = FALSE) 
+                          type = "call", greeks = FALSE)
     p2 <- vanillaOptionEuropean(S=S, X = X, tau=tau, r=r, q=q, vol=vol, ## with vol
                           type = "call", greeks = FALSE)
     p3 <- vanillaOptionEuropean(S=S, X = X, tau=tau, r=r, q=q, vol=vol, ## vol ignored
@@ -180,7 +180,7 @@ test.vanillaOptionEuropean <- function() {
     checkEquals(p1,p2)
     checkEquals(p3,p4)
 
-    
+
     ## GREEXS
     S <- 30; X <- 30; tau <- 0.5; r <- 0.03; q <- 0.06; vol <- 0.1;
     x <- vanillaOptionEuropean(S, X, tau, r, q, vol^2, type = "put")
@@ -207,7 +207,7 @@ test.vanillaOptionEuropean <- function() {
 
     ## forward difference
     fd <- function(cf, S, X, tau, r, q, ..., implVol = FALSE,
-                   uniroot.control = list(), 
+                   uniroot.control = list(),
                    uniroot.info = FALSE, what = "S") {
         h <- 1e-6
         r1 <- r
@@ -216,7 +216,7 @@ test.vanillaOptionEuropean <- function() {
             r1 <- r + h
         if (what == "S")
             S1 <- S + h
-        
+
         (callCF(cf = cf, S=S1, X=X, tau=tau, r=r1, q = q, v0 =
                 v0, vT = vT, rho = rho, k = k, sigma = sigma,
                 implVol = FALSE) -
@@ -239,7 +239,7 @@ test.vanillaOptionEuropean <- function() {
                          v0 = v0, vT = vT, rho = rho, k = k,
                          sigma = sigma, implVol = FALSE, what = "S")
                 checkTrue(abs(D1-D2) < 0.015)
-            }    
+            }
 }
 
 
