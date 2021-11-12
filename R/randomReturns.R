@@ -1,4 +1,5 @@
-randomReturns <- function(na, ns, sd, mean = 0, rho = 0, exact = FALSE) {
+randomReturns <- function(na, ns, sd, mean = 0, rho = 0,
+                          exact = FALSE, L = NULL) {
     ## sd   = vol of returns
     ## mean = means of returns
     ##      ==> both may be scalars or vectors of length na
@@ -30,7 +31,9 @@ randomReturns <- function(na, ns, sd, mean = 0, rho = 0, exact = FALSE) {
             diag(C) <- 1
         } else
             C <- rho
-        ans <- t(chol(C)) %*% ans
+        if (is.null(L))
+            L <- t(chol(C))
+        ans <- L %*% ans
     }
     ans <- ans*sd
     ans <- ans + mean
