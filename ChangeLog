@@ -1,3 +1,11 @@
+2021-11-12  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/randomReturns.R (randomReturns): specially
+        handle case rho == 1. Also, add an argument
+        "exact"; if TRUE, the created matrix has exact
+        means, standard deviations and
+        correlations. Default is FALSE.
+
 2021-10-20  Enrico Schumann  <es@enricoschumann.net>
 
         * DESCRIPTION (Version): 2.5-0

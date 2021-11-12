@@ -1,3 +1,11 @@
+v2.6-0  (2021-??-??; not released yet)
+
+  o function 'randomReturns' gains an argument "exact":
+    if TRUE, the created matrix has exactl. the
+    specified column means
+
+  o ....
+
 v2.5-0  (2021-10-20)
 
   o new function 'Ritter', which downloads IPO data

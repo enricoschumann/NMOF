@@ -7,31 +7,32 @@
   Create a matrix of random returns.
 }
 \usage{
-randomReturns(na, ns, sd, mean = 0, rho = 0)
+randomReturns(na, ns, sd, mean = 0, rho = 0, exact = FALSE)
 }
 \arguments{
-  \item{na}{
+  \item{na}{%
     number of assets
-}
-  \item{ns}{
+  }
+  \item{ns}{%
     number of return scenarios
-}
-  \item{sd}{
-
+  }
+  \item{sd}{%
     the standard deviation: either a single number or a vector
     of length \code{na}
-
-}
-  \item{mean}{
-
+  }
+  \item{mean}{%
     the mean return: either a single number or a vector
     of length \code{na}
-
-}
-  \item{rho}{
+  }
+  \item{rho}{%
     correlation: either a scalar (i.e. a constant pairwise correlation)
     or a correlation matrix
-}
+  }
+  \item{exact}{%
+    logical: if \code{TRUE}, return a random matrix whose
+    column means, standard deviations and correlations match the
+    specified values exactly (up to numerical precision)
+  }
 }
 \details{
 
