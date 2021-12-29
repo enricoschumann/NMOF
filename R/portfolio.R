@@ -237,9 +237,8 @@ mvPortfolio <- function(m, var, min.return, wmin = 0, wmax = 1,
     result
 }
 
-group_constraints_matrices <- function(na, groups,
-                              groups.wmin,
-                              groups.wmax) {
+group_constraints_matrices <-
+function(na, groups, groups.wmin, groups.wmax) {
 
     if (is.factor(groups))
         groups <- as.character(groups)
@@ -261,16 +260,16 @@ group_constraints_matrices <- function(na, groups,
     b.ineq <- NULL
     if (!is.null(groups.wmax)) {
         G.max <- if (is.character(groups))
-                     G[names(groups.wmax), ] else G
-        G.max <- G.max[is.finite(groups.wmax), ]
+                     G[names(groups.wmax),, drop = FALSE] else G
+        G.max <- G.max[is.finite(groups.wmax),, drop = FALSE]
         groups.wmax <- groups.wmax[is.finite(groups.wmax)]
         A.ineq <- rbind(A.ineq, -G.max)
         b.ineq <- c(b.ineq, -groups.wmax)
     }
     if (!is.null(groups.wmin)) {
         G.min <- if (is.character(groups))
-                     G[names(groups.wmin), ] else G
-        G.min <- G.min[is.finite(groups.wmin), ]
+                     G[names(groups.wmin),, drop = FALSE] else G
+        G.min <- G.min[is.finite(groups.wmin),, drop = FALSE]
         groups.wmin <- groups.wmin[is.finite(groups.wmin)]
         A.ineq <- rbind(A.ineq, G.min)
         b.ineq <- c(b.ineq, groups.wmin)

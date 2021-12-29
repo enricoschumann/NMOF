@@ -4,6 +4,9 @@ v2.6-0  (2021-??-??; not released yet)
     if TRUE, the created matrix has exactl. the
     specified column means
 
+  o group constraints now work with only a single group
+   (e.g. in functions 'minCVaR' or 'minvar')
+
   o ....
 
 v2.5-0  (2021-10-20)

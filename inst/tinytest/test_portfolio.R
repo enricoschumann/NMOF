@@ -57,6 +57,54 @@ expect_equivalent(sum(res2), 1)
 
 expect_equivalent(res, res2)
 
+
+## group constraints: names with NA
+res3 <- minvar(var, wmin = 0, wmax = 0.40,
+               groups = c("A", NA, NA, "B", "B"),
+               groups.wmin = c(A = 0.29, B = 0.1),
+               groups.wmax = c(A = 0.30, B = 0.2))
+
+
+expect_true(res2[1] >= 0.29 - 1e-10)
+expect_true(res2[1] <= 0.30 + 1e-10)
+expect_equivalent(sum(res2), 1)
+
+expect_true(sum(res2[4:5]) >= 0.1 - 1e-10)
+expect_true(sum(res2[4:5]) <= 0.2 + 1e-10)
+expect_equivalent(sum(res2), 1)
+
+expect_equivalent(res2, res2)
+
+
+
+
+
+## group constraints: names, only one group
+res2 <- minvar(var, wmin = 0, wmax = 0.40,
+               groups = c("none", "none", "none", "B", "B"),
+               groups.wmin = c(B = 0.1),
+               groups.wmax = c(B = 0.2))
+
+expect_true(sum(res2[4:5]) >= 0.1 - 1e-10)
+expect_true(sum(res2[4:5]) <= 0.2 + 1e-10)
+expect_equivalent(sum(res2), 1)
+
+
+
+###      ---------------- group constraints: overlapping groups
+res <- minvar(var, wmin = 0, wmax = 0.40, groups = list(3:4, 4:5),
+              groups.wmin = c(0.2, 0.3),
+              groups.wmax = c(0.3, 0.4))
+
+expect_equivalent(sum(res), 1)
+
+expect_true(sum(res[3:4]) >= 0.2 - 1e-10)
+expect_true(sum(res[3:4]) <= 0.3 + 1e-10)
+
+expect_true(sum(res[4:5]) >= 0.3 - 1e-10)
+expect_true(sum(res[4:5]) <= 0.4 + 1e-10)
+
+
 if (Sys.getenv("ES_PACKAGE_TESTING_73179826243954") == "true") {
 
 
