@@ -1,8 +1,11 @@
 randomReturns <- function(na, ns, sd, mean = 0, rho = 0,
-                          exact = FALSE, L = NULL) {
+                          exact = FALSE) {
     ## sd   = vol of returns
     ## mean = means of returns
     ##      ==> both may be scalars or vectors of length na
+
+    ## TODO allow L to be passed as an argument
+    L <- NULL
 
     rho1 <- all(rho == 1)
     rho0 <- identical(rho, 0) || identical(rho, 0L)

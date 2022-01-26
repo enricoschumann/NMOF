@@ -1,13 +1,11 @@
-v2.6-0  (2021-??-??; not released yet)
+v2.6-0  (2022-01-26)
 
   o function 'randomReturns' gains an argument "exact":
-    if TRUE, the created matrix has exactl. the
-    specified column means
+    if TRUE, the created matrix has the exact specified
+    column means (up to numerical, but not sampling accuracy)
 
   o group constraints now work with only a single group
-   (e.g. in functions 'minCVaR' or 'minvar')
-
-  o ....
+    (e.g. in functions 'minCVaR' or 'minvar')
 
 v2.5-0  (2021-10-20)
 
