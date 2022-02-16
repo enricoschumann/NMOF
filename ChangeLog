@@ -1,3 +1,12 @@
+2022-01-27  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/mc.R (gbm, gbb): both functions gain an
+        argument "exp.result", with default TRUE. If
+        FALSE, the log paths are returned
+        (gbb): the function gets an argument "log",
+        with default FALSE, which matches the previous
+        behaviour
+
 2022-01-26  Enrico Schumann  <es@enricoschumann.net>
 
         * DESCRIPTION (Version): 2.6-0
