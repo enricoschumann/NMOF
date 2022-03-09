@@ -1,4 +1,5 @@
-gbm <- function(npaths, timesteps, r, v, tau, S0, exp.result = TRUE) {
+gbm <- function(npaths, timesteps, r, v, tau, S0, exp.result = TRUE,
+                antithetic = FALSE) {
     s0 <-  if (missing(S0))
                0
            else
@@ -6,9 +7,16 @@ gbm <- function(npaths, timesteps, r, v, tau, S0, exp.result = TRUE) {
     dt <- tau/timesteps
     ans <- numeric((timesteps + 1L) * npaths)
     dim(ans) <- c(timesteps + 1L, npaths)
-    ans[-1L, ] <- rnorm(timesteps * npaths,
-                        mean = (r - 0.5 * v)*dt,
-                        sd = sqrt(dt * v))
+    if (!antithetic) {
+        ans[-1L, ] <- rnorm(timesteps * npaths,
+                            mean = (r - 0.5 * v)*dt,
+                            sd = sqrt(dt * v))
+    } else {
+        tmp <- rnorm(timesteps * npaths/2,
+                     mean = 0,
+                     sd = sqrt(dt * v))
+        ans[-1L, ] <- cbind(tmp, -tmp) + (r - 0.5 * v)*dt
+    }
     if (timesteps > 1L) {
         ans[1L, ] <- s0
         for (j in seq_len(npaths))

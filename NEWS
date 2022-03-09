@@ -1,3 +1,10 @@
+v2.7-0  (2022-??-??; not yet released)
+
+  o function 'gbm' gains an argument "antithetic": if
+    TRUE, paths are created based on antithetic variates
+
+  o ....
+
 v2.6-0  (2022-01-26)
 
   o function 'randomReturns' gains an argument "exact":

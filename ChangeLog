@@ -1,3 +1,10 @@
+2022-03-09  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/mc.R (gbm): the function gains an argument
+        "antithetic", with default FALSE. If TRUE, only
+        npaths/2 paths are created and then duplicated
+        with switched sign
+
 2022-01-27  Enrico Schumann  <es@enricoschumann.net>
 
         * R/mc.R (gbm, gbb): both functions gain an
