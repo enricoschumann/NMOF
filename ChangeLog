@@ -1,3 +1,7 @@
+2022-03-16  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/options.R (barrierOptionEuropean): add function
+
 2022-03-09  Enrico Schumann  <es@enricoschumann.net>
 
         * R/mc.R (gbm): the function gains an argument
