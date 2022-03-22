@@ -1,3 +1,9 @@
+2022-03-22  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/options.R (vanillaOptionAmerican): the
+        function now works even for very small values
+        for M (M <= 3)
+
 2022-03-16  Enrico Schumann  <es@enricoschumann.net>
 
         * R/options.R (barrierOptionEuropean): add function

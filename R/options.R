@@ -89,6 +89,12 @@ vanillaOptionAmerican <- function(S, X, tau, r, q, v,
     if (type == "call")
         m <- 1 else m <- -1
     W <- pmax2(m*(S * dM * uM - X), 0)
+
+    if (greeks) {
+        deltaE <- NA_real_
+        thetaE <- NA_real_
+        gammaE <- NA_real_
+    }
     for (i in M:1) {
         t <- (i-1)*dt
         PV <- sum(D * (t < tauD) * exp(-r * (tauD - t)))
@@ -235,15 +241,15 @@ barrierOptionEuropean <- function(S, X, H, tau, r, q = 0, v,
         } else if (barrier.type %in% c("upin", "upout")) {
             nu <- -1
             phi <- 1
-        } 
+        }
     } else if (type == "put") {
         if (barrier.type %in% c("downin", "downout")) {
             nu <- 1
-            phi <- -1            
+            phi <- -1
         } else if (barrier.type %in% c("upin", "upout")) {
             nu <- -1
             phi <- -1
-        } 
+        }
     } else
         stop("unknown ", sQuote(type))
 

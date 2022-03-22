@@ -1,4 +1,3 @@
-library("tinytest")
 v <- barrierOptionEuropean(S = 100,
                            X = 90,
                            H = 95,
