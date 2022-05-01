@@ -224,8 +224,9 @@ default method is the LP approach described in
 ns <- 5000  ## number of scenarios
 na <- 20    ## nunber of assets
 R <- randomReturns(na, ns, sd = 0.01, rho = 0.5)
-
-sol <- minCVaR(R, q = 0.1)
+if (requireNamespace("Rglpk"))
+    sol <- minCVaR(R, q = 0.1) else
+    message("Package ", sQuote("Rglpk"), " not available")
 @
 
 \bibliographystyle{plainnat}
