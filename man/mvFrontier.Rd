@@ -124,11 +124,14 @@ wmax <- 1          # maximum holding size
 wmin <- 0.0          # minimum holding size
 rf <- 0.02
 
-p1 <- mvFrontier(m, var, wmin = wmin, wmax = wmax, n = 50)
-p2 <- mvFrontier(m, var, wmin = wmin, wmax = wmax, n = 50, rf = rf)
-plot(p1$volatility, p1$return, pch = 19, cex = 0.5, type = "o",
-     xlab = "Expected volatility",
-     ylab = "Expected return")
-lines(p2$volatility, p2$return, col = grey(0.5))
-abline(v = 0, h = rf)
+if (requireNamespace("quadprog")) {
+  p1 <- mvFrontier(m, var, wmin = wmin, wmax = wmax, n = 50)
+  p2 <- mvFrontier(m, var, wmin = wmin, wmax = wmax, n = 50, rf = rf)
+  plot(p1$volatility, p1$return, pch = 19, cex = 0.5, type = "o",
+       xlab = "Expected volatility",
+       ylab = "Expected return")
+  lines(p2$volatility, p2$return, col = grey(0.5))
+  abline(v = 0, h = rf)
+} else
+  message("Package 'quadprog' is required")
 }

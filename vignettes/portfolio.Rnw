@@ -18,11 +18,17 @@
 \DefineVerbatimEnvironment{Scode}{Verbatim}{xleftmargin=2em}
 \fvset{listparameters={\setlength{\topsep}{0pt}}}
 \renewenvironment{Schunk}{\vspace{\topsep}}{\vspace{\topsep}}
-<<echo=false>>=
+<<echo=false,results=hide>>=
 options(continue = "  ", digits = 3, width = 60, useFancyQuotes = FALSE,
         max.print = 1000, width = 65)
 pv <- packageVersion("NMOF")
 pv <- gsub("(.*)[.](.*)", "\\1-\\2", pv)
+if (!requireNamespace("quadprog", quietly = TRUE))
+    trackingPortfolio <- mvFrontier <-
+    mvPortfolio <- minvar <- function(...) {
+        cat("package", sQuote("quadprog"), " is required")
+        invisible(NULL)
+    }
 @
 
 \begin{document}
@@ -174,20 +180,23 @@ traces out a whole frontier of mean--variance efficient
 portfolios.  (But see the discussion on frontiers in
 Chapter~14 of \citealp{Gilli2019}.)
 <<frontier-plot, fig = TRUE, height = 3.2, width = 4>>=
-wmin <- 0
-wmax <- 1
-p1 <- mvFrontier(m, var, wmin = wmin, wmax = wmax, n = 50)
+if (requireNamespace("quadprog")) {
+    wmin <- 0
+    wmax <- 1
+    p1 <- mvFrontier(m, var, wmin = wmin, wmax = wmax, n = 50)
 
-## with a 'risk-free' asset rf
-rf <- 0.02
-p2 <- mvFrontier(m, var, wmin = wmin, wmax = wmax, n = 50, rf = rf)
+    ## with a 'risk-free' asset rf
+    rf <- 0.02
+    p2 <- mvFrontier(m, var, wmin = wmin, wmax = wmax, n = 50, rf = rf)
 
-par(las = 1, bty = "n", tck = 0.001, ps = 8)
-plot(p1$volatility, p1$return, pch = 19, cex = 0.5, type = "o",
-     xlab = "Expected volatility",
-     ylab = "Expected return")
-lines(p2$volatility, p2$return, col = grey(0.5))
-abline(v = 0, h = rf)
+    par(las = 1, bty = "n", tck = 0.001, ps = 8)
+    plot(p1$volatility, p1$return, pch = 19, cex = 0.5, type = "o",
+         xlab = "Expected volatility",
+         ylab = "Expected return")
+    lines(p2$volatility, p2$return, col = grey(0.5))
+    abline(v = 0, h = rf)
+} else
+    plot(1)
 @
 
 \section{Return-based tracking portfolios}
@@ -225,7 +234,10 @@ ns <- 5000  ## number of scenarios
 na <- 20    ## nunber of assets
 R <- randomReturns(na, ns, sd = 0.01, rho = 0.5)
 
-sol <- minCVaR(R, q = 0.1)
+if (requireNamespace("Rglpk")) { ## example requires "Rglpk" package
+    sol <- minCVaR(R, q = 0.1)
+} else
+    message("Package ", sQuote("Rglpk"), " not available")
 @
 
 \bibliographystyle{plainnat}

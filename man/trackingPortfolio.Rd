@@ -71,24 +71,26 @@ trackingPortfolio(var, wmin = 0, wmax = 1,
   \code{\link{minvar}}
 }
 \examples{
-ns <- 120
-R <- randomReturns(na = 1 + 20,
-                   ns = ns,
-                   sd = 0.03,
-                   mean = 0.005,
-                   rho = 0.7)
+if (requireNamespace("quadprog")) {
+    ns <- 120
+    R <- randomReturns(na = 1 + 20,
+                       ns = ns,
+                       sd = 0.03,
+                       mean = 0.005,
+                       rho = 0.7)
 
-var <- cov(R)
+    var <- cov(R)
 
-sol.qp <- trackingPortfolio(var, wmax = 0.4)
-sol.ls <- trackingPortfolio(var = var, R = R, wmax = 0.4, method = "ls")
-data.frame(QP = round(100*sol.qp, 1),
-           LS = round(100*sol.ls, 1))
+    sol.qp <- trackingPortfolio(var, wmax = 0.4)
+    sol.ls <- trackingPortfolio(var = var, R = R, wmax = 0.4, method = "ls")
+    data.frame(QP = round(100*sol.qp, 1),
+               LS = round(100*sol.ls, 1))
 
-sol.qp <- trackingPortfolio(var, R = R, wmax = 0.4,
-                            objective = "sum.of.squares")
-sol.ls <- trackingPortfolio(var = var, R = R, wmax = 0.4, method = "ls",
-                            objective = "sum.of.squares")
-data.frame(QP = round(100*sol.qp, 1),
-           LS = round(100*sol.ls, 1))
+    sol.qp <- trackingPortfolio(var, R = R, wmax = 0.4,
+                                objective = "sum.of.squares")
+    sol.ls <- trackingPortfolio(var = var, R = R, wmax = 0.4, method = "ls",
+                                objective = "sum.of.squares")
+    data.frame(QP = round(100*sol.qp, 1),
+               LS = round(100*sol.ls, 1))
+}
 }
