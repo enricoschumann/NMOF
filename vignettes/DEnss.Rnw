@@ -85,7 +85,7 @@ OF <- function(param, data) {
     y <- data$model(param, data$tm)
     maxdiff <- y - data$yM
     maxdiff <- max(abs(maxdiff))
-    if (is.na(maxdiff)) 
+    if (is.na(maxdiff))
         maxdiff <- 1e10
     maxdiff
 }

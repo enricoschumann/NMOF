@@ -63,7 +63,7 @@ x
 @
 Three of the elements of \texttt{x} actually violate the constraints.
 <<>>=
-repair1a <- function(x,up,lo) 
+repair1a <- function(x,up,lo)
     pmin(up,pmax(lo,x))
 x
 repair1a(x, up, lo)
@@ -112,15 +112,15 @@ The third of these functions would also work on matrices if
 X <- array(rnorm(25L), dim = c(5L, 5L))
 X
 repair1c(X, up = 0.5, lo = -0.5)
-@ 
+@
 The speedup comes at a price, of course, since there is no checking
 (eg, for \texttt{NA} values) in \texttt{repair1b} and
 \texttt{repair1c}.  We could also define new functions \texttt{pmin2}
 and \texttt{pmax2}.
 <<>>=
-pmax2 <- function(x1, x2) 
+pmax2 <- function(x1, x2)
     ((x1 + x2) + abs(x1 - x2)) / 2
-pmin2 <- function(x1, x2) 
+pmin2 <- function(x1, x2)
     ((x1 + x2) - abs(x1 - x2)) / 2
 @
 A test follows.
@@ -150,7 +150,7 @@ variable~\texttt{x[i]} to the range \texttt{up[i] - lo[i]}.
 repair2 <- function(x, up, lo) {
     done <- TRUE
     e <- sum(x - up  + abs(x - up) + lo - x  + abs(lo - x))
-    if (e > 1e-12) 
+    if (e > 1e-12)
         done <- FALSE
     r <- up - lo
     while (!done) {
@@ -164,7 +164,7 @@ repair2 <- function(x, up, lo) {
 
         x <- x - (adjU - adjL)/2
         e <- sum(x - up  + abs(x - up) + lo - x  + abs(lo - x))
-        if (e < 1e-12) 
+        if (e < 1e-12)
             done <- TRUE
     }
     x
@@ -180,14 +180,14 @@ system.time(for (i in strials) y4 <- repair2(x,up,lo))
 %%     x[x < lo]  <-  x[x < lo] + ((lo - x[x < lo]) %/% r)*r + 2 * (lo - x[x < lo]) %% r
 
 %%     r <- up - lo
-%%     ii <- x > up    
+%%     ii <- x > up
 %%     x[ii] - ((x[ii] - up[ii]) %/% r[ii])*r[ii] - (2 *  (x[ii] - up[ii]) %% r[ii])
-    
+
 %% }
 %% x
 %% repair2b(x, up, lo)
 %% system.time(for (i in strials) y4 <- repair2(x,up,lo))
-%% @ 
+%% @
 
 \subsection{Adjusting a cardinality limit}
 Let \texttt{x} be a logical vector.

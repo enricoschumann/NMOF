@@ -8,7 +8,7 @@ PSopt <- function(OF, algo = list(), ...) {
                   pen = NULL, repair = NULL, changeV = NULL,
                   loopOF = TRUE, loopPen = TRUE,
                   loopRepair  = TRUE, loopChangeV = TRUE,
-                  printDetail = TRUE, printBar = TRUE,
+                  printDetail = TRUE, printBar = interactive(),
                   initP = NULL,
                   storeF = TRUE,
                   storeSolutions = FALSE,

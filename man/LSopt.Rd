@@ -11,7 +11,7 @@
 LSopt(OF, algo = list(), ...)
 }
 \arguments{
-  \item{OF}{    
+  \item{OF}{
     The objective function, to be minimised. Its first argument needs to
     be a solution; \code{\dots} arguments are also passed.
   }
@@ -48,9 +48,9 @@ LSopt(OF, algo = list(), ...)
       easier to compare and switch between functions
       \code{\link{LSopt}}, \code{\link{TAopt}} and
       \code{\link{SAopt}}.
-      
+
     }
-    
+
     \item{\code{x0}}{The initial solution. This can be a function; it
       will then be called once without arguments to compute an initial
       solution, ie, \code{x0 <- algo$x0()}. This can be useful when
@@ -92,7 +92,7 @@ LSopt(OF, algo = list(), ...)
 
   At the minimum, \code{algo} needs to contain an initial solution
   \code{x0} and a \code{neighbour} function.
-  
+
   \acronym{LS} works on solutions through the functions \code{neighbour}
   and \code{OF}, which are specified by the user. Thus, a solution need
   not be a numeric vector, but can be any other data structure as well
@@ -160,7 +160,7 @@ x0 <- makeRandomSol(nc)
 
 ## ... but probably not a good one
 sum(y - rowSums(X[ , xTRUE, drop = FALSE])) ## should be 0
-sum(y - rowSums(X[ , x0, drop = FALSE])) 
+sum(y - rowSums(X[ , x0, drop = FALSE]))
 
 ## a neighbourhood function: switch n elements in solution
 neighbour <- function(xc, Data) {

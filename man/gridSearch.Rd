@@ -5,7 +5,7 @@
   Grid Search
 }
 \description{
-  Evaluate a function for a given list of possible arguments.
+  Evaluate a function for a given list of arguments.
 }
 \usage{
 gridSearch(fun, levels, ..., lower, upper, npar = 1L, n = 5L,
@@ -17,7 +17,7 @@ gridSearch(fun, levels, ..., lower, upper, npar = 1L, n = 5L,
 \arguments{
   \item{fun}{
     a function of the form \code{fun(x, \dots)}, with \code{x} being a
-    numeric vector or a list of numeric vectors (of length one)
+    numeric vector or a list
   }
   \item{levels}{
     a list of levels for the arguments (see Examples)
@@ -35,7 +35,7 @@ gridSearch(fun, levels, ..., lower, upper, npar = 1L, n = 5L,
     the number of parameters. Must be supplied if \code{lower} and
     \code{upper} are to be expanded; see Details. Ignored when \code{levels} are
     explicitly specified, or when \code{lower}/\code{upper} are used and
-    at least one has lenght greater than one. See Examples.
+    at least one has length greater than one. See Examples.
   }
   \item{n}{
     the number of levels. Default is 5. Ignored if levels are explicitly specified.
@@ -109,7 +109,7 @@ gridSearch(fun, levels, ..., lower, upper, npar = 1L, n = 5L,
   Methods and Optimization in Finance}. 2nd edition. Elsevier.
   \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
 
-  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
+  Schumann, E. (2021) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 }
 \author{
@@ -152,5 +152,28 @@ lower <- c(1,1); upper <- 3; n <- 4
 res <- gridSearch(testFun, lower = lower, upper = upper, n = n)
 res$minfun
 sol$minlevels
+
+
+
+## non-numeric inputs
+test_fun <- function(x) {
+    -(length(x$S) + x$N1 + x$N2)
+}
+
+ans <- gridSearch(test_fun,
+                  levels = list(S  = list("a", c("a", "b"), c("a", "b", "c")),
+                                N1 = 1:5,
+                                N2 = 101:105),
+                  asList = TRUE, keepNames = TRUE)
+ans$minlevels
+## $S
+## [1] "a" "b" "c"
+##
+## $N1
+## [1] 5
+##
+## $N2
+## [1] 105
+
 }
 \keyword{optimize}

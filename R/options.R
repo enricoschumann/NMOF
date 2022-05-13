@@ -59,9 +59,8 @@ vanillaOptionEuropean <- function(S, X, tau, r, q = 0, v,
             value <- putCallParity(what = "put", call = value,
                                    put = NULL, S, X, tau, r, q, tauD, D)
         if (!greeks)
-            value else {
-                list(value = value, delta = exq * vP1 - exq *(I < 0))
-            }
+            value else list(value = value,
+                            delta = exq * vP1 - exq *(I < 0))
     }
 }
 
@@ -76,8 +75,7 @@ vanillaOptionAmerican <- function(S, X, tau, r, q, v,
     if (any(tau <= 0))
         stop(sQuote("tau"), " must be a positive number")
 
-    pmax2 <- function(y1,y2)
-        (y1 + y2 + abs(y1 - y2)) / 2
+    pmax2 <- function(y1, y2) (y1 + y2 + abs(y1 - y2)) / 2
 
     S <- S - sum(exp(-r*tauD)*D) ## forward
     dt <- tau/M
@@ -91,6 +89,12 @@ vanillaOptionAmerican <- function(S, X, tau, r, q, v,
     if (type == "call")
         m <- 1 else m <- -1
     W <- pmax2(m*(S * dM * uM - X), 0)
+
+    if (greeks) {
+        deltaE <- NA_real_
+        thetaE <- NA_real_
+        gammaE <- NA_real_
+    }
     for (i in M:1) {
         t <- (i-1)*dt
         PV <- sum(D * (t < tauD) * exp(-r * (tauD - t)))
@@ -104,7 +108,7 @@ vanillaOptionAmerican <- function(S, X, tau, r, q, v,
             } else if (i == 3L) {
                 gammaE <- ((W[3L] - W[2L]) / (Si[3L] - Si[2L]) -
                            (W[2L] - W[1L]) / (Si[2L] - Si[1L])) /
-                               (0.5*(Si[3L] - Si[1L]))
+                          (0.5*(Si[3L] - Si[1L]))
                 thetaE <- W[2L]
             } else if (i == 1L)
                 thetaE <- (thetaE - W[1L]) / (2 * dt)
@@ -187,7 +191,7 @@ if (FALSE) {
         d1 <- (log(S/X) + (r - q + vol^2/2) * tau)/(vol * sqrt(tau))
         d2 <- d1 - vol * sqrt(tau)
         list(value = I * (S * exp(-q * tau) * pnorm(I * d1) -
-             X * exp(-r * tau) * pnorm(I * d2)),
+                          X * exp(-r * tau) * pnorm(I * d2)),
              vega  = S * exp(-q*tau) * dnorm(d1 * I) * sqrt(tau))
     }
     cases <- 100000
@@ -202,8 +206,8 @@ if (FALSE) {
     v0 <- numeric(cases)
     for (i in seq_len(cases)) {
         tmp <- try(vanillaOptionImpliedVol("european", price = prices[i],
-                                         S = S[i], X = X[i], tau = tau[i],
-                                         r = r[i], q=q[i]))
+                                           S = S[i], X = X[i], tau = tau[i],
+                                           r = r[i], q=q[i]))
         if (inherits(tmp, "try-error"))
             message("error in i ", i)
         else
@@ -218,4 +222,104 @@ if (FALSE) {
     summary(abs(v0-vol))
     summary(abs(iv - vol[ci]))
     boxplot(list(abs(v0-vol), abs(iv - vol[ci])))
+}
+
+
+barrierOptionEuropean <- function(S, X, H, tau, r, q = 0, v,
+                                  tauD = 0, D = 0, type = "call",
+                                  barrier.type = "downin",
+                                  rebate = 0,
+                                  greeks = FALSE, model = NULL, ...) {
+
+    if (D != 0)
+        stop("not supported: use q as an approximation")
+
+    if (type == "call") {
+        if (barrier.type %in% c("downin", "downout")) {
+            nu  <- 1
+            phi <- 1
+        } else if (barrier.type %in% c("upin", "upout")) {
+            nu <- -1
+            phi <- 1
+        }
+    } else if (type == "put") {
+        if (barrier.type %in% c("downin", "downout")) {
+            nu <- 1
+            phi <- -1
+        } else if (barrier.type %in% c("upin", "upout")) {
+            nu <- -1
+            phi <- -1
+        }
+    } else
+        stop("unknown ", sQuote(type))
+
+    K <- rebate
+    mu <- (r - q - v/2)/v
+    lambda <- sqrt(mu*mu + 2*r/v)
+    z <- log(H/S)/sqrt(v*tau) + lambda*sqrt(v*tau)
+
+    x1 <- log(S/X)/(sqrt(v*tau)) + (1+mu)*sqrt(v*tau)
+    x2 <- log(S/H)/(sqrt(v*tau)) + (1+mu)*sqrt(v*tau)
+
+    y1 <- log(H^2/(S*X))/sqrt(v*tau) + (1+mu)*sqrt(v*tau)
+    y2 <- log(H/S)/sqrt(v*tau) + (1+mu)*sqrt(v*tau)
+
+    A <- phi*S*exp(-q*tau) * pnorm(phi*x1) - phi*X*exp(-r*tau)*pnorm(phi*x1 - phi*sqrt(v*tau))
+    B <- phi*S*exp(-q*tau) * pnorm(phi*x2) - phi*X*exp(-r*tau)*pnorm(phi*x2 - phi*sqrt(v*tau))
+
+    C <- phi*S*exp(-q*tau)*(H/S)^(2*(mu+1))*pnorm(nu*y1) - phi*X*exp(-r*tau)*(H/S)^(2*mu)*pnorm(nu*y1 - nu*sqrt(v*tau))
+    D <- phi*S*exp(-q*tau)*(H/S)^(2*(mu+1))*pnorm(nu*y2) - phi*X*exp(-r*tau)*(H/S)^(2*mu)*pnorm(nu*y2 - nu*sqrt(v*tau))
+
+    E <- K*exp(-r*tau)*(pnorm(nu*x2 - nu*sqrt(v*tau)) - (H/S)^(2*mu)*pnorm(nu*y2 - nu*sqrt(v*tau)))
+    F <- K*((H/S)^(mu + lambda)*pnorm(nu*z) + (H/S)^(mu - lambda)*pnorm(nu*z - 2*nu*lambda*sqrt(v*tau)))
+
+    if (type == "call") {
+        if (barrier.type == "downin") {
+            if (X > H)
+                value <- C + E
+            else
+                value <- A - B + D +E
+        } else if (barrier.type == "upin") {
+            if (X > H)
+                value <- A + E
+            else
+                value <- B - C + D +E
+        } else if (barrier.type == "downout") {
+            if (X > H)
+                value <- A - C + F
+            else
+                value <- B - D + F
+        } else if (barrier.type == "upout") {
+            if (X > H)
+                value <- F
+            else
+                value <- A - B + C - D + F
+        }
+    } else if (type == "put") {
+        if (barrier.type == "downin") {
+            if (X > H)
+                value <- B  - C +D+E
+            else
+                value <- A+E
+        } else if (barrier.type == "upin") {
+            if (X > H)
+                value <- A - B +D+E
+            else
+                value <- C+E
+        } else if (barrier.type == "downout") {
+            if (X > H)
+                value <- A-B+C-D+F
+            else
+                value <- F
+
+        } else if (barrier.type == "upout") {
+            if (X > H)
+                value <- B - D +F
+            else
+                value <- A -C +F
+        }
+    }
+    if (!greeks)
+        value else
+                  list(value = value, delta = NA)
 }

@@ -1,7 +1,7 @@
 LSopt <- function(OF, algo = list(), ...) {
     algoD <- list(nS = 1000L, nI = NULL,
                   neighbour = NULL, x0 = NULL,
-                  printDetail = TRUE, printBar = TRUE,
+                  printDetail = TRUE, printBar = interactive(),
                   storeF = TRUE, storeSolutions = FALSE,
                   OF.target = NULL,
                   classify = FALSE)

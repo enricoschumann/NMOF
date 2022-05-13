@@ -1,3 +1,223 @@
+2022-03-22  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/options.R (vanillaOptionAmerican): the
+        function now works even for very small values
+        for M (M <= 3)
+
+2022-03-16  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/options.R (barrierOptionEuropean): add function
+
+2022-03-09  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/mc.R (gbm): the function gains an argument
+        "antithetic", with default FALSE. If TRUE, only
+        npaths/2 paths are created and then duplicated
+        with switched sign
+
+2022-01-27  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/mc.R (gbm, gbb): both functions gain an
+        argument "exp.result", with default TRUE. If
+        FALSE, the log paths are returned
+        (gbb): the function gets an argument "log",
+        with default FALSE, which matches the previous
+        behaviour
+
+2022-01-26  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.6-0
+
+2021-12-29  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/portfolio.R (group_constraints_matrices):
+        fix group constraints with a single group
+
+2021-11-12  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/randomReturns.R (randomReturns): specially
+        handle case rho == 1. Also, add an argument
+        "exact"; if TRUE, the created matrix has exact
+        means, standard deviations and
+        correlations. Default is FALSE.
+
+2022-05-10  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.5-1
+
+        * man/*,vignettes/*,inst/tinytes/*: add
+        tests whether suggested packages 'quadprog' and
+        'Rglpk' are available
+
+2021-10-20  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.5-0
+
+2021-09-28  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/gridSearch.R (gridSearch): allow
+        non-numeric input arguments, e.g. factors or
+        character vectors, specified in argument
+        "levels". Used only if argument 'asList' is
+        TRUE.
+
+2021-07-22  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R (Ritter): add function, which
+        downloads IPO data from Jay Ritter
+
+2021-05-30  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R (French): trim whitespace
+        from "industry_group"
+
+2021-04-09  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.4-1
+
+        * R/*opt.R: set default value of 'printBar' to
+        'interactive()' in optimisation functions
+
+        * inst/tinytest/test_portfolio.R: run several
+        tests only locally
+
+2021-04-01  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.4-0
+
+2021-03-30  Enrico Schumann  <es@enricoschumann.net>
+
+        * inst/tinytest/test_portfolio.R: use more
+        tolerance in tests
+
+2021-03-23  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R (French): support univariate
+        dataset "Portfolios Formed on ME"
+
+2021-03-12  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/randomReturns.R (randomReturns): 'rho' may
+        now be a correlation matrix
+
+2021-02-22  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/portfolio.R (minCVaR): support wmin/wmax
+        other than the defaults (thanks to Peter Garnry
+        for reporting on GitHub)
+        (minCVaR): support group constraints
+
+        * R/market_data.R (French): the function no
+        longer fails when a column is are NA; more
+        tweaks to process files
+
+        * R/callHestoncf.R (callHestoncf): new \dots
+        argument for passing arguments to 'integrate'
+
+2021-01-19  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.3-1
+
+        * R/market_data.R (Shiller): support additional
+        columns; construct dates as monthly sequence
+        instead of parsing the dates in the file
+
+2020-10-31  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/portfolio.R (minCVaR): new arguments
+        'min.return' and 'm' for specifying a
+        minimum-return restriction
+
+2020-10-20  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.2-2
+
+        * inst/tinytest: exclude tests after spurious
+        error on CRAN machine
+
+2020-10-20  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.2-1
+
+        * man/optionData.Rd: update URLs, as
+        requested by CRAN
+
+2020-10-20  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.2-0
+
+2020-10-14  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R (French): use 'basename' on
+        the dataset, so that the complete ftp-link to a
+        dataset can be used
+
+2020-08-19  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/TAopt.R (TAopt): new option 'drop0',to be
+        passed via 'algo'
+
+2020-07-29  Enrico Schumann  <es@enricoschumann.net>
+
+        * vignettes/portfolio.Rnw: add vignette on
+        portfolio-selection functions
+
+2020-06-23  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/portfolio.R (group_constraints_matrices):
+        fix how constraints matrices are set up (thanks
+        to 'clcsar' for reporting on GitHub); allow
+        group labels
+
+2020-06-10  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/portfolio.R (trackingPortfolio): export function
+
+2020-06-10  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/portfolio.R (trackingPortfolio): add function (not
+        yet exported); see
+        http://enricoschumann.net/notes/return-based-tracking-portfolios.html
+
+2020-05-12  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R (French): for industry portfolios,
+        also export "Sum of BE/Sum of ME". The data are
+        attached as an attribute "sumBE.sumME". All
+        data-frames attached as attributes now have the
+        timestamps as rownames.
+
+2020-04-27  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R: support further datasets, such as
+        "Bivariate sorts on Size, B/M, OP and Inv"
+
+2020-04-11  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/portfolio.R (minCVaR): add function; see
+        http://enricoschumann.net/notes/minimising-conditional-var.html
+
+2020-04-01  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.1-0
+
+2020-03-17  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R (French): provide more
+        information for share issuance dataset
+
+2020-02-20  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R (French): adapt function to
+        changed format (momentum monthly/yearly)
+
+2020-02-17  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/portfolio.R (minvar,mvFrontier,mvPortfolio):
+        the functions gain arguments 'groups',
+        'groups.wmin' and 'groups.wmax', which allow to
+        specify group constraints
+
 2020-01-23  Enrico Schumann  <es@enricoschumann.net>
 
         * R/market_data.R (French,Shiller): if download

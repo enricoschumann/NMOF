@@ -30,15 +30,17 @@ NSS(param, tm)
   The function returns a vector of length \code{length(tm)}.
 }
 \references{
+
   Gilli, M. and Grosse, S. and Schumann, E. (2010) Calibrating the Nelson-Siegel-Svensson model, \acronym{COMISEF} Working Paper Series No. 031.
-  \url{http://comisef.eu/files/wps031.pdf}
+  \url{http://enricoschumann.net/COMISEF/wps031.pdf}
 
   Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
   Methods and Optimization in Finance}. 2nd edition. Elsevier.
   \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
 
   Gilli, M. and Schumann, E. (2010) A Note on \sQuote{Good} Starting Values in Numerical Optimisation,
-  \acronym{COMISEF} Working Paper Series No. 044. \url{http://comisef.eu/files/wps044.pdf}
+  \acronym{COMISEF} Working Paper Series No. 044.
+  \url{http://enricoschumann.net/COMISEF/wps044.pdf}
 
   Nelson, C.R. and Siegel, A.F. (1987) Parsimonious Modeling of Yield Curves. \emph{Journal of Business}, \strong{60}(4), pp. 473--489.
 

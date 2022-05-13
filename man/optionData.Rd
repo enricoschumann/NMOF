@@ -27,9 +27,9 @@
 }
 \source{
   The data was obtained from several websites: close prices of EUREX
-  products were collected from \url{https://www.eurexchange.com} ; Euribor rates
+  products were collected from \url{https://www.eurex.com/ex-en/} ; Euribor rates
   and the parameters of the Nelson-Siegel-Svensson can be found at
-  \url{https://www.bundesbank.de} .
+  \url{https://www.bundesbank.de/en/} .
 }
 \references{
   Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical

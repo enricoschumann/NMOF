@@ -105,7 +105,11 @@ TAopt(OF, algo = list(), \dots)
       an integer greater than 1.}
 
     \item{\code{scale}}{The thresholds are multiplied by
-    \code{scale}. Default is 1.}
+      \code{scale}. Default is 1.}
+
+    \item{\code{drop0}}{When thresholds are computed, should zero values
+      be dropped from the sample of objective-function values?  Default is
+      \code{FALSE}.}
 
     \item{\code{stepUp}}{Defaults to \code{0}. If an integer greater
       than zero, then the thresholds are recycled, ie, \code{vT} is

@@ -7,30 +7,32 @@
   Create a matrix of random returns.
 }
 \usage{
-randomReturns(na, ns, sd, mean = 0, rho = 0)
+randomReturns(na, ns, sd, mean = 0, rho = 0, exact = FALSE)
 }
 \arguments{
-  \item{na}{
+  \item{na}{%
     number of assets
-}
-  \item{ns}{
+  }
+  \item{ns}{%
     number of return scenarios
-}
-  \item{sd}{
-
+  }
+  \item{sd}{%
     the standard deviation: either a single number or a vector
     of length \code{na}
-
-}
-  \item{mean}{
-
+  }
+  \item{mean}{%
     the mean return: either a single number or a vector
     of length \code{na}
-
-}
-  \item{rho}{
-    correlation
-}
+  }
+  \item{rho}{%
+    correlation: either a scalar (i.e. a constant pairwise correlation)
+    or a correlation matrix
+  }
+  \item{exact}{%
+    logical: if \code{TRUE}, return a random matrix whose
+    column means, standard deviations and correlations match the
+    specified values exactly (up to numerical precision)
+  }
 }
 \details{
 
@@ -50,7 +52,7 @@ randomReturns(na, ns, sd, mean = 0, rho = 0)
     Methods and Optimization in Finance}, 2nd edition. Elsevier.
     \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
 
-  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
+  Schumann, E. (2021) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 
 }
@@ -67,16 +69,21 @@ randomReturns(na, ns, sd, mean = 0, rho = 0)
   \code{\link{mc}}
 }
 \examples{
-na <- 100  ## number of assets
-inc <- 5   ## number of assets to include
+if (requireNamespace("quadprog")) {
+    ## a small experiment: when computing minimum-variance portfolios
+    ## for correlated assets, how many large positions are in the portfolio?
 
-n <- numeric(20)
-for (i in seq_along(n)) {
-    R <- NMOF:::randomReturns(na = na,
-                              ns = 1000,
-                              sd = seq(.2/.16, .5/.16, length.out = 100),
-                              rho = 0.5)
-    n[i] <- sum(minvar(cov(R), wmax = 1/inc)> 0.01)
+    na <- 100  ## number of assets
+    inc <-  5  ## minimum of assets to include
+
+    n <- numeric(10)
+    for (i in seq_along(n)) {
+        R <- randomReturns(na = na,
+                           ns = 500,
+                           sd = seq(.2/.16, .5/.16, length.out = 100),
+                           rho = 0.5)
+        n[i] <- sum(minvar(cov(R), wmax = 1/inc)> 0.01)
+    }
+    summary(n)
 }
-summary(n)
 }

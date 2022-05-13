@@ -76,13 +76,13 @@ for position) could look as follows:
 N <- 8              ## board size
 p <- sample.int(N)  ## a random solution
 data.frame(row = 1:N, column = p)
-@ 
+@
 
 \noindent Or (a very bad solution):
 <<>>=
-p <- rep(1, N) 
+p <- rep(1, N)
 data.frame(row = 1:N, column = p)
-@ 
+@
 
 
 \noindent We will also want to visualise a position, for which
@@ -94,14 +94,14 @@ print_board <- function(p, q.char = "Q", sep = " ") {
     for (i in seq_len(n)) {
         row_i <- row
         row_i[p[i]] <- q.char
-       
+
         cat(paste(row_i, collapse = sep))
         cat("\n")
     }
 }
 
 print_board(p)
-@ 
+@
 
 \section{Evaluating a solution}
 
@@ -122,7 +122,7 @@ for (r in 1:N)
     for (c in 1:N)
         mat[r,c] <- c + r - (N + 1)
 mat
-@ 
+@
 
 \noindent Note that for reverse diagonals, the \texttt{N + 1}
 would not be necessary; it serves only to shift the
@@ -138,16 +138,16 @@ should be zero.
 n_attacks <- function(p) {
     ## more than one Q on a column?
     sum(duplicated(p)) +
-        
+
     ## more than one Q on a diagonal?
-    sum(duplicated(p - seq_along(p))) +   
+    sum(duplicated(p - seq_along(p))) +
 
     ## more than one Q on a reverse diagonal?
     sum(duplicated(p + seq_along(p)))
 }
 
 n_attacks(p)
-@ 
+@
 
 
 \section{Changing a solution}
@@ -162,26 +162,26 @@ neighbour <- function(p) {
     step <- 3
     i <- sample.int(N, 1)
     p[i] <- p[i] + sample(c(1:step, -(1:step)), 1)
-    
+
     if (p[i] > N)
         p[i] <- 1
     else if (p[i] < 1)
         p[i] <- N
     p
 }
-@ 
+@
 
 <<>>=
 print_board(p)
 print_board(p <- neighbour(p))
 print_board(p <- neighbour(p))
-@ 
+@
 
 \section{Solving the model}
 
-We use three different LS methods: a `classical' 
+We use three different LS methods: a `classical'
 Stochastic Local Search (\texttt{LSopt}),
-Threshold Accepting (\texttt{TAopt}) and 
+Threshold Accepting (\texttt{TAopt}) and
 Simulated Annealing (\texttt{SAopt}).
 
 <<>>=
@@ -205,7 +205,7 @@ sol <- SAopt(n_attacks, list(x0 = p0,
                              printBar = FALSE,
                              nS = 1000))
 print_board(sol$xbest)
-@ 
+@
 
 
 \bibliographystyle{plainnat}

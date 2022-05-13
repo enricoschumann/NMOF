@@ -75,7 +75,7 @@ gridSearch <- function(fun, levels, ..., lower, upper,
     lstLevels <- vector("list", length = nlp)
     for (r in seq_len(nlp)) {
         lstLevels[[r]] <- if (asList)
-            as.list(sapply(res, `[[`, r)) else
+            lapply(res, `[[`, r) else
         sapply(res, `[[`, r)
     }
     if (method == "multicore") {

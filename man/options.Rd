@@ -2,11 +2,15 @@
 \alias{vanillaOptionEuropean}
 \alias{vanillaOptionAmerican}
 \alias{vanillaOptionImpliedVol}
+\alias{barrierOptionEuropean}
 \title{
-  Pricing Plain-Vanilla Options (European and American)
+  Pricing Plain-Vanilla (European and American) and Barrier Options (European)
 }
 \description{
-  Functions to calculate the theoretical prices and (some) Greeks for plain vanilla options.
+
+  Functions to calculate the theoretical prices and (some) Greeks for
+  plain-vanilla and barrier options.
+
 }
 \usage{
 vanillaOptionEuropean(S, X, tau, r, q, v, tauD = 0, D = 0,
@@ -19,14 +23,21 @@ vanillaOptionImpliedVol(exercise = "european", price, S, X, tau, r,
                         q = 0, tauD = 0, D = 0, type = "call",
                         M = 101,
                         uniroot.control = list(), uniroot.info = FALSE)
+
+barrierOptionEuropean(S, X, H, tau, r, q, v, tauD = 0, D = 0,
+                      type = "call", greeks = TRUE,
+                      model = NULL, ...)
 }
 \arguments{
   \item{S}{
     spot
-}
+  }
   \item{X}{
     strike
-}
+  }
+  \item{H}{
+    barrier
+  }
   \item{tau}{
     time-to-maturity in years
 }

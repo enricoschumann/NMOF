@@ -21,7 +21,7 @@
 \fvset{listparameters={\setlength{\topsep}{0pt}}}
 \renewenvironment{Schunk}{\vspace{\topsep}}{\vspace{\topsep}}
 <<echo=false>>=
-require("NMOF")
+library("NMOF")
 options(continue = "  ", digits = 5, max.print = 20, width = 85)
 @
 \begin{document}
@@ -176,7 +176,7 @@ available from that site.
 
 A goal for the \textsc{nmof} package is to provide reliable code.
 Thus, a large number of test cases is included.
-<<echo=false>>=
+<<echo=false,eval=false>>=
 test.rep <- readLines(system.file("unitTests/test_results.txt",
                                   package = "NMOF"))
 nt <- gsub(".*\\(([0-9]+) checks?\\).*", "\\1",

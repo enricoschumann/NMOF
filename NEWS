@@ -1,12 +1,110 @@
-v2.1-0  (2020-02-02; not yet released)
+v2.7-0  (2022-??-??; not yet released)
 
-  o Shiller: adapt function to new file format
+  o function 'gbm' gains an argument "antithetic": if
+    TRUE, paths are created based on antithetic variates
 
-  o French/Shiller: if download fails, the functions
-    now return NULL (invisibly)
+  o new function 'barrierOptionEuropean', for computing
+    theoretical prices for various barrier-option types
 
-  o ......
+  o ....
 
+v2.6-0  (2022-01-26)
+
+  o function 'randomReturns' gains an argument "exact":
+    if TRUE, the created matrix has the exact specified
+    column means (up to numerical, but not sampling accuracy)
+
+  o group constraints now work with only a single group
+    (e.g. in functions 'minCVaR' or 'minvar')
+
+v2.5-0  (2021-10-20)
+
+  o new function 'Ritter', which downloads IPO data
+    provided by Jay Ritter
+
+  o 'gridSearch' now can handle arbitrary lists (before,
+    only lists of numeric vectors were supported)
+
+  o 'French': improve formatting of (some) datasets
+
+v2.4-1  (2021-04-09)
+
+  o the default value for option 'printBar' in all
+    optimisation routines is now 'interactive()', so
+    progress bars remain shown in interactive sessions,
+    but are suppressed otherwise. (For the old
+    behaviour, set 'printBar' to TRUE.)
+
+v2.4-0  (2021-04-01)
+
+  o fixed: 'minCVaR' no longer ignores minimum and
+    maximum holding constraints; thanks to Peter Garnry
+    for reporting on GitHub. Group constraints are
+    supported, too. See
+    https://github.com/enricoschumann/NMOF/issues/3 .
+
+  o 'randomReturns': argument 'rho' may now be a
+    correlation matrix
+
+  o 'callHestoncf' gains a '...' argument, for passing
+    settings to integrate
+
+  o 'French' supports more datasets
+
+v2.3-1  (2021-01-19)
+
+  o 'minCVaR' gains an argument 'min.return' for
+    specifying a minimum required return (and another
+    argument 'm' for specifying expected returns)
+
+  o 'Shiller' includes additional columns, such as bond
+    returns
+
+v2.2-0  (2020-10-20)
+
+  o New function 'minCVaR' for computing minimum CVaR
+    portfolios. For details, see
+    http://enricoschumann.net/notes/minimising-conditional-var.html
+
+  o New function 'trackingPortfolio'. For details, see
+    http://enricoschumann.net/notes/return-based-tracking-portfolios.html
+
+  o New vignette 'Functions for portfolio selection'.
+
+  o 'TAopt' gains a new option 'drop0' (to be passed
+    via 'algo): if TRUE, zero values are dropped from
+    the sample of objective-function values during the
+    computation of the threshold sequence. See
+    https://stackoverflow.com/questions/63377180/finding-ideal-filter-setting-to-maximize-target-function
+
+  o 'French' supports more datasets. For industry
+    portfolios, the function now also provides "Sum of
+    BE/Sum of ME". The data are attached as an
+    attribute "sumBE.sumME". All data-frames attached
+    as attributes now have the timestamps as rownames.
+
+  o The setting-up of constraints matrices in
+    portfolio-selection functions such as 'minvar' is
+    now fixed; thanks to 'clcsar' for reporting on
+    GitHub. Also, the functions now allow group labels
+    for specifying constraints.
+    See https://github.com/enricoschumann/NMOF/issues/2 .
+
+v2.1-0  (2020-04-01)
+
+  o 'Shiller': adapt function to new file format
+
+  o 'French'/'Shiller': if download fails, the
+    functions now return NULL (invisibly). Also,
+    'French' supports additional datasets.
+
+  o 'minvar', 'mvFrontier', 'mvPortfolio': the
+    functions gain arguments 'groups', 'groups.wmin'
+    and 'groups.wmax', which allow to specify group
+    constraints
+
+  o 'mvPortfolio': new argument 'lambda' for specifying
+    a risk--reward trade-off
 
 v2.0-1  (2019-10-20)
 

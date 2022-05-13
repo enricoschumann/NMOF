@@ -1,5 +1,5 @@
 callHestoncf <- function(S, X, tau, r, q, v0, vT, rho, k, sigma,
-                         implVol = FALSE) {
+                         implVol = FALSE, ...) {
     ## S     = spot
     ## X     = strike
     ## tau   = time to mat
@@ -41,10 +41,10 @@ callHestoncf <- function(S, X, tau, r, q, v0, vT, rho, k, sigma,
     }
 
     ## pricing
-    vP1 <- 0.5 + 1/pi * integrate(P1,lower = 0, upper = Inf,
-                                  S, X, tau, r, q, v0, vT, rho, k, sigma)$value
-    vP2 <- 0.5 + 1/pi * integrate(P2,lower = 0, upper = Inf,
-                                  S, X, tau, r, q, v0, vT, rho, k, sigma)$value
+    vP1 <- 0.5 + 1/pi * integrate(P1, lower = 0, upper = Inf,
+                                  S, X, tau, r, q, v0, vT, rho, k, sigma, ...)$value
+    vP2 <- 0.5 + 1/pi * integrate(P2, lower = 0, upper = Inf,
+                                  S, X, tau, r, q, v0, vT, rho, k, sigma, ...)$value
     result <- exp(-q * tau) * S * vP1 - exp(-r * tau) * X * vP2;
 
     ## implied BSM vol

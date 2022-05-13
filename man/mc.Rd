@@ -39,21 +39,21 @@ gbb(npaths, timesteps, S0, ST, v, tau)
   }
 }
 \details{
-  
+
 \code{gbm} generates sample paths of geometric Brownian motion.
 
 \code{gbb} generates sample paths of a Brownian bridge by first creating
 paths of Brownian motion \code{W} from time \code{0} to time \code{T},
 with \code{W_0} equal to zero.  Then, at each \code{t}, it subtracts t/T
 * W_T and adds S0*(1-t/T)+ST*(t/T).
-      
+
 }
 \value{
 
     A matrix of sample paths; each column contains the price path of an
     asset. Even with only a single time-step, the matrix will have two
     rows (the first row is \code{S0}).
-    
+
 }
 \references{
   Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
@@ -97,7 +97,7 @@ vanillaOptionEuropean(S0, X = 100, tau = tau, r = r, v = v)$value
 
 
 ## compute delta via forward difference
-## (see Gilli/Maringer/Schumann, ch. 9) 
+## (see Gilli/Maringer/Schumann, ch. 9)
 h <- 1e-6                 ## a small number
 rnorm(1)                  ## make sure RNG is initialised
 rnd.seed <- .Random.seed  ## store current seed
@@ -105,11 +105,11 @@ paths1 <- gbm(npaths, timesteps, r, v, tau, S0 = S0)
 .Random.seed <- rnd.seed
 paths2 <- gbm(npaths, timesteps, r, v, tau, S0 = S0 + h)
 
-delta.mc <- (mc(paths2, payoff, X = 100, r = r, tau = tau)- 
+delta.mc <- (mc(paths2, payoff, X = 100, r = r, tau = tau)-
              mc(paths1, payoff, X = 100, r = r, tau = tau))/h
 delta <- vanillaOptionEuropean(S0, X = 100, tau = tau,
                                r = r, v = v)$delta
-delta.mc - delta 
+delta.mc - delta
 
 
 

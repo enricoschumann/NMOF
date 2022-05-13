@@ -1,6 +1,7 @@
 \name{mvFrontier}
 \alias{mvFrontier}
 \alias{mvPortfolio}
+\concept{portfolio selection}
 \title{
   Computing Mean--Variance Efficient Portfolios
 }
@@ -8,8 +9,10 @@
   Compute mean--variance efficient portfolios and efficient frontiers.
 }
 \usage{
-mvFrontier(m, var, wmin = 0, wmax = 1, n = 50, rf = NA)
-mvPortfolio(m, var, min.return, wmin = 0, wmax = 1, lambda = NULL)
+mvFrontier(m, var, wmin = 0, wmax = 1, n = 50, rf = NA,
+           groups = NULL, groups.wmin = NULL, groups.wmax = NULL)
+mvPortfolio(m, var, min.return, wmin = 0, wmax = 1, lambda = NULL,
+            groups = NULL, groups.wmin = NULL, groups.wmax = NULL)
 }
 \arguments{
   \item{m}{
@@ -36,6 +39,15 @@ mvPortfolio(m, var, min.return, wmin = 0, wmax = 1, lambda = NULL)
   \item{lambda}{
     risk--reward trade-off
 }
+  \item{groups}{
+    a list of group definitions
+  }
+  \item{groups.wmin}{
+    a numeric vector
+  }
+  \item{groups.wmax}{
+    a numeric vector
+  }
 }
 \details{
 
@@ -49,13 +61,13 @@ mvPortfolio(m, var, min.return, wmin = 0, wmax = 1, lambda = NULL)
    If \eqn{\lambda}{\code{lambda}}
    is specified, the function ignores the \code{min.return}
    constraint and instead solves the model
-   \deqn{\min_w\ \ -\lambda \mbox{\code{m}}'w + \frac{1}{2}(1-\lambda)
-     w'\mbox{\code{var}\,}w}{min -lambda m'w - (1 - lambda)/2 w'var w}
+   \deqn{\min_w\ \ -\lambda \mbox{\code{m}}'w + (1-\lambda)
+     w'\mbox{\code{var}\,}w}{min -lambda m'w - (1 - lambda) w'var w}
    in which \eqn{w}{\code{w}} are the weights. If
    \eqn{\lambda}{\code{lambda}}
    is a vector of length 2, then the model becomes
-   \deqn{\min\ -\lambda_1 \mbox{\code{m}\,}'w + \frac{1}{2}\lambda_2
-     w'\mbox{\code{var}\,}w}{min -lambda_1 m'w - lambda_2/2 w'var w}
+   \deqn{\min_w\ \ -\lambda_1 \mbox{\code{m}\,}'w + \lambda_2
+     w'\mbox{\code{var}\,}w}{min -lambda_1 m'w - lambda_2 w'var w}
    which may be more convenient
    (e.g. for setting \eqn{\lambda_1}{\code{lambda_1}} to 1).
 
@@ -106,17 +118,20 @@ const_cor <- function(rho, na) {
     diag(C) <- 1
     C
 }
-var <- diag(vols) \%*\% const_cor(0.5, na) %*% diag(vols)
+var <- diag(vols) \%*\% const_cor(0.5, na) \%*\% diag(vols)
 
-wmax <- 2.5          # maximum holding size
+wmax <- 1          # maximum holding size
 wmin <- 0.0          # minimum holding size
 rf <- 0.02
 
-p1 <- mvFrontier(m, var, wmin = wmin, wmax = wmax, n = 50)
-p2 <- mvFrontier(m, var, wmin = wmin, wmax = wmax, n = 50, rf = rf)
-plot(p1$volatility, p1$return, pch = 19, cex = 0.5, type = "o",
-     xlab = "Expected volatility",
-     ylab = "Expected return")
-lines(p2$volatility, p2$return, col = grey(0.5))
-abline(v = 0, h = rf)
+if (requireNamespace("quadprog")) {
+  p1 <- mvFrontier(m, var, wmin = wmin, wmax = wmax, n = 50)
+  p2 <- mvFrontier(m, var, wmin = wmin, wmax = wmax, n = 50, rf = rf)
+  plot(p1$volatility, p1$return, pch = 19, cex = 0.5, type = "o",
+       xlab = "Expected volatility",
+       ylab = "Expected return")
+  lines(p2$volatility, p2$return, col = grey(0.5))
+  abline(v = 0, h = rf)
+} else
+  message("Package 'quadprog' is required")
 }

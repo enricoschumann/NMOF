@@ -1,6 +1,7 @@
 \name{PSopt}
 \alias{PSopt}
 \concept{Particle Swarm Optimisation}
+\concept{heuristics}
 \title{
   Particle Swarm Optimisation
 }

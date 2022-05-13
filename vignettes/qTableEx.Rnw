@@ -103,7 +103,7 @@ cat(qTable(X, yoffset = -0.025, unitlength = "5cm",
 ## with limits and alternative functions
 cat(qTable(X, yoffset = -0.025, unitlength = "5cm",
            circlesize = 0.0125, xmin = -10, xmax = 10, dec = 2,
-           funs = list(average = mean, 
+           funs = list(average = mean,
                        `10th Q.` = function(x) quantile(x, 0.1),
                        `90th Q.` = function(x) quantile(x, 0.9))))
 @

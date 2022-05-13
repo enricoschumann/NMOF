@@ -8,9 +8,10 @@ TAopt <- function(OF, algo = list(), ...) {
                   vT = NULL,  ## threshold sequence
                   neighbour = NULL,
                   printDetail = TRUE,
-                  printBar = TRUE,
+                  printBar = interactive(),
                   stepUp = 0L,
                   scale = 1,
+                  drop0 = FALSE,
                   storeF = TRUE,
                   storeSolutions = FALSE,
                   classify = FALSE,
@@ -92,6 +93,8 @@ TAopt <- function(OF, algo = list(), ...) {
             vT <- algoD$q * ((nT - 1L):0)/nT
             if (any(is.na(diffF)))
                 stop("objective function evaluated to NA")
+            if (algoD$drop0)
+                diffF <- diffF[diffF != 0]
             vT <- quantile(diffF, vT, na.rm = FALSE)
             vT[nT] <- 0  ## set last threshold to zero
             if (printBar)
@@ -201,7 +204,8 @@ TAopt <- function(OF, algo = list(), ...) {
             ## check stopif value
             if (!is.null(algoD$OF.target) && xbestF <= algoD$OF.target) {
                 if (printDetail) {
-                    cat("Target value (", prettyNum(algoD$OF.target), ") ",
+                    cat(if (printBar) "\n",
+                        "  Target value (", prettyNum(algoD$OF.target), ") ",
                         "for objective function reached: ",
                         prettyNum(xbestF), "\n", sep = "")
                     flush.console()

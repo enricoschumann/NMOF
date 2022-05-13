@@ -2,14 +2,14 @@ importFrom("parallel",
            clusterApply, makeCluster, mclapply, stopCluster)
 importFrom("grDevices", "dev.new", "grey")
 importFrom("graphics", "plot", "legend", "lines")
-importFrom("stats", "dnorm", "integrate", "median", "pnorm",
+importFrom("stats", "cov", "dnorm", "integrate", "median", "pnorm",
            "quantile", "rnorm", "runif", "sd", "uniroot")
 importFrom("utils", "flush.console", "setTxtProgressBar",
            "download.file", "read.table", "unzip",
            "txtProgressBar")
 export(
-    DEopt,
     CPPI,
+    DEopt,
     EuropeanCall,
     EuropeanCallBE,
     French,
@@ -22,11 +22,13 @@ export(
     NSSf,
     NSf,
     PSopt,
+    Ritter,
     SA.info,
     SAopt,
     Shiller,
     TA.info,
     TAopt,
+    barrierOptionEuropean,
     bracketing,
     bundFuture,
     bundFutureImpliedRate,
@@ -48,6 +50,8 @@ export(
     gbm,
     greedySearch,
     gridSearch,
+    maxSharpe,
+    minCVaR,
     minvar,
     mvFrontier,
     mvPortfolio,
@@ -67,6 +71,7 @@ export(
     tfRosenbrock,
     tfSchwefel,
     tfTrefethen,
+    trackingPortfolio,
     vanillaBond,
     vanillaOptionAmerican,
     vanillaOptionEuropean,
