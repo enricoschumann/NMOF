@@ -78,8 +78,9 @@ French(dest.dir,
 }
 \value{
 
-  a \code{\link{data.frame}}, with contents
-  depending on the particular dataset
+  A \code{\link{data.frame}}, with contents depending on the
+  particular dataset.  If the download failes, the function
+  evaluates to \code{\link{NULL}}.
 
 }
 \references{

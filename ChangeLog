@@ -1,8 +1,15 @@
+2022-06-29  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R (French): safeguard download so
+        that the function evaluates to NULL when the
+        download fails. That behaviour had been intended as
+        least since 2020-01-23 [see ChangeLog], but had so
+        far depended on the return value of 'download.file'.
+
 2022-03-22  Enrico Schumann  <es@enricoschumann.net>
 
-        * R/options.R (vanillaOptionAmerican): the
-        function now works even for very small values
-        for M (M <= 3)
+        * R/options.R (vanillaOptionAmerican): the function
+        now works even for very small values for M (M <= 3)
 
 2022-03-16  Enrico Schumann  <es@enricoschumann.net>
 
@@ -12,17 +19,16 @@
 
         * R/mc.R (gbm): the function gains an argument
         "antithetic", with default FALSE. If TRUE, only
-        npaths/2 paths are created and then duplicated
-        with switched sign
+        npaths/2 paths are created and then duplicated with
+        switched sign
 
 2022-01-27  Enrico Schumann  <es@enricoschumann.net>
 
-        * R/mc.R (gbm, gbb): both functions gain an
-        argument "exp.result", with default TRUE. If
-        FALSE, the log paths are returned
-        (gbb): the function gets an argument "log",
-        with default FALSE, which matches the previous
-        behaviour
+        * R/mc.R (gbm, gbb): both functions gain an argument
+        "exp.result", with default TRUE. If FALSE, the log
+        paths are returned
+        (gbb): the function gets an argument "log", with
+        default FALSE, which matches the previous behaviour
 
 2022-01-26  Enrico Schumann  <es@enricoschumann.net>
 

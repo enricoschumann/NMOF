@@ -6,6 +6,10 @@ v2.7-0  (2022-??-??; not yet released)
   o new function 'barrierOptionEuropean', for computing
     theoretical prices for various barrier-option types
 
+  o function 'French' tries harder to evaluate to NULL
+    when a download fails
+
+
   o ....
 
 v2.6-0  (2022-01-26)

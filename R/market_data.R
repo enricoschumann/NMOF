@@ -222,10 +222,16 @@ French <- function(dest.dir,
     f.path <- file.path(normalizePath(dest.dir), f.name)
 
     if (!file.exists(f.path))
-        dl.result <- download.file(paste0(.ftp, url), f.path)
+        dl.result <- try(download.file(paste0(.ftp, url), f.path),
+                         silent = TRUE)
     else
         dl.result <- 0
 
+    if (inherits(dl.result, "try-error")) {
+        warning("download failed with message ",
+                sQuote(conditionMessage(attr(dl.result, "condition")), FALSE))
+        return(invisible(NULL))
+    }
     if (dl.result != 0L) {
         warning("download failed with code ", dl.result, "; see ?download.file")
         return(invisible(NULL))
