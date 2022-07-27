@@ -32,7 +32,7 @@
 }
 \details{
 
-  For a vector \eqn{\emph{x}}{x} of length \eqn{\emph{n}}{n}, partial
+  For a vector \eqn{x}{x} of length \eqn{n}{n}, partial
   moments are computed as follows:
 
   \deqn{\mathrm{upper\ partial\ moment} = \frac{1}{n} \sum_{x >
@@ -43,14 +43,14 @@
       t}\left(t - x \right)^e}{%
     lower partial moment = sum_{x < t}(t - x)^e / n}
 
-  The \code{threshold} is denoted \eqn{\emph{t}}{t}, the exponent
-  \code{xp} is labelled \eqn{\emph{e}}{e}.
+  The \code{threshold} is denoted \eqn{t}{t}, the exponent
+  \code{xp} is labelled \eqn{e}{e}.
 
   If \code{normalise} is \code{TRUE}, the result is raised to
   \code{1/xp}.  If \code{x} is a matrix, the function will compute the
   partial moments column-wise.
 
-  See Gilli, Maringer and Schumann (2011), Section 13.3.
+  See Gilli, Maringer and Schumann (2019), chapter 14.
 }
 \value{
   numeric
