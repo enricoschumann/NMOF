@@ -1,7 +1,13 @@
-v2.7-0  (2022-??-??; not yet released)
+v2.7-0  (2022-08-19; not yet released)
 
   o function 'gbm' gains an argument "antithetic": if
     TRUE, paths are created based on antithetic variates
+
+  o functions 'gbm' and 'gbb' gain an argument
+    'exp.result', with default TRUE. If FALSE, the log
+    paths are returned. Function 'gbb' gets an argument
+    'log', with default FALSE, which matches the
+    previous behaviour
 
   o new function 'barrierOptionEuropean', for computing
     theoretical prices for various barrier-option types
@@ -9,8 +15,8 @@ v2.7-0  (2022-??-??; not yet released)
   o function 'French' tries harder to evaluate to NULL
     when a download fails
 
-
-  o ....
+  o function vanillaOptionAmerican now works for very
+    small values for M (M <= 3)
 
 v2.6-0  (2022-01-26)
 

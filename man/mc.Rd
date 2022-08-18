@@ -12,8 +12,10 @@
 
 }
 \usage{
-gbm(npaths, timesteps, r, v, tau, S0)
-gbb(npaths, timesteps, S0, ST, v, tau)
+gbm(npaths, timesteps, r, v, tau, S0,
+    exp.result = TRUE, antithetic = FALSE)
+gbb(npaths, timesteps, S0, ST, v, tau,
+    log = FALSE, exp.result = TRUE)
 }
 \arguments{
   \item{npaths}{
@@ -37,6 +39,17 @@ gbb(npaths, timesteps, S0, ST, v, tau)
   \item{ST}{
     final value of Brownian bridge
   }
+  \item{exp.results}{
+    logical: compute \code{\link{exp}} of the final path, or return
+    log values?
+  }
+  \item{antithetic}{
+
+    logical: if \code{TRUE}, random numbers for only
+    \code{npaths/2} are drawn, and the random numbers
+    are mirrored
+
+  }
 }
 \details{
 
@@ -44,8 +57,8 @@ gbb(npaths, timesteps, S0, ST, v, tau)
 
 \code{gbb} generates sample paths of a Brownian bridge by first creating
 paths of Brownian motion \code{W} from time \code{0} to time \code{T},
-with \code{W_0} equal to zero.  Then, at each \code{t}, it subtracts t/T
-* W_T and adds S0*(1-t/T)+ST*(t/T).
+with \code{W_0} equal to zero.  Then, at each \code{t}, it subtracts \code{t/T
+* W_T} and adds \code{S0*(1-t/T)+ST*(t/T)}.
 
 }
 \value{
