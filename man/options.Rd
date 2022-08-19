@@ -24,8 +24,11 @@ vanillaOptionImpliedVol(exercise = "european", price, S, X, tau, r,
                         M = 101,
                         uniroot.control = list(), uniroot.info = FALSE)
 
-barrierOptionEuropean(S, X, H, tau, r, q, v, tauD = 0, D = 0,
-                      type = "call", greeks = TRUE,
+barrierOptionEuropean(S, X, H, tau, r, q = 0, v, tauD = 0, D = 0,
+                      type = "call",
+                      barrier.type = "downin",
+                      rebate = 0,
+                      greeks = FALSE,
                       model = NULL, ...)
 }
 \arguments{
@@ -60,7 +63,15 @@ barrierOptionEuropean(S, X, H, tau, r, q, v, tauD = 0, D = 0,
   \item{type}{
     call or put; default is call.
 }
-  \item{greeks}{
+
+\item{barrier.type}{string: combination of \code{up}/\code{down} and
+  \code{in}/\code{out}, such as \code{downin}
+}
+\item{rebate}{%
+    currently not implemented
+}
+
+\item{greeks}{
     compute Greeks? Defaults to \code{TRUE}. But see Details for
     American options.
   }

@@ -1,4 +1,4 @@
-v2.7-0  (2022-08-19; not yet released)
+v2.7-0  (2022-08-19)
 
   o function 'gbm' gains an argument "antithetic": if
     TRUE, paths are created based on antithetic variates

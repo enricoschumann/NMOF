@@ -1,3 +1,7 @@
+2022-08-19  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.7-0
+
 2022-06-29  Enrico Schumann  <es@enricoschumann.net>
 
         * R/market_data.R (French): safeguard download so
@@ -51,7 +55,7 @@
 
         * DESCRIPTION (Version): 2.5-1
 
-        * man/*,vignettes/*,inst/tinytes/*: add
+        * man/*,vignettes/*,inst/tinytest/*: add
         tests whether suggested packages 'quadprog' and
         'Rglpk' are available
 
@@ -1366,4 +1370,3 @@
 
         * R/TAopt.R (TAopt): added 'flush.console' during computation of
         thresholds
-

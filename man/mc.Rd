@@ -24,31 +24,32 @@ gbb(npaths, timesteps, S0, ST, v, tau,
   \item{timesteps}{
     timesteps per path
   }
-  \item{r}{
-    the mean per unit of time
-  }
-  \item{v}{
-    the variance per unit of time
-  }
-  \item{tau}{
-    time
-  }
-  \item{S0}{
-    initial value
-  }
-  \item{ST}{
-    final value of Brownian bridge
-  }
-  \item{exp.results}{
-    logical: compute \code{\link{exp}} of the final path, or return
-    log values?
-  }
-  \item{antithetic}{
 
+  \item{r}{the mean per unit of time
+  }
+
+  \item{v}{the variance per unit of time
+  }
+
+  \item{tau}{time
+  }
+
+  \item{S0}{initial value
+  }
+
+  \item{ST}{final value of Brownian bridge
+  }
+
+  \item{log}{logical: construct bridge from log series?
+  }
+
+  \item{exp.result}{logical: compute \code{\link{exp}} of the final
+    path, or return log values?}
+
+  \item{antithetic}{%
     logical: if \code{TRUE}, random numbers for only
     \code{npaths/2} are drawn, and the random numbers
     are mirrored
-
   }
 }
 \details{
