@@ -39,10 +39,11 @@ minvar(var, wmin = 0, wmax = 1, method = "qp",
 }
 \details{
 
-  The function uses \code{\link[quadprog]{solve.QP}} from package
+  For method \code{"qp"}, the function uses
+  \code{\link[quadprog]{solve.QP}} from package
   \pkg{quadprog}. Because of the algorithm that
   \code{\link[quadprog]{solve.QP}} uses, \code{var} has to be positive
-  definit (i.e. must be of full rank).
+  definite (i.e. must be of full rank).
 
 }
 \value{
@@ -57,7 +58,7 @@ minvar(var, wmin = 0, wmax = 1, method = "qp",
   Schumann, E. (2012) Computing the global minimum-variance
   portfolio. \url{http://enricoschumann.net/R/minvar.htm}
 
-  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
+  Schumann, E. (2022) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 }
 \author{
