@@ -20,10 +20,9 @@ simulations.
 
 ## Installing the package
 
-The latest build of the package is always available
-from
-[http://enricoschumann.net/R/packages/NMOF/](http://enricoschumann.net/R/packages/NMOF/)
-. A stable version is available from
+The latest build of the package is always available from
+[http://enricoschumann.net/R/packages/NMOF/](http://enricoschumann.net/R/packages/NMOF/). 
+A stable version is available from
 [CRAN](https://cran.r-project.org/package=NMOF).
 
 To install the package from within an R session, type:
