@@ -111,7 +111,7 @@
   Methods and Optimization in Finance}. 2nd edition. Elsevier.
   \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
 
-  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
+  Schumann, E. (2022) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 
 }
@@ -125,11 +125,11 @@ packageDescription("NMOF")
 help(package = "NMOF")
 
 ## code from book
-showExample("equations.R")
-showExample("exampleLS.R", chapter = 13)
+showExample("equations.R", edition = 1)
+showExample("Heur")
 
 ## show NEWS file
-news(Version >= "1.0-0", package = "NMOF")
+news(Version >= "2.0-0", package = "NMOF")
 
 ## vignettes
 vignette(package = "NMOF")
@@ -137,13 +137,14 @@ nss <- vignette("DEnss", package = "NMOF")
 print(nss)
 edit(nss)
 
-## book website
+## _book_ websites
 browseURL("http://nmof.net")
 browseURL("http://enricoschumann.net/NMOF/")
 
-## package websites
+## _package_ websites
 browseURL("http://enricoschumann.net/R/packages/NMOF/")
 browseURL("https://cran.r-project.org/package=NMOF")
+browseURL("https://git.sr.ht/~enricoschumann/NMOF")
 browseURL("https://github.com/enricoschumann/NMOF")
 
 ## unit tests
