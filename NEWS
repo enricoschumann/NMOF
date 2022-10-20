@@ -1,3 +1,13 @@
+v2.7-1  (2022-10-20)
+
+  o various minor documentation updates
+
+  o manual has been updated:
+    http://enricoschumann.net/NMOF.htm#NMOFmanual
+
+  o there is an additional public repository at
+    https://git.sr.ht/~enricoschumann/NMOF
+
 v2.7-0  (2022-08-19)
 
   o function 'gbm' gains an argument "antithetic": if
