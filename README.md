@@ -3,7 +3,7 @@
 Functions, examples and data from the first and the
 second edition of "Numerical Methods and Optimization
 in Finance" by
-[M. Gilli](http://www.unige.ch/ses/dsec/static/gilli/),
+[M. Gilli](http://www.unige.ch/ses/dsec/static/gilli/), 
 [D. Maringer](https://wwz.unibas.ch/de/personen/dietmar-maringer/)
 and [E. Schumann](http://enricoschumann.net/)
 (2019, ISBN:978-0128150658).  The package provides
@@ -21,7 +21,7 @@ simulations.
 ## Installing the package
 
 The latest build of the package is always available from
-[http://enricoschumann.net/R/packages/NMOF/](http://enricoschumann.net/R/packages/NMOF/). 
+[http://enricoschumann.net/R/packages/NMOF/](http://enricoschumann.net/R/packages/NMOF/).
 A stable version is available from
 [CRAN](https://cran.r-project.org/package=NMOF).
 
@@ -59,5 +59,5 @@ package maintainer, for instance by using =bug.report=.
 ## References
 
 Manfred Gilli, Dietmar Maringer and Enrico Schumann.
-[Numerical Methods and Optimization in Finance](https://www.amazon.com/-/de/Numerical-Methods-Optimization-Finance-Manfred/dp/0128150653). 
+[Numerical Methods and Optimization in Finance](https://www.amazon.com/-/de/Numerical-Methods-Optimization-Finance-Manfred/dp/0128150653).
 Academic Press, 2019.
