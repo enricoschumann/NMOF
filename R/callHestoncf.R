@@ -1,5 +1,7 @@
 callHestoncf <- function(S, X, tau, r, q, v0, vT, rho, k, sigma,
-                         implVol = FALSE, ...) {
+                         implVol = FALSE, ...,
+                         uniroot.control = list(),
+                         uniroot.info = FALSE) {
     ## S     = spot
     ## X     = strike
     ## tau   = time to mat
@@ -30,14 +32,13 @@ callHestoncf <- function(S, X, tau, r, q, v0, vT, rho, k, sigma,
         d <- sqrt((rho * sigma * 1i * om - k)^2 + sigma^2 *
                   (1i * om + om ^ 2))
         g <- (k - rho * sigma * 1i * om - d) /
-            (k - rho * sigma * 1i * om + d)
+             (k - rho * sigma * 1i * om + d)
         cf1 <- 1i * om * (log(S) + (r - q) * tau)
         cf2 <- vT*k/(sigma^2)*((k - rho * sigma * 1i * om - d) *
                                tau - 2 * log((1 - g * exp(-d * tau)) / (1 - g)))
         cf3 <- v0 / sigma^2 * (k - rho * sigma * 1i * om - d) *
             (1 - exp(-d * tau)) / (1 - g * exp(-d * tau))
-        cf  <- exp(cf1 + cf2 + cf3)
-        cf
+        exp(cf1 + cf2 + cf3)
     }
 
     ## pricing
@@ -45,21 +46,33 @@ callHestoncf <- function(S, X, tau, r, q, v0, vT, rho, k, sigma,
                                   S, X, tau, r, q, v0, vT, rho, k, sigma, ...)$value
     vP2 <- 0.5 + 1/pi * integrate(P2, lower = 0, upper = Inf,
                                   S, X, tau, r, q, v0, vT, rho, k, sigma, ...)$value
-    result <- exp(-q * tau) * S * vP1 - exp(-r * tau) * X * vP2;
+    result <- exp(-q * tau) * S * vP1 - exp(-r * tau) * X * vP2
 
     ## implied BSM vol
     if (implVol) {
-        diffPrice <- function(vol,call,S,X,tau,r,q){
+
+        ucon <- list(interval = c(1e-05, 2),
+                     tol = .Machine$double.eps^0.25,
+                     maxiter = 1000L)
+        ucon[names(uniroot.control)] <- uniroot.control
+
+        diffPrice <- function(vol,call,S,X,tau,r,q) {
             d1 <- (log(S/X)+(r - q + vol^2/2)*tau)/(vol*sqrt(tau))
             d2 <- d1 - vol*sqrt(tau)
             callBSM <- S * exp(-q * tau) * pnorm(d1) -
                 X * exp(-r * tau) * pnorm(d2)
             call - callBSM
         }
-        impliedVol <- uniroot(diffPrice, interval = c(0.0001, 2),
+        impliedVol <- uniroot(diffPrice,
+                              interval = ucon$interval,
+                              tol = ucon$tol,
+                              maxiter = ucon$maxiter,
                               call = result, S = S, X = X,
-                              tau = tau, r = r, q = q)[[1L]]
-        result <- list(value = result, impliedVol = impliedVol)
+                              tau = tau, r = r, q = q)
+        if (!uniroot.info)
+            impliedVol <- impliedVol[[1]]
+        result <- list(value = result,
+                       impliedVol = impliedVol)
     }
     result
 }

@@ -126,7 +126,8 @@ vanillaOptionImpliedVol <- function(exercise = "european",
                                     M = 101L, uniroot.control = list(),
                                     uniroot.info = FALSE) {
 
-    ucon <- list(interval = c(1e-05, 2), tol = .Machine$double.eps^0.25,
+    ucon <- list(interval = c(1e-05, 2),
+                 tol = .Machine$double.eps^0.25,
                  maxiter = 1000L)
     ucon[names(uniroot.control)] <- uniroot.control
 

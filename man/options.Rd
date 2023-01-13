@@ -4,12 +4,13 @@
 \alias{vanillaOptionImpliedVol}
 \alias{barrierOptionEuropean}
 \title{
-  Pricing Plain-Vanilla (European and American) and Barrier Options (European)
+  Pricing Plain-Vanilla (European and American) and
+  Barrier Options (European)
 }
 \description{
 
-  Functions to calculate the theoretical prices and (some) Greeks for
-  plain-vanilla and barrier options.
+  Functions to calculate the theoretical prices and (some)
+  Greeks for plain-vanilla and barrier options.
 
 }
 \usage{
@@ -19,10 +20,13 @@ vanillaOptionEuropean(S, X, tau, r, q, v, tauD = 0, D = 0,
 vanillaOptionAmerican(S, X, tau, r, q, v, tauD = 0, D = 0,
                       type = "call", greeks = TRUE, M = 101)
 
-vanillaOptionImpliedVol(exercise = "european", price, S, X, tau, r,
-                        q = 0, tauD = 0, D = 0, type = "call",
+vanillaOptionImpliedVol(exercise = "european", price,
+                        S, X, tau, r, q = 0,
+                        tauD = 0, D = 0,
+                        type = "call",
                         M = 101,
-                        uniroot.control = list(), uniroot.info = FALSE)
+                        uniroot.control = list(),
+                        uniroot.info = FALSE)
 
 barrierOptionEuropean(S, X, H, tau, r, q = 0, v, tauD = 0, D = 0,
                       type = "call",
@@ -148,7 +152,7 @@ Dividends (\code{D}) are modelled via the escrowed-dividend model.
   Methods and Optimization in Finance}. 2nd edition. Elsevier.
   \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
 
-  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
+  Schumann, E. (2023) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 }
 \author{

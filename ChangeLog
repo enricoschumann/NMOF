@@ -1,3 +1,9 @@
+2023-01-13  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/callHestoncf.R (callHestoncf): add arguments
+        'uniroot.control' for passing settings for
+        'uniroot', and 'uniroot.info'
+
 2022-10-20  Enrico Schumann  <es@enricoschumann.net>
 
         * DESCRIPTION (Version): 2.7-1

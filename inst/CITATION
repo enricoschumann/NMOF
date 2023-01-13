@@ -13,18 +13,18 @@ citEntry(entry  = "book",
          url     = "http://www.enricoschumann.net/NMOF/",
          note    = "ISBN 978-0128150658",
          edition = "Second",
-         textVersion = 
-         paste("Manfred Gilli, Dietmar Maringer and Enrico Schumann. ", 
+         textVersion =
+         paste("Manfred Gilli, Dietmar Maringer and Enrico Schumann. ",
                "Numerical Methods and Optimization in Finance. 2nd edition. ",
                "Elsevier/Academic Press, 2019.", sep = ""))
 
 citEntry(entry  = "manual",
          title  = paste0("Numerical Methods and Optimization in Finance (NMOF) ",
-                         "Manual. Package version ", meta$Version, ")"),         
+                         "Manual. Package version ", meta$Version, ")"),
          author = person("Enrico", "Schumann", role = c("aut", "cre")),
          year   = paste0("2011--", sub("-.*", "", meta$Date)),
          url       = "http://enricoschumann.net/NMOF/",
-         textVersion = 
-         paste0("Enrico Schumann. ", 
+         textVersion =
+         paste0("Enrico Schumann. ",
                 "Numerical Methods and Optimization in Finance (NMOF). ",
                 "Manual. Package version ", meta$Version, "."))
