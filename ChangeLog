@@ -1,6 +1,14 @@
+2023-01-24  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/portfolio.R (trackingPortfolio): add
+        argument 'ls.algo' for specifying settings for
+        method 'ls'
+        (trackingPortfolio): no longer require 'var'
+        when 'R' is specified
+
 2023-01-13  Enrico Schumann  <es@enricoschumann.net>
 
-        * R/callHestoncf.R (callHestoncf): add arguments
+        * R/callHestoncf.R (callHestoncf): add argument
         'uniroot.control' for passing settings for
         'uniroot', and 'uniroot.info'
 

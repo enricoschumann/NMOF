@@ -1,9 +1,12 @@
-v2.8-0  (2023-01-13; not yet released)
+v2.8-0  (2023-01-24; not yet released)
 
-  o 'callHestoncf' gains arguments 'uniroot.control', which
-    allows passing settings for 'uniroot' (to compute
+  o 'callHestoncf' gains an argument 'uniroot.control',
+    which allows passing settings for 'uniroot' (to compute
     implied vol), and 'uniroot.info'; both arguments work
     the same as in 'vanillaOptionImpliedVol' and 'callCF'
+
+  o 'trackingPortfolio' now has an argument 'ls.algo' for
+    specifying settings for method 'ls'
 
   o ....
 

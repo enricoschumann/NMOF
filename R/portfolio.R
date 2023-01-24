@@ -374,11 +374,16 @@ minCVaR <- function(R,
 
 trackingPortfolio <- function(var, wmin = 0, wmax = 1,
                               method = "qp", objective = "variance",
-                              R) {
+                              R,
+                              ls.algo = list()) {
 
     if (method == "qp") {
 
-        na <- ncol(var) - 1L
+        if (!missing(R)) {
+            na <- ncol(R) - 1L
+        } else
+            na <- ncol(var) - 1L
+
         if (length(wmin) == 1L)
             wmin <- rep(wmin, na)
         if (length(wmax) == 1L)
@@ -393,6 +398,8 @@ trackingPortfolio <- function(var, wmin = 0, wmax = 1,
             stop("package ", sQuote("quadprog"), " is not available")
 
         if (objective == "variance" ) {
+            if (missing(var))
+                var <- cov(R)
             Dmat <- var[-1, -1]
             dvec <- var[1, -1]
         } else if (objective == "sum.of.squares") {
@@ -404,9 +411,9 @@ trackingPortfolio <- function(var, wmin = 0, wmax = 1,
                                      Amat = t(A),
                                      bvec = b,
                                      meq  = 1L)
-
         ans <- qp_res$solution
-    } else if (method == "ls") {
+
+    } else if (method %in% c("ls", "LSopt")) {
 
         if (objective == "variance" ) {
             te <- function(w, R)
@@ -417,8 +424,7 @@ trackingPortfolio <- function(var, wmin = 0, wmax = 1,
                 crossprod(R[, -1] %*% w - R[, 1])
         }
 
-        ## if (!requireNamespace("neighbours"))
-        ##     stop("package ", sQuote("quadprog"), " is not available")
+        ## with package 'neighbours':
         ## nb <- neighbours::neighbourfun(type = "numeric",
         ##                                max = wmax,
         ##                                length = ncol(R) - 1,
@@ -436,11 +442,14 @@ trackingPortfolio <- function(var, wmin = 0, wmax = 1,
             x
         }
 
-        sol.ls <- LSopt(te, list(neighbour = nb, nI = 2000,
-                                 printBar = FALSE,
-                                 printDetail = FALSE,
-                                 x0 = rep(1/(ncol(R) - 1), ncol(R) - 1)),
-                        R = R)
+        algo <- list(neighbour = nb,
+                     nI = 2000,
+                     printBar = FALSE,
+                     printDetail = FALSE,
+                     x0 = rep(1/(ncol(R) - 1), ncol(R) - 1))
+        algo[names(ls.algo)] <- ls.algo
+
+        sol.ls <- LSopt(te, algo = algo, R = R)
         ans <- sol.ls$xbest
 
     }
