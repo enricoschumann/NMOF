@@ -620,7 +620,8 @@ French <- function(dest.dir,
         message("Dataset not explicitly supported: trying default => check data carefully.")
 
         if (grepl("daily", dataset) && frequency != "daily")
-            warning("daily dataset but frequency not set to daily")
+            warning("Daily dataset but frequency not set to daily.\n",
+                    "  If parsing of file fails, try setting ", sQuote("frequency"), " to ", sQuote("daily"), ".")
 
         if (frequency == "annual") {
             i <- if (weighting == "equal")
