@@ -1,4 +1,4 @@
-v2.8-0  (2023-01-24; not yet released)
+v2.8-0  (2023-02-28; not yet released)
 
   o 'callHestoncf' gains an argument 'uniroot.control',
     which allows passing settings for 'uniroot' (to compute
@@ -7,6 +7,10 @@ v2.8-0  (2023-01-24; not yet released)
 
   o 'trackingPortfolio' now has an argument 'ls.algo' for
     specifying settings for method 'ls'
+
+  o new function 'minMAD' for computing minimum-MAD
+    portfolios, as described in Konno and Yamazaki
+    (1991; https://doi.org/10.1287/mnsc.37.5.519 )
 
   o ....
 
@@ -95,7 +99,9 @@ v2.3-1  (2021-01-19)
 v2.2-0  (2020-10-20)
 
   o New function 'minCVaR' for computing minimum CVaR
-    portfolios. For details, see
+    portfolios, as described in Rockafellar/Uryasev
+    (2000; http://doi.org/10.21314/JOR.2000.038 ).
+    For details on implementation, see
     http://enricoschumann.net/notes/minimising-conditional-var.html
 
   o New function 'trackingPortfolio'. For details, see

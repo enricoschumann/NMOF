@@ -52,6 +52,7 @@ export(
     gridSearch,
     maxSharpe,
     minCVaR,
+    minMAD,
     minvar,
     mvFrontier,
     mvPortfolio,

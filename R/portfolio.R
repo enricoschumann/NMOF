@@ -514,3 +514,89 @@ maxSharpe <- function(m, var, min.return,
     ans
 
 }
+
+minMAD <- function(R,
+                   wmin = 0,
+                   wmax = 1,
+                   min.return = NULL,
+                   m = NULL,
+                   demean = TRUE,
+                   method = "lp",
+                   groups = NULL,
+                   groups.wmin = NULL,
+                   groups.wmax = NULL,
+                   Rglpk.control = list()) {
+
+    na <- ncol(R)
+    ns <- nrow(R)
+    if (!is.null(groups))
+        warning("group constraints not yet implemented")
+
+    if (method == "lp") {
+        rm <- colMeans(R)
+        if (demean)
+            R <- sweep(R, 2, rm)
+        M <- rbind(c(rep(1, na), rep(0, ns)),  ## budget
+                   cbind( R, diag(ns)),
+                   cbind(-R, diag(ns)))
+        dir <- c("==",  ## budget
+                 rep(">=", 2*ns))
+        rhs <- c(1,  ## budget
+                 rep(0, 2*ns))
+
+        if (!is.null(min.return)) {
+            M <- rbind(M,
+                       c(if (is.null(m)) rm else m, rep(0, ns)))
+            dir <- c(dir, ">=")
+            rhs <- c(rhs, min.return)
+
+        }
+
+
+        default.bounds <- identical(wmin, 0) && identical(wmax, 1)
+
+        if (!default.bounds) {
+            if (length(wmin) == 1L)
+                wmin <- rep.int(wmin, na)
+            if (length(wmax) == 1L)
+                wmax <- rep.int(wmax, na)
+            bounds <- list(lower = list(ind = seq_len(na) + 1L, val = wmin),
+                           upper = list(ind = seq_len(na) + 1L, val = wmax))
+        }
+        sol.lp <- Rglpk::Rglpk_solve_LP(
+                             obj = c(rep(0, na), rep(1/ns, ns)),
+                             mat = M,
+                             dir = dir,
+                             rhs = rhs,
+                             bounds = if (!default.bounds) bounds)
+        ans <- sol.lp$solution[seq_len(na)]
+
+    } else if (method == "ls") {
+
+        if (demean) {
+            mad <- function(w, R) {
+                Rw <- R %*% w   ## compute portfolio returns under scenarios
+                mean(abs(Rw - mean(Rw)))
+            }
+        } else {
+            mad <- function(w, R) {
+                Rw <- R %*% w   ## compute portfolio returns under scenarios
+                sum(abs(Rw))
+            }
+        }
+        nb <- neighbours::neighbourfun(wmin, wmax,
+                           length = ncol(R),
+                           type = "numeric",
+                           stepsize = 0.01)
+
+        ans <- LSopt(mad,
+                     list(x0 = rep(1/ncol(R), ncol(R)),
+                          neighbour = nb,
+                          nI = 100000,
+                          printDetail = FALSE,
+                          printBar = FALSE),
+                     R = R)$xbest
+
+    }
+    ans
+}

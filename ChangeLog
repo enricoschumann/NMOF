@@ -1,3 +1,7 @@
+2023-02-28  Enrico Schumann  <es@enricoschumann.net>
+
+	* R/portfolio.R (minMAD): add function
+
 2023-01-24  Enrico Schumann  <es@enricoschumann.net>
 
         * R/portfolio.R (trackingPortfolio): add
