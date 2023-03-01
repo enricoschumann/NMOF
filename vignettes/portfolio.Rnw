@@ -199,6 +199,8 @@ if (requireNamespace("quadprog")) {
     plot(1)
 @
 
+
+
 \section{Return-based tracking portfolios}
 
 Function
@@ -220,16 +222,18 @@ var <- cov(R)
 trackingPortfolio(var, wmax = 0.4)
 @
 
+
+
 \section{Minimum-Expected-Shortfall portfolios}
 
-The function
+Function
 \texttt{minCVaR}\marginpar{\footnotesize\texttt{minCVaR}} computes a
 portfolio that minimises conditional Value-at-Risk; its
 default method is the LP approach described in
 \citet{rockafellar2000}.  See \emph{Minimising
   Conditional Value-at-Risk (CVaR)} (\url{http://enricoschumann.net/notes/minimising-conditional-var.html}) for more details
 
-<<>>=
+<<minCVaR>>=
 ns <- 5000  ## number of scenarios
 na <- 20    ## nunber of assets
 R <- randomReturns(na, ns, sd = 0.01, rho = 0.5)
@@ -238,6 +242,23 @@ if (requireNamespace("Rglpk")) { ## example requires "Rglpk" package
 } else
     message("Package ", sQuote("Rglpk"), " not available")
 @
+
+
+
+\section{Minimum Mean--Absolute-Deviation portfolios}
+
+Function
+\texttt{minMAD}\marginpar{\footnotesize\texttt{minMAD}}
+computes a portfolio that minimises the mean
+absolute-deviation of portfolio returns, as described
+in \citet{Konno1991}.
+<<minMAD>>=
+ns <- 5000  ## number of scenarios
+na <- 5    ## nunber of assets
+R <- randomReturns(na, ns, sd = 0.01, rho = 0.5)
+minMAD(R = R)
+@
+
 
 \bibliographystyle{plainnat}
 \bibliography{NMOF}
