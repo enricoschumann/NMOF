@@ -1,6 +1,11 @@
+2023-03-01  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/portfolio.R (minMAD): copy neighbourhood
+        function from "neighbours" package
+
 2023-02-28  Enrico Schumann  <es@enricoschumann.net>
 
-	* R/portfolio.R (minMAD): add function
+        * R/portfolio.R (minMAD): add function
 
 2023-01-24  Enrico Schumann  <es@enricoschumann.net>
 
