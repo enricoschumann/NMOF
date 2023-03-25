@@ -106,36 +106,41 @@ barrierOptionEuropean(S, X, H, tau, r, q = 0, v, tauD = 0, D = 0,
 
 \details{
 
-For European options the formula of Messrs Black, Scholes and Merton is
-used. It can be used for equities (set \code{q} equal to the dividend
-yield), futures (Black, 1976; set \code{q} equal to \code{r}),
-currencies (Garman and Kohlhagen, 1983; set \code{q} equal to the
-foreign risk-free rate). For future-style options (e.g. options on the German Bund
-future), set \code{q} and \code{r} equal to zero.
+For European options the formula of Messrs Black, Scholes and
+Merton is used. It can be used for equities (set \code{q} equal
+to the dividend yield), futures (Black, 1976; set \code{q} equal
+to \code{r}), currencies (Garman and Kohlhagen, 1983; set
+\code{q} equal to the foreign risk-free rate). For future-style
+options (e.g. options on the German Bund future), set \code{q}
+and \code{r} equal to zero.
 
-The Greeks are provided in their raw (\sQuote{textbook}) form with only one
-exception: Theta is made negative. For practical use, the other Greeks are
-also typically adjusted: Theta is often divided by 365 (or some other
-yearly day count); Vega and Rho are divided by 100 to give the
-sensitivity for one percentage-point move in volatility/the interest
-rate. Raw Gamma is not much use if not adjusted for the actual move in
-the underlier.
+The Greeks are provided in their raw (\sQuote{textbook}) form
+with only one exception: Theta is made negative. For practical
+use, the other Greeks are also typically adjusted: Theta is
+often divided by 365 (or some other yearly day count); Vega and
+Rho are divided by 100 to give the sensitivity for one
+percentage-point move in volatility/the interest rate. Raw Gamma
+is not much use if not adjusted for the actual move in the
+underlier.
 
-For European options the Greeks are computed through the respective
-analytic expressions. For American options only Delta, Gamma and Theta
-are computed because they can be directly obtained from the binomial
-tree; other Greeks need to be computed through a finite difference (see
-Examples).
+For European options the Greeks are computed through the
+respective analytic expressions. For American options only
+Delta, Gamma and Theta are computed because they can be directly
+obtained from the binomial tree; other Greeks need to be
+computed through a finite difference (see Examples).
 
-For the European-type options, the function understands vectors of
-inputs, except for dividends. American options are priced via a
-Cox-Ross-Rubinstein tree; no vectorisation is implemented here.
+For the European-type options, the function understands vectors
+of inputs, except for dividends. American options are priced via
+a Cox-Ross-Rubinstein tree; no vectorisation is implemented
+here.
 
-The implied volatility is computed with \code{\link{uniroot}} from the
-\pkg{stats} package (the default search interval is \code{c(0.00001,
-2)}; it can be changed through \code{uniroot.control}).
+The implied volatility is computed with \code{\link{uniroot}}
+from the \pkg{stats} package (the default search interval is
+\code{c(0.00001, 2)}; it can be changed through
+\code{uniroot.control}).
 
-Dividends (\code{D}) are modelled via the escrowed-dividend model.
+Dividends (\code{D}) are modelled via the escrowed-dividend
+model.
 
 }
 \value{
@@ -151,6 +156,9 @@ Dividends (\code{D}) are modelled via the escrowed-dividend model.
   Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
   Methods and Optimization in Finance}. 2nd edition. Elsevier.
   \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
+
+  Haug, E. (2007) \emph{The Complete Guide to Option Pricing Formulas}.
+  2nd edition. McGraw-Hill.
 
   Schumann, E. (2023) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}

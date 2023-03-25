@@ -1,4 +1,4 @@
-v2.8-0  (2023-02-28; not yet released)
+v2.8-0  (2023-03-25; not yet released)
 
   o 'callHestoncf' gains an argument 'uniroot.control',
     which allows passing settings for 'uniroot' (to compute
@@ -12,6 +12,9 @@ v2.8-0  (2023-02-28; not yet released)
     portfolios, as described in Konno and Yamazaki
     (1991; https://doi.org/10.1287/mnsc.37.5.519 )
 
+  o 'vanillaOptionEuropean' also provides "DvegaDspot"
+    and "DvegaDvol"
+  
   o ....
 
 v2.7-1  (2022-10-20)

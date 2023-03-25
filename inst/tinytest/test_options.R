@@ -109,3 +109,37 @@ value <- callHestoncf(
     uniroot.control = list(interval = c(0.5, 4),
                            maxiter = 2000),
     uniroot.info = TRUE)
+
+
+
+
+
+## more GREEKS
+## DvegaDspot (Haug, pp 32-33)
+S <- 90
+X <- 80
+tau <- 0.25
+r <- 0.05
+q <- 0
+vol <- 0.2
+
+tmp <- vanillaOptionEuropean(S = S, X = X, r = r, q = q,
+                             tau = tau, v = vol*vol,
+                             type = "put")
+
+expect_equal(round(tmp$DvegaDspot, 4), -1.0008)
+
+
+## DvegaDvol (Haug, pp 58-59)
+S <- 90
+X <- 130
+tau <- 0.75
+r <- 0.05
+q <- 0.05
+vol <- 0.28
+
+tmp <- vanillaOptionEuropean(S = S, X = X, r = r, q = q,
+                             tau = tau, v = vol*vol,
+                             type = "put")
+
+expect_equal(round(tmp$DvegaDvol, 4), 92.3444)
