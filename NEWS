@@ -1,4 +1,4 @@
-v2.8-0  (2023-03-25; not yet released)
+v2.8-0  (2023-07-31; not yet released)
 
   o 'callHestoncf' gains an argument 'uniroot.control',
     which allows passing settings for 'uniroot' (to compute
@@ -14,6 +14,8 @@ v2.8-0  (2023-03-25; not yet released)
 
   o 'vanillaOptionEuropean' also provides "DvegaDspot"
     and "DvegaDvol"
+
+  o 'Ritter' has been adjusted for new file format
   
   o ....
 

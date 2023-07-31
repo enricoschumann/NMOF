@@ -23,9 +23,8 @@ Ritter <- function(dest.dir,
 
     data <- openxlsx::read.xlsx(f.path)
     data <- data[, 1:11]
-    colnames(data) <- c("CUSIP","Offer date","Company name",
-                        "Ticker","Founding","PERM","VC dummy",
-                        "Rollup","Dual","Post-issue shares","Internet")
+    data <- data[!apply(data, 1, function(x) all(is.na(x)))]
+    colnames(data) <- gsub("[.]", " ", colnames(data))
 
     data[["Offer date"]] <- as.Date(as.character(data[["Offer date"]]),
                                     format = "%Y%m%d")
@@ -39,15 +38,28 @@ Ritter <- function(dest.dir,
     data[["Dual"]][data[["Dual"]] %in% c(".")] <- NA
     data[["Dual"]] <- as.numeric(data[["Dual"]])
 
-    data[["VC dummy"]][data[["VC dummy"]] %in% c(".")] <- NA
-    data[["VC dummy"]] <- as.numeric(data[["VC dummy"]])
+    if ("VC dummy" %in% colnames(data)) {
+        data[["VC dummy"]][data[["VC dummy"]] %in% c(".")] <- NA
+        data[["VC dummy"]] <- as.numeric(data[["VC dummy"]])
+    }
 
-    data[["Post-issue shares"]][data[["Post-issue shares"]] %in% c(".", "-9")] <- NA
-    data[["Post-issue shares"]] <- as.numeric(data[["Post-issue shares"]])
+    if ("VC" %in% colnames(data)) {
+        data[["VC"]][data[["VC"]] %in% c(".")] <- NA
+        data[["VC"]] <- as.numeric(data[["VC"]])
+    }
+
+    if ("Post-issue shares" %in% colnames(data)) {
+        data[["Post-issue shares"]][data[["Post-issue shares"]] %in% c(".", "-9")] <- NA
+        data[["Post-issue shares"]] <- as.numeric(data[["Post-issue shares"]])
+    }
+
+    if ("PostIssueShares" %in% colnames(data)) {
+        data[["PostIssueShares"]][data[["PostIssueShares"]] %in% c(".", "-9")] <- NA
+        data[["PostIssueShares"]] <- as.numeric(data[["PostIssueShares"]])
+    }
 
     data[["Founding"]][data[["Founding"]] %in% c(".", "-99", "-9")] <- NA
     data[["Founding"]] <- as.numeric(data[["Founding"]])
-
 
     data
 }

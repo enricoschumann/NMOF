@@ -1,3 +1,8 @@
+2023-07-31  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R (Ritter): adapt to new file
+        format
+
 2023-03-25  Enrico Schumann  <es@enricoschumann.net>
 
         * R/options.R (vanillaOptionEuropean): compute
