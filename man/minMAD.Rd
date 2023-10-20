@@ -54,21 +54,29 @@ minMAD(R, wmin = 0, wmax = 1,
 }
 \details{
 
+  Compute the minimum mean--absolute-deviation portfolio for a
+  given scenario set.
+
+  The function uses \code{\link[Rglpk]{Rglpk_solve_LP}} from package
+  \pkg{Rglpk}.
+
 }
 \value{
-a vector of portfolio weights
+  a vector of portfolio weights
 }
 \references{
 
   Konno, H. and Yamazaki, H. (1991) Mean-Absolute Deviation
   Portfolio Optimization Model and Its Applications to Tokyo
-  Stock Market. \emph{Management Science}. \strong{37} (5), 519--531.
+  Stock Market. \emph{Management Science}. \strong{37} (5),
+  519--531.
+
 }
 \author{
   Enrico Schumann
 }
 \seealso{
-  \code{\link{minvar}}
+  \code{\link{minvar}}, \code{\link{minCVaR}}
 }
 \examples{
 na <- 10

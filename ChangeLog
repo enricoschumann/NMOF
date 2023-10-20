@@ -1,6 +1,14 @@
+2023-10-20  Enrico Schumann  <es@enricoschumann.net>
+
+	* DESCRIPTION (Version): 2.8-0
+
+	* man/*.Rd: fix many links
+
 2023-10-15  Enrico Schumann  <es@enricoschumann.net>
 
-	* R/internals.R (mcList): add 'affinity.list'
+        * R/market_data.R (Ritter): fix removal of empty lines
+
+        * R/internals.R (mcList): add 'affinity.list'
 
 2023-07-31  Enrico Schumann  <es@enricoschumann.net>
 

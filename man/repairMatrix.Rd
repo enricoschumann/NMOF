@@ -5,8 +5,8 @@ Repair an Indefinite Correlation Matrix
 }
 \description{
 
-  The function \sQuote{repairs} an indefinite correlation matrix by
-  replacing its negative eigenvalues by zero.
+  The function \sQuote{repairs} an indefinite correlation
+  matrix by replacing its negative eigenvalues by zero.
 
 }
 \usage{
@@ -18,24 +18,25 @@ repairMatrix(C, eps = 0)
 }
 \details{
 
-  The function \sQuote{repairs} a correlation matrix: it replaces
-  negative eigenvalues with \code{eps} and rescales the matrix such that
-  all elements on the main diagonal become unity again.
+  The function \sQuote{repairs} a correlation matrix: it
+  replaces negative eigenvalues with \code{eps} and rescales
+  the matrix such that all elements on the main diagonal
+  become unity again.
 
 }
 \value{
 Returns a numeric matrix.
 }
 \references{
-  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
-  Methods and Optimization in Finance}. 2nd edition. Elsevier.
-  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
+  Gilli, M., Maringer, D. and Schumann, E. (2019)
+  \emph{Numerical Methods and Optimization in Finance}.
+  2nd edition. Elsevier. \doi{10.1016/C2017-0-01621-X}
 
   Rebonato, R. and Jaeckel, P. (1999) The most general methodology to
   create a valid correlation matrix for risk management and option
   pricing purposes.
 
-  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
+  Schumann, E. (2023) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 }
 \author{

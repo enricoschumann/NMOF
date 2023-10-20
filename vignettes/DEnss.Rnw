@@ -7,9 +7,9 @@
 \documentclass[a4paper,11pt]{article}
 \usepackage[left=2.5cm,top=2cm,bottom=3cm,right=3.5cm]{geometry}
 \usepackage[noae]{Sweave}
+\usepackage[scaled=0.9]{inconsolata}
 \usepackage{mathptmx}
 \usepackage{amsmath,amstext}
-%\usepackage{hyperref}
 \usepackage{natbib}
 \usepackage{framed}
 \usepackage{url}
@@ -24,13 +24,17 @@
 \DefineVerbatimEnvironment{Scode}{Verbatim}{xleftmargin=2em}
 \fvset{listparameters={\setlength{\topsep}{0pt}}}
 \renewenvironment{Schunk}{\vspace{\topsep}}{\vspace{\topsep}}
+\usepackage{hyperref}
 <<echo=false>>=
 options(continue = "  ", digits = 5)
+pv <- packageVersion("NMOF")
+pv <- gsub("(.*)[.](.*)", "\\1-\\2", pv)
 @
 
 \begin{document}
 {\raggedright{\LARGE Fitting the Nelson--Siegel--Svensson model\\[0.2ex]%
-with Differential Evolution}}\medskip
+with Differential Evolution}}\hspace*{\fill}
+{\footnotesize Package version \Sexpr{pv}}\medskip
 
 \noindent Enrico Schumann\\
 \noindent \texttt{es@enricoschumann.net}\\

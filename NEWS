@@ -1,23 +1,30 @@
-v2.8-0  (2023-07-31; not yet released)
+v2.8-0  (2023-10-20)
 
-  o 'callHestoncf' gains an argument 'uniroot.control',
-    which allows passing settings for 'uniroot' (to compute
-    implied vol), and 'uniroot.info'; both arguments work
-    the same as in 'vanillaOptionImpliedVol' and 'callCF'
+  o 'callHestoncf' gains an argument 'uniroot.control', which
+    allows passing settings for 'uniroot' (to compute implied
+    vol), and 'uniroot.info'; both arguments work the same way
+    as in functions 'vanillaOptionImpliedVol' and 'callCF'
 
-  o 'trackingPortfolio' now has an argument 'ls.algo' for
+  o 'trackingPortfolio' now has an argument 'ls.algo', for
     specifying settings for method 'ls'
 
   o new function 'minMAD' for computing minimum-MAD
     portfolios, as described in Konno and Yamazaki
     (1991; https://doi.org/10.1287/mnsc.37.5.519 )
 
-  o 'vanillaOptionEuropean' also provides "DvegaDspot"
-    and "DvegaDvol"
+  o 'vanillaOptionEuropean' also provides "DvegaDspot" and
+    "DvegaDvol"
 
-  o 'Ritter' has been adjusted for new file format
-  
-  o ....
+  o 'Ritter' has been adapted to new file format
+
+  o all functions that allow parallel programming now support
+    argument 'affinity.list'
+
+  o the package now depends on R >= 3.5 (which was released
+    in 2018)
+
+  o the manual has been updated:
+    http://enricoschumann.net/NMOF.htm#NMOFmanual
 
 v2.7-1  (2022-10-20)
 

@@ -65,14 +65,19 @@ minCVaR(R, q = 0.1, wmin = 0, wmax = 1,
   attribute whose name matches the \code{method} name
 
 }
-\references{Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
-  Methods and Optimization in Finance}. 2nd edition. Elsevier.
-  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
+\references{
+
+  Gilli, M., Maringer, D. and Schumann, E. (2019)
+  \emph{Numerical Methods and Optimization in Finance}.
+  2nd edition. Elsevier. \doi{10.1016/C2017-0-01621-X}
 
   Rockafellar, R. T. and Uryasev, S. (2000).
   Optimization of Conditional Value-at-Risk.
   Journal of Risk.
   \strong{2} (3), 21--41.
+
+  Schumann, E. (2023) Financial Optimisation with R (\pkg{NMOF} Manual).
+  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 
   Schumann, E. (2020) Minimising Conditional Value-at-Risk (CVaR).
   \url{http://enricoschumann.net/notes/minimising-conditional-var.html}

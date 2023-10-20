@@ -4,6 +4,7 @@
 \documentclass[a4paper,11pt]{article}
 \usepackage[left = 2.5cm, top = 2cm, bottom = 3cm, right = 3.5cm]{geometry}
 \usepackage[noae]{Sweave}
+\usepackage[scaled=0.9]{inconsolata}
 \usepackage{mathptmx}
 \usepackage{amsmath,amstext}
 \usepackage{hyperref}
@@ -23,9 +24,12 @@
 <<echo=false>>=
 library("NMOF")
 options(continue = "  ", digits = 5, max.print = 20, width = 85)
+pv <- packageVersion("NMOF")
+pv <- gsub("(.*)[.](.*)", "\\1-\\2", pv)
 @
 \begin{document}
-{\raggedright{\LARGE An Overview of the NMOF Package}}\medskip
+{\raggedright{\LARGE An Overview of the NMOF Package}}\hspace*{\fill}
+{\footnotesize Package version \Sexpr{pv}}\medskip
 
 \noindent Enrico Schumann\\
 \noindent \texttt{es@enricoschumann.net}\\

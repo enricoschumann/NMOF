@@ -164,9 +164,9 @@ DEopt(OF, algo = list(), ...)
 
 } % end value
 \references{
-  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
-  Methods and Optimization in Finance}. 2nd edition. Elsevier.
-  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
+  Gilli, M., Maringer, D. and Schumann, E. (2019)
+  \emph{Numerical Methods and Optimization in Finance}.
+  2nd edition. Elsevier. \doi{10.1016/C2017-0-01621-X}
 
   Maringer, D. and Oyewumi, O. (2007). Index Tracking with Constrained
   Portfolios. \emph{Intelligent Systems in Accounting, Finance and Management},
@@ -176,7 +176,7 @@ DEopt(OF, algo = list(), ...)
   heuristic optimization methods'.
   \url{http://enricoschumann.net/R/remarks.htm}
 
-  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
+  Schumann, E. (2023) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 
   Storn, R., and Price, K. (1997) Differential Evolution -- a Simple and

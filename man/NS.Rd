@@ -31,24 +31,30 @@ NSS(param, tm)
 }
 \references{
 
-  Gilli, M. and Grosse, S. and Schumann, E. (2010) Calibrating the Nelson-Siegel-Svensson model, \acronym{COMISEF} Working Paper Series No. 031.
+  Gilli, M. and Grosse, S. and Schumann, E. (2010)
+  Calibrating the Nelson-Siegel-Svensson model,
+  \acronym{COMISEF} Working Paper Series No. 031.
   \url{http://enricoschumann.net/COMISEF/wps031.pdf}
 
-  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
-  Methods and Optimization in Finance}. 2nd edition. Elsevier.
-  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
+  Gilli, M., Maringer, D. and Schumann, E. (2019)
+  \emph{Numerical Methods and Optimization in Finance}.
+  2nd edition. Elsevier. \doi{10.1016/C2017-0-01621-X}
 
-  Gilli, M. and Schumann, E. (2010) A Note on \sQuote{Good} Starting Values in Numerical Optimisation,
+  Gilli, M. and Schumann, E. (2010) A Note on
+  \sQuote{Good} Starting Values in Numerical Optimisation,
   \acronym{COMISEF} Working Paper Series No. 044.
   \url{http://enricoschumann.net/COMISEF/wps044.pdf}
 
-  Nelson, C.R. and Siegel, A.F. (1987) Parsimonious Modeling of Yield Curves. \emph{Journal of Business}, \strong{60}(4), pp. 473--489.
+  Nelson, C.R. and Siegel, A.F. (1987) Parsimonious
+  Modeling of Yield Curves. \emph{Journal of Business},
+  \strong{60}(4), pp. 473--489.
 
-  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
+  Schumann, E. (2023) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 
-  Svensson, L.E. (1994) Estimating and Interpreting Forward Interest Rates: Sweden 1992--1994. \acronym{IMF} Working Paper 94/114.
-
+  Svensson, L.E. (1994) Estimating and Interpreting
+  Forward Interest Rates: Sweden 1992--1994.
+  \acronym{IMF} Working Paper 94/114.
 }
 \author{
   Enrico Schumann
@@ -70,20 +76,25 @@ plot(tm, yM, xlab = "maturity in years",
              ylab = "yield in percent")
 
 
-\dontrun{
+\donttest{
 ## get Bliss/Diebold/Li data (used in some of the papers in References)
-u <- url("http://www.ssc.upenn.edu/~fdiebold/papers/paper49/FBFITTED.txt")
-open(u); BliDiLi <- scan(u, skip = 14); close(u)
-mat <- NULL
-for (i in 1:372)
-    mat <- rbind(mat,BliDiLi[(19*(i-1)+1):(19*(i-1)+19)])
-mats  <- c(1,3,6,9,12,15,18,21,24,30,36,48,60,72,84,96,108,120)/12
+u <- url("https://www.sas.upenn.edu/~fdiebold/papers/paper49/FBFITTED.txt")
+try(open(u))
+BliDiLi <- try(scan(u, skip = 14))
 
-## the obligatory perspective plot
-persp(x = mat[,1], y = mats, mat[ ,-1L],
-      phi = 30, theta = 30, ticktype = "detailed",
-      xlab = "time",
-      ylab = "time to maturity in years",
-      zlab = "zero rates in \%")
+if (!inherits(BliDiLi, "try-error")) {
+    close(u)
+    mat <- NULL
+    for (i in 1:372)
+        mat <- rbind(mat,BliDiLi[(19*(i-1)+1):(19*(i-1)+19)])
+    mats  <- c(1,3,6,9,12,15,18,21,24,30,36,48,60,72,84,96,108,120)/12
+
+    ## the obligatory perspective plot
+    persp(x = mat[,1], y = mats, mat[ ,-1L],
+          phi = 30, theta = 30, ticktype = "detailed",
+          xlab = "time",
+          ylab = "time to maturity in years",
+          zlab = "zero rates in \%")
+}
 }
 }

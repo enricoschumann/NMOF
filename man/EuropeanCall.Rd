@@ -32,9 +32,9 @@ Returns the value of the call (\code{numeric}).
 }
 \references{
 
-  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
-    Methods and Optimization in Finance}, 2nd edition. Elsevier.
-  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
+  Gilli, M., Maringer, D. and Schumann, E. (2019)
+  \emph{Numerical Methods and Optimization in Finance}.
+  2nd edition. Elsevier. \doi{10.1016/C2017-0-01621-X}
 
   M. Gilli and Schumann, E. (2009) Implementing Binomial
   Trees. \acronym{COMISEF} Working Paper Series No. 008.
@@ -44,7 +44,7 @@ Returns the value of the call (\code{numeric}).
   Valuation in MATLAB. \emph{SIAM Review}, \bold{44}(4), pp. 661--677.
   \doi{10.1137/S0036144501393266} .
 
-  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
+  Schumann, E. (2023) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 
 }

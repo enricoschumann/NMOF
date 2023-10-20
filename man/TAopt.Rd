@@ -212,9 +212,9 @@ TAopt(OF, algo = list(), \dots)
     Optimization Heuristic for Downside Risk Minimization. \emph{Journal
     of Risk}. \strong{8} (3), 1--18.
 
-  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
-  Methods and Optimization in Finance}. 2nd edition. Elsevier.
-  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
+    Gilli, M., Maringer, D. and Schumann, E. (2019)
+    \emph{Numerical Methods and Optimization in Finance}.
+    2nd edition. Elsevier. \doi{10.1016/C2017-0-01621-X}
 
     Moscato, P. and Fontanari, J.F. (1990). Stochastic Versus
     Deterministic Update in Simulated Annealing. Physics Letters A.
@@ -224,7 +224,7 @@ TAopt(OF, algo = list(), \dots)
     heuristic optimization methods'.
     \url{http://enricoschumann.net/R/remarks.htm}
 
-    Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
+    Schumann, E. (2023) Financial Optimisation with R (\pkg{NMOF} Manual).
     \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 
     Winker, P. (2001). \emph{Optimization Heuristics in Econometrics:
@@ -236,7 +236,10 @@ TAopt(OF, algo = list(), \dots)
   }
 
   \seealso{
-    \code{\link{LSopt}},  \code{\link{restartOpt}}
+    \code{\link{LSopt}}, \code{\link{restartOpt}}.  Simulated Annealing
+    is implemented in function \code{\link{SAopt}}.
+    Package \pkg{neighbours} (also on CRAN) offers helpers
+    for creating neighbourhood functions.
   }
   \examples{
 ## Aim: given a matrix x with n rows and 2 columns,

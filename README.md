@@ -3,7 +3,7 @@
 Functions, examples and data from the first and the
 second edition of "Numerical Methods and Optimization
 in Finance" by
-[M. Gilli](http://www.unige.ch/ses/dsec/static/gilli/), 
+[M. Gilli](https://www.unige.ch/gsem/en/research/faculty/honorary-professors/manfred-gilli/),
 [D. Maringer](https://wwz.unibas.ch/de/personen/dietmar-maringer/)
 and [E. Schumann](http://enricoschumann.net/)
 (2019, ISBN:978-0128150658).  The package provides

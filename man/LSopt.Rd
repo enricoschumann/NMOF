@@ -125,18 +125,20 @@ LSopt(OF, algo = list(), ...)
 
 }
 \references{
-  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
-  Methods and Optimization in Finance}. 2nd edition. Elsevier.
-  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
+  Gilli, M., Maringer, D. and Schumann, E. (2019)
+  \emph{Numerical Methods and Optimization in Finance}.
+  2nd edition. Elsevier. \doi{10.1016/C2017-0-01621-X}
 
-  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
+  Schumann, E. (2023) Financial Optimisation with R (\pkg{NMOF} Manual).
   \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
 }
 \author{
   Enrico Schumann
 }
 \seealso{
-  \code{\link{TAopt}}, \code{\link{restartOpt}}
+  \code{\link{TAopt}}, \code{\link{restartOpt}}.
+  Package \pkg{neighbours} (also on CRAN) offers helpers
+  for creating neighbourhood functions.
 }
 \examples{
 ## Aim: find the columns of X that, when summed, give y

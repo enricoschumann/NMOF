@@ -139,6 +139,7 @@ mvFrontier <- function(m, var, wmin = 0, wmax = 1, n = 50, rf = NA,
             risk[i] <- sqrt(result$solution %*% var %*% result$solution)
             portfolios[, i] <- result$solution
         }
+
     } else {
         A <- rbind(m - rf, -diag(na), diag(na))
         r.seq <- seq(rf, max(m), length.out = n)
@@ -165,9 +166,10 @@ mvFrontier <- function(m, var, wmin = 0, wmax = 1, n = 50, rf = NA,
             risk[i] <- sqrt(result$solution %*% var %*% result$solution)
             portfolios[, i] <- result$solution
         }
-        portfolios <- rbind(portfolios, cash)
 
+        portfolios <- rbind(portfolios, cash)
     }
+
     list(returns = rets,
          volatility = risk,
          portfolios = portfolios)
@@ -512,7 +514,6 @@ maxSharpe <- function(m, var, min.return,
                                  meq  = 1L)
     ans <- qp_res$solution/sum(qp_res$solution)
     ans
-
 }
 
 minMAD <- function(R,
@@ -549,9 +550,7 @@ minMAD <- function(R,
                        c(if (is.null(m)) rm else m, rep(0, ns)))
             dir <- c(dir, ">=")
             rhs <- c(rhs, min.return)
-
         }
-
 
         default.bounds <- identical(wmin, 0) && identical(wmax, 1)
 
@@ -563,6 +562,7 @@ minMAD <- function(R,
             bounds <- list(lower = list(ind = seq_len(na) + 1L, val = wmin),
                            upper = list(ind = seq_len(na) + 1L, val = wmax))
         }
+
         sol.lp <- Rglpk::Rglpk_solve_LP(
                              obj = c(rep(0, na), rep(1/ns, ns)),
                              mat = M,
@@ -605,7 +605,7 @@ minMAD <- function(R,
                           printDetail = FALSE,
                           printBar = FALSE),
                      R = R)$xbest
-
     }
+
     ans
 }

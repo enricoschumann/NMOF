@@ -64,7 +64,7 @@ callHestoncf(S, X, tau, r, q, v0, vT, rho, k, sigma, implVol = FALSE,
   is included in the result.
 }
 
-\note{%  
+\note{%
   If \code{implVol} is \code{TRUE}, the function will
   return a list with elements named \code{value} and
   \code{impliedVol}. Prior to version 0.26-3, the first
@@ -74,8 +74,7 @@ callHestoncf(S, X, tau, r, q, v0, vT, rho, k, sigma, implVol = FALSE,
 \references{%
   Gilli, M., Maringer, D. and Schumann, E. (2019)
   \emph{Numerical Methods and Optimization in Finance}.
-  2nd edition. Elsevier.
-  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
+  2nd edition. Elsevier. \doi{10.1016/C2017-0-01621-X}
 
   Heston, S.L. (1993) A Closed-Form Solution for Options
   with Stochastic Volatility with Applications to Bonds

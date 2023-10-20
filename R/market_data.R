@@ -23,7 +23,7 @@ Ritter <- function(dest.dir,
 
     data <- openxlsx::read.xlsx(f.path)
     data <- data[, 1:11]
-    data <- data[!apply(data, 1, function(x) all(is.na(x)))]
+    data <- data[!apply(data, 1, function(x) all(is.na(x))), ]
     colnames(data) <- gsub("[.]", " ", colnames(data))
 
     data[["Offer date"]] <- as.Date(as.character(data[["Offer date"]]),

@@ -1,13 +1,13 @@
 citHeader("To cite NMOF in publications please use:")
 
-citEntry(entry  = "book",
-         title  = "Numerical Methods and Optimization in Finance",
+bibentry(bibtype = "Book",
+         title   = "Numerical Methods and Optimization in Finance",
 
-         author = c(person("Manfred", "Gilli", role = "aut"),
+         author  = c(person("Manfred", "Gilli", role = "aut"),
                     person("Dietmar", "Maringer", role = "aut"),
                     person("Enrico", "Schumann", role = c("aut", "cre"))),
 
-         year   = "2019",
+         year    = "2019",
          publisher = "Elsevier/Academic Press",
          address = "Waltham, MA, USA",
          url     = "http://www.enricoschumann.net/NMOF/",
@@ -18,12 +18,12 @@ citEntry(entry  = "book",
                "Numerical Methods and Optimization in Finance. 2nd edition. ",
                "Elsevier/Academic Press, 2019.", sep = ""))
 
-citEntry(entry  = "manual",
-         title  = paste0("Numerical Methods and Optimization in Finance (NMOF) ",
+bibentry(bibtype = "Manual",
+         title   = paste0("Numerical Methods and Optimization in Finance (NMOF) ",
                          "Manual. Package version ", meta$Version, ")"),
-         author = person("Enrico", "Schumann", role = c("aut", "cre")),
-         year   = paste0("2011--", sub("-.*", "", meta$Date)),
-         url       = "http://enricoschumann.net/NMOF/",
+         author  = person("Enrico", "Schumann", role = c("aut", "cre")),
+         year    = paste0("2011--", sub("-.*", "", meta$Date)),
+         url     = "http://enricoschumann.net/NMOF/",
          textVersion =
          paste0("Enrico Schumann. ",
                 "Numerical Methods and Optimization in Finance (NMOF). ",
