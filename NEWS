@@ -1,3 +1,12 @@
+v2.9-0  (2023-10-24; not yet released)
+
+  o new function 'approxBondReturn', for approximating the
+    total return of a (par) bond through its current yield,
+    duration and convexity, as described in Swinkels
+    (2019; https://doi.org/10.3390/data4030091)
+
+  o ....
+
 v2.8-0  (2023-10-20)
 
   o 'callHestoncf' gains an argument 'uniroot.control', which

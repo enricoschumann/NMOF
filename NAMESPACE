@@ -28,6 +28,7 @@ export(
     Shiller,
     TA.info,
     TAopt,
+    approxBondReturn,
     barrierOptionEuropean,
     bracketing,
     bundFuture,
