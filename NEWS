@@ -1,9 +1,13 @@
-v2.9-0  (2023-10-24; not yet released)
+v2.9-0  (2023-12-25; not yet released)
 
   o new function 'approxBondReturn', for approximating the
     total return of a (par) bond through its current yield,
-    duration and convexity, as described in Swinkels
-    (2019; https://doi.org/10.3390/data4030091)
+    duration and convexity, as described in Swinkels (2019;
+    https://doi.org/10.3390/data4030091)
+
+  o 'bracketing' handles better cases when 'fun' evaluates to
+    exactly zero, matching the MATLAB implementation in the
+    NMOF book
 
   o ....
 

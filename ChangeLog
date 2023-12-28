@@ -1,14 +1,20 @@
+2023-12-25  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/bracket.R (bracketing): directly compare signs,
+        instead of the sign of products, which works better
+        when 'fun' evaluates to /exactly/ zero
+
 2023-10-24  Enrico Schumann  <es@enricoschumann.net>
 
-	* R/approxTR.R (approxBondReturn): new function, which
-	approximates the total return of a bond by its
-	duration & convexity, as described in Swinkels(2019)
+        * R/approxTR.R (approxBondReturn): new function, which
+        approximates the total return of a bond by its
+        duration & convexity, as described in Swinkels(2019)
 
 2023-10-20  Enrico Schumann  <es@enricoschumann.net>
 
-	* DESCRIPTION (Version): 2.8-0
+        * DESCRIPTION (Version): 2.8-0
 
-	* man/*.Rd: fix many links
+        * man/*.Rd: fix many links
 
 2023-10-15  Enrico Schumann  <es@enricoschumann.net>
 
