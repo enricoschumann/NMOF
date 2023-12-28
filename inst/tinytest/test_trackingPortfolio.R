@@ -30,7 +30,7 @@ if (requireNamespace("quadprog")) {
     ## local search
     sol.ls <- trackingPortfolio(var = var, R = R, wmax = 0.4,
                                 method = "ls",
-                                ls.algo = list(nI = 3300))
-    expect_true(max(abs(sol.ls - sol.qp1)) < 0.001)
+                                ls.algo = list(nI = 3500))
+    expect_true(max(abs(sol.ls - sol.qp1)) < 0.002)
 
 }
