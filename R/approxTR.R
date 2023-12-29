@@ -12,7 +12,7 @@ approxBondReturn <- function(yield, tm, n = 2, scale = 1/250,
     if (!is.null(pad)) {
         ans <- c(pad, ans)
     }
-    
+
     attr(ans, "duration") <- D
     attr(ans, "convexity") <- C
     ans

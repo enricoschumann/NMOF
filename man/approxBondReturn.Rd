@@ -10,7 +10,6 @@
 \usage{
 approxBondReturn(yield, tm, n = 2, scale = 1/250, pad = NULL)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{yield}{
     a numeric vector
@@ -30,11 +29,17 @@ approxBondReturn(yield, tm, n = 2, scale = 1/250, pad = NULL)
 }
 }
 \details{%
-  The function approximates the total return of a bond investor.
-
-
-  warnings: - approximation based on par yield
-            - for indices: no defaults
+  The function approximates the total return of a bond investor,
+  based on changes in yield.  The computation is based on a
+  Taylor-series expansion.
+  See the references, in particular concerning the shortcomings
+  of the approximation:
+  \enumerate{
+    \item approximation is based on par yield
+    \item it relies on yield alone, so does not take into
+    account defaults; so for indices, the approximation should
+    only used for issuers without defaults
+  }
 }
 \value{
   a numeric vector, with attributes \code{duration} and \code{convexity}

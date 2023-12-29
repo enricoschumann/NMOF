@@ -82,7 +82,7 @@ bracketing(fun, interval, ...,
 
 }
 \value{%
-  
+
   A numeric matrix with two columns, named \emph{lower} and
   \emph{upper}. Each row contains one interval that contains
   at least one root. If no roots were found, the matrix has
