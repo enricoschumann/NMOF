@@ -1,3 +1,10 @@
+v2.10-0  (2024-02-24; not yet released)
+
+  o 'French' supports more datasets:
+    "F-F_Research_Data_5_Factors_2x3_daily_CSV.zip"
+
+  o ....
+
 v2.9-0  (2023-12-29)
 
   o new function 'approxBondReturn', for approximating the

@@ -533,11 +533,15 @@ French <- function(dest.dir,
         else
             stop("frequency not supported")
 
-    } else if (tolower(dataset) == "f-f_research_data_factors_daily_csv.zip") {
+    } else if (tolower(dataset) %in%
+               c("f-f_research_data_factors_daily_csv.zip",
+                 "f-f_research_data_5_factors_2x3_daily_csv.zip")) {
 
         frequency <- "daily"
         i <- grep("Mkt-RF", txt)
         j <- grep("^ *$", txt[-c(1:10)]) + 9
+        if (!length(j))
+            j <- length(txt)
         ans <- txt[i:j]
 
     ## } else if (tolower(dataset) == "portfolios_formed_on_be-me_csv.zip") {

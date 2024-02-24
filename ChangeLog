@@ -1,3 +1,8 @@
+2024-02-20  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R (French): support dataset
+        "F-F_Research_Data_5_Factors_2x3_daily_CSV.zip"
+
 2023-12-29  Enrico Schumann  <es@enricoschumann.net>
 
         * DESCRIPTION (Version): 2.9-0
