@@ -126,13 +126,15 @@ Shiller <- function(dest.dir,
     data
 }
 
+
 French <- function(dest.dir,
                    dataset = "F-F_Research_Data_Factors_CSV.zip",
                    weighting = "value",
                    frequency = "monthly",
                    price.series = FALSE,
                    na.rm = FALSE,
-                   adjust.frequency = TRUE) {
+                   adjust.frequency = TRUE,
+                   return.class = "data.frame") {
 
     .prepare_timestamp <- function(x, freq) {
         if (freq == "monthly")
@@ -206,10 +208,10 @@ French <- function(dest.dir,
     else if (dataset == "me_breakpoints") {
         url <- "ME_Breakpoints_CSV.zip"
         dataset <- "me_breakpoints_csv.zip"
-    } else if (dataset %in% c("market", "rf") &&
+    } else if (tolower(dataset) %in% c("market", "rf") &&
              frequency == "daily")
         url <- "F-F_Research_Data_Factors_daily_CSV.zip"
-    else if (dataset %in% c("market", "rf"))
+    else if (tolower(dataset) %in% c("market", "rf"))
         url <- "F-F_Research_Data_Factors_CSV.zip"
     else
         url <- dataset
@@ -766,5 +768,14 @@ French <- function(dest.dir,
         for (i in seq_along(attr.list))
             attr(ans, names(attr.list)[i]) <- attr.list[[i]]
 
+    if (return.class == "zoo") {
+        if (requireNamespace("zoo")) {
+            ans <- zoo(ans, as.Date(row.names(ans)))
+        } else {
+            warning("return class ",
+                    sQuote("zoo"),
+                    " specified but package not available")
+        }
+    }
     ans
 }
