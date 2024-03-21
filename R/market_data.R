@@ -777,7 +777,7 @@ French <- function(dest.dir,
 
     if (return.class == "zoo") {
         if (requireNamespace("zoo")) {
-            ans <- zoo(ans, as.Date(row.names(ans)))
+            ans <- zoo::zoo(ans, as.Date(row.names(ans)))
         } else {
             warning("return class ",
                     sQuote("zoo"),

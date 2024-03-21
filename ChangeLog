@@ -1,5 +1,7 @@
 2024-03-21  Enrico Schumann  <es@enricoschumann.net>
 
+        * R/market_data.R: use zoo::zoo to fix namespace
+
         * inst/tinytest/test_bracketing.R: add testfile
 
         * R/market_data.R (Shiller): implement new URL of file;
