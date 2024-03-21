@@ -9,7 +9,9 @@ v2.10-0  (2024-03-21; not yet released)
      can easily be transformed to "xts"
 
   o 'Shiller' tries to fetch data from new URL
-  
+
+  o fix bug in bracketing introduced in version 2.9-0
+
   o ....
 
 v2.9-0  (2023-12-29)

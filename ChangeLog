@@ -1,14 +1,19 @@
 2024-03-21  Enrico Schumann  <es@enricoschumann.net>
 
+        * inst/tinytest/test_bracketing.R: add testfile
+
         * R/market_data.R (Shiller): implement new URL of file;
         if argument "url" is not explicitly defined, the
         function uses the new URL
 
 2024-03-20  Enrico Schumann  <es@enricoschumann.net>
 
-	* R/market_data.R (French): new argument
-	"return.class", with default value 'data.frame';
-	a single alternative value 'zoo' is supported
+        * R/bracket.R (bracketing): fix bug introduced in
+        version 2.9-0
+
+        * R/market_data.R (French): new argument
+        "return.class", with default value 'data.frame';
+        a single alternative value 'zoo' is supported
 
 2024-02-20  Enrico Schumann  <es@enricoschumann.net>
 
