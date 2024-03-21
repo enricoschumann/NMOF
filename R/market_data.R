@@ -64,12 +64,19 @@ Ritter <- function(dest.dir,
     data
 }
 
+
 Shiller <- function(dest.dir,
                     url = "http://www.econ.yale.edu/~shiller/data/ie_data.xls") {
 
-    f.name <- paste0(format(Sys.Date(), "%Y%m%d_"),
-                     "ie_data.xls")
+    f.name <- paste0(format(Sys.Date(), "%Y%m%d_"), "ie_data.xls")
     f.path <- file.path(normalizePath(dest.dir), f.name)
+
+    if (missing(url)) {
+        txt <- readLines("https://shillerdata.com/", warn = FALSE)
+        txt <- paste(txt, collapse = "")
+        url <- sub(".*href=.*?(img1.wsimg.com/blobby/go/.*?/downloads/ie_data.xls).*",
+                   "\\1", txt, perl = TRUE)
+    }
 
     if (!file.exists(f.path))
         dl.result <- download.file(url, destfile = f.path)
