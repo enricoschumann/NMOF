@@ -1,3 +1,7 @@
+2024-04-07  Enrico Schumann  <es@enricoschumann.net>
+
+        * inst/unitTests/unitTests2.R: removed (emptied) file
+
 2024-03-21  Enrico Schumann  <es@enricoschumann.net>
 
         * R/market_data.R: use zoo::zoo to fix namespace
