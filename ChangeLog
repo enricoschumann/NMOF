@@ -1,3 +1,8 @@
+2024-07-26  Enrico Schumann  <es@enricoschumann.net>
+
+        * inst/tinytest/test_heston.R: add tests, using
+        reference prices from Alan Lewis' blog
+
 2024-04-07  Enrico Schumann  <es@enricoschumann.net>
 
         * inst/unitTests/unitTests2.R: removed (emptied) file
