@@ -1,3 +1,9 @@
+2024-09-10  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R: slightly rearrange code for case
+        when 'na.rm' is TRUE, to avoid the (harmless)
+        warning when there are no finite values
+
 2024-07-26  Enrico Schumann  <es@enricoschumann.net>
 
         * inst/tinytest/test_heston.R: add tests, using

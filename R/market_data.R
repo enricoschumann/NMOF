@@ -753,9 +753,9 @@ French <- function(dest.dir,
         for (cc in seq_len(ncol(ans))) {
             if (na.rm && any(is.na(ans[[cc]]))) {
                 na <- is.na(ans[[cc]])
-                first_num <- min(which(!na))
-                if (!is.finite(first_num))  ## only NA values
+                if (all(na))  ## only NA values
                     next
+                first_num <- min(which(!na))
                 ans[[cc]][ na ] <- 0
                 ans[[cc]] <- cumprod(1 + ans[[cc]])
                 if (first_num > 1)
