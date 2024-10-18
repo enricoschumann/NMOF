@@ -1,3 +1,8 @@
+2024-10-18  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/MRC.R: add function, based on
+        https://quant.stackexchange.com/questions/80370/risk-parity-portfolio-from-scenario-optimization/80453#80453
+
 2024-09-10  Enrico Schumann  <es@enricoschumann.net>
 
         * R/market_data.R: slightly rearrange code for case
