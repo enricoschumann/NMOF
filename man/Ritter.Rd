@@ -24,7 +24,7 @@ Ritter(dest.dir,
 \details{
 
   The function downloads \acronym{IPO} data provided by Jay
-  R. Ritter \url{https://site.warrington.ufl.edu/ritter}.
+  R. Ritter \url{https://site.warrington.ufl.edu/ritter/}.
   Since the data are provided in Excel format, package
   \pkg{openxlsx} is required.
 
