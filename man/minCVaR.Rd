@@ -77,10 +77,10 @@ minCVaR(R, q = 0.1, wmin = 0, wmax = 1,
   \strong{2} (3), 21--41.
 
   Schumann, E. (2023) Financial Optimisation with R (\pkg{NMOF} Manual).
-  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+  \url{https://enricoschumann.net/NMOF.htm#NMOFmanual}
 
   Schumann, E. (2020) Minimising Conditional Value-at-Risk (CVaR).
-  \url{http://enricoschumann.net/notes/minimising-conditional-var.html}
+  \url{https://enricoschumann.net/notes/minimising-conditional-var.html}
 }
 \author{
   Enrico Schumann

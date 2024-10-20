@@ -101,7 +101,7 @@ mvPortfolio(m, var, min.return, wmin = 0, wmax = 1, lambda = NULL,
   2nd edition. Elsevier. \doi{10.1016/C2017-0-01621-X}
 
   Schumann, E. (2023) Financial Optimisation with R (\pkg{NMOF} Manual).
-  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+  \url{https://enricoschumann.net/NMOF.htm#NMOFmanual}
 }
 \author{
     Enrico Schumann

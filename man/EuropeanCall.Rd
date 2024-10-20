@@ -38,14 +38,14 @@ Returns the value of the call (\code{numeric}).
 
   M. Gilli and Schumann, E. (2009) Implementing Binomial
   Trees. \acronym{COMISEF} Working Paper Series No. 008.
-  \url{http://enricoschumann.net/COMISEF/wps008.pdf}
+  \url{https://enricoschumann.net/COMISEF/wps008.pdf}
 
   Higham, D. (2002) Nine Ways to Implement the Binomial Method for Option
   Valuation in MATLAB. \emph{SIAM Review}, \bold{44}(4), pp. 661--677.
   \doi{10.1137/S0036144501393266} .
 
   Schumann, E. (2023) Financial Optimisation with R (\pkg{NMOF} Manual).
-  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+  \url{https://enricoschumann.net/NMOF.htm#NMOFmanual}
 
 }
 \author{

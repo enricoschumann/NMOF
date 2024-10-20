@@ -62,7 +62,7 @@ changeInterval(nodes, weights, oldmin, oldmax, newmin, newmax)
   \bold{23}(106), pp. 221--230+s1--s10.
 
   Schumann, E. (2023) Financial Optimisation with R (\pkg{NMOF} Manual).
-  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+  \url{https://enricoschumann.net/NMOF.htm#NMOFmanual}
 }
 \author{
   Enrico Schumann

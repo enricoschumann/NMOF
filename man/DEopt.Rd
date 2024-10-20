@@ -174,10 +174,10 @@ DEopt(OF, algo = list(), ...)
 
   Schumann, E. (2012) Remarks on 'A comparison of some
   heuristic optimization methods'.
-  \url{http://enricoschumann.net/R/remarks.htm}
+  \url{https://enricoschumann.net/R/remarks.htm}
 
   Schumann, E. (2023) Financial Optimisation with R (\pkg{NMOF} Manual).
-  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+  \url{https://enricoschumann.net/NMOF.htm#NMOFmanual}
 
   Storn, R., and Price, K. (1997) Differential Evolution -- a Simple and
   Efficient Heuristic for Global Optimization over Continuous Spaces.
@@ -192,7 +192,7 @@ DEopt(OF, algo = list(), ...)
 }
 \examples{
 ## Example 1: Trefethen's 100-digit challenge (problem 4)
-## http://people.maths.ox.ac.uk/trefethen/hundred.html
+## https://people.maths.ox.ac.uk/trefethen/hundred.html
 
 OF <- tfTrefethen               ### see ?testFunctions
 algo <- list(nP = 50L,          ### population size

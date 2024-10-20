@@ -161,7 +161,7 @@ model.
   2nd edition. McGraw-Hill.
 
   Schumann, E. (2023) Financial Optimisation with R (\pkg{NMOF} Manual).
-  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+  \url{https://enricoschumann.net/NMOF.htm#NMOFmanual}
 }
 \author{
 Enrico Schumann

@@ -69,10 +69,10 @@ trackingPortfolio(var, wmin = 0, wmax = 1,
   2nd edition. Elsevier. \doi{10.1016/C2017-0-01621-X}
 
   Schumann, E. (2023) Financial Optimisation with R (\pkg{NMOF} Manual).
-  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+  \url{https://enricoschumann.net/NMOF.htm#NMOFmanual}
 
   Schumann, E. (2020) Return-based tracking portfolios.
-  \url{http://enricoschumann.net/notes/return-based-tracking-portfolios.html}
+  \url{https://enricoschumann.net/notes/return-based-tracking-portfolios.html}
 
   Sharpe, W. F. (1992) Asset Allocation: Management Style and
   Performance Measurement. Journal of Portfolio Management.

@@ -222,10 +222,10 @@ TAopt(OF, algo = list(), \dots)
 
     Schumann, E. (2012) Remarks on 'A comparison of some
     heuristic optimization methods'.
-    \url{http://enricoschumann.net/R/remarks.htm}
+    \url{https://enricoschumann.net/R/remarks.htm}
 
     Schumann, E. (2023) Financial Optimisation with R (\pkg{NMOF} Manual).
-    \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+    \url{https://enricoschumann.net/NMOF.htm#NMOFmanual}
 
     Winker, P. (2001). \emph{Optimization Heuristics in Econometrics:
     Applications of Threshold Accepting}. Wiley.

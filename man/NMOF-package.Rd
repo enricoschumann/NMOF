@@ -56,7 +56,7 @@
   The source code of the \pkg{NMOF} package is also hosted at
   \url{https://github.com/enricoschumann/NMOF/}.
   Updates to the package and new features are described at
-  \url{http://enricoschumann.net/notes/NMOF/}.
+  \url{https://enricoschumann.net/notes/NMOF/}.
 
   \subsection{Optimisation}{
 
@@ -110,7 +110,7 @@
   2nd edition. Elsevier. \doi{10.1016/C2017-0-01621-X}
 
   Schumann, E. (2023) Financial Optimisation with R (\pkg{NMOF} Manual).
-  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+  \url{https://enricoschumann.net/NMOF.htm#NMOFmanual}
 }
 \keyword{package}
 \examples{
@@ -135,11 +135,11 @@ print(nss)
 edit(nss)
 
 ## _book_ websites
-browseURL("http://nmof.net")
-browseURL("http://enricoschumann.net/NMOF/")
+browseURL("https://nmof.net")
+browseURL("https://enricoschumann.net/NMOF/")
 
 ## _package_ websites
-browseURL("http://enricoschumann.net/R/packages/NMOF/")
+browseURL("https://enricoschumann.net/R/packages/NMOF/")
 browseURL("https://cran.r-project.org/package=NMOF")
 browseURL("https://git.sr.ht/~enricoschumann/NMOF")
 browseURL("https://github.com/enricoschumann/NMOF")

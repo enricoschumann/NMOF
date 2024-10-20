@@ -59,10 +59,10 @@ maxSharpe(m, var, min.return,
   2nd edition. Elsevier. \doi{10.1016/C2017-0-01621-X}
 
   Schumann, E. (2023) Financial Optimisation with R (\pkg{NMOF} Manual).
-  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+  \url{https://enricoschumann.net/NMOF.htm#NMOFmanual}
 
   Schumann, E. (2012) Computing the global minimum-variance
-  portfolio. \url{http://enricoschumann.net/R/minvar.htm}
+  portfolio. \url{https://enricoschumann.net/R/minvar.htm}
 }
 \author{
   Enrico Schumann

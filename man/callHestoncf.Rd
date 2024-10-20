@@ -82,7 +82,7 @@ callHestoncf(S, X, tau, r, q, v0, vT, rho, k, sigma, implVol = FALSE,
   \strong{6}(2), 327--343.
 
   Schumann, E. (2023) Financial Optimisation with R (\pkg{NMOF} Manual).
-  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+  \url{https://enricoschumann.net/NMOF.htm#NMOFmanual}
 
 }
 

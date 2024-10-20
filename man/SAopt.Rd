@@ -174,7 +174,7 @@ SAopt(OF, algo = list(), \dots)
   with Simulated Annealing. Science. \strong{220} (4598), 671--680.
 
   Schumann, E. (2023) Financial Optimisation with R (\pkg{NMOF} Manual).
-  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+  \url{https://enricoschumann.net/NMOF.htm#NMOFmanual}
 }
 \author{
   Enrico Schumann

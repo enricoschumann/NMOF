@@ -125,7 +125,7 @@ To use the function in a vignette, use \code{\link{cat}(tTable(X))} (and
   Information}. 2nd edition, Graphics Press.
 
   Schumann, E. (2023) Financial Optimisation with R (\pkg{NMOF} Manual).
-  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+  \url{https://enricoschumann.net/NMOF.htm#NMOFmanual}
 }
 \author{
   Enrico Schumann
