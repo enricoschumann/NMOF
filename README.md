@@ -5,7 +5,7 @@ second edition of "Numerical Methods and Optimization
 in Finance" by
 [M. Gilli](https://www.unige.ch/gsem/en/research/faculty/honorary-professors/manfred-gilli/),
 [D. Maringer](https://wwz.unibas.ch/de/personen/dietmar-maringer/)
-and [E. Schumann](http://enricoschumann.net/)
+and [E. Schumann](https://enricoschumann.net/)
 (2019, ISBN:978-0128150658).  The package provides
 implementations of optimisation heuristics
 (Differential Evolution, Genetic Algorithms, Particle
@@ -21,7 +21,7 @@ simulations.
 ## Installing the package
 
 The latest build of the package is always available from
-[http://enricoschumann.net/R/packages/NMOF/](http://enricoschumann.net/R/packages/NMOF/).
+[https://enricoschumann.net/R/packages/NMOF/](https://enricoschumann.net/R/packages/NMOF/).
 A stable version is available from
 [CRAN](https://cran.r-project.org/package=NMOF).
 
@@ -29,7 +29,7 @@ To install the package from within an R session, type:
 
     install.packages('NMOF')  ## CRAN version
     install.packages('NMOF',  ## development version
-                     repos = c('http://enricoschumann.net/R',
+                     repos = c('https://enricoschumann.net/R',
                                getOption('repos')))
 
 
