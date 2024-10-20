@@ -40,7 +40,7 @@ New package releases and other news related to the book or the
 package are announced on the
 [NMOF-news mailing list](https://lists.r-forge.r-project.org/cgi-bin/mailman/listinfo/nmof-news).
 
-An [RSS feed of the package NEWS file](http://enricoschumann.net/R/packages/NMOF/NMOF_news.xml)
+An [RSS feed of the package NEWS file](https://enricoschumann.net/R/packages/NMOF/NMOF_news.xml)
 is also available.
 
 Applications, as long as they are finance-related, should be
@@ -55,9 +55,8 @@ package maintainer, for instance by using =bug.report=.
 
 
 
-
 ## References
 
 Manfred Gilli, Dietmar Maringer and Enrico Schumann.
-[Numerical Methods and Optimization in Finance](https://www.amazon.com/-/de/Numerical-Methods-Optimization-Finance-Manfred/dp/0128150653).
+[Numerical Methods and Optimization in Finance](https://enricoschumann.net/NMOF.htm).
 Academic Press, 2019.

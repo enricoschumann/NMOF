@@ -1,3 +1,17 @@
+2024-10-20  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.10-0
+
+        * R/market_data.R (Shiller): adapt regex; set
+        default of argument 'url' to NULL, since old link
+        is no longer working
+
+        * R/market_data.R (Ritter): adapt to new column
+        headers in latest files; column names are now made
+        lower case
+
+        * man/*.Rd: updated many links to https
+
 2024-10-18  Enrico Schumann  <es@enricoschumann.net>
 
         * R/MRC.R: add function, based on
@@ -303,7 +317,7 @@
 
         * R/portfolio.R (trackingPortfolio): add function (not
         yet exported); see
-        http://enricoschumann.net/notes/return-based-tracking-portfolios.html
+        https://enricoschumann.net/notes/return-based-tracking-portfolios.html
 
 2020-05-12  Enrico Schumann  <es@enricoschumann.net>
 
@@ -321,7 +335,7 @@
 2020-04-11  Enrico Schumann  <es@enricoschumann.net>
 
         * R/portfolio.R (minCVaR): add function; see
-        http://enricoschumann.net/notes/minimising-conditional-var.html
+        https://enricoschumann.net/notes/minimising-conditional-var.html
 
 2020-04-01  Enrico Schumann  <es@enricoschumann.net>
 
@@ -538,7 +552,7 @@
 
         * inst/NMOFex/*: code examples have been
         removed (but remain available from
-        http://enricoschumann.net)
+        https://enricoschumann.net)
 
 2018-06-19  Enrico Schumann  <es@enricoschumann.net>
 

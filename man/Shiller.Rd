@@ -11,7 +11,7 @@
 }
 \usage{
 Shiller(dest.dir,
-        url = "https://www.econ.yale.edu/~shiller/data/ie_data.xls")
+        url = NULL)
 }
 \arguments{
   \item{dest.dir}{

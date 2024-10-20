@@ -1,4 +1,6 @@
-v2.10-0  (2024-10-20; not yet released)
+v2.10-0  (2024-10-20)
+
+  o fix bug in bracketing introduced in version 2.9-0
 
   o 'French' supports more datasets:
     "F-F_Research_Data_5_Factors_2x3_daily_CSV.zip", and
@@ -8,15 +10,8 @@ v2.10-0  (2024-10-20; not yet released)
      "data.frame" (the current behaviour) and "zoo", which
      can easily be transformed to "xts"
 
-  o 'Shiller' tries to fetch data from new URL
-
-  o fix bug in bracketing introduced in version 2.9-0
-
-  o new function MRC, for computing marginal
-    risk-contribution; see
-    https://quant.stackexchange.com/questions/80370/risk-parity-portfolio-from-scenario-optimization/80453#80453
-
-  o ....
+  o 'Shiller' tries to fetch data from new URL at
+    https://shillerdata.com/
 
 v2.9-0  (2023-12-29)
 

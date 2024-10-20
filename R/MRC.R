@@ -7,7 +7,7 @@ function(w, var, R, risk = sd, Rw = NULL, ...,
 
         ans <- var %*% w
         ans <- w*ans
-        
+
         if (scale)
             ans <- ans/sqrt(sum(w %*% t(w) * var))
 

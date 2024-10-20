@@ -79,11 +79,9 @@ plot(tm, yM, xlab = "maturity in years",
 \donttest{
 ## get Bliss/Diebold/Li data (used in some of the papers in References)
 u <- url("https://www.sas.upenn.edu/~fdiebold/papers/paper49/FBFITTED.txt")
-try(open(u))
-BliDiLi <- try(scan(u, skip = 14))
+BliDiLi <- try(scan(u, skip = 14), silent = TRUE)
 
 if (!inherits(BliDiLi, "try-error")) {
-    close(u)
     mat <- NULL
     for (i in 1:372)
         mat <- rbind(mat,BliDiLi[(19*(i-1)+1):(19*(i-1)+19)])
@@ -95,6 +93,8 @@ if (!inherits(BliDiLi, "try-error")) {
           xlab = "time",
           ylab = "time to maturity in years",
           zlab = "zero rates in \%")
+} else {
+    message("==> Bliss/Diebold/Li data could not be accessed; check URL/internet connection")
 }
 }
 }

@@ -25,56 +25,58 @@ Ritter <- function(dest.dir,
     data <- data[, 1:11]
     data <- data[!apply(data, 1, function(x) all(is.na(x))), ]
     colnames(data) <- gsub("[.]", " ", colnames(data))
+    cn0 <- colnames(data)
+    colnames(data) <- tolower(colnames(data))
 
-    data[["Offer date"]] <- as.Date(as.character(data[["Offer date"]]),
+    data[["offer date"]] <- as.Date(as.character(data[["offer date"]]),
                                     format = "%Y%m%d")
 
-    data[["Rollup"]][data[["Rollup"]] %in% c(".")] <- NA
-    data[["Rollup"]] <- as.logical(as.numeric(data[["Rollup"]]))
+    data[["rollup"]][data[["rollup"]] %in% c(".")] <- NA
+    data[["rollup"]] <- as.logical(as.numeric(data[["rollup"]]))
 
-    data[["Internet"]][data[["Internet"]] %in% c(".")] <- NA
-    data[["Internet"]] <- as.logical(as.numeric(data[["Internet"]]))
+    data[["internet"]][data[["internet"]] %in% c(".")] <- NA
+    data[["internet"]] <- as.logical(as.numeric(data[["internet"]]))
 
-    data[["Dual"]][data[["Dual"]] %in% c(".")] <- NA
-    data[["Dual"]] <- as.numeric(data[["Dual"]])
+    data[["dual"]][data[["dual"]] %in% c(".")] <- NA
+    data[["dual"]] <- as.numeric(data[["dual"]])
 
-    if ("VC dummy" %in% colnames(data)) {
-        data[["VC dummy"]][data[["VC dummy"]] %in% c(".")] <- NA
-        data[["VC dummy"]] <- as.numeric(data[["VC dummy"]])
+    if ("vc dummy" %in% colnames(data)) {
+        data[["vc dummy"]][data[["vc dummy"]] %in% c(".")] <- NA
+        data[["vc dummy"]] <- as.numeric(data[["vc dummy"]])
     }
 
-    if ("VC" %in% colnames(data)) {
-        data[["VC"]][data[["VC"]] %in% c(".")] <- NA
-        data[["VC"]] <- as.numeric(data[["VC"]])
+    if ("vc" %in% colnames(data)) {
+        data[["vc"]][data[["vc"]] %in% c(".")] <- NA
+        data[["vc"]] <- as.numeric(data[["vc"]])
     }
 
-    if ("Post-issue shares" %in% colnames(data)) {
-        data[["Post-issue shares"]][data[["Post-issue shares"]] %in% c(".", "-9")] <- NA
-        data[["Post-issue shares"]] <- as.numeric(data[["Post-issue shares"]])
+    if ("post-issue shares" %in% colnames(data)) {
+        data[["post-issue shares"]][data[["post-issue shares"]] %in% c(".", "-9")] <- NA
+        data[["post-issue shares"]] <- as.numeric(data[["post-issue shares"]])
     }
 
-    if ("PostIssueShares" %in% colnames(data)) {
-        data[["PostIssueShares"]][data[["PostIssueShares"]] %in% c(".", "-9")] <- NA
-        data[["PostIssueShares"]] <- as.numeric(data[["PostIssueShares"]])
+    if ("postissueshares" %in% colnames(data)) {
+        data[["postissueshares"]][data[["postissueshares"]] %in% c(".", "-9")] <- NA
+        data[["postissueshares"]] <- as.numeric(data[["postissueshares"]])
     }
 
-    data[["Founding"]][data[["Founding"]] %in% c(".", "-99", "-9")] <- NA
-    data[["Founding"]] <- as.numeric(data[["Founding"]])
+    data[["founding"]][data[["founding"]] %in% c(".", "-99", "-9")] <- NA
+    data[["founding"]] <- as.numeric(data[["founding"]])
+    colnames(data) <- cn0
 
     data
 }
 
 
-Shiller <- function(dest.dir,
-                    url = "http://www.econ.yale.edu/~shiller/data/ie_data.xls") {
+Shiller <- function(dest.dir, url = NULL) {
 
     f.name <- paste0(format(Sys.Date(), "%Y%m%d_"), "ie_data.xls")
     f.path <- file.path(normalizePath(dest.dir), f.name)
 
-    if (missing(url)) {
+    if (is.null(url)) {
         txt <- readLines("https://shillerdata.com/", warn = FALSE)
         txt <- paste(txt, collapse = "")
-        url <- sub(".*href=.*?(img1.wsimg.com/blobby/go/.*?/downloads/ie_data.xls).*",
+        url <- sub(".*href=.*?(img1.wsimg.com/blobby/go/.*?/downloads/.*?ie_data.xls).*",
                    "\\1", txt, perl = TRUE)
     }
 
