@@ -59,7 +59,6 @@ NSS(param, tm)
 \author{
   Enrico Schumann
 }
-
 \seealso{
   \code{\link{NSf}}, \code{\link{NSSf}}
 }
@@ -74,27 +73,4 @@ param <- c(6, 3, 5, -5, 1, 3)
 yM <- NSS(param, tm)
 plot(tm, yM, xlab = "maturity in years",
              ylab = "yield in percent")
-
-
-\donttest{
-## get Bliss/Diebold/Li data (used in some of the papers in References)
-u <- url("https://www.sas.upenn.edu/~fdiebold/papers/paper49/FBFITTED.txt")
-BliDiLi <- try(scan(u, skip = 14), silent = TRUE)
-
-if (!inherits(BliDiLi, "try-error")) {
-    mat <- NULL
-    for (i in 1:372)
-        mat <- rbind(mat,BliDiLi[(19*(i-1)+1):(19*(i-1)+19)])
-    mats  <- c(1,3,6,9,12,15,18,21,24,30,36,48,60,72,84,96,108,120)/12
-
-    ## the obligatory perspective plot
-    persp(x = mat[,1], y = mats, mat[ ,-1L],
-          phi = 30, theta = 30, ticktype = "detailed",
-          xlab = "time",
-          ylab = "time to maturity in years",
-          zlab = "zero rates in \%")
-} else {
-    message("==> Bliss/Diebold/Li data could not be accessed; check URL/internet connection")
-}
-}
 }

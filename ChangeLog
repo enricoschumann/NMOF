@@ -1,3 +1,11 @@
+2024-11-03  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.10-1
+
+        * man/NS.Rd: remove code example, as it failed on
+        a CRAN machine and the failure could not be
+        reproduced elsewhere
+
 2024-10-20  Enrico Schumann  <es@enricoschumann.net>
 
         * DESCRIPTION (Version): 2.10-0
