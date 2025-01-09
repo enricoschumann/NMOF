@@ -174,6 +174,8 @@ French <- function(dest.dir,
             "F-F_Research_Data_Factors_daily_CSV.zip",
             "ME_Breakpoints_CSV.zip",
 
+            "Europe_5_Factors_CSV.zip",
+
             ## univariate sorts
             "Portfolios_Formed_on_ME_CSV.zip",
 
@@ -533,6 +535,17 @@ French <- function(dest.dir,
         ans <- txt[i:j]
         cnames <- "Mom"
 
+    } else if (dataset == "europe_5_factors_csv.zip") {
+
+        i <- grep(",Mkt-RF", txt)
+        i <- i[ c("monthly" = 1, "annual" = 2)[frequency] ]
+        j <- grep("^[, ]*$", txt)
+        j <- min( j[j > i] ) - 1
+        ans <- txt[i:j]
+
+        cnames <- c("Mkt-RF", "SMB", "HML",
+                    "RMW", "CMA", "RF")
+
     } else if (tolower(dataset) == "f-f_research_data_factors_csv.zip") {
 
         i <- grep("Mkt-RF", txt)
@@ -731,7 +744,7 @@ French <- function(dest.dir,
                           check.names = FALSE,
                           colClasses = "numeric")
         for (cc in seq_len(ncol(ans)))
-            ans[[cc]][ ans[[cc]] < -99 ] <- NA
+            ans[[cc]][ ans[[cc]] <= -99 ] <- NA
 
         timestamp <- .prepare_timestamp(ans[[1L]], frequency)
 
