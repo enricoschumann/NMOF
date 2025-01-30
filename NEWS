@@ -1,6 +1,7 @@
-v2.10-2  (2025-01-09; not yet released)
+v2.10-2  (2025-01-09; under development)
 
-  o French: support more datasets
+  o French: support more datasets; see
+    https://quant.stackexchange.com/questions/81589/mean-of-excess-returns-why-do-fama-french-library-and-ff-2017-differ-for-the
 
   o ....
 

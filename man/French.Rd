@@ -102,6 +102,11 @@ French(dest.dir,
 
 }
 \references{
+
+  Fama, Eugene F. and French, Kenneth R. (2023)
+  Production of U.S. Rm-Rf, SMB, and HML in the Fama-French Data Library,
+  Chicago Booth Research Paper No. 23-22. \doi{10.2139/ssrn.4629613}
+  
   Gilli, M., Maringer, D. and Schumann, E. (2019)
   \emph{Numerical Methods and Optimization in Finance}.
   2nd edition. Elsevier. \doi{10.1016/C2017-0-01621-X}

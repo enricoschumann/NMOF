@@ -171,7 +171,12 @@ French <- function(dest.dir,
             "6_portfolios_2x3_daily_CSV.zip",
             "F-F_Momentum_Factor_CSV.zip",
             "F-F_Momentum_Factor_daily_CSV.zip",
+
             "F-F_Research_Data_Factors_daily_CSV.zip",
+            "F-F_Research_Data_Factors_CSV.zip",
+
+            "F-F_Research_Data_5_Factors_2x3_daily_CSV.zip",
+
             "ME_Breakpoints_CSV.zip",
 
             "Europe_5_Factors_CSV.zip",
