@@ -1,9 +1,7 @@
-v2.10-2  (2025-01-09; under development)
+v2.10-2  (2025-02-14)
 
   o French: support more datasets; see
     https://quant.stackexchange.com/questions/81589/mean-of-excess-returns-why-do-fama-french-library-and-ff-2017-differ-for-the
-
-  o ....
 
 v2.10-1  (2024-11-03)
 
@@ -61,14 +59,14 @@ v2.8-0  (2023-10-20)
     in 2018)
 
   o the manual has been updated:
-    http://enricoschumann.net/NMOF.htm#NMOFmanual
+    https://enricoschumann.net/NMOF.htm#NMOFmanual
 
 v2.7-1  (2022-10-20)
 
   o various minor documentation updates
 
   o manual has been updated:
-    http://enricoschumann.net/NMOF.htm#NMOFmanual
+    https://enricoschumann.net/NMOF.htm#NMOFmanual
 
   o there is an additional public repository at
     https://git.sr.ht/~enricoschumann/NMOF
@@ -151,10 +149,10 @@ v2.2-0  (2020-10-20)
     portfolios, as described in Rockafellar/Uryasev
     (2000; http://doi.org/10.21314/JOR.2000.038 ).
     For details on implementation, see
-    http://enricoschumann.net/notes/minimising-conditional-var.html
+    https://enricoschumann.net/notes/minimising-conditional-var.html
 
   o New function 'trackingPortfolio'. For details, see
-    http://enricoschumann.net/notes/return-based-tracking-portfolios.html
+    https://enricoschumann.net/notes/return-based-tracking-portfolios.html
 
   o New vignette 'Functions for portfolio selection'.
 
@@ -233,10 +231,10 @@ v2.0-1  (2019-10-20)
 
   o various documentation updates; new features are
     now described at
-      http://enricoschumann.net/notes/NMOF/
+      https://enricoschumann.net/notes/NMOF/
 
   o manual has been updated:
-    http://enricoschumann.net/NMOF.htm#NMOFmanual
+    https://enricoschumann.net/NMOF.htm#NMOFmanual
 
 v1.6-0  (2019-04-01)
 
@@ -308,7 +306,7 @@ v0.99-0  (2017-02-15)
     portfolios
 
   o manual has been updated:
-    http://enricoschumann.net/NMOF.htm#NMOFmanual
+    https://enricoschumann.net/NMOF.htm#NMOFmanual
 
 v0.40-0  (2016-10-20)
 
@@ -699,7 +697,7 @@ v0.25-0  (2012-04-20)
     (The scripts are stored in subdirectory 'book'.)
 
   o A first draft of the 'NMOF Manual' is available from
-    http://enricoschumann.net/NMOF.htm . The manual's code
+    https://enricoschumann.net/NMOF.htm . The manual's code
     examples are collected in file 'NMOFman.R' (in subdirectory
     'NMOFex'). The manual supersedes 'Examples and Extensions for
     the NMOF package'.
@@ -770,9 +768,9 @@ v0.22-1  (2011-12-15)
   o tests for distributed computing have been organised into a
     report, 'Distributed computations with the NMOF package',
     available as a pdf-file from
-    http://enricoschumann.net/files/NMOFdist_Windows.pdf
+    https://enricoschumann.net/files/NMOFdist_Windows.pdf
     and
-    http://enricoschumann.net/files/NMOFdist_Linux.pdf
+    https://enricoschumann.net/files/NMOFdist_Linux.pdf
     (package 'multicore' is only available on Linux)
   o the code for 'Distributed computations with the NMOF package'
     is available in file 'NMOFdist.R', stored in subdirectory
@@ -825,7 +823,7 @@ v0.21-2  (2011-11-22)
     before it is checked whether package 'snow' is available)
   o the latest pdf-version of 'Examples and Extensions
     for the NMOF package' is now available from
-    http://enricoschumann.net/files/NMOFex.pdf
+    https://enricoschumann.net/files/NMOFex.pdf
   o code examples in subdirectory 'NMOFex' updated
 
 

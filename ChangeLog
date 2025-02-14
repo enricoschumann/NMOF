@@ -1,3 +1,9 @@
+2025-02-14  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.10-2
+
+        * NEWS: updated many links from http to https
+
 2025-01-30  Enrico Schumann  <es@enricoschumann.net>
 
         * R/market_data.R (French): update list of
