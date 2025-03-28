@@ -414,6 +414,7 @@ trackingPortfolio <- function(var, wmin = 0, wmax = 1,
                                      bvec = b,
                                      meq  = 1L)
         ans <- qp_res$solution
+        names(ans) <- colnames(var)[-1]
 
     } else if (method %in% c("ls", "LSopt")) {
 

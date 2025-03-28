@@ -1,3 +1,8 @@
+2025-03-28  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/portfolio.R (trackingPortfolio): copy names of
+        'var' to solution
+
 2025-02-14  Enrico Schumann  <es@enricoschumann.net>
 
         * DESCRIPTION (Version): 2.10-2
