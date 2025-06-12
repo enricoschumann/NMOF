@@ -1,10 +1,12 @@
-v2.11-0  (2025-03-28; under development)
+v2.11-0  (2025-06-12; under development)
 
+  o 'Ritter' has been adapted to new file format and
+    allows to pass parameters to 'download.file'
+  
   o 'trackingPortfolio' keeps column names of the input
     data
   
   o ....
-
 
 v2.10-2  (2025-02-14)
 

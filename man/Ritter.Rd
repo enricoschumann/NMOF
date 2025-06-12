@@ -11,7 +11,8 @@
 }
 \usage{
 Ritter(dest.dir,
-        url = "https://site.warrington.ufl.edu/ritter/files/IPO-age.xlsx")
+       url = "https://site.warrington.ufl.edu/ritter/files/IPO-age.xlsx",
+       \dots)
 }
 \arguments{
   \item{dest.dir}{
@@ -19,7 +20,11 @@ Ritter(dest.dir,
 }
   \item{url}{
     the data URL
-}
+  }
+  \item{\dots}{
+    named arguments to be passed to
+    \code{\link{download.file}}
+  }
 }
 \details{
 
@@ -37,18 +42,7 @@ Ritter(dest.dir,
 
 }
 \value{
-a \code{\link{data.frame}}:
-\item{CUSIP}{CUSIP}
-\item{Offer date}{a \code{\link{Date}}}
-\item{Company name}{character: Company name}
- \item{Ticker}{character: Ticker}
-\item{Founding}{Founding year}
-\item{PERM}{PERM}
-\item{VC dummy}{VC Dummy}
-\item{Rollup}{Rollup}
-\item{Dual}{Dual}
-\item{Post-issue shares}{Post-issue shares}
-\item{Internet}{Internet}
+  a \code{\link{data.frame}}
 }
 \references{
 

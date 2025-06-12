@@ -1,3 +1,11 @@
+2025-06-12  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R (Ritter): new '...' argument,
+        with the additional parameters passed to
+        'download.file'
+        (Ritter): adapt to new file format -- there is new
+        column "ADR"
+
 2025-03-28  Enrico Schumann  <es@enricoschumann.net>
 
         * R/portfolio.R (trackingPortfolio): copy names of

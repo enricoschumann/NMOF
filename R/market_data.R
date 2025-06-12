@@ -1,19 +1,21 @@
 ## -*- truncate-lines: t; -*-
 
 Ritter <- function(dest.dir,
-                   url = "https://site.warrington.ufl.edu/ritter/files/IPO-age.xlsx") {
+                   url = "https://site.warrington.ufl.edu/ritter/files/IPO-age.xlsx",
+                   ...) {
 
     f.name <- paste0(format(Sys.Date(), "%Y%m%d_"),
                      "IPO-age.xlsx")
     f.path <- file.path(normalizePath(dest.dir), f.name)
 
     if (!file.exists(f.path))
-        dl.result <- download.file(url, destfile = f.path)
+        dl.result <- download.file(url, destfile = f.path, ...)
     else
         dl.result <- 0
 
     if (dl.result != 0L) {
-        warning("download failed with code ", dl.result, "; see ?download.file")
+        warning("download failed with code ",
+                dl.result, "; see ?download.file")
         return(invisible(NULL))
     }
 
@@ -22,14 +24,15 @@ Ritter <- function(dest.dir,
              sQuote("openxlsx"), " is not available")
 
     data <- openxlsx::read.xlsx(f.path)
-    data <- data[, 1:11]
+    data <- data[, 1:12]
     data <- data[!apply(data, 1, function(x) all(is.na(x))), ]
     colnames(data) <- gsub("[.]", " ", colnames(data))
     cn0 <- colnames(data)
     colnames(data) <- tolower(colnames(data))
 
-    data[["offer date"]] <- as.Date(as.character(data[["offer date"]]),
-                                    format = "%Y%m%d")
+    data[["offer date"]] <- as.Date(
+        as.character(data[["offer date"]]),
+        format = "%Y%m%d")
 
     data[["rollup"]][data[["rollup"]] %in% c(".")] <- NA
     data[["rollup"]] <- as.logical(as.numeric(data[["rollup"]]))
