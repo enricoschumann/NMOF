@@ -1,8 +1,12 @@
-v2.11-0  (2025-06-12; under development)
+v2.11-0  (2025-06-16; under development)
 
   o 'Ritter' has been adapted to new file format and
     allows to pass parameters to 'download.file'
   
+  o new function 'PBO', for computing probability of
+    backtest overfitting, as descrived in Bailey et
+    al. (2017; https://doi.org/10.21314/JCF.2016.322 )
+
   o 'trackingPortfolio' keeps column names of the input
     data
   
@@ -37,7 +41,7 @@ v2.9-0  (2023-12-29)
   o new function 'approxBondReturn', for approximating the
     total return of a (par) bond through its current yield,
     duration and convexity, as described in Swinkels (2019;
-    https://doi.org/10.3390/data4030091)
+    https://doi.org/10.3390/data4030091 )
 
   o 'bracketing' better handles cases when 'fun' evaluates to
     exactly zero, matching the MATLAB implementation in the

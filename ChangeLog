@@ -1,3 +1,10 @@
+2026-06-16  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/probBO.R (PBO): add function 'PBO', for
+        computing probability of backtest overfitting,
+        as descrived in Bailey et al. (2017;
+        https://doi.org/10.21314/JCF.2016.322 )
+
 2025-06-12  Enrico Schumann  <es@enricoschumann.net>
 
         * R/market_data.R (Ritter): new '...' argument,
