@@ -174,7 +174,7 @@ v2.2-0  (2020-10-20)
     via 'algo): if TRUE, zero values are dropped from
     the sample of objective-function values during the
     computation of the threshold sequence. See
-    https://stackoverflow.com/questions/63377180/finding-ideal-filter-setting-to-maximize-target-function
+    https://stackoverflow.com/a/63429510 .
 
   o 'French' supports more datasets. For industry
     portfolios, the function now also provides "Sum of
