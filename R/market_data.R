@@ -502,7 +502,7 @@ French <- function(dest.dir,
     } else if (dataset == "10_portfolios_prior_12_2_csv.zip") {
 
         if (weighting == "value")
-            i <- grep("Average Value Weighted Returns -- Monthly", txt)
+            i <- grep("(Average)? *Value Weight(ed)? Returns -- Monthly", txt)
         else if (weighting == "equal")
             i <- grep("Average Equal Weighted Returns -- Monthly", txt)
 
