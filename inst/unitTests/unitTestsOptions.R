@@ -1,8 +1,6 @@
 ## -*- truncate-lines: t; -*-
 
 ## - option pricing
-## - testFunctions
-## - restartOpt
 
 test.callHestoncf <- function() {
     S <- 100; X <- 100; tau <- 1; r <- 0.02; q <- 0.01;

@@ -4,9 +4,16 @@ importFrom("grDevices", "dev.new", "grey")
 importFrom("graphics", "plot", "legend", "lines")
 importFrom("stats", "cov", "dnorm", "integrate", "median", "pnorm",
            "quantile", "rnorm", "runif", "sd", "uniroot")
-importFrom("utils", "flush.console", "setTxtProgressBar",
-           "download.file", "read.table", "unzip",
-           "txtProgressBar")
+importFrom("utils",
+           "combn",
+           "download.file",
+           "flush.console",
+           "read.table",
+           "setTxtProgressBar",
+           "txtProgressBar",
+           "unzip")
+
+
 export(
     CPPI,
     DEopt,
@@ -21,6 +28,7 @@ export(
     NSS,
     NSSf,
     NSf,
+    PBO,
     PSopt,
     Ritter,
     SA.info,
@@ -28,6 +36,7 @@ export(
     Shiller,
     TA.info,
     TAopt,
+    approxBondReturn,
     barrierOptionEuropean,
     bracketing,
     bundFuture,
@@ -52,6 +61,7 @@ export(
     gridSearch,
     maxSharpe,
     minCVaR,
+    minMAD,
     minvar,
     mvFrontier,
     mvPortfolio,

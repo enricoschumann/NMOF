@@ -1,12 +1,109 @@
-v2.7-0  (2022-??-??; not yet released)
+v2.11-0  (2025-06-16; under development)
+
+  o 'Ritter' has been adapted to new file format and
+    allows to pass parameters to 'download.file'
+  
+  o new function 'PBO', for computing probability of
+    backtest overfitting, as descrived in Bailey et
+    al. (2017; https://doi.org/10.21314/JCF.2016.322 )
+
+  o 'trackingPortfolio' keeps column names of the input
+    data
+  
+  o ....
+
+v2.10-2  (2025-02-14)
+
+  o French: support more datasets; see
+    https://quant.stackexchange.com/a/81590
+
+v2.10-1  (2024-11-03)
+
+  o an example was removed from the manual page of 'NS'
+
+v2.10-0  (2024-10-20)
+
+  o fix bug in bracketing introduced in version 2.9-0
+
+  o 'French' supports more datasets:
+    "F-F_Research_Data_5_Factors_2x3_daily_CSV.zip", and
+    "market" with frequency "monthly"
+
+  o 'French' gains an argument "return.class": supported are
+     "data.frame" (the current behaviour) and "zoo", which
+     can easily be transformed to "xts"
+
+  o 'Shiller' tries to fetch data from new URL at
+    https://shillerdata.com/
+
+v2.9-0  (2023-12-29)
+
+  o new function 'approxBondReturn', for approximating the
+    total return of a (par) bond through its current yield,
+    duration and convexity, as described in Swinkels (2019;
+    https://doi.org/10.3390/data4030091 )
+
+  o 'bracketing' better handles cases when 'fun' evaluates to
+    exactly zero, matching the MATLAB implementation in the
+    NMOF book
+
+v2.8-0  (2023-10-20)
+
+  o 'callHestoncf' gains an argument 'uniroot.control', which
+    allows passing settings for 'uniroot' (to compute implied
+    vol), and 'uniroot.info'; both arguments work the same way
+    as in functions 'vanillaOptionImpliedVol' and 'callCF'
+
+  o 'trackingPortfolio' now has an argument 'ls.algo', for
+    specifying settings for method 'ls'
+
+  o new function 'minMAD' for computing minimum-MAD
+    portfolios, as described in Konno and Yamazaki
+    (1991; https://doi.org/10.1287/mnsc.37.5.519 )
+
+  o 'vanillaOptionEuropean' also provides "DvegaDspot" and
+    "DvegaDvol"
+
+  o 'Ritter' has been adapted to new file format
+
+  o all functions that allow parallel programming now support
+    argument 'affinity.list'
+
+  o the package now depends on R >= 3.5 (which was released
+    in 2018)
+
+  o the manual has been updated:
+    https://enricoschumann.net/NMOF.htm#NMOFmanual
+
+v2.7-1  (2022-10-20)
+
+  o various minor documentation updates
+
+  o manual has been updated:
+    https://enricoschumann.net/NMOF.htm#NMOFmanual
+
+  o there is an additional public repository at
+    https://git.sr.ht/~enricoschumann/NMOF
+
+v2.7-0  (2022-08-19)
 
   o function 'gbm' gains an argument "antithetic": if
     TRUE, paths are created based on antithetic variates
 
+  o functions 'gbm' and 'gbb' gain an argument
+    'exp.result', with default TRUE. If FALSE, the log
+    paths are returned. Function 'gbb' gets an argument
+    'log', with default FALSE, which matches the
+    previous behaviour
+
   o new function 'barrierOptionEuropean', for computing
     theoretical prices for various barrier-option types
 
-  o ....
+  o function 'French' tries harder to evaluate to NULL
+    when a download fails
+
+  o function vanillaOptionAmerican now works for very
+    small values for M (M <= 3)
 
 v2.6-0  (2022-01-26)
 
@@ -63,11 +160,13 @@ v2.3-1  (2021-01-19)
 v2.2-0  (2020-10-20)
 
   o New function 'minCVaR' for computing minimum CVaR
-    portfolios. For details, see
-    http://enricoschumann.net/notes/minimising-conditional-var.html
+    portfolios, as described in Rockafellar/Uryasev
+    (2000; http://doi.org/10.21314/JOR.2000.038 ).
+    For details on implementation, see
+    https://enricoschumann.net/notes/minimising-conditional-var.html
 
   o New function 'trackingPortfolio'. For details, see
-    http://enricoschumann.net/notes/return-based-tracking-portfolios.html
+    https://enricoschumann.net/notes/return-based-tracking-portfolios.html
 
   o New vignette 'Functions for portfolio selection'.
 
@@ -75,7 +174,7 @@ v2.2-0  (2020-10-20)
     via 'algo): if TRUE, zero values are dropped from
     the sample of objective-function values during the
     computation of the threshold sequence. See
-    https://stackoverflow.com/questions/63377180/finding-ideal-filter-setting-to-maximize-target-function
+    https://stackoverflow.com/a/63429510 .
 
   o 'French' supports more datasets. For industry
     portfolios, the function now also provides "Sum of
@@ -146,10 +245,10 @@ v2.0-1  (2019-10-20)
 
   o various documentation updates; new features are
     now described at
-      http://enricoschumann.net/notes/NMOF/
+      https://enricoschumann.net/notes/NMOF/
 
   o manual has been updated:
-    http://enricoschumann.net/NMOF.htm#NMOFmanual
+    https://enricoschumann.net/NMOF.htm#NMOFmanual
 
 v1.6-0  (2019-04-01)
 
@@ -221,7 +320,7 @@ v0.99-0  (2017-02-15)
     portfolios
 
   o manual has been updated:
-    http://enricoschumann.net/NMOF.htm#NMOFmanual
+    https://enricoschumann.net/NMOF.htm#NMOFmanual
 
 v0.40-0  (2016-10-20)
 
@@ -612,7 +711,7 @@ v0.25-0  (2012-04-20)
     (The scripts are stored in subdirectory 'book'.)
 
   o A first draft of the 'NMOF Manual' is available from
-    http://enricoschumann.net/NMOF.htm . The manual's code
+    https://enricoschumann.net/NMOF.htm . The manual's code
     examples are collected in file 'NMOFman.R' (in subdirectory
     'NMOFex'). The manual supersedes 'Examples and Extensions for
     the NMOF package'.
@@ -683,9 +782,9 @@ v0.22-1  (2011-12-15)
   o tests for distributed computing have been organised into a
     report, 'Distributed computations with the NMOF package',
     available as a pdf-file from
-    http://enricoschumann.net/files/NMOFdist_Windows.pdf
+    https://enricoschumann.net/files/NMOFdist_Windows.pdf
     and
-    http://enricoschumann.net/files/NMOFdist_Linux.pdf
+    https://enricoschumann.net/files/NMOFdist_Linux.pdf
     (package 'multicore' is only available on Linux)
   o the code for 'Distributed computations with the NMOF package'
     is available in file 'NMOFdist.R', stored in subdirectory
@@ -738,7 +837,7 @@ v0.21-2  (2011-11-22)
     before it is checked whether package 'snow' is available)
   o the latest pdf-version of 'Examples and Extensions
     for the NMOF package' is now available from
-    http://enricoschumann.net/files/NMOFex.pdf
+    https://enricoschumann.net/files/NMOFex.pdf
   o code examples in subdirectory 'NMOFex' updated
 
 

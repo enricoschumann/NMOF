@@ -1,19 +1,21 @@
 ## -*- truncate-lines: t; -*-
 
 Ritter <- function(dest.dir,
-                   url = "https://site.warrington.ufl.edu/ritter/files/IPO-age.xlsx") {
+                   url = "https://site.warrington.ufl.edu/ritter/files/IPO-age.xlsx",
+                   ...) {
 
     f.name <- paste0(format(Sys.Date(), "%Y%m%d_"),
                      "IPO-age.xlsx")
     f.path <- file.path(normalizePath(dest.dir), f.name)
 
     if (!file.exists(f.path))
-        dl.result <- download.file(url, destfile = f.path)
+        dl.result <- download.file(url, destfile = f.path, ...)
     else
         dl.result <- 0
 
     if (dl.result != 0L) {
-        warning("download failed with code ", dl.result, "; see ?download.file")
+        warning("download failed with code ",
+                dl.result, "; see ?download.file")
         return(invisible(NULL))
     }
 
@@ -22,42 +24,64 @@ Ritter <- function(dest.dir,
              sQuote("openxlsx"), " is not available")
 
     data <- openxlsx::read.xlsx(f.path)
-    data <- data[, 1:11]
-    colnames(data) <- c("CUSIP","Offer date","Company name",
-                        "Ticker","Founding","PERM","VC dummy",
-                        "Rollup","Dual","Post-issue shares","Internet")
+    data <- data[, 1:12]
+    data <- data[!apply(data, 1, function(x) all(is.na(x))), ]
+    colnames(data) <- gsub("[.]", " ", colnames(data))
+    cn0 <- colnames(data)
+    colnames(data) <- tolower(colnames(data))
 
-    data[["Offer date"]] <- as.Date(as.character(data[["Offer date"]]),
-                                    format = "%Y%m%d")
+    data[["offer date"]] <- as.Date(
+        as.character(data[["offer date"]]),
+        format = "%Y%m%d")
 
-    data[["Rollup"]][data[["Rollup"]] %in% c(".")] <- NA
-    data[["Rollup"]] <- as.logical(as.numeric(data[["Rollup"]]))
+    data[["rollup"]][data[["rollup"]] %in% c(".")] <- NA
+    data[["rollup"]] <- as.logical(as.numeric(data[["rollup"]]))
 
-    data[["Internet"]][data[["Internet"]] %in% c(".")] <- NA
-    data[["Internet"]] <- as.logical(as.numeric(data[["Internet"]]))
+    data[["internet"]][data[["internet"]] %in% c(".")] <- NA
+    data[["internet"]] <- as.logical(as.numeric(data[["internet"]]))
 
-    data[["Dual"]][data[["Dual"]] %in% c(".")] <- NA
-    data[["Dual"]] <- as.numeric(data[["Dual"]])
+    data[["dual"]][data[["dual"]] %in% c(".")] <- NA
+    data[["dual"]] <- as.numeric(data[["dual"]])
 
-    data[["VC dummy"]][data[["VC dummy"]] %in% c(".")] <- NA
-    data[["VC dummy"]] <- as.numeric(data[["VC dummy"]])
+    if ("vc dummy" %in% colnames(data)) {
+        data[["vc dummy"]][data[["vc dummy"]] %in% c(".")] <- NA
+        data[["vc dummy"]] <- as.numeric(data[["vc dummy"]])
+    }
 
-    data[["Post-issue shares"]][data[["Post-issue shares"]] %in% c(".", "-9")] <- NA
-    data[["Post-issue shares"]] <- as.numeric(data[["Post-issue shares"]])
+    if ("vc" %in% colnames(data)) {
+        data[["vc"]][data[["vc"]] %in% c(".")] <- NA
+        data[["vc"]] <- as.numeric(data[["vc"]])
+    }
 
-    data[["Founding"]][data[["Founding"]] %in% c(".", "-99", "-9")] <- NA
-    data[["Founding"]] <- as.numeric(data[["Founding"]])
+    if ("post-issue shares" %in% colnames(data)) {
+        data[["post-issue shares"]][data[["post-issue shares"]] %in% c(".", "-9")] <- NA
+        data[["post-issue shares"]] <- as.numeric(data[["post-issue shares"]])
+    }
 
+    if ("postissueshares" %in% colnames(data)) {
+        data[["postissueshares"]][data[["postissueshares"]] %in% c(".", "-9")] <- NA
+        data[["postissueshares"]] <- as.numeric(data[["postissueshares"]])
+    }
+
+    data[["founding"]][data[["founding"]] %in% c(".", "-99", "-9")] <- NA
+    data[["founding"]] <- as.numeric(data[["founding"]])
+    colnames(data) <- cn0
 
     data
 }
 
-Shiller <- function(dest.dir,
-                    url = "http://www.econ.yale.edu/~shiller/data/ie_data.xls") {
 
-    f.name <- paste0(format(Sys.Date(), "%Y%m%d_"),
-                     "ie_data.xls")
+Shiller <- function(dest.dir, url = NULL) {
+
+    f.name <- paste0(format(Sys.Date(), "%Y%m%d_"), "ie_data.xls")
     f.path <- file.path(normalizePath(dest.dir), f.name)
+
+    if (is.null(url)) {
+        txt <- readLines("https://shillerdata.com/", warn = FALSE)
+        txt <- paste(txt, collapse = "")
+        url <- sub(".*href=.*?(img1.wsimg.com/blobby/go/.*?/downloads/.*?ie_data.xls).*",
+                   "\\1", txt, perl = TRUE)
+    }
 
     if (!file.exists(f.path))
         dl.result <- download.file(url, destfile = f.path)
@@ -114,13 +138,15 @@ Shiller <- function(dest.dir,
     data
 }
 
+
 French <- function(dest.dir,
                    dataset = "F-F_Research_Data_Factors_CSV.zip",
                    weighting = "value",
                    frequency = "monthly",
                    price.series = FALSE,
                    na.rm = FALSE,
-                   adjust.frequency = TRUE) {
+                   adjust.frequency = TRUE,
+                   return.class = "data.frame") {
 
     .prepare_timestamp <- function(x, freq) {
         if (freq == "monthly")
@@ -148,8 +174,15 @@ French <- function(dest.dir,
             "6_portfolios_2x3_daily_CSV.zip",
             "F-F_Momentum_Factor_CSV.zip",
             "F-F_Momentum_Factor_daily_CSV.zip",
+
             "F-F_Research_Data_Factors_daily_CSV.zip",
+            "F-F_Research_Data_Factors_CSV.zip",
+
+            "F-F_Research_Data_5_Factors_2x3_daily_CSV.zip",
+
             "ME_Breakpoints_CSV.zip",
+
+            "Europe_5_Factors_CSV.zip",
 
             ## univariate sorts
             "Portfolios_Formed_on_ME_CSV.zip",
@@ -194,10 +227,10 @@ French <- function(dest.dir,
     else if (dataset == "me_breakpoints") {
         url <- "ME_Breakpoints_CSV.zip"
         dataset <- "me_breakpoints_csv.zip"
-    } else if (dataset %in% c("market", "rf") &&
+    } else if (tolower(dataset) %in% c("market", "rf") &&
              frequency == "daily")
         url <- "F-F_Research_Data_Factors_daily_CSV.zip"
-    else if (dataset %in% c("market", "rf"))
+    else if (tolower(dataset) %in% c("market", "rf"))
         url <- "F-F_Research_Data_Factors_CSV.zip"
     else
         url <- dataset
@@ -222,10 +255,16 @@ French <- function(dest.dir,
     f.path <- file.path(normalizePath(dest.dir), f.name)
 
     if (!file.exists(f.path))
-        dl.result <- download.file(paste0(.ftp, url), f.path)
+        dl.result <- try(download.file(paste0(.ftp, url), f.path),
+                         silent = TRUE)
     else
         dl.result <- 0
 
+    if (inherits(dl.result, "try-error")) {
+        warning("download failed with message ",
+                sQuote(conditionMessage(attr(dl.result, "condition")), FALSE))
+        return(invisible(NULL))
+    }
     if (dl.result != 0L) {
         warning("download failed with code ", dl.result, "; see ?download.file")
         return(invisible(NULL))
@@ -504,6 +543,17 @@ French <- function(dest.dir,
         ans <- txt[i:j]
         cnames <- "Mom"
 
+    } else if (dataset == "europe_5_factors_csv.zip") {
+
+        i <- grep(",Mkt-RF", txt)
+        i <- i[ c("monthly" = 1, "annual" = 2)[frequency] ]
+        j <- grep("^[, ]*$", txt)
+        j <- min( j[j > i] ) - 1
+        ans <- txt[i:j]
+
+        cnames <- c("Mkt-RF", "SMB", "HML",
+                    "RMW", "CMA", "RF")
+
     } else if (tolower(dataset) == "f-f_research_data_factors_csv.zip") {
 
         i <- grep("Mkt-RF", txt)
@@ -515,11 +565,15 @@ French <- function(dest.dir,
         else
             stop("frequency not supported")
 
-    } else if (tolower(dataset) == "f-f_research_data_factors_daily_csv.zip") {
+    } else if (tolower(dataset) %in%
+               c("f-f_research_data_factors_daily_csv.zip",
+                 "f-f_research_data_5_factors_2x3_daily_csv.zip")) {
 
         frequency <- "daily"
         i <- grep("Mkt-RF", txt)
         j <- grep("^ *$", txt[-c(1:10)]) + 9
+        if (!length(j))
+            j <- length(txt)
         ans <- txt[i:j]
 
     ## } else if (tolower(dataset) == "portfolios_formed_on_be-me_csv.zip") {
@@ -614,7 +668,8 @@ French <- function(dest.dir,
         message("Dataset not explicitly supported: trying default => check data carefully.")
 
         if (grepl("daily", dataset) && frequency != "daily")
-            warning("daily dataset but frequency not set to daily")
+            warning("Daily dataset but frequency not set to daily.\n",
+                    "  If parsing of file fails, try setting ", sQuote("frequency"), " to ", sQuote("daily"), ".")
 
         if (frequency == "annual") {
             i <- if (weighting == "equal")
@@ -697,7 +752,7 @@ French <- function(dest.dir,
                           check.names = FALSE,
                           colClasses = "numeric")
         for (cc in seq_len(ncol(ans)))
-            ans[[cc]][ ans[[cc]] < -99 ] <- NA
+            ans[[cc]][ ans[[cc]] <= -99 ] <- NA
 
         timestamp <- .prepare_timestamp(ans[[1L]], frequency)
 
@@ -721,9 +776,9 @@ French <- function(dest.dir,
         for (cc in seq_len(ncol(ans))) {
             if (na.rm && any(is.na(ans[[cc]]))) {
                 na <- is.na(ans[[cc]])
-                first_num <- min(which(!na))
-                if (!is.finite(first_num))  ## only NA values
+                if (all(na))  ## only NA values
                     next
+                first_num <- min(which(!na))
                 ans[[cc]][ na ] <- 0
                 ans[[cc]] <- cumprod(1 + ans[[cc]])
                 if (first_num > 1)
@@ -743,5 +798,14 @@ French <- function(dest.dir,
         for (i in seq_along(attr.list))
             attr(ans, names(attr.list)[i]) <- attr.list[[i]]
 
+    if (return.class == "zoo") {
+        if (requireNamespace("zoo")) {
+            ans <- zoo::zoo(ans, as.Date(row.names(ans)))
+        } else {
+            warning("return class ",
+                    sQuote("zoo"),
+                    " specified but package not available")
+        }
+    }
     ans
 }

@@ -9,6 +9,7 @@
 \usepackage[noae]{Sweave}
 \usepackage{mathptmx}
 \usepackage{amsmath,amstext}
+\usepackage{ragged2e}
 \usepackage{hyperref}
 \usepackage{natbib}
 \usepackage{units}
@@ -24,32 +25,36 @@
 \renewenvironment{Schunk}{\vspace{\topsep}}{\vspace{\topsep}}
 <<echo=false>>=
 options(continue = "  ", digits = 5, max.print = 1000)
+pv <- packageVersion("NMOF")
+pv <- gsub("(.*)[.](.*)", "\\1-\\2", pv)
 @
 
 \begin{document}
-{\raggedright{\LARGE Solving the \emph{N}-Queens Problem with Local Search}}\medskip
+{\raggedright{\LARGE Solving the \emph{N}-Queens Problem with Local Search}}\hspace*{\fill}
+{\footnotesize Package version \Sexpr{pv}}\medskip
 
 \noindent Enrico Schumann\\
 \noindent \texttt{es@enricoschumann.net}\\
 \bigskip
 
 
-\noindent This vignette provides example code for a combinatorial
-problem: the \emph{N-Queens Problem}.
+\noindent This vignette provides example code for a
+combinatorial problem: the \emph{N-Queens Problem}.%
+\marginpar{\footnotesize\RaggedRight The example is inspired
+  by \citet[chapter 2]{ierusalimschy2016}.} %
 
-
-\nocite{Gilli2011b}
+\nocite{Gilli2019}
 
 
 \section{The problem}
 
-The goal is to place $N$~queens on a chess-board of size
-$N \times N$ in such a way that no queen is attacked. A
-queen may move vertically, horizontally and on a
-diagonal. So whenever there is more than one queen on
-any row, column or diagonal, the position is invalid. To
-solve the problem with a Local Search (LS), we need
-three components:
+The goal is to place $N$~queens on a chess-board of
+size $N \times N$ in such a way that no queen is
+attacked.  A queen may move vertically, horizontally
+and on a diagonal. So whenever there is more than one
+queen on any row, column or diagonal, the position is
+invalid. To solve the problem with a Local Search (LS),
+we need three components:
 \begin{enumerate}
 \item a way to represent a solution (i.e. a position on
   the chessboard);

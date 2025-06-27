@@ -36,11 +36,15 @@ vanillaOptionEuropean <- function(S, X, tau, r, q = 0, v,
             n1 <- dnorm(I*d1)
             gamma <- exq * n1 / (S * sqrt(v*tau))
             vega <- Sexq * n1 * sqrt(tau)
+            DvegaDspot <- vega/S * (1 - d1/sqrt(v * tau))
+            DvegaDvol <- vega * d1 * d2 / sqrt(v)
         }
         if (!greeks)
             value else list(value = value, delta = delta, gamma = gamma,
                             theta = theta, vega = vega,
-                            rho = rho, rhoDiv = rhoDiv)
+                            rho = rho, rhoDiv = rhoDiv,
+                            DvegaDspot = DvegaDspot,
+                            DvegaDvol = DvegaDvol)
     } else if (tolower(model) == "heston") {
         cf <- cfHeston
         P1 <- function(om, S, X, tau, r, q, ...)
@@ -126,7 +130,8 @@ vanillaOptionImpliedVol <- function(exercise = "european",
                                     M = 101L, uniroot.control = list(),
                                     uniroot.info = FALSE) {
 
-    ucon <- list(interval = c(1e-05, 2), tol = .Machine$double.eps^0.25,
+    ucon <- list(interval = c(1e-05, 2),
+                 tol = .Machine$double.eps^0.25,
                  maxiter = 1000L)
     ucon[names(uniroot.control)] <- uniroot.control
 

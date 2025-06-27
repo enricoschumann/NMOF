@@ -1,33 +1,33 @@
 Package: NMOF
 Type: Package
 Title: Numerical Methods and Optimization in Finance
-Version: 2.7-0
-Date: 2022-03-22
+Version: 2.11-0
+Date: 2025-06-16
 Maintainer: Enrico Schumann <es@enricoschumann.net>
 Authors@R: person("Enrico", "Schumann",
                   role  = c("aut", "cre"),
                   email = "es@enricoschumann.net",
                   comment = c(ORCID = "0000-0001-7601-6576"))
-Depends: R (>= 2.14)
+Depends: R (>= 3.5)
 Imports: grDevices, graphics, parallel, stats, utils
 Suggests: MASS, PMwR, RUnit, Rglpk, datetimeutils,
-  openxlsx, quadprog, readxl, tinytest
+  openxlsx, quadprog, readxl, tinytest, zoo
 Description: Functions, examples and data from the first and
-  the second edition of "Numerical Methods and Optimization
-  in Finance" by M. Gilli, D. Maringer and E. Schumann
-  (2019, ISBN:978-0128150658).  The package provides
-  implementations of optimisation heuristics (Differential
-  Evolution, Genetic Algorithms, Particle Swarm
-  Optimisation, Simulated Annealing and Threshold
-  Accepting), and other optimisation tools, such as grid
-  search and greedy search.  There are also functions for
-  the valuation of financial instruments such as bonds and
+  the second edition of "Numerical Methods and Optimization in
+  Finance" by M. Gilli, D. Maringer and E. Schumann (2019,
+  ISBN:978-0128150658).  The package provides implementations
+  of optimisation heuristics (Differential Evolution, Genetic
+  Algorithms, Particle Swarm Optimisation, Simulated Annealing
+  and Threshold Accepting), and other optimisation tools, such
+  as grid search and greedy search.  There are also functions
+  for the valuation of financial instruments such as bonds and
   options, for portfolio selection and functions that help
   with stochastic simulations.
 License: GPL-3
-URL: https://gitlab.com/NMOF,
-     https://github.com/enricoschumann/NMOF,
-     http://enricoschumann.net/NMOF.htm
+URL: https://enricoschumann.net/NMOF.htm ,
+     https://gitlab.com/NMOF ,
+     https://git.sr.ht/~enricoschumann/NMOF ,
+     https://github.com/enricoschumann/NMOF
 LazyLoad: yes
 LazyData: yes
 ByteCompile: yes

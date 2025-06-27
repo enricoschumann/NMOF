@@ -11,7 +11,8 @@
 }
 \usage{
 Ritter(dest.dir,
-        url = "https://site.warrington.ufl.edu/ritter/files/IPO-age.xlsx")
+       url = "https://site.warrington.ufl.edu/ritter/files/IPO-age.xlsx",
+       \dots)
 }
 \arguments{
   \item{dest.dir}{
@@ -19,12 +20,16 @@ Ritter(dest.dir,
 }
   \item{url}{
     the data URL
-}
+  }
+  \item{\dots}{
+    named arguments to be passed to
+    \code{\link{download.file}}
+  }
 }
 \details{
 
   The function downloads \acronym{IPO} data provided by Jay
-  R. Ritter \url{https://site.warrington.ufl.edu/ritter}.
+  R. Ritter \url{https://site.warrington.ufl.edu/ritter/}.
   Since the data are provided in Excel format, package
   \pkg{openxlsx} is required.
 
@@ -37,26 +42,18 @@ Ritter(dest.dir,
 
 }
 \value{
-a \code{\link{data.frame}}:
-\item{CUSIP}{CUSIP}
-\item{Offer date}{a \code{\link{Date}}}
-\item{Company name}{character: Company name}
- \item{Ticker}{character: Ticker}
-\item{Founding}{Founding year}
-\item{PERM}{PERM}
-\item{VC dummy}{VC Dummy}
-\item{Rollup}{Rollup}
-\item{Dual}{Dual}
-\item{Post-issue shares}{Post-issue shares}
-\item{Internet}{Internet}
+  a \code{\link{data.frame}}
 }
 \references{
 
   \url{https://site.warrington.ufl.edu/ritter/ipo-data/}
 
-  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
-  Methods and Optimization in Finance}. 2nd edition. Elsevier.
-  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
+  Gilli, M., Maringer, D. and Schumann, E. (2019)
+  \emph{Numerical Methods and Optimization in Finance}.
+  2nd edition. Elsevier. \doi{10.1016/C2017-0-01621-X}
+
+  Schumann, E. (2023) Financial Optimisation with R (\pkg{NMOF} Manual).
+  \url{https://enricoschumann.net/NMOF.htm#NMOFmanual}
 
 }
 \author{

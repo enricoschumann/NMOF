@@ -164,9 +164,9 @@ DEopt(OF, algo = list(), ...)
 
 } % end value
 \references{
-  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
-  Methods and Optimization in Finance}. 2nd edition. Elsevier.
-  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
+  Gilli, M., Maringer, D. and Schumann, E. (2019)
+  \emph{Numerical Methods and Optimization in Finance}.
+  2nd edition. Elsevier. \doi{10.1016/C2017-0-01621-X}
 
   Maringer, D. and Oyewumi, O. (2007). Index Tracking with Constrained
   Portfolios. \emph{Intelligent Systems in Accounting, Finance and Management},
@@ -174,10 +174,10 @@ DEopt(OF, algo = list(), ...)
 
   Schumann, E. (2012) Remarks on 'A comparison of some
   heuristic optimization methods'.
-  \url{http://enricoschumann.net/R/remarks.htm}
+  \url{https://enricoschumann.net/R/remarks.htm}
 
-  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
-  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+  Schumann, E. (2023) Financial Optimisation with R (\pkg{NMOF} Manual).
+  \url{https://enricoschumann.net/NMOF.htm#NMOFmanual}
 
   Storn, R., and Price, K. (1997) Differential Evolution -- a Simple and
   Efficient Heuristic for Global Optimization over Continuous Spaces.
@@ -192,7 +192,7 @@ DEopt(OF, algo = list(), ...)
 }
 \examples{
 ## Example 1: Trefethen's 100-digit challenge (problem 4)
-## http://people.maths.ox.ac.uk/trefethen/hundred.html
+## https://people.maths.ox.ac.uk/trefethen/hundred.html
 
 OF <- tfTrefethen               ### see ?testFunctions
 algo <- list(nP = 50L,          ### population size

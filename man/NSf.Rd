@@ -31,20 +31,20 @@ NSSf(lambda1, lambda2, tm)
 \references{
 
   Gilli, M. and Grosse, S. and Schumann, E. (2010) Calibrating the Nelson-Siegel-Svensson model, \acronym{COMISEF} Working Paper Series No. 031.
-  \url{http://enricoschumann.net/COMISEF/wps031.pdf}
+  \url{https://enricoschumann.net/COMISEF/wps031.pdf}
 
-  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
-  Methods and Optimization in Finance}. 2nd edition. Elsevier.
-  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
+  Gilli, M., Maringer, D. and Schumann, E. (2019)
+  \emph{Numerical Methods and Optimization in Finance}.
+  2nd edition. Elsevier. \doi{10.1016/C2017-0-01621-X}
 
   Gilli, M. and Schumann, E. (2010) A Note on \sQuote{Good} Starting Values in Numerical Optimisation,
   \acronym{COMISEF} Working Paper Series No. 044.
-  \url{http://enricoschumann.net/COMISEF/wps044.pdf}
+  \url{https://enricoschumann.net/COMISEF/wps044.pdf}
 
   Nelson, C.R. and Siegel, A.F. (1987) Parsimonious Modeling of Yield Curves. \emph{Journal of Business}, \strong{60}(4), pp. 473--489.
 
-  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
-  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+  Schumann, E. (2023) Financial Optimisation with R (\pkg{NMOF} Manual).
+  \url{https://enricoschumann.net/NMOF.htm#NMOFmanual}
 
   Svensson, L.E. (1994) Estimating and Interpreting Forward Interest Rates: Sweden 1992--1994. \acronym{IMF} Working Paper 94/114.
 

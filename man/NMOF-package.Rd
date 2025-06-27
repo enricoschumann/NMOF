@@ -56,7 +56,7 @@
   The source code of the \pkg{NMOF} package is also hosted at
   \url{https://github.com/enricoschumann/NMOF/}.
   Updates to the package and new features are described at
-  \url{http://enricoschumann.net/notes/NMOF/}.
+  \url{https://enricoschumann.net/notes/NMOF/}.
 
   \subsection{Optimisation}{
 
@@ -99,21 +99,18 @@
     \code{\link{optionData}}.
 
   }
-
 }
 \author{Enrico Schumann
 
   Maintainer: Enrico Schumann <es@enricoschumann.net>
 }
 \references{
+  Gilli, M., Maringer, D. and Schumann, E. (2019)
+  \emph{Numerical Methods and Optimization in Finance}.
+  2nd edition. Elsevier. \doi{10.1016/C2017-0-01621-X}
 
-  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
-  Methods and Optimization in Finance}. 2nd edition. Elsevier.
-  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
-
-  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
-  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
-
+  Schumann, E. (2023) Financial Optimisation with R (\pkg{NMOF} Manual).
+  \url{https://enricoschumann.net/NMOF.htm#NMOFmanual}
 }
 \keyword{package}
 \examples{
@@ -125,11 +122,11 @@ packageDescription("NMOF")
 help(package = "NMOF")
 
 ## code from book
-showExample("equations.R")
-showExample("exampleLS.R", chapter = 13)
+showExample("equations.R", edition = 1)
+showExample("Heur")
 
 ## show NEWS file
-news(Version >= "1.0-0", package = "NMOF")
+news(Version >= "2.0-0", package = "NMOF")
 
 ## vignettes
 vignette(package = "NMOF")
@@ -137,13 +134,14 @@ nss <- vignette("DEnss", package = "NMOF")
 print(nss)
 edit(nss)
 
-## book website
-browseURL("http://nmof.net")
-browseURL("http://enricoschumann.net/NMOF/")
+## _book_ websites
+browseURL("https://nmof.net")
+browseURL("https://enricoschumann.net/NMOF/")
 
-## package websites
-browseURL("http://enricoschumann.net/R/packages/NMOF/")
+## _package_ websites
+browseURL("https://enricoschumann.net/R/packages/NMOF/")
 browseURL("https://cran.r-project.org/package=NMOF")
+browseURL("https://git.sr.ht/~enricoschumann/NMOF")
 browseURL("https://github.com/enricoschumann/NMOF")
 
 ## unit tests

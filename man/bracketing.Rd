@@ -47,47 +47,55 @@ bracketing(fun, interval, ...,
     documentation of packages \pkg{parallel} and \pkg{snow}.}
 }
 \details{
-  \code{bracketing} evaluates \code{fun} at equal-spaced values of \code{x}
-  between (and including) \code{lower} and \code{upper}. If the sign of
-  \code{fun} changes between two consecutive \code{x}-values,
-  \code{bracketing} reports these two \code{x}-values as containing (\sQuote{bracketing})
-  a root. There is no guarantee that there is only one root
-  within a reported interval. \code{bracketing} will not narrow the chosen intervals.
+
+  \code{bracketing} evaluates \code{fun} at equal-spaced
+  values of \code{x} between (and including) \code{lower} and
+  \code{upper}. If the sign of \code{fun} changes between two
+  consecutive \code{x}-values, \code{bracketing} reports these
+  two \code{x}-values as containing (\sQuote{bracketing}) a
+  root. There is no guarantee that there is only one root
+  within a reported interval. \code{bracketing} will not
+  narrow the chosen intervals.
 
   The argument \code{method} determines how \code{fun} is
   evaluated. Default is \code{loop}. If \code{method} is
-  \code{"vectorised"}, \code{fun} must be written such that it can be
-  evaluated for a vector \code{x} (see Examples). If \code{method} is
-  \code{multicore}, function \code{mclapply} from package \pkg{parallel}
-  is used. Further settings for \code{mclapply} can be passed through
-  the list \code{mc.control}. If \code{multicore} is chosen but the
-  functionality is not available (eg, currently on Windows), then
-  \code{method} will be set to \code{loop} and a warning is issued. If
-  \code{method} is \code{snow}, function \code{clusterApply} from
-  package \pkg{parallel} is used. In this case, the argument \code{cl}
-  must either be a cluster object (see the documentation of
-  \code{clusterApply}) or an integer. If an integer, a cluster will be
-  set up via \code{makeCluster(c(rep("localhost", cl)), type = "SOCK")},
-  and \code{stopCluster} is called when the function is exited. If
-  \code{snow} is chosen but the package is not available or \code{cl} is
-  not specified, then \code{method} will be set to \code{loop} and a
-  warning is issued. In case that \code{cl} is a cluster object,
-  \code{stopCluster} will not be called automatically.
+  \code{"vectorised"}, \code{fun} must be written such that it
+  can be evaluated for a vector \code{x} (see Examples). If
+  \code{method} is \code{multicore}, function \code{mclapply}
+  from package \pkg{parallel} is used. Further settings for
+  \code{mclapply} can be passed through the list
+  \code{mc.control}. If \code{multicore} is chosen but the
+  functionality is not available (eg, currently on Windows),
+  then \code{method} will be set to \code{loop} and a warning
+  is issued. If \code{method} is \code{snow}, function
+  \code{clusterApply} from package \pkg{parallel} is used. In
+  this case, the argument \code{cl} must either be a cluster
+  object (see the documentation of \code{clusterApply}) or an
+  integer. If an integer, a cluster will be set up via
+  \code{makeCluster(c(rep("localhost", cl)), type = "SOCK")},
+  and \code{stopCluster} is called when the function is
+  exited. If \code{snow} is chosen but the package is not
+  available or \code{cl} is not specified, then \code{method}
+  will be set to \code{loop} and a warning is issued. In case
+  that \code{cl} is a cluster object, \code{stopCluster} will
+  not be called automatically.
 
 }
-\value{
+\value{%
+
   A numeric matrix with two columns, named \emph{lower} and
-  \emph{upper}. Each row contains one interval
-  that contains at least one root. If no roots were found, the matrix
-  has zero rows.
+  \emph{upper}. Each row contains one interval that contains
+  at least one root. If no roots were found, the matrix has
+  zero rows.
+
 }
 \references{
-  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
-  Methods and Optimization in Finance}. 2nd edition. Elsevier.
-  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
+  Gilli, M., Maringer, D. and Schumann, E. (2019)
+  \emph{Numerical Methods and Optimization in Finance}.
+  2nd edition. Elsevier. \doi{10.1016/C2017-0-01621-X}
 
-  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
-  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+  Schumann, E. (2023) Financial Optimisation with R (\pkg{NMOF} Manual).
+  \url{https://enricoschumann.net/NMOF.htm#NMOFmanual}
 }
 \author{
   Enrico Schumann

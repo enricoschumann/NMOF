@@ -12,8 +12,10 @@
 
 }
 \usage{
-gbm(npaths, timesteps, r, v, tau, S0)
-gbb(npaths, timesteps, S0, ST, v, tau)
+gbm(npaths, timesteps, r, v, tau, S0,
+    exp.result = TRUE, antithetic = FALSE)
+gbb(npaths, timesteps, S0, ST, v, tau,
+    log = FALSE, exp.result = TRUE)
 }
 \arguments{
   \item{npaths}{
@@ -22,20 +24,32 @@ gbb(npaths, timesteps, S0, ST, v, tau)
   \item{timesteps}{
     timesteps per path
   }
-  \item{r}{
-    the mean per unit of time
+
+  \item{r}{the mean per unit of time
   }
-  \item{v}{
-    the variance per unit of time
+
+  \item{v}{the variance per unit of time
   }
-  \item{tau}{
-    time
+
+  \item{tau}{time
   }
-  \item{S0}{
-    initial value
+
+  \item{S0}{initial value
   }
-  \item{ST}{
-    final value of Brownian bridge
+
+  \item{ST}{final value of Brownian bridge
+  }
+
+  \item{log}{logical: construct bridge from log series?
+  }
+
+  \item{exp.result}{logical: compute \code{\link{exp}} of the final
+    path, or return log values?}
+
+  \item{antithetic}{%
+    logical: if \code{TRUE}, random numbers for only
+    \code{npaths/2} are drawn, and the random numbers
+    are mirrored
   }
 }
 \details{
@@ -44,8 +58,8 @@ gbb(npaths, timesteps, S0, ST, v, tau)
 
 \code{gbb} generates sample paths of a Brownian bridge by first creating
 paths of Brownian motion \code{W} from time \code{0} to time \code{T},
-with \code{W_0} equal to zero.  Then, at each \code{t}, it subtracts t/T
-* W_T and adds S0*(1-t/T)+ST*(t/T).
+with \code{W_0} equal to zero.  Then, at each \code{t}, it subtracts \code{t/T
+* W_T} and adds \code{S0*(1-t/T)+ST*(t/T)}.
 
 }
 \value{
@@ -56,12 +70,12 @@ with \code{W_0} equal to zero.  Then, at each \code{t}, it subtracts t/T
 
 }
 \references{
-  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
-  Methods and Optimization in Finance}. 2nd edition. Elsevier.
-  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
+  Gilli, M., Maringer, D. and Schumann, E. (2019)
+  \emph{Numerical Methods and Optimization in Finance}.
+  2nd edition. Elsevier. \doi{10.1016/C2017-0-01621-X}
 
-  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
-  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+  Schumann, E. (2023) Financial Optimisation with R (\pkg{NMOF} Manual).
+  \url{https://enricoschumann.net/NMOF.htm#NMOFmanual}
 }
 \author{
   Enrico Schumann

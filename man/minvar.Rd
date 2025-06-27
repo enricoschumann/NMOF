@@ -39,10 +39,11 @@ minvar(var, wmin = 0, wmax = 1, method = "qp",
 }
 \details{
 
-  The function uses \code{\link[quadprog]{solve.QP}} from package
+  For method \code{"qp"}, the function uses
+  \code{\link[quadprog]{solve.QP}} from package
   \pkg{quadprog}. Because of the algorithm that
   \code{\link[quadprog]{solve.QP}} uses, \code{var} has to be positive
-  definit (i.e. must be of full rank).
+  definite (i.e. must be of full rank).
 
 }
 \value{
@@ -50,15 +51,15 @@ minvar(var, wmin = 0, wmax = 1, method = "qp",
   \code{variance} (the portfolio's variance)
 }
 \references{
-  Gilli, M., Maringer, D. and Schumann, E. (2019) \emph{Numerical
-  Methods and Optimization in Finance}. 2nd edition. Elsevier.
-  \url{https://www.elsevier.com/books/numerical-methods-and-optimization-in-finance/gilli/978-0-12-815065-8}
+  Gilli, M., Maringer, D. and Schumann, E. (2019)
+  \emph{Numerical Methods and Optimization in Finance}.
+  2nd edition. Elsevier. \doi{10.1016/C2017-0-01621-X}
+
+  Schumann, E. (2023) Financial Optimisation with R (\pkg{NMOF} Manual).
+  \url{https://enricoschumann.net/NMOF.htm#NMOFmanual}
 
   Schumann, E. (2012) Computing the global minimum-variance
-  portfolio. \url{http://enricoschumann.net/R/minvar.htm}
-
-  Schumann, E. (2019) Financial Optimisation with R (\pkg{NMOF} Manual).
-  \url{http://enricoschumann.net/NMOF.htm#NMOFmanual}
+  portfolio. \url{https://enricoschumann.net/R/minvar.htm}
 }
 \author{
   Enrico Schumann
@@ -68,7 +69,7 @@ minvar(var, wmin = 0, wmax = 1, method = "qp",
 }
 \examples{
 ## variance-covariance matrix from daily returns, 1 Jan 2014 -- 31 Dec 2013, of
-## cleaned data set at http://enricoschumann.net/data/gilli_accuracy.html
+## cleaned data set at https://enricoschumann.net/data/gilli_accuracy.html
 
 if (requireNamespace("quadprog")) {
 

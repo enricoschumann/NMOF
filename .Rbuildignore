@@ -2,12 +2,13 @@
 .git
 .gitignore
 ChangeLog
+LICENSE
 README.org
 THANKS
 TODO_NMOF.org
 dev
 dev/
+pull.sh
 reports
 reports/
 vignettes/auto/
-pull.sh

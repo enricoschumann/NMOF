@@ -60,9 +60,8 @@ bracketing <- function(fun, interval, ...,
            }
            )
 
-    ## find diffs
-    iSigns <- which(fn[-n] * fn[-1L] < 0)
-    ans <- cbind(xs[iSigns], xs[iSigns+1L])
+    iSigns <- which(sign(fn[-n]) != sign(fn[-1L]))
+    ans <- cbind(xs[iSigns], xs[iSigns + 1L])
     colnames(ans) <- c("lower", "upper")
     ans
 }

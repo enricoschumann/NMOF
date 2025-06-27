@@ -139,6 +139,7 @@ mvFrontier <- function(m, var, wmin = 0, wmax = 1, n = 50, rf = NA,
             risk[i] <- sqrt(result$solution %*% var %*% result$solution)
             portfolios[, i] <- result$solution
         }
+
     } else {
         A <- rbind(m - rf, -diag(na), diag(na))
         r.seq <- seq(rf, max(m), length.out = n)
@@ -165,9 +166,10 @@ mvFrontier <- function(m, var, wmin = 0, wmax = 1, n = 50, rf = NA,
             risk[i] <- sqrt(result$solution %*% var %*% result$solution)
             portfolios[, i] <- result$solution
         }
-        portfolios <- rbind(portfolios, cash)
 
+        portfolios <- rbind(portfolios, cash)
     }
+
     list(returns = rets,
          volatility = risk,
          portfolios = portfolios)
@@ -374,11 +376,16 @@ minCVaR <- function(R,
 
 trackingPortfolio <- function(var, wmin = 0, wmax = 1,
                               method = "qp", objective = "variance",
-                              R) {
+                              R,
+                              ls.algo = list()) {
 
     if (method == "qp") {
 
-        na <- ncol(var) - 1L
+        if (!missing(R)) {
+            na <- ncol(R) - 1L
+        } else
+            na <- ncol(var) - 1L
+
         if (length(wmin) == 1L)
             wmin <- rep(wmin, na)
         if (length(wmax) == 1L)
@@ -393,6 +400,8 @@ trackingPortfolio <- function(var, wmin = 0, wmax = 1,
             stop("package ", sQuote("quadprog"), " is not available")
 
         if (objective == "variance" ) {
+            if (missing(var))
+                var <- cov(R)
             Dmat <- var[-1, -1]
             dvec <- var[1, -1]
         } else if (objective == "sum.of.squares") {
@@ -404,9 +413,10 @@ trackingPortfolio <- function(var, wmin = 0, wmax = 1,
                                      Amat = t(A),
                                      bvec = b,
                                      meq  = 1L)
-
         ans <- qp_res$solution
-    } else if (method == "ls") {
+        names(ans) <- colnames(var)[-1]
+
+    } else if (method %in% c("ls", "LSopt")) {
 
         if (objective == "variance" ) {
             te <- function(w, R)
@@ -417,14 +427,13 @@ trackingPortfolio <- function(var, wmin = 0, wmax = 1,
                 crossprod(R[, -1] %*% w - R[, 1])
         }
 
-        ## if (!requireNamespace("neighbours"))
-        ##     stop("package ", sQuote("quadprog"), " is not available")
+        ## with package 'neighbours':
         ## nb <- neighbours::neighbourfun(type = "numeric",
         ##                                max = wmax,
         ##                                length = ncol(R) - 1,
         ##                                stepsize = 0.01)
         stepsize <- 0.01
-        nb <- function (x, ...)  {
+        nb <- function(x, ...) {
             decrease <- which(x > wmin)
             increase <- which(x < wmax)
             i <- decrease[sample.int(length(decrease), size = 1L)]
@@ -436,11 +445,14 @@ trackingPortfolio <- function(var, wmin = 0, wmax = 1,
             x
         }
 
-        sol.ls <- LSopt(te, list(neighbour = nb, nI = 2000,
-                                 printBar = FALSE,
-                                 printDetail = FALSE,
-                                 x0 = rep(1/(ncol(R) - 1), ncol(R) - 1)),
-                        R = R)
+        algo <- list(neighbour = nb,
+                     nI = 2000,
+                     printBar = FALSE,
+                     printDetail = FALSE,
+                     x0 = rep(1/(ncol(R) - 1), ncol(R) - 1))
+        algo[names(ls.algo)] <- ls.algo
+
+        sol.ls <- LSopt(te, algo = algo, R = R)
         ans <- sol.ls$xbest
 
     }
@@ -503,5 +515,98 @@ maxSharpe <- function(m, var, min.return,
                                  meq  = 1L)
     ans <- qp_res$solution/sum(qp_res$solution)
     ans
+}
 
+minMAD <- function(R,
+                   wmin = 0,
+                   wmax = 1,
+                   min.return = NULL,
+                   m = NULL,
+                   demean = TRUE,
+                   method = "lp",
+                   groups = NULL,
+                   groups.wmin = NULL,
+                   groups.wmax = NULL,
+                   Rglpk.control = list()) {
+
+    na <- ncol(R)
+    ns <- nrow(R)
+    if (!is.null(groups))
+        warning("group constraints not yet implemented")
+
+    if (method == "lp") {
+        rm <- colMeans(R)
+        if (demean)
+            R <- sweep(R, 2, rm)
+        M <- rbind(c(rep(1, na), rep(0, ns)),  ## budget
+                   cbind( R, diag(ns)),
+                   cbind(-R, diag(ns)))
+        dir <- c("==",  ## budget
+                 rep(">=", 2*ns))
+        rhs <- c(1,  ## budget
+                 rep(0, 2*ns))
+
+        if (!is.null(min.return)) {
+            M <- rbind(M,
+                       c(if (is.null(m)) rm else m, rep(0, ns)))
+            dir <- c(dir, ">=")
+            rhs <- c(rhs, min.return)
+        }
+
+        default.bounds <- identical(wmin, 0) && identical(wmax, 1)
+
+        if (!default.bounds) {
+            if (length(wmin) == 1L)
+                wmin <- rep.int(wmin, na)
+            if (length(wmax) == 1L)
+                wmax <- rep.int(wmax, na)
+            bounds <- list(lower = list(ind = seq_len(na) + 1L, val = wmin),
+                           upper = list(ind = seq_len(na) + 1L, val = wmax))
+        }
+
+        sol.lp <- Rglpk::Rglpk_solve_LP(
+                             obj = c(rep(0, na), rep(1/ns, ns)),
+                             mat = M,
+                             dir = dir,
+                             rhs = rhs,
+                             bounds = if (!default.bounds) bounds)
+        ans <- sol.lp$solution[seq_len(na)]
+
+    } else if (method == "ls") {
+
+        if (demean) {
+            mad <- function(w, R) {
+                Rw <- R %*% w   ## compute portfolio returns under scenarios
+                mean(abs(Rw - mean(Rw)))
+            }
+        } else {
+            mad <- function(w, R) {
+                Rw <- R %*% w   ## compute portfolio returns under scenarios
+                sum(abs(Rw))
+            }
+        }
+
+        stepsize <- 0.01
+        nb <- function(x, ...) {
+            decrease <- which(x > wmin)
+            increase <- which(x < wmax)
+            i <- decrease[sample.int(length(decrease), size = 1L)]
+            j <- increase[sample.int(length(increase), size = 1L)]
+            stepsize <- stepsize * runif(1L)
+            stepsize <- min(x[i] - wmin, wmax - x[j], stepsize)
+            x[i] <- x[i] - stepsize
+            x[j] <- x[j] + stepsize
+            x
+        }
+
+        ans <- LSopt(mad,
+                     list(x0 = rep(1/ncol(R), ncol(R)),
+                          neighbour = nb,
+                          nI = 100000,
+                          printDetail = FALSE,
+                          printBar = FALSE),
+                     R = R)$xbest
+    }
+
+    ans
 }

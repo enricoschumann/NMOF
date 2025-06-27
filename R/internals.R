@@ -46,7 +46,8 @@ mcList <- function(mc.control) {
                         mc.silent = FALSE,
                         mc.cores = getOption("mc.cores", 2L),
                         mc.cleanup = TRUE,
-                        mc.allow.recursive = TRUE)
+                        mc.allow.recursive = TRUE,
+                        affinity.list = NULL)
     checkList(mc.control, mc.settings, "'mc.control'")
     mc.settings[names(mc.control)] <- mc.control
     mc.settings

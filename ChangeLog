@@ -1,8 +1,193 @@
+2026-06-16  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/probBO.R (PBO): add function 'PBO', for
+        computing probability of backtest overfitting,
+        as descrived in Bailey et al. (2017;
+        https://doi.org/10.21314/JCF.2016.322 )
+
+2025-06-12  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R (Ritter): new '...' argument,
+        with the additional parameters passed to
+        'download.file'
+        (Ritter): adapt to new file format -- there is new
+        column "ADR"
+
+2025-03-28  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/portfolio.R (trackingPortfolio): copy names of
+        'var' to solution
+
+2025-02-14  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.10-2
+
+        * NEWS: updated many links from http to https
+
+2025-01-30  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R (French): update list of
+        supported data files
+
+2025-01-09  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R (French): support
+        'Europe_5_Factors_CSV.zip'
+
+2024-11-03  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.10-1
+
+        * man/NS.Rd: remove code example, as it failed on
+        a CRAN machine and the failure could not be
+        reproduced elsewhere
+
+2024-10-20  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.10-0
+
+        * R/market_data.R (Shiller): adapt regex; set
+        default of argument 'url' to NULL, since old link
+        is no longer working
+
+        * R/market_data.R (Ritter): adapt to new column
+        headers in latest files; column names are now made
+        lower case
+
+        * man/*.Rd: updated many links to https
+
+2024-10-18  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/MRC.R: add function, based on
+        https://quant.stackexchange.com/questions/80370/risk-parity-portfolio-from-scenario-optimization/80453#80453
+
+2024-09-10  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R: slightly rearrange code for case
+        when 'na.rm' is TRUE, to avoid the (harmless)
+        warning when there are no finite values
+
+2024-07-26  Enrico Schumann  <es@enricoschumann.net>
+
+        * inst/tinytest/test_heston.R: add tests, using
+        reference prices from Alan Lewis' blog
+
+2024-04-07  Enrico Schumann  <es@enricoschumann.net>
+
+        * inst/unitTests/unitTests2.R: removed (emptied) file
+
+2024-03-21  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R: use zoo::zoo to fix namespace
+
+        * inst/tinytest/test_bracketing.R: add testfile
+
+        * R/market_data.R (Shiller): implement new URL of file;
+        if argument "url" is not explicitly defined, the
+        function uses the new URL
+
+2024-03-20  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/bracket.R (bracketing): fix bug introduced in
+        version 2.9-0
+
+        * R/market_data.R (French): new argument
+        "return.class", with default value 'data.frame';
+        a single alternative value 'zoo' is supported
+
+2024-02-20  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R (French): support dataset
+        "F-F_Research_Data_5_Factors_2x3_daily_CSV.zip"
+
+2023-12-29  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.9-0
+
+2023-12-28  Enrico Schumann  <es@enricoschumann.net>
+
+        * inst/tinytest/test_trackingPortfolio.R: make test
+        less stringent
+
+2023-12-25  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/bracket.R (bracketing): directly compare signs,
+        instead of the sign of products, which works better
+        when 'fun' evaluates to /exactly/ zero
+
+2023-10-24  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/approxTR.R (approxBondReturn): new function, which
+        approximates the total return of a bond by its
+        duration & convexity, as described in Swinkels(2019)
+
+2023-10-20  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.8-0
+
+        * man/*.Rd: fix many links
+
+2023-10-15  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R (Ritter): fix removal of empty lines
+
+        * R/internals.R (mcList): add 'affinity.list'
+
+2023-07-31  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R (Ritter): adapt to new file
+        format
+
+2023-03-25  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/options.R (vanillaOptionEuropean): compute
+        "DvegaDspot" and "DvegaDvol"
+
+2023-03-01  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/portfolio.R (minMAD): copy neighbourhood
+        function from "neighbours" package
+
+2023-02-28  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/portfolio.R (minMAD): add function
+
+2023-01-24  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/portfolio.R (trackingPortfolio): add
+        argument 'ls.algo' for specifying settings for
+        method 'ls'
+        (trackingPortfolio): no longer require 'var'
+        when 'R' is specified
+
+2023-01-13  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/callHestoncf.R (callHestoncf): add argument
+        'uniroot.control' for passing settings for
+        'uniroot', and 'uniroot.info'
+
+2022-10-20  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.7-1
+
+        * man/*: documentation updates
+
+2022-08-19  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.7-0
+
+2022-06-29  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/market_data.R (French): safeguard download so
+        that the function evaluates to NULL when the
+        download fails. That behaviour had been intended as
+        least since 2020-01-23 [see ChangeLog], but had so
+        far depended on the return value of 'download.file'.
+
 2022-03-22  Enrico Schumann  <es@enricoschumann.net>
 
-        * R/options.R (vanillaOptionAmerican): the
-        function now works even for very small values
-        for M (M <= 3)
+        * R/options.R (vanillaOptionAmerican): the function
+        now works even for very small values for M (M <= 3)
 
 2022-03-16  Enrico Schumann  <es@enricoschumann.net>
 
@@ -12,17 +197,16 @@
 
         * R/mc.R (gbm): the function gains an argument
         "antithetic", with default FALSE. If TRUE, only
-        npaths/2 paths are created and then duplicated
-        with switched sign
+        npaths/2 paths are created and then duplicated with
+        switched sign
 
 2022-01-27  Enrico Schumann  <es@enricoschumann.net>
 
-        * R/mc.R (gbm, gbb): both functions gain an
-        argument "exp.result", with default TRUE. If
-        FALSE, the log paths are returned
-        (gbb): the function gets an argument "log",
-        with default FALSE, which matches the previous
-        behaviour
+        * R/mc.R (gbm, gbb): both functions gain an argument
+        "exp.result", with default TRUE. If FALSE, the log
+        paths are returned
+        (gbb): the function gets an argument "log", with
+        default FALSE, which matches the previous behaviour
 
 2022-01-26  Enrico Schumann  <es@enricoschumann.net>
 
@@ -45,7 +229,7 @@
 
         * DESCRIPTION (Version): 2.5-1
 
-        * man/*,vignettes/*,inst/tinytes/*: add
+        * man/*,vignettes/*,inst/tinytest/*: add
         tests whether suggested packages 'quadprog' and
         'Rglpk' are available
 
@@ -177,7 +361,7 @@
 
         * R/portfolio.R (trackingPortfolio): add function (not
         yet exported); see
-        http://enricoschumann.net/notes/return-based-tracking-portfolios.html
+        https://enricoschumann.net/notes/return-based-tracking-portfolios.html
 
 2020-05-12  Enrico Schumann  <es@enricoschumann.net>
 
@@ -195,7 +379,7 @@
 2020-04-11  Enrico Schumann  <es@enricoschumann.net>
 
         * R/portfolio.R (minCVaR): add function; see
-        http://enricoschumann.net/notes/minimising-conditional-var.html
+        https://enricoschumann.net/notes/minimising-conditional-var.html
 
 2020-04-01  Enrico Schumann  <es@enricoschumann.net>
 
@@ -412,7 +596,7 @@
 
         * inst/NMOFex/*: code examples have been
         removed (but remain available from
-        http://enricoschumann.net)
+        https://enricoschumann.net)
 
 2018-06-19  Enrico Schumann  <es@enricoschumann.net>
 
@@ -1360,4 +1544,3 @@
 
         * R/TAopt.R (TAopt): added 'flush.console' during computation of
         thresholds
-
