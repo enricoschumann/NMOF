@@ -1,5 +1,8 @@
 # Numerical Methods and Optimisation in Finance
 
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/NMOF)](https://cran.r-project.org/package=NMOF)
+[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/NMOF)](https://cran.r-project.org/package=NMOF)
+
 Functions, examples and data from the first and the
 second edition of "Numerical Methods and Optimization
 in Finance" by
