@@ -1,3 +1,8 @@
+2025-10-19  Enrico Schumann  <es@enricoschumann.net>
+
+        * R/portfolio.R (trackingPortfolio): only copy names
+        of 'var' when it is defined
+
 2025-06-18  Enrico Schumann  <es@enricoschumann.net>
 
         * R/market_data.R (French): adapt to new format of
