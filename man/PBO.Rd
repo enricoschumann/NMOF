@@ -68,8 +68,12 @@ PBO(M, s = 12, fun = colMeans,
 %% %% ~~objects to See Also as \code{\link{help}}, ~~~
 %% }
 \examples{
+\donttest{
+## might run a few seconds
 N <- 5000
 T <- 480
 M <- array(rnorm(N*T, sd = 0.01), dim = c(T, N))
-PBO(M, s = 12, fun = colMeans, loop.fun = FALSE)
+p <- PBO(M, s = 12, fun = colMeans, loop.fun = FALSE)
+str(p)
+}
 }
