@@ -1,16 +1,14 @@
-v2.11-0  (2025-06-18; under development)
+v2.11-0  (2025-10-20)
 
   o 'Ritter' has been adapted to new file format and
     allows to pass parameters to 'download.file'
 
-  o new function 'PBO', for computing probability of
-    backtest overfitting, as descrived in Bailey et
-    al. (2017; https://doi.org/10.21314/JCF.2016.322 )
-
   o 'trackingPortfolio' keeps column names of the
     input data
 
-  o ....
+  o new function 'PBO', for computing probability of
+    backtest overfitting, as descrived in Bailey et al.
+    (2017; https://doi.org/10.21314/JCF.2016.322 )
 
 v2.10-2  (2025-02-14)
 

@@ -8,9 +8,9 @@
         * R/market_data.R (French): adapt to new format of
         "10_portfolios_prior_12_2_csv.zip":
         "Average Value Weighted Returns -- Monthly" ==>
-        "Value Weight Returns -- Monthly" became
+        "Value Weight Returns -- Monthly"
 
-2026-06-16  Enrico Schumann  <es@enricoschumann.net>
+2025-06-16  Enrico Schumann  <es@enricoschumann.net>
 
         * R/probBO.R (PBO): add function 'PBO', for
         computing probability of backtest overfitting,
