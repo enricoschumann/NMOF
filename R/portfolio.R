@@ -1,4 +1,5 @@
 ## -*- truncate-lines: t; -*-
+## Copyright (C) 2010-24  Enrico Schumann
 
 erc <- function(cov,  wmin = 0, wmax = 1, method = "ls") {
 
@@ -280,6 +281,7 @@ function(na, groups, groups.wmin, groups.wmax) {
          b.ineq = b.ineq)
 }
 
+
 minCVaR <- function(R,
                     q = 0.1,
                     wmin = 0,
@@ -374,6 +376,7 @@ minCVaR <- function(R,
     ans
 }
 
+
 trackingPortfolio <- function(var, wmin = 0, wmax = 1,
                               method = "qp", objective = "variance",
                               R,
@@ -460,6 +463,7 @@ trackingPortfolio <- function(var, wmin = 0, wmax = 1,
     ans
 }
 
+
 maxSharpe <- function(m, var, min.return,
                       wmin = -Inf,
                       wmax = Inf,
@@ -517,6 +521,7 @@ maxSharpe <- function(m, var, min.return,
     ans <- qp_res$solution/sum(qp_res$solution)
     ans
 }
+
 
 minMAD <- function(R,
                    wmin = 0,
@@ -607,6 +612,75 @@ minMAD <- function(R,
                           printDetail = FALSE,
                           printBar = FALSE),
                      R = R)$xbest
+    }
+
+    ans
+}
+
+maxMinR <- function(R,
+                    wmin = 0,
+                    wmax = 1,
+                    min.return = NULL,
+                    m = NULL,
+                    demean = TRUE,
+                    method = "lp",
+                    groups = NULL,
+                    groups.wmin = NULL,
+                    groups.wmax = NULL,
+                    Rglpk.control = list()) {
+
+    na <- ncol(R)
+    ns <- nrow(R)
+    if (!is.null(groups))
+        warning("group constraints not yet implemented")
+
+    if (method == "lp") {
+        ## rm <- colMeans(R)
+        ## if (demean)
+        ##     R <- sweep(R, 2, rm)
+        ## obj <- c(1, numeric(na))
+
+        ## ## Rglpk_solve_LP(max = TRUE)
+
+        ## left <- c(0, rep(1, na))
+        ## right <- 1
+
+
+        ## left <- rbind(left,
+        ##               cbind(-1, R))
+
+        ## right <- c(right,
+        ##            rep(0, nrow(R)))
+
+        ## dir <- c("==", rep(">=", nrow(R)))
+        ## data.frame(left, dir, right)
+
+        ## bounds <- list(lower = list(ind = 1:(na+1), val = c(-Inf, rep(0, na))),
+        ##                upper = list(ind = 1:(na+1), val = c( Inf, rep(1, na))))
+
+        ## Rglpk_solve_LP(obj = obj,
+        ##                mat = left,
+        ##                dir = dir,
+        ##                rhs = right,
+        ##                max = TRUE,
+        ##                bounds = bounds,
+        ##                control = list(verbose = TRUE))
+        ## ans <- sol.lp$solution[seq_len(na)]
+
+    } else if (method == "ls") {
+
+        ## if (demean) {
+        ##     mad <- function(w, R) {
+        ##         Rw <- R %*% w   ## compute portfolio returns under scenarios
+        ##         mean(abs(Rw - mean(Rw)))
+        ##     }
+        ## } else {
+        ##     mad <- function(w, R) {
+        ##         Rw <- R %*% w   ## compute portfolio returns under scenarios
+        ##         sum(abs(Rw))
+        ##     }
+        ## }
+
     }
 
     ans
