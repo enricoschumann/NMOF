@@ -1,5 +1,7 @@
+v2.12-0  (2026-10-20)
 
-  o update several links in vignettes
+  o update several links in vignettes and help files;
+    in particular, link to new announcement mailing-list
 
   o new function 'maxMinR', for computing portfolios
     that maximise minimum return, as described in
@@ -166,7 +168,7 @@ v2.2-0  (2020-10-20)
 
   o New function 'minCVaR' for computing minimum CVaR
     portfolios, as described in Rockafellar/Uryasev
-    (2000; http://doi.org/10.21314/JOR.2000.038 ).
+    (2000; https://doi.org/10.21314/JOR.2000.038 ).
     For details on implementation, see
     https://enricoschumann.net/notes/minimising-conditional-var.html
 

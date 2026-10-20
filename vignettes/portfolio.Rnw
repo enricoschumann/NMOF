@@ -79,7 +79,7 @@ constraints.  As example data, the variable
 \texttt{var} contains a small variance--covariance
 matrix, computed from daily returns of five German
 stocks.  The data are taken from
-\url{http://enricoschumann.net/data/gilli_accuracy.html}\,;
+\url{https://enricoschumann.net/data/gilli_accuracy.html}\,;
 the code to build the matrix is in the source file of
 this vignette.
 
@@ -230,7 +230,7 @@ Function
 portfolio that minimises conditional Value-at-Risk; its
 default method is the LP approach described in
 \citet{rockafellar2000}.  See \emph{Minimising
-  Conditional Value-at-Risk (CVaR)} (\url{http://enricoschumann.net/notes/minimising-conditional-var.html}) for more details
+  Conditional Value-at-Risk (CVaR)} (\url{https://enricoschumann.net/notes/minimising-conditional-var.html}) for more details
 
 <<minCVaR>>=
 ns <- 5000  ## number of scenarios

@@ -440,7 +440,7 @@ legend(x = "topright", legend = c("true yields", "DE", "nlminb"),
 \begin{framed}
   \noindent The section was removed to reduce the build-time of the
   package. The examples were moved to the `NMOF manual' (see
-  \url{http://enricoschumann.net/NMOF.htm}). The code is in the
+  \url{https://enricoschumann.net/NMOF.htm}). The code is in the
   subdirectory \texttt{NMOFex}; to show the code in \textsf{R}, you can use
   the function \texttt{system.file}.
 <<eval = FALSE>>=
@@ -455,7 +455,7 @@ file.show(whereToLook, title = "NMOF examples")
 \begin{framed}
   \noindent The section was removed to reduce the build-time of the
   package. The examples were moved to the  `NMOF manual' (see
-  \url{http://enricoschumann.net/NMOF.htm}). The code is in the
+  \url{https://enricoschumann.net/NMOF.htm}). The code is in the
   subdirectory \texttt{NMOFex}; to show the code in \textsf{R}, you can use
   the function \texttt{system.file}.
 <<eval = FALSE>>=

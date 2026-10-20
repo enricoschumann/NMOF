@@ -78,7 +78,7 @@ test.callCF <- function() {
 
                                         # BATES
 
-    ## http://www.wilmott.com/messageview.cfm?catid=4&threadid=63014
+    ## https://web.archive.org/web/20090202100301/https://www.wilmott.com/messageview.cfm?catid=4&threadid=63014
     S <- 100; X <- 100; tau <- 1; r <- 0.04; q <- 0.02;
     v0 <- 0.2^2; vT <- 0.2^2            ## variance, not volatility
     rho <- -0.5; k <- 5; sigma <- 0.25  ## stoch. vol: Heston/Bates

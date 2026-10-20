@@ -6,7 +6,7 @@
 Functions, examples and data from the first and the
 second edition of "Numerical Methods and Optimization
 in Finance" by
-[M. Gilli](https://www.unige.ch/gsem/en/research/faculty/honorary-professors/manfred-gilli/),
+[M. Gilli](https://www.unige.ch/gsem/en/research/faculty/honorary-professors/manfred-gilli),
 [D. Maringer](https://wwz.unibas.ch/de/personen/dietmar-maringer/)
 and [E. Schumann](https://enricoschumann.net/)
 (2019, ISBN:978-0128150658).  The package provides
@@ -41,7 +41,7 @@ To install the package from within an R session, type:
 
 New package releases and other news related to the book or the
 package are announced on the
-[NMOF-news mailing list](https://lists.r-forge.r-project.org/cgi-bin/mailman/listinfo/nmof-news).
+[NMOF-news mailing list](https://lists.sr.ht/~enricoschumann/nmof-announce).
 
 An [RSS feed of the package NEWS file](https://enricoschumann.net/R/packages/NMOF/NMOF_news.xml)
 is also available.

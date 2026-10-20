@@ -2,7 +2,7 @@
 
   Functions, examples and data from the first and the
   second edition of "Numerical Methods and Optimization
-  in Finance" by [[http://www.unige.ch/ses/dsec/static/gilli/][M. Gilli]], [[https://wwz.unibas.ch/de/personen/dietmar-maringer/][D. Maringer]] and [[http://enricoschumann.net/][E. Schumann]]
+  in Finance" by [[https://www.unige.ch/ses/dsec/static/gilli/][M. Gilli]], [[https://wwz.unibas.ch/de/personen/dietmar-maringer/][D. Maringer]] and [[https://enricoschumann.net/][E. Schumann]]
   (2019, ISBN:978-0128150658).  The package provides
   implementations of optimisation heuristics
   (Differential Evolution, Genetic Algorithms, Particle
@@ -23,7 +23,7 @@
 #+BEGIN_SRC R :eval never :export code
 install.packages('NMOF')  ## CRAN version
 install.packages('NMOF',  ## development version
-                 repos = c('http://enricoschumann.net/R',
+                 repos = c('https://enricoschumann.net/R',
                            getOption('repos')))
 #+END_SRC
 
@@ -31,9 +31,9 @@ install.packages('NMOF',  ## development version
 ** News, feedback and discussion
 
    New package releases and other news related to the book or the
-   package are announced on the [[https://lists.r-forge.r-project.org/cgi-bin/mailman/listinfo/nmof-news][NMOF-news mailing list]].
+   package are announced on the [[https://lists.sr.ht/~enricoschumann/nmof-announce][NMOF-news mailing list]].
 
-   An [[http://enricoschumann.net/R/packages/NMOF/NMOF_news.xml][RSS feed of the package NEWS file]] is also available.
+   An [[https://enricoschumann.net/R/packages/NMOF/NMOF_news.xml][RSS feed of the package NEWS file]] is also available.
 
    Applications, as long as they are finance-related, should be
    discussed on the [[https://stat.ethz.ch/mailman/listinfo/r-sig-finance][R-SIG-Finance mailing list]].

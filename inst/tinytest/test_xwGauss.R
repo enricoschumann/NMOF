@@ -1,4 +1,4 @@
-## http://dlmf.nist.gov/3.5
+## https://dlmf.nist.gov/3.5
 
 tab <- list(nodes = 0, weights = 2)
 res <- xwGauss(n =  1L, "legendre")

@@ -143,20 +143,18 @@ cat(paste(strwrap(x$results[,"Title"], exdent = 2), collapse = "\n"))
 
 \subsection{Websites}
 
-\noindent The book's website: \url{http://nmof.net} \smallskip
-
-\noindent The package's website:
-\url{http://enricoschumann.net/NMOF}\medskip
+\noindent The book/package website:
+\url{https://enricoschumann.net/NMOF.htm}\medskip
 
 \noindent The stable version is available from \textsc{cran}. The
 development version is available from
 
-\url{http://enricoschumann.net/R/packages/NMOF/index.htm}\medskip
+\url{https://enricoschumann.net/R/packages/NMOF/index.htm}\medskip
 
 \noindent To install the development version from an R session, type:
 <<eval=false>>=
 install.packages("NMOF",
-                 repos = c("http://enricoschumann.net/R",
+                 repos = c("https://enricoschumann.net/R",
                            getOption("repos")))
 @
 
@@ -172,7 +170,7 @@ The book's source code examples are available from GitLab:
 \subsection{Manual}
 
 A manual is available from
-\url{http://enricoschumann.net/NMOF.htm#NMOFmanual}\,, though it is
+\url{https://enricoschumann.net/NMOF.htm#NMOFmanual}\,, though it is
 still work in process.  The code examples from the manual are also
 available from that site.
 
@@ -196,13 +194,13 @@ These tests are stored in subdirectory \texttt{unitTests}.
 \noindent New package releases and other news related to the book or
 the package are announced on the \texttt{NMOF-news} mailing list:\smallskip
 
-\url{https://lists.r-forge.r-project.org/cgi-bin/mailman/listinfo/nmof-news}
+\url{https://lists.sr.ht/~enricoschumann/nmof-announce}
 \medskip
 
 \noindent An \textsc{rss} feed of the package \textsc{news} file is
 available at\smallskip
 
-\url{http://enricoschumann.net/R/packages/NMOF/NMOF_news.xml}\,.
+\url{https://enricoschumann.net/R/packages/NMOF/NMOF_news.xml}\,.
 
 \medskip
 
