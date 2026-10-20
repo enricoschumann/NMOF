@@ -24,6 +24,10 @@
 
         * R/portfolio.R (maxMinR): add outline of function
 
+2025-10-20  Enrico Schumann  <es@enricoschumann.net>
+
+        * DESCRIPTION (Version): 2.11-0
+
 2025-10-19  Enrico Schumann  <es@enricoschumann.net>
 
         * R/portfolio.R (trackingPortfolio): only copy names
