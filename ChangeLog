@@ -1,3 +1,14 @@
+2026-10-18  Enrico Schumann  <es@enricoschumann.net>
+
+        * man/minvar.Rd:  replace
+        .Dim => dim, .Dimnames => dimnames
+
+        * inst/tinytest/test_bracketing.R: replace
+        .Dim => dim, .Dimnames => dimnames
+
+        * inst/tinytest/test_portfolio.R: replace
+        .Dim => dim, .Dimnames => dimnames
+
 2026-10-17  Enrico Schumann  <es@enricoschumann.net>
 
         * R/portfolio.R (maxMinR): implement variant 1 of

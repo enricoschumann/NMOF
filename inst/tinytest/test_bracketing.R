@@ -1,7 +1,7 @@
 ## example edition 1, ch. 11/p. 290
 res0 <- structure(c(0.3, 0.348, 0.444, 0.78, 0.324, 0.372, 0.468, 0.804),
-                  .Dim = c(4L, 2L),
-                  .Dimnames = list(NULL, c("lower", "upper")))
+                  dim = c(4L, 2L),
+                  dimnames = list(NULL, c("lower", "upper")))
 testFun <- function(x)
     cos(1/x^2)
 expect_equal(res0, bracketing(testFun, interval = c(0.3, 0.9), n = 26L))

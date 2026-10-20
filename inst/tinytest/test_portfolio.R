@@ -15,9 +15,9 @@ if (requireNamespace("quadprog") &&
           0.000265780633005374, 0.000132611196599808, 0.000262742052359594,
           0.0000283532159921211, 0.000188824454515841, 0.000132611196599808,
           0.00025948420130626),
-        .Dim = c(5L, 5L),
-        .Dimnames = list(c("CBK.DE", "VOW.DE", "CON.DE", "LIN.DE", "MUV2.DE"),
-                         c("CBK.DE", "VOW.DE", "CON.DE", "LIN.DE", "MUV2.DE")))
+        dim = c(5L, 5L),
+        dimnames = list(c("CBK.DE", "VOW.DE", "CON.DE", "LIN.DE", "MUV2.DE"),
+                        c("CBK.DE", "VOW.DE", "CON.DE", "LIN.DE", "MUV2.DE")))
 
 
     res <- minvar(var, wmin = 0, wmax = 0.25)
