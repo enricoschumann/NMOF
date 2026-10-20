@@ -162,3 +162,20 @@ if (requireNamespace("quadprog") &&
         }
     }
 }
+
+if (requireNamespace("Rglpk")) {
+
+    na <- 10
+    ns <- 20
+    R <- randomReturns(na = na, ns = ns, sd = 0.01,
+                       mean = 0.01, rho = .5)
+    w1 <- maxMinR(R)
+
+    w2 <- maxMinR(R, method = "ls")
+
+    min(R %*% w1)
+    min(R %*% w2)
+
+    round(w1, 6)
+    round(w2, 6)
+}

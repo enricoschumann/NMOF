@@ -1,5 +1,5 @@
 ## -*- truncate-lines: t; -*-
-## Copyright (C) 2010-24  Enrico Schumann
+## Copyright (C) 2010-26  Enrico Schumann
 
 erc <- function(cov,  wmin = 0, wmax = 1, method = "ls") {
 
@@ -368,7 +368,7 @@ minCVaR <- function(R,
         ans <- sol.lp$solution[2:(1+na)]
         attr(ans, "LP") <- sol.lp
     } else if (tolower(method) == "ls") {
-        message("Not implemented. See http://enricoschumann.net/notes/minimising-conditional-var.html")
+        message("Not implemented. See https://enricoschumann.net/notes/minimising-conditional-var.html")
         ans <- invisible(NULL)
     } else {
         stop("method ", sQuote(method), " not supported")
@@ -622,7 +622,6 @@ maxMinR <- function(R,
                     wmax = 1,
                     min.return = NULL,
                     m = NULL,
-                    demean = TRUE,
                     method = "lp",
                     groups = NULL,
                     groups.wmin = NULL,
@@ -635,51 +634,68 @@ maxMinR <- function(R,
         warning("group constraints not yet implemented")
 
     if (method == "lp") {
-        ## rm <- colMeans(R)
-        ## if (demean)
-        ##     R <- sweep(R, 2, rm)
-        ## obj <- c(1, numeric(na))
-
-        ## ## Rglpk_solve_LP(max = TRUE)
-
-        ## left <- c(0, rep(1, na))
-        ## right <- 1
 
 
-        ## left <- rbind(left,
-        ##               cbind(-1, R))
+        control <- list(verbose = FALSE,
+                        presolve = FALSE)
 
-        ## right <- c(right,
-        ##            rep(0, nrow(R)))
+        control[names(Rglpk.control)] <- Rglpk.control
 
-        ## dir <- c("==", rep(">=", nrow(R)))
-        ## data.frame(left, dir, right)
 
-        ## bounds <- list(lower = list(ind = 1:(na+1), val = c(-Inf, rep(0, na))),
-        ##                upper = list(ind = 1:(na+1), val = c( Inf, rep(1, na))))
+        if (is.null(m))
+            m <- colMeans(R)
 
-        ## Rglpk_solve_LP(obj = obj,
-        ##                mat = left,
-        ##                dir = dir,
-        ##                rhs = right,
-        ##                max = TRUE,
-        ##                bounds = bounds,
-        ##                control = list(verbose = TRUE))
-        ## ans <- sol.lp$solution[seq_len(na)]
+        if (is.null(min.return))
+            min.return <- -Inf
+        f.obj <- c(rep(0, na), 1)
+
+        C <- rbind(
+            cbind(R, -1),      ## >= 0
+            c(rep(1, na), 0),  ## == 1
+            c(m, 0)            ## >= r
+        )
+
+        bounds <- list(lower = list(ind = c(seq_len(na), na + 1),
+                                    val = c(rep(0, na), -Inf)))
+
+        rhs <- c(rep(   0, ns),    1, min.return)
+        dir <- c(rep(">=", ns), "==", ">=")
+
+        sol.lp <- Rglpk::Rglpk_solve_LP(f.obj,
+                                        mat = C,
+                                        bounds = bounds,
+                                        dir = dir,
+                                        rhs = rhs,
+                                        max = TRUE,
+                                        control = list(verbose = TRUE))
+        ans <- sol.lp$solution[seq_len(na)]
 
     } else if (method == "ls") {
 
-        ## if (demean) {
-        ##     mad <- function(w, R) {
-        ##         Rw <- R %*% w   ## compute portfolio returns under scenarios
-        ##         mean(abs(Rw - mean(Rw)))
-        ##     }
-        ## } else {
-        ##     mad <- function(w, R) {
-        ##         Rw <- R %*% w   ## compute portfolio returns under scenarios
-        ##         sum(abs(Rw))
-        ##     }
-        ## }
+        stepsize <- 0.01
+        nb <- function(x, ...) {
+            decrease <- which(x > wmin)
+            increase <- which(x < wmax)
+            i <- decrease[sample.int(length(decrease), size = 1L)]
+            j <- increase[sample.int(length(increase), size = 1L)]
+            stepsize <- stepsize * runif(1L)
+            stepsize <- min(x[i] - wmin, wmax - x[j], stepsize)
+            x[i] <- x[i] - stepsize
+            x[j] <- x[j] + stepsize
+            x
+        }
+
+        ans <- LSopt(
+            function(w, R) {
+                Rw <- R %*% w   ## compute portfolio returns under scenarios
+                -min(Rw)        ## minimize, so -max
+            },
+            list(x0 = rep(1/na, na),
+                 neighbour = nb,
+                 nI = 100000,
+                 printDetail = FALSE,
+                 printBar = FALSE),
+            R = R)$xbest
 
     }
 

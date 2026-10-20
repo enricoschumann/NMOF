@@ -59,6 +59,7 @@ export(
     gbm,
     greedySearch,
     gridSearch,
+    maxMinR,
     maxSharpe,
     minCVaR,
     minMAD,

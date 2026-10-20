@@ -253,10 +253,25 @@ computes a portfolio that minimises the mean
 absolute-deviation of portfolio returns, as described
 in \citet{Konno1991}.
 <<minMAD>>=
-ns <- 5000  ## number of scenarios
-na <- 5    ## nunber of assets
+ns <- 1000  ## number of scenarios
+na <- 5     ## nunber of assets
 R <- randomReturns(na, ns, sd = 0.01, rho = 0.5)
 minMAD(R = R)
+@
+
+
+\section{Maximum minimum-return portfolio}
+
+Function
+\texttt{maxMinR}\marginpar{\footnotesize\texttt{maxMinR}}
+computes a portfolio that maximises the minimum
+return for a given scenario set, as described
+in \citet{Young1998}.
+<<minMAD>>=
+ns <- 100   ## number of scenarios
+na <- 5     ## nunber of assets
+R <- randomReturns(na, ns, sd = 0.01, rho = 0.5)
+maxMinR(R = R)
 @
 
 
