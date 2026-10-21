@@ -1,8 +1,8 @@
 Package: NMOF
 Type: Package
 Title: Numerical Methods and Optimization in Finance
-Version: 2.12-0
-Date: 2026-10-20
+Version: 2.13-0
+Date: 2026-10-21
 Maintainer: Enrico Schumann <es@enricoschumann.net>
 Authors@R: person("Enrico", "Schumann",
                   role  = c("aut", "cre"),
@@ -13,16 +13,20 @@ Imports: grDevices, graphics, parallel, stats, utils
 Suggests: MASS, PMwR, RUnit, Rglpk, datetimeutils,
   openxlsx, quadprog, readxl, tinytest, zoo
 Description: Functions, examples and data from the first and
-  the second edition of "Numerical Methods and Optimization in
-  Finance" by M. Gilli, D. Maringer and E. Schumann (2019,
+  the second edition of "Numerical Methods and Optimization
+  in Finance" by M. Gilli, D. Maringer and E. Schumann (2019,
   ISBN:978-0128150658).  The package provides implementations
   of optimisation heuristics (Differential Evolution, Genetic
-  Algorithms, Particle Swarm Optimisation, Simulated Annealing
-  and Threshold Accepting), and other optimisation tools, such
-  as grid search and greedy search.  There are also functions
-  for the valuation of financial instruments such as bonds and
-  options, for portfolio selection and functions that help
-  with stochastic simulations.
+  Algorithms, Particle Swarm Optimisation, Simulated
+  Annealing and Threshold Accepting), and other optimisation
+  tools, such as grid search and greedy search.  There are
+  also functions for the valuation of financial instruments
+  such as bonds and options, functions that help with
+  stochastic simulations, and several implementations of
+  portfolio-selection models, such as
+  Konno and Yamazaki (1991; <doi:10.1287/mnsc.37.5.519>),
+  Young (1998; <doi:10.1287/mnsc.44.5.673>) and
+  Rockafellar/Uryasev (2000; <doi:10.21314/JOR.2000.038>).  
 License: GPL-3
 URL: https://enricoschumann.net/NMOF.htm ,
      https://gitlab.com/NMOF ,
